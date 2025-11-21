@@ -1,21 +1,36 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product
+from .models import Product, Title
+
+
+class TitleForm(forms.ModelForm):
+    class Meta:
+        model = Title
+        fields = [
+            'id',
+            'machine_name',
+            'human_name',
+            'description',
+            'levels',
+            'langs',
+            'ages',
+            'collection',
+            'duration',
+        ]
 
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = [
-            'title',
-            'level',
-            'language_pair',
-            'description',
+            'id',
+            'name',
             'price',
-            'audio_file',
-            'cover_image',
-            'titles',
+            'currency',
+            'description',
+            'is_free',
+            'packages',
         ]
 
 
