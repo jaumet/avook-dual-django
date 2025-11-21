@@ -8,7 +8,7 @@
     <div class="hero__text">
         <p class="hero__kicker">Dual Understanding And Listening</p>
         <h1>{{ marketing_title }}</h1>
-        <p class="hero__subtitle">{{ marketing_subtitle }}</p>
+        <p class="hero__subtitle">{{ subtitle }}</p>
         <div class="hero__actions">
             <a class="button" href="#productes">Descobreix els productes</a>
             <a class="button button--ghost" href="{% url 'signup' %}">Crea un compte</a>
@@ -31,11 +31,7 @@
     <div class="product-grid">
         {% for product in products %}
             <article class="product-card">
-                {% if product.cover_image %}
-                    <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.name }}" class="product-card__image" />
-                {% else %}
-                    <img src="{% static 'imgs/logo.png' %}" alt="{{ product.name }}" class="product-card__image" />
-                {% endif %}
+                <img src="{% static 'imgs/logo.png' %}" alt="{{ product.name }}" class="product-card__image" />
                 <div class="product-card__body">
                     <h3>{{ product.name }}</h3>
                     <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
@@ -49,7 +45,11 @@
                                     {% for title in package.titles.all %}
                                         <li>
                                             <span class="product-card__title-name">{{ title.human_name }}</span>
-                                            {% if title.langs %}<span class="product-card__badge">{{ title.langs }}</span>{% endif %}
+                                            {% if title.languages.all %}
+                                                <span class="product-card__badge">
+                                                    {% for lang in title.languages.all %}{{ lang.language }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                                </span>
+                                            {% endif %}
                                             {% if title.duration %}<span class="product-card__badge product-card__badge--muted">{{ title.duration }}</span>{% endif %}
                                         </li>
                                     {% endfor %}
@@ -62,7 +62,7 @@
 
                     <div class="product-card__footer">
                         <span class="product-card__price">{{ product.price }} €</span>
-                        <a class="button button--small" href="#">Veure fitxa</a>
+                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">Veure fitxa</a>
                     </div>
                 </div>
             </article>

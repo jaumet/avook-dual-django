@@ -1,13 +1,19 @@
 from django.contrib import admin
-from .models import Product, Title, Package, UserPurchase
+from .models import Product, Title, Package, UserPurchase, TitleLanguage
+
+
+class TitleLanguageInline(admin.TabularInline):
+    model = TitleLanguage
+    extra = 1
 
 
 @admin.register(Title)
 class TitleAdmin(admin.ModelAdmin):
-    list_display = ('human_name', 'levels', 'langs', 'collection')
-    search_fields = ('human_name', 'machine_name', 'collection', 'langs')
+    list_display = ('human_name', 'levels', 'collection')
+    search_fields = ('human_name', 'machine_name', 'collection')
     list_filter = ('levels', 'collection')
     prepopulated_fields = {'machine_name': ('human_name',)}
+    inlines = [TitleLanguageInline]
 
 
 @admin.register(Package)

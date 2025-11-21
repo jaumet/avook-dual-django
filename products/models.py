@@ -9,7 +9,6 @@ class Title(models.Model):
     human_name = models.CharField(max_length=255, help_text=_("Nom del títol per mostrar"))
     description = models.TextField(blank=True, help_text=_("Descripció del títol"))
     levels = models.CharField(max_length=50, blank=True, help_text=_("Nivells, p. ex., 'A2'"))
-    langs = models.CharField(max_length=100, blank=True, help_text=_("Idiomes separats per comes, p. ex., 'CA, EN, FR'"))
     ages = models.CharField(max_length=20, blank=True, help_text=_("Rang d’edat, p. ex., '10-16'"))
     collection = models.CharField(max_length=100, blank=True, help_text=_("Col·lecció a la qual pertany"))
     duration = models.CharField(max_length=20, blank=True, help_text=_("Durada en format HH:MM:SS"))
@@ -20,6 +19,21 @@ class Title(models.Model):
     class Meta:
         verbose_name = _("Títol")
         verbose_name_plural = _("Títols")
+
+
+class TitleLanguage(models.Model):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='languages')
+    language = models.CharField(max_length=2, help_text=_("Codi de l'idioma, p. ex., 'CA'"))
+    directory = models.CharField(max_length=255, help_text=_("Ruta al directori de l'idioma"))
+    json_file = models.CharField(max_length=255, help_text=_("Nom del fitxer JSON de l'idioma"))
+
+    def __str__(self):
+        return f"{self.title.human_name} ({self.language})"
+
+    class Meta:
+        unique_together = ('title', 'language')
+        verbose_name = _("Ruta d'idioma del títol")
+        verbose_name_plural = _("Rutes d'idioma del títol")
 
 
 class Package(models.Model):

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Product, Title
+from .models import Product, Title, TitleLanguage
 
 
 class TitleForm(forms.ModelForm):
@@ -13,11 +13,16 @@ class TitleForm(forms.ModelForm):
             'human_name',
             'description',
             'levels',
-            'langs',
             'ages',
             'collection',
             'duration',
         ]
+
+
+class TitleLanguageForm(forms.ModelForm):
+    class Meta:
+        model = TitleLanguage
+        fields = ['language', 'directory', 'json_file']
 
 
 class ProductForm(forms.ModelForm):
