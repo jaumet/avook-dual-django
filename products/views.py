@@ -14,6 +14,9 @@ class HomeView(ListView):
     template_name = 'home.html'
     context_object_name = 'products'
 
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('titles')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['marketing_title'] = 'Audiovook Dual — Aprèn llengües escoltant històries'
@@ -36,10 +39,19 @@ class ProductDetailView(DetailView):
     template_name = 'products/detail.html'
     context_object_name = 'product'
 
+<<<<<<< ours
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         titles_by_level = load_titles_grouped_by_level()
         context['package_titles'] = titles_by_level.get(self.object.level, [])
+=======
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('titles')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['package_titles'] = self.object.titles.all()
+>>>>>>> theirs
         return context
 
 

@@ -29,8 +29,13 @@
         {% endif %}
     </div>
     <div class="product-grid">
+<<<<<<< ours
         {% for package in packages %}
             {% with product=package.product titles=package.titles %}
+=======
+        {% for product in products %}
+            {% with titles=product.titles.all %}
+>>>>>>> theirs
                 <article class="product-card">
                     {% if product.cover_image %}
                         <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.title }}" class="product-card__image" />
@@ -48,8 +53,13 @@
                                 <ul>
                                     {% for title in titles %}
                                         <li>
+<<<<<<< ours
                                             <span class="product-card__title-name">{{ title.title }}</span>
                                             {% if title.langs %}<span class="product-card__badge">{{ title.langs|join:', ' }}</span>{% endif %}
+=======
+                                            <span class="product-card__title-name">{{ title.title_human }}</span>
+                                            {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
+>>>>>>> theirs
                                             {% if title.duration %}<span class="product-card__badge product-card__badge--muted">{{ title.duration }}</span>{% endif %}
                                         </li>
                                     {% endfor %}

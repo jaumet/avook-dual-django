@@ -15,6 +15,7 @@ class ProductForm(forms.ModelForm):
             'price',
             'audio_file',
             'cover_image',
+            'titles',
         ]
 
 
