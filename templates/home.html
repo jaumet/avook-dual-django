@@ -35,6 +35,9 @@
 =======
         {% for product in products %}
             {% with titles=product.titles.all %}
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
                 <article class="product-card">
                     {% if product.cover_image %}
@@ -54,8 +57,13 @@
                                     {% for title in titles %}
                                         <li>
 <<<<<<< ours
+<<<<<<< ours
                                             <span class="product-card__title-name">{{ title.title }}</span>
                                             {% if title.langs %}<span class="product-card__badge">{{ title.langs|join:', ' }}</span>{% endif %}
+=======
+                                            <span class="product-card__title-name">{{ title.title_human }}</span>
+                                            {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
+>>>>>>> theirs
 =======
                                             <span class="product-card__title-name">{{ title.title_human }}</span>
                                             {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
