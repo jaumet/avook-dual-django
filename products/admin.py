@@ -8,7 +8,10 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('title', 'language_pair', 'level')
     list_filter = ('level', 'language_pair')
 <<<<<<< ours
+<<<<<<< ours
 =======
+=======
+>>>>>>> theirs
     filter_horizontal = ('titles',)
 
 
@@ -17,4 +20,7 @@ class TitleAdmin(admin.ModelAdmin):
     list_display = ('title_human', 'level', 'languages', 'collection')
     search_fields = ('title_human', 'slug', 'collection', 'languages')
     list_filter = ('level', 'collection')
+<<<<<<< ours
+>>>>>>> theirs
+=======
 >>>>>>> theirs
