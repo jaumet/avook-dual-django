@@ -17,17 +17,11 @@ def run(playwright):
         page.click("button[type='submit']")
         page.wait_for_url("http://127.0.0.1:8000/", timeout=60000)
 
-        # Go to the add title page
-        page.goto("http://127.0.0.1:8000/products/title/nou/")
+        # Go to the product detail page
+        page.goto("http://127.0.0.1:8000/products/product/30001/")
 
-        # Take a screenshot before clicking the button
-        page.screenshot(path="verification/title_form_refactored_before.png")
-
-        # Click the "Nova llengua" button
-        page.click("#add-language-form")
-
-        # Take a screenshot after clicking the button
-        page.screenshot(path="verification/title_form_refactored_after.png")
+        # Take a screenshot to verify
+        page.screenshot(path="verification/product_detail_fixed.png")
 
     except Exception as e:
         print(f"An error occurred: {e}")
