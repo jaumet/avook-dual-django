@@ -16,7 +16,3 @@ class TitleAdmin(admin.ModelAdmin):
     search_fields = ('title_human', 'slug', 'collection', 'languages')
     list_filter = ('level', 'collection')
     prepopulated_fields = {'slug': ('title_human',)}
-<<<<<<< ours
-
-=======
->>>>>>> theirs
