@@ -25,57 +25,31 @@
         <h2>Històries curtes per practicar llengües</h2>
         <p>Consulta el catàleg d'audiollibres bilingües. Entra a un producte per veure la descripció i reproduir l'àudio.</p>
         {% if user.is_authenticated %}
-            <a class="button button--small" href="{% url 'products:create' %}">Afegir un nou producte</a>
+            <a class="button button--small" href="{% url 'products:product_create' %}">Afegir un nou producte</a>
         {% endif %}
     </div>
     <div class="product-grid">
-<<<<<<< ours
-        {% for package in packages %}
-            {% with product=package.product titles=package.titles %}
-=======
         {% for product in products %}
-            {% with titles=product.titles.all %}
-<<<<<<< ours
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-                <article class="product-card">
-                    {% if product.cover_image %}
-                        <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.title }}" class="product-card__image" />
-                    {% else %}
-                        <img src="{% static 'imgs/logo.png' %}" alt="{{ product.title }}" class="product-card__image" />
-                    {% endif %}
-                    <div class="product-card__body">
-                        <p class="product-card__eyebrow">{{ product.language_pair }}</p>
-                        <h3>{{ product.title }}</h3>
-                        <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
-                        <p class="product-card__meta">Nivell del paquet: {{ product.level|default:'No definit' }}</p>
-                        {% if titles %}
+            <article class="product-card">
+                {% if product.cover_image %}
+                    <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.name }}" class="product-card__image" />
+                {% else %}
+                    <img src="{% static 'imgs/logo.png' %}" alt="{{ product.name }}" class="product-card__image" />
+                {% endif %}
+                <div class="product-card__body">
+                    <h3>{{ product.name }}</h3>
+                    <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
+
+                    {% for package in product.packages.all %}
+                        <p class="product-card__meta">Paquet: {{ package.name }}</p>
+                        {% if package.titles.all %}
                             <div class="product-card__titles">
                                 <p class="kicker">Títols inclosos</p>
                                 <ul>
-                                    {% for title in titles %}
+                                    {% for title in package.titles.all %}
                                         <li>
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-                                            <span class="product-card__title-name">{{ title.title }}</span>
-                                            {% if title.langs %}<span class="product-card__badge">{{ title.langs|join:', ' }}</span>{% endif %}
-=======
-                                            <span class="product-card__title-name">{{ title.title_human }}</span>
-                                            {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
->>>>>>> theirs
-=======
-                                            <span class="product-card__title-name">{{ title.title_human }}</span>
-                                            {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
->>>>>>> theirs
-=======
-                                            <span class="product-card__title-name">{{ title.title_human }}</span>
-                                            {% if title.language_list %}<span class="product-card__badge">{{ title.language_list|join:', ' }}</span>{% endif %}
->>>>>>> theirs
+                                            <span class="product-card__title-name">{{ title.human_name }}</span>
+                                            {% if title.langs %}<span class="product-card__badge">{{ title.langs }}</span>{% endif %}
                                             {% if title.duration %}<span class="product-card__badge product-card__badge--muted">{{ title.duration }}</span>{% endif %}
                                         </li>
                                     {% endfor %}
@@ -84,13 +58,14 @@
                         {% else %}
                             <p class="product-card__meta">Cap títol assignat a aquest paquet.</p>
                         {% endif %}
-                        <div class="product-card__footer">
-                            <span class="product-card__price">{{ product.price }} €</span>
-                            <a class="button button--small" href="{% url 'products:detail' product.pk %}">Veure fitxa</a>
-                        </div>
+                    {% endfor %}
+
+                    <div class="product-card__footer">
+                        <span class="product-card__price">{{ product.price }} €</span>
+                        <a class="button button--small" href="#">Veure fitxa</a>
                     </div>
-                </article>
-            {% endwith %}
+                </div>
+            </article>
         {% empty %}
             <p>Encara no hi ha productes. Si tens permís, crea'n un!</p>
         {% endfor %}
@@ -104,7 +79,7 @@
     </div>
     <div class="cta__actions">
         {% if user.is_authenticated %}
-            <a class="button" href="{% url 'products:create' %}">Crea un producte</a>
+            <a class="button" href="{% url 'products:product_create' %}">Crea un producte</a>
         {% else %}
             <a class="button" href="{% url 'signup' %}">Comença ara</a>
             <a class="button button--ghost" href="{% url 'login' %}">Ja tinc compte</a>
