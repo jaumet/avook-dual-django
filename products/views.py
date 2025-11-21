@@ -6,6 +6,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from .forms import ProductForm, SignUpForm
 from .models import Product
+from .utils import load_titles_grouped_by_level
 
 
 class HomeView(ListView):
@@ -19,6 +20,14 @@ class HomeView(ListView):
         context['marketing_subtitle'] = (
             'Escolta narracions combinades per millorar la comprensió i la pronunciació'
         )
+        titles_by_level = load_titles_grouped_by_level()
+        context['packages'] = [
+            {
+                'product': product,
+                'titles': titles_by_level.get(product.level, []),
+            }
+            for product in context['products']
+        ]
         return context
 
 
@@ -26,6 +35,12 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        titles_by_level = load_titles_grouped_by_level()
+        context['package_titles'] = titles_by_level.get(self.object.level, [])
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

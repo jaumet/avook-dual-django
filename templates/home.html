@@ -29,23 +29,42 @@
         {% endif %}
     </div>
     <div class="product-grid">
-        {% for product in products %}
-            <article class="product-card">
-                {% if product.cover_image %}
-                    <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.title }}" class="product-card__image" />
-                {% else %}
-                    <img src="{% static 'imgs/logo.png' %}" alt="{{ product.title }}" class="product-card__image" />
-                {% endif %}
-                <div class="product-card__body">
-                    <p class="product-card__eyebrow">{{ product.language_pair }}</p>
-                    <h3>{{ product.title }}</h3>
-                    <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
-                    <div class="product-card__footer">
-                        <span class="product-card__price">{{ product.price }} €</span>
-                        <a class="button button--small" href="{% url 'products:detail' product.pk %}">Veure fitxa</a>
+        {% for package in packages %}
+            {% with product=package.product titles=package.titles %}
+                <article class="product-card">
+                    {% if product.cover_image %}
+                        <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.title }}" class="product-card__image" />
+                    {% else %}
+                        <img src="{% static 'imgs/logo.png' %}" alt="{{ product.title }}" class="product-card__image" />
+                    {% endif %}
+                    <div class="product-card__body">
+                        <p class="product-card__eyebrow">{{ product.language_pair }}</p>
+                        <h3>{{ product.title }}</h3>
+                        <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
+                        <p class="product-card__meta">Nivell del paquet: {{ product.level|default:'No definit' }}</p>
+                        {% if titles %}
+                            <div class="product-card__titles">
+                                <p class="kicker">Títols inclosos</p>
+                                <ul>
+                                    {% for title in titles %}
+                                        <li>
+                                            <span class="product-card__title-name">{{ title.title }}</span>
+                                            {% if title.langs %}<span class="product-card__badge">{{ title.langs|join:', ' }}</span>{% endif %}
+                                            {% if title.duration %}<span class="product-card__badge product-card__badge--muted">{{ title.duration }}</span>{% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <p class="product-card__meta">Cap títol assignat a aquest paquet.</p>
+                        {% endif %}
+                        <div class="product-card__footer">
+                            <span class="product-card__price">{{ product.price }} €</span>
+                            <a class="button button--small" href="{% url 'products:detail' product.pk %}">Veure fitxa</a>
+                        </div>
                     </div>
-                </div>
-            </article>
+                </article>
+            {% endwith %}
         {% empty %}
             <p>Encara no hi ha productes. Si tens permís, crea'n un!</p>
         {% endfor %}

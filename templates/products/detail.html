@@ -34,5 +34,28 @@
     {% else %}
         <p>No hi ha cap àudio associat a aquest producte encara.</p>
     {% endif %}
+
+    <div class="product-detail__titles">
+        <h2>Títols inclosos en aquest paquet</h2>
+        {% if package_titles %}
+            <ul>
+                {% for title in package_titles %}
+                    <li class="product-detail__title-item">
+                        <div>
+                            <p class="kicker">Nivell {{ title.level }}</p>
+                            <strong>{{ title.title }}</strong>
+                            {% if title.description %}
+                                <p>{{ title.description }}</p>
+                            {% endif %}
+                            <p class="product-card__meta">Idiomes: {{ title.langs|join:', ' }}</p>
+                            {% if title.duration %}<p class="product-card__meta">Durada: {{ title.duration }}</p>{% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Encara no hi ha títols assignats a aquest paquet.</p>
+        {% endif %}
+    </div>
 </section>
 {% endblock %}

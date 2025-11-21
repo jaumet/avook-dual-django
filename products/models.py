@@ -4,6 +4,11 @@ from django.urls import reverse
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
+    level = models.CharField(
+        max_length=10,
+        blank=True,
+        help_text='Nivell del paquet (per exemple A0, A1, A2, B1, B2, C1, C2)',
+    )
     language_pair = models.CharField(
         max_length=100, help_text='Exemple: Català - Anglès'
     )
