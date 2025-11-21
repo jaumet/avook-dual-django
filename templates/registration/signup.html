@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear compte — Audiovook Dual{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>Crea un compte</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="form__field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                    <p class="form__error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="button">Registrar-me</button>
+    </form>
+</section>
+{% endblock %}

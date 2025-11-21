@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Audiovook Dual{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<header class="nav">
+    <div class="nav__content">
+        <a class="nav__logo" href="{% url 'home' %}">
+            <img src="{% static 'imgs/logo-dual-fons-blau.png' %}" alt="Audiovook Dual" class="logo" />
+        </a>
+        <nav class="nav__links">
+            <a href="{% url 'home' %}">Inici</a>
+            <a href="#productes">Productes</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'products:create' %}">Afegir producte</a>
+                <a href="{% url 'logout' %}">Tanca sessió</a>
+            {% else %}
+                <a href="{% url 'login' %}">Inicia sessió</a>
+                <a href="{% url 'signup' %}" class="button button--small">Registra't</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message message--{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="footer__content">
+        <p>© Audiovook Dual. Comprensió i escolta de llengües a través de narracions.</p>
+    </div>
+</footer>
+</body>
+</html>
