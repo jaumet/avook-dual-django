@@ -140,3 +140,8 @@ class CatalogView(ListView):
         context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
         context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
         return context
+
+
+def player_view(request, machine_name):
+    title = Title.objects.get(machine_name=machine_name)
+    return render(request, 'products/player.html', {'title': title})
