@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const langs = mode.includes('-') ? mode.split('-') : [mode];
         for (const L of langs) {
             if (!langData[L]) {
-                const path = `/static/AUDIOS/{{ title.machine_name }}/${L}/${L}-{{ title.machine_name }}.json`;
+                const path = `/static/AUDIOS/{{ title.machine_name }}/${L}-{{ title.machine_name }}.json`;
                 try {
                     const r = await fetch(path);
                     if (r.ok) {
