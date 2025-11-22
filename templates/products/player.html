@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const spd1 = parseFloat(qs('#speed1').value);
         const spd2 = parseFloat(qs('#speed2').value);
         const spd = item.lang === L1 ? spd1 : spd2;
-        const src = `/static/AUDIOS/{{ title.machine_name }}/${item.lang}/${item.file.replace(/^\.?\/*/,'')}`;
+        const src = `/static/AUDIOS/{{ title.machine_name }}/${item.file.replace(/^\.?\/*/,'')}`;
         audioEl.src = src;
         audioEl.playbackRate = spd;
         if (!manual) audioEl.play().catch(() => {});
