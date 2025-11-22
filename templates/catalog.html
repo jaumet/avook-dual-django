@@ -84,7 +84,7 @@
 
   <section id="catalog">
     {% for title in titles %}
-    <div class="titleCard">
+    <a href="{% url 'products:player' machine_name=title.machine_name %}" class="titleCard">
       <div class="meta-top">
         {% if title.levels %}<span class="level">{{ title.levels }}</span>{% endif %}
         {% if title.ages %}<span class="ages">{{ title.ages }}</span>{% endif %}
@@ -106,7 +106,7 @@
         <div class="description">{{ title.description }}</div>
         {% endif %}
       </div>
-    </div>
+    </a>
     {% endfor %}
   </section>
   <div id="helpIcon">❔</div>
