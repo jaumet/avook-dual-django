@@ -92,6 +92,65 @@
 </style>
 {% endblock %}
 
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const qs = s => document.querySelector(s);
+    const qsa = s => [...document.querySelectorAll(s)];
+    const iso2to3 = c => ({ CA: 'cat', EN: 'eng', PT: 'por', FR: 'fra', IT: 'ita', ES: 'spa' })[c] || c.toLowerCase();
+
+    const availableLangs = [{% for lang in languages %}"{{ lang.language }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    let langData = {};
+    let sequence = [];
+    let seqIndex = 0;
+    const audioEl = qs('#audio');
+
+    function radiosMarkup(langs, name, checked) {
+        return langs.map(L => `<label><input type="radio" name="${name}" value="${L}" ${checked ? 'checked' : ''}/> ${iso2to3(L)}</label>`).join('');
+    }
+
+    function getL1() {
+        return qs('input[name="l1"]:checked')?.value || null;
+    }
+
+    function getL2() {
+        return qs('input[name="l2"]:checked')?.value || null;
+    }
+
+    // Placeholder for now
+    function buildModes() {
+        console.log('buildModes called');
+    }
+
+    function disableSameLang() {
+        const l1 = getL1();
+        qsa('input[name="l2"]').forEach(r => {
+            r.disabled = (r.value && r.value === l1);
+            if (r.checked && r.disabled) {
+                const none = qs('input[name="l2"][value=""]');
+                if (none) none.checked = true;
+            }
+        });
+        buildModes();
+    }
+
+    function buildLangRadios() {
+        const L1 = radiosMarkup(availableLangs, 'l1', false);
+        const L2 = `<label><input type="radio" name="l2" value="" checked> cap</label>` + radiosMarkup(availableLangs, 'l2', false);
+        qs('#radiosL1').innerHTML = L1;
+        qs('#radiosL2').innerHTML = L2;
+
+        qsa('input[name="l1"]').forEach(r => r.onchange = disableSameLang);
+        qsa('input[name="l2"]').forEach(r => r.onchange = buildModes);
+
+        disableSameLang();
+    }
+
+    buildLangRadios();
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <main>
   <section id="topInfo" class="topCard">
