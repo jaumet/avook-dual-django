@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+  #filtersBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <h3>ℹ️ Què és Audiovook Dual?</h3>
+  <p>
+    Audiovook Dual és una col·lecció d’audiorelats bilingües que et permet escoltar una mateixa història en dues llengües.
+    És una forma d’aprendre jugant amb el so, la repetició i el context.
+  </p>
+  <h2 style="text-align:center">📚 Relats disponibles</h2>
+
+  <!-- Barra de filtres -->
+  <form method="get" action="{% url 'products:catalog' %}" id="filtersBar">
+    <div class="av-input">
+      <input type="text" name="q" placeholder="🔍 Cerca per text o títol..." value="{{ request.GET.q }}">
+    </div>
+    <div class="av-select" data-placeholder="Col·lecció">
+      <label>Col·lecció</label>
+      <select name="collection" onchange="this.form.submit()">
+        <option value="">--</option>
+        {% for collection in collections %}
+        <option value="{{ collection }}" {% if request.GET.collection == collection %}selected{% endif %}>{{ collection }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="av-select" data-placeholder="Nivell">
+      <label>Nivell</label>
+      <select name="level" onchange="this.form.submit()">
+        <option value="">--</option>
+        {% for level in levels %}
+        <option value="{{ level }}" {% if request.GET.level == level %}selected{% endif %}>{{ level }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="av-select" data-placeholder="Durada">
+      <label>Durada</label>
+      <select name="duration" onchange="this.form.submit()">
+        <option value="">--</option>
+        {% for duration in durations %}
+        <option value="{{ duration }}" {% if request.GET.duration == duration %}selected{% endif %}>{{ duration }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="av-select" data-placeholder="Llengües">
+      <label>Llengües</label>
+      <select name="lang" onchange="this.form.submit()">
+        <option value="">--</option>
+        {% for lang in languages %}
+        <option value="{{ lang }}" {% if request.GET.lang == lang %}selected{% endif %}>{{ lang }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="av-select" data-placeholder="Edats">
+      <label>Edats</label>
+      <select name="ages" onchange="this.form.submit()">
+        <option value="">--</option>
+        {% for ages in ages_list %}
+        <option value="{{ ages }}" {% if request.GET.ages == ages %}selected{% endif %}>{{ ages }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit">Filtra</button>
+  </form>
+
+  <!-- Missatge inicial -->
+  <div id="helpNote">
+    <h3 style="text-align:center">Dual en 3 clics:</h3>
+    <p>1️⃣ Selecciona quin tipus de textos vols<br>
+      2️⃣ Tria un relat<br>
+      3️⃣ Aniràs al reproductor i podràs experimentar el sistema Dual</p>
+  </div>
+
+  <section id="catalog">
+    {% for title in titles %}
+    <div class="titleCard">
+      <div class="meta-top">
+        {% if title.levels %}<span class="level">{{ title.levels }}</span>{% endif %}
+        {% if title.ages %}<span class="ages">{{ title.ages }}</span>{% endif %}
+      </div>
+      <div class="cardText">
+        <h3>{{ title.human_name }}</h3>
+        <div class="meta">
+          {% if title.collection %}<span class="collection">{{ title.collection }}</span>{% endif %}
+          {% if title.duration %}<span class="duration">{{ title.duration }}</span>{% endif %}
+        </div>
+        {% if title.languages.all %}
+        <div class="langList">
+          {% for lang in title.languages.all %}
+            {{ lang.language }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if title.description %}
+        <div class="description">{{ title.description }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <div id="helpIcon">❔</div>
+</main>
+{% endblock %}

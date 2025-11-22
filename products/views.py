@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib import messages
+from django.db.models import Q
 
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
 from .models import Product, Title, TitleLanguage
@@ -97,3 +98,45 @@ class SignUpView(SuccessMessageMixin, CreateView):
         response = super().form_valid(form)
         login(self.request, self.object)
         return response
+
+
+class CatalogView(ListView):
+    model = Title
+    template_name = 'catalog.html'
+    context_object_name = 'titles'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        level = self.request.GET.get('level')
+        collection = self.request.GET.get('collection')
+        duration = self.request.GET.get('duration')
+        lang = self.request.GET.get('lang')
+        ages = self.request.GET.get('ages')
+
+        if query:
+            queryset = queryset.filter(
+                Q(human_name__icontains=query) |
+                Q(description__icontains=query)
+            )
+        if level:
+            queryset = queryset.filter(levels=level)
+        if collection:
+            queryset = queryset.filter(collection=collection)
+        if duration:
+            queryset = queryset.filter(duration=duration)
+        if lang:
+            queryset = queryset.filter(languages__language=lang)
+        if ages:
+            queryset = queryset.filter(ages=ages)
+
+        return queryset.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['collections'] = Title.objects.values_list('collection', flat=True).distinct()
+        context['durations'] = Title.objects.values_list('duration', flat=True).distinct()
+        context['languages'] = TitleLanguage.objects.values_list('language', flat=True).distinct()
+        context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
+        context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
+        return context
