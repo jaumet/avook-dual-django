@@ -9,6 +9,29 @@
     margin-bottom: 2rem;
     align-items: center;
   }
+  .titleCard {
+    position: relative;
+  }
+  .status-label {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  .status-label span {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+  .free {
+    background-color: green;
+  }
+  .premium-owned {
+    background-color: green;
+  }
+  .premium-not-owned {
+    background-color: red;
+  }
 </style>
 {% endblock %}
 
@@ -83,27 +106,36 @@
   </div>
 
   <section id="catalog">
-    {% for title in titles %}
-    <a href="{% url 'products:player' machine_name=title.machine_name %}" class="titleCard">
+    {% for item in titles_with_status %}
+    <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="titleCard">
       <div class="meta-top">
-        {% if title.levels %}<span class="level">{{ title.levels }}</span>{% endif %}
-        {% if title.ages %}<span class="ages">{{ title.ages }}</span>{% endif %}
+        {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
+        {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
       </div>
       <div class="cardText">
-        <h3>{{ title.human_name }}</h3>
+        <h3>{{ item.title.human_name }}</h3>
         <div class="meta">
-          {% if title.collection %}<span class="collection">{{ title.collection }}</span>{% endif %}
-          {% if title.duration %}<span class="duration">{{ title.duration }}</span>{% endif %}
+          {% if item.title.collection %}<span class="collection">{{ item.title.collection }}</span>{% endif %}
+          {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
         </div>
-        {% if title.languages.all %}
+        {% if item.title.languages.all %}
         <div class="langList">
-          {% for lang in title.languages.all %}
+          {% for lang in item.title.languages.all %}
             {{ lang.language }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </div>
         {% endif %}
-        {% if title.description %}
-        <div class="description">{{ title.description }}</div>
+        {% if item.title.description %}
+        <div class="description">{{ item.title.description }}</div>
+        {% endif %}
+      </div>
+      <div class="status-label">
+        {% if item.status == 'FREE' %}
+          <span class="free">FREE</span>
+        {% elif item.status == 'PREMIUM_OWNED' %}
+          <span class="premium-owned">PREMIUM</span>
+        {% elif item.status == 'PREMIUM_NOT_OWNED' %}
+          <span class="premium-not-owned">PREMIUM</span>
         {% endif %}
       </div>
     </a>
