@@ -139,6 +139,33 @@ class CatalogView(ListView):
         context['languages'] = TitleLanguage.objects.values_list('language', flat=True).distinct()
         context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
         context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
+
+        if self.request.user.is_authenticated:
+            user_packages = self.request.user.packages.all()
+            titles_with_status = []
+            for title in context['titles']:
+                is_free = title.packages.filter(is_free=True).exists()
+                if is_free:
+                    status = 'FREE'
+                else:
+                    is_owned = title.packages.filter(id__in=user_packages).exists()
+                    if is_owned:
+                        status = 'PREMIUM_OWNED'
+                    else:
+                        status = 'PREMIUM_NOT_OWNED'
+                titles_with_status.append({'title': title, 'status': status})
+            context['titles_with_status'] = titles_with_status
+        else:
+            titles_with_status = []
+            for title in context['titles']:
+                is_free = title.packages.filter(is_free=True).exists()
+                if is_free:
+                    status = 'FREE'
+                else:
+                    status = 'PREMIUM_NOT_OWNED'
+                titles_with_status.append({'title': title, 'status': status})
+            context['titles_with_status'] = titles_with_status
+
         return context
 
 
