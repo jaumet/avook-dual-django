@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 
 class Title(models.Model):
-    id = models.CharField(max_length=5, primary_key=True, help_text=_("ID del títol, p. ex., 10001"))
+    id = models.AutoField(primary_key=True)
     machine_name = models.SlugField(unique=True, help_text=_("Nom intern sense espais, p. ex., 'el-meu-titol'"))
     human_name = models.CharField(max_length=255, help_text=_("Nom del títol per mostrar"))
     description = models.TextField(blank=True, help_text=_("Descripció del títol"))
@@ -37,7 +37,7 @@ class TitleLanguage(models.Model):
 
 
 class Package(models.Model):
-    id = models.CharField(max_length=5, primary_key=True, help_text=_("ID del paquet, p. ex., 20001"))
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text=_("Nom del paquet"))
     level_range = models.CharField(max_length=50, blank=True, help_text=_("Rang de nivells del paquet, p. ex., 'A0'"))
     description = models.TextField(blank=True, help_text=_("Descripció del paquet"))
@@ -53,7 +53,7 @@ class Package(models.Model):
 
 
 class Product(models.Model):
-    id = models.CharField(max_length=5, primary_key=True, help_text=_("ID del producte, p. ex., 30001"))
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text=_("Nom del producte"))
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text=_("Preu del producte"))
     currency = models.CharField(max_length=10, default='euro', help_text=_("Moneda del preu"))
@@ -79,7 +79,7 @@ class Product(models.Model):
 
 
 class UserPurchase(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchases')
     purchase_date = models.DateTimeField(auto_now_add=True)
 

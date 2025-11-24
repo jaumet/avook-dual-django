@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class ProductsConfig(AppConfig):
+class AccountsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "products"
+    name = "accounts"
 
     def ready(self):
-        import products.signals
+        import accounts.signals
