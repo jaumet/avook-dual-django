@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,18 +14,32 @@ from .models import Product, Title, TitleLanguage
 from .utils import load_titles_grouped_by_level
 
 
-class HomeView(ListView):
-    model = Product
-    template_name = 'home.html'
-    context_object_name = 'products'
-
-    def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles')
+class CatalogView(ListView):
+    model = Title
+    template_name = 'catalog.html'
+    context_object_name = 'titles'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['marketing_title'] = 'Audiovook Dual — Aprèn llengües escoltant històries'
-        context['subtitle'] = 'Escolta narracions combinades per millorar la comprensió i la pronunciació'
+
+        titles = Title.objects.prefetch_related('languages').all()
+
+        titles_list = []
+        for title in titles:
+            languages = list(title.languages.values('language'))
+            titles_list.append({
+                'id': title.id,
+                'machine_name': title.machine_name,
+                'human_name': title.human_name,
+                'description': title.description,
+                'levels': title.levels,
+                'languages': languages,
+                'ages': title.ages,
+                'collection': title.collection,
+                'duration': title.duration,
+            })
+
+        context['titles_json'] = titles_list
         return context
 
 
