@@ -10,7 +10,9 @@ logger = logging.getLogger(__name__)
 def assign_free_package(sender, instance, created, **kwargs):
     if created:
         try:
-            free_package = Package.objects.get(name="Pack-free")
+            free_package = Package.objects.get(is_default_free=True)
             instance.packages.add(free_package)
         except Package.DoesNotExist:
-            logger.warning("The 'Pack-free' package does not exist. Please create it in the admin.")
+            logger.warning("No default free package found. Please mark one in the admin.")
+        except Package.MultipleObjectsReturned:
+            logger.error("Multiple default free packages found. Please ensure only one is marked.")

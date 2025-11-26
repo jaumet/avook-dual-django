@@ -28,28 +28,44 @@
             <a class="button button--small" href="{% url 'products:product_create' %}">Afegir un nou producte</a>
         {% endif %}
     </div>
-    <div class="product-list">
+    <div class="product-grid">
         {% for product in products %}
-            <div class="product-item">
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <div class="packages">
+            <article class="product-card">
+                <img src="{% static 'imgs/logo.png' %}" alt="{{ product.name }}" class="product-card__image" />
+                <div class="product-card__body">
+                    <h3>{{ product.name }}</h3>
+                    <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
+
                     {% for package in product.packages.all %}
-                        <div class="package">
-                            <h4>{{ package.name }}</h4>
-                            <ul class="titles">
-                                {% for title in package.titles.all %}
-                                    <li>{{ title.human_name }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        <p class="product-card__meta">Paquet: {{ package.name }}</p>
+                        {% if package.titles.all %}
+                            <div class="product-card__titles">
+                                <p class="kicker">Títols inclosos</p>
+                                <ul>
+                                    {% for title in package.titles.all %}
+                                        <li>
+                                            <span class="product-card__title-name">{{ title.human_name }}</span>
+                                            {% if title.languages.all %}
+                                                <span class="product-card__badge">
+                                                    {% for lang in title.languages.all %}{{ lang.language }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                                </span>
+                                            {% endif %}
+                                            {% if title.duration %}<span class="product-card__badge product-card__badge--muted">{{ title.duration }}</span>{% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% else %}
+                            <p class="product-card__meta">Cap títol assignat a aquest paquet.</p>
+                        {% endif %}
                     {% endfor %}
+
+                    <div class="product-card__footer">
+                        <span class="product-card__price">{{ product.price }} €</span>
+                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">Veure fitxa</a>
+                    </div>
                 </div>
-                <div class="product-card__footer">
-                    <span class="product-card__price">{{ product.price }} €</span>
-                    <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">Veure fitxa</a>
-                </div>
-            </div>
+            </article>
         {% empty %}
             <p>Encara no hi ha productes. Si tens permís, crea'n un!</p>
         {% endfor %}

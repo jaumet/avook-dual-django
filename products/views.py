@@ -14,9 +14,10 @@ from django.db.models import Q
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
 from .models import Product, Title, TitleLanguage
 from .utils import load_titles_grouped_by_level
+from .mixins import TitleContextMixin
 
 
-class ProductListView(ListView):
+class ProductListView(TitleContextMixin, ListView):
     model = Product
     template_name = 'products/product_list.html'
     context_object_name = 'products'
@@ -26,40 +27,9 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        user_packages_ids = set()
-        if self.request.user.is_authenticated:
-            user_packages_ids = set(self.request.user.packages.values_list('id', flat=True))
-
         for product in context['products']:
             for package in product.packages.all():
-                titles_with_status = []
-                for title in package.titles.all():
-                    # Determine status
-                    status = ''
-                    if package.is_free:
-                        status = 'FREE'
-                    elif self.request.user.is_authenticated:
-                        if package.id in user_packages_ids:
-                            status = 'PREMIUM_OWNED'
-                        else:
-                            status = 'PREMIUM_NOT_OWNED'
-                    else:
-                        status = 'PREMIUM_NOT_OWNED'
-
-                    # Determine image URL
-                    image_path = f"AUDIOS/{title.machine_name}/{title.machine_name}.png"
-                    image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
-                    image_url = ''
-                    if os.path.exists(image_fullpath):
-                        image_url = os.path.join(settings.STATIC_URL, image_path)
-                    else:
-                        image_url = os.path.join(settings.STATIC_URL, "imgs/anonymous-cover.png")
-
-                    titles_with_status.append({'title': title, 'status': status, 'image_url': image_url})
-
-                package.titles_with_status = titles_with_status
-
+                package.titles_with_status = self.get_titles_with_status(package.titles.all())
         return context
 
 
@@ -149,7 +119,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
         return response
 
 
-class CatalogView(ListView):
+class CatalogView(TitleContextMixin, ListView):
     model = Title
     template_name = 'catalog.html'
     context_object_name = 'titles'
@@ -189,31 +159,7 @@ class CatalogView(ListView):
         context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
         context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
 
-        titles_with_status = []
-        for title in context['titles']:
-            # Determine status
-            is_free = title.packages.filter(is_free=True).exists()
-            if is_free:
-                status = 'FREE'
-            elif self.request.user.is_authenticated:
-                user_packages = self.request.user.packages.all()
-                is_owned = title.packages.filter(id__in=user_packages).exists()
-                status = 'PREMIUM_OWNED' if is_owned else 'PREMIUM_NOT_OWNED'
-            else:
-                status = 'PREMIUM_NOT_OWNED'
-
-            # Determine image URL
-            image_path = f"AUDIOS/{title.machine_name}/{title.machine_name}.png"
-            image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
-            if os.path.exists(image_fullpath):
-                image_url = os.path.join(settings.STATIC_URL, image_path)
-            else:
-                image_url = os.path.join(settings.STATIC_URL, "imgs/anonymous-cover.png")
-
-            titles_with_status.append({'title': title, 'status': status, 'image_url': image_url})
-
-        context['titles_with_status'] = titles_with_status
-
+        context['titles_with_status'] = self.get_titles_with_status(context['titles'])
         return context
 
 

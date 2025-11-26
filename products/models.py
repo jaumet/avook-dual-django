@@ -1,5 +1,7 @@
+import os
 from django.conf import settings
 from django.db import models
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 
 
@@ -15,6 +17,26 @@ class Title(models.Model):
 
     def __str__(self):
         return self.human_name
+
+    def get_image_url(self):
+        image_path = f"AUDIOS/{self.machine_name}/{self.machine_name}.png"
+        image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
+
+        if os.path.exists(image_fullpath):
+            return static(image_path)
+        else:
+            return static("imgs/anonymous-cover.png")
+
+    def get_user_status(self, user):
+        """
+        Determina l'estat del títol per a un usuari específic.
+        Retorna 'FREE', 'PREMIUM_OWNED', o 'PREMIUM_NOT_OWNED'.
+        """
+        if self.packages.filter(is_free=True).exists():
+            return 'FREE'
+        if user.is_authenticated and user.packages.filter(titles=self).exists():
+            return 'PREMIUM_OWNED'
+        return 'PREMIUM_NOT_OWNED'
 
     class Meta:
         verbose_name = _("Títol")
@@ -42,6 +64,7 @@ class Package(models.Model):
     level_range = models.CharField(max_length=50, blank=True, help_text=_("Rang de nivells del paquet, p. ex., 'A0'"))
     description = models.TextField(blank=True, help_text=_("Descripció del paquet"))
     is_free = models.BooleanField(default=False, help_text=_("És un paquet gratuït?"))
+    is_default_free = models.BooleanField(default=False, help_text=_("Marca si aquest és el paquet gratuït per defecte per a nous usuaris"))
     titles = models.ManyToManyField(Title, related_name='packages', help_text=_("Títols inclosos en aquest paquet"))
 
     def __str__(self):
