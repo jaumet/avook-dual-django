@@ -33,12 +33,14 @@
   .premium-not-owned {
     background-color: red;
   }
+  .title-container {
+    display: flex;
+    align-items: center;
+  }
   .play-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
   }
   .play-button img {
     width: 100%;
@@ -125,7 +127,12 @@
         {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
       </div>
       <div class="cardText">
-        <h3>{{ item.title.human_name }}</h3>
+        <h3 class="title-container">
+          {{ item.title.human_name }}
+          <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
+            <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
+          </a>
+        </h3>
         <div class="meta">
           {% if item.title.collection %}<span class="collection">{{ item.title.collection }}</span>{% endif %}
           {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
@@ -150,9 +157,6 @@
           <span class="premium-not-owned">PREMIUM</span>
         {% endif %}
       </div>
-      <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
-        <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
-      </a>
     </div>
     {% endfor %}
   </section>
