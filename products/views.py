@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -140,31 +142,30 @@ class CatalogView(ListView):
         context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
         context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
 
-        if self.request.user.is_authenticated:
-            user_packages = self.request.user.packages.all()
-            titles_with_status = []
-            for title in context['titles']:
-                is_free = title.packages.filter(is_free=True).exists()
-                if is_free:
-                    status = 'FREE'
-                else:
-                    is_owned = title.packages.filter(id__in=user_packages).exists()
-                    if is_owned:
-                        status = 'PREMIUM_OWNED'
-                    else:
-                        status = 'PREMIUM_NOT_OWNED'
-                titles_with_status.append({'title': title, 'status': status})
-            context['titles_with_status'] = titles_with_status
-        else:
-            titles_with_status = []
-            for title in context['titles']:
-                is_free = title.packages.filter(is_free=True).exists()
-                if is_free:
-                    status = 'FREE'
-                else:
-                    status = 'PREMIUM_NOT_OWNED'
-                titles_with_status.append({'title': title, 'status': status})
-            context['titles_with_status'] = titles_with_status
+        titles_with_status = []
+        for title in context['titles']:
+            # Determine status
+            is_free = title.packages.filter(is_free=True).exists()
+            if is_free:
+                status = 'FREE'
+            elif self.request.user.is_authenticated:
+                user_packages = self.request.user.packages.all()
+                is_owned = title.packages.filter(id__in=user_packages).exists()
+                status = 'PREMIUM_OWNED' if is_owned else 'PREMIUM_NOT_OWNED'
+            else:
+                status = 'PREMIUM_NOT_OWNED'
+
+            # Determine image URL
+            image_path = f"AUDIOS/{title.machine_name}/{title.machine_name}.png"
+            image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
+            if os.path.exists(image_fullpath):
+                image_url = os.path.join(settings.STATIC_URL, image_path)
+            else:
+                image_url = os.path.join(settings.STATIC_URL, "imgs/anonymous-cover.png")
+
+            titles_with_status.append({'title': title, 'status': status, 'image_url': image_url})
+
+        context['titles_with_status'] = titles_with_status
 
         return context
 
