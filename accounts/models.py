@@ -24,6 +24,18 @@ class CustomUser(AbstractUser):
         help_text=_("Els paquets als que aquest usuari té accés."),
         related_name="users",
     )
+    known_languages = models.JSONField(
+        _("Llengües conegudes"),
+        default=list,
+        blank=True,
+        help_text=_("Llista de llengües que l'usuari coneix i el seu nivell.")
+    )
+    learning_languages = models.JSONField(
+        _("Llengües a aprendre"),
+        default=list,
+        blank=True,
+        help_text=_("Llista de llengües que l'usuari vol aprendre i el seu nivell.")
+    )
 
     def __str__(self):
         return self.username
