@@ -105,7 +105,6 @@ h2,h3 {color:var(--accent);}
   padding:1em;
   position:relative;
   text-align:left;
-  cursor:pointer;
   transition:transform .2s,box-shadow .2s;
 }
 
