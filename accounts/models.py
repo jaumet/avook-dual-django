@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
             'unique': _("Ja existeix un usuari amb aquest nom d'usuari."),
         },
     )
-    email = models.EmailField(_('email address'), blank=True)
+    email = models.EmailField(_('email address'), blank=False)
     packages = models.ManyToManyField(
         'products.Package',
         verbose_name=_("paquets"),
