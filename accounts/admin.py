@@ -10,6 +10,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (_("Idiomes"), {"fields": ("known_languages", "learning_languages")}),
         (_("Paquets"), {"fields": ("packages",)}),
         (
             _("Permissions"),
@@ -28,7 +29,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'first_name', 'last_name', 'password', 'password2'),
+            'fields': ('username', 'email', 'first_name', 'last_name'),
         }),
     )
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
