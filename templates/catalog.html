@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block extra_css %}
 <style>
@@ -31,6 +32,17 @@
   }
   .premium-not-owned {
     background-color: red;
+  }
+  .play-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  .play-button img {
+    width: 100%;
+    height: auto;
   }
 </style>
 {% endblock %}
@@ -107,7 +119,7 @@
 
   <section id="catalog">
     {% for item in titles_with_status %}
-    <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="titleCard">
+    <div class="titleCard">
       <div class="meta-top">
         {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
         {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
@@ -138,7 +150,10 @@
           <span class="premium-not-owned">PREMIUM</span>
         {% endif %}
       </div>
-    </a>
+      <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
+        <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
+      </a>
+    </div>
     {% endfor %}
   </section>
   <div id="helpIcon">❔</div>
