@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Productes</h1>
+    <hr>
+    {% for product in products %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>{{ product.name }}</h2>
+        </div>
+        <div class="card-body">
+            {% for package in product.packages.all %}
+            <h4 class="card-title">{{ package.name }}</h4>
+            <ul class="list-group list-group-flush">
+                {% for title in package.titles.all %}
+                <li class="list-group-item">{{ title.human_name }}</li>
+                {% empty %}
+                <li class="list-group-item">No hi ha títols en aquest paquet.</li>
+                {% endfor %}
+            </ul>
+            {% empty %}
+            <p class="card-text">No hi ha paquets en aquest producte.</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <p>No hi ha productes disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -18,7 +18,7 @@
         <nav class="nav__links">
             <a href="{% url 'home' %}">Inici</a>
             <a href="{% url 'products:catalog' %}">Catàleg</a>
-            <a href="#productes">Productes</a>
+            <a href="{% url 'products:product_list' %}">Productes</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'products:product_create' %}">Afegir producte</a>
                 <a href="{% url 'products:title_create' %}">Afegir títol</a>
