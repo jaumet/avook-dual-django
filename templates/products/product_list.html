@@ -1,26 +1,71 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-5">
     <h1>Productes</h1>
     <hr>
     {% for product in products %}
-    <div class="card mb-4">
-        <div class="card-header">
-            <h2>{{ product.name }}</h2>
+    <div class="product-card">
+        <div class="product-header">
+            <h2>{{ product.name }} - {{ product.price }} {{ product.currency }}</h2>
         </div>
-        <div class="card-body">
+        <div class="product-body">
             {% for package in product.packages.all %}
-            <h4 class="card-title">{{ package.name }}</h4>
-            <ul class="list-group list-group-flush">
-                {% for title in package.titles.all %}
-                <li class="list-group-item">{{ title.human_name }}</li>
-                {% empty %}
-                <li class="list-group-item">No hi ha títols en aquest paquet.</li>
-                {% endfor %}
-            </ul>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h4 class="package-title">{{ package.name }}</h4>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <section class="catalog-grid">
+                        {% for item in package.titles_with_status %}
+                        <div class="titleCard">
+                          <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}" class="title-image" />
+                          <div class="meta-top">
+                            {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
+                            {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
+                          </div>
+                          <div class="cardText">
+                            <h3 class="title-container">
+                              {{ item.title.human_name }}
+                              <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
+                                <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
+                              </a>
+                            </h3>
+                            <div class="meta">
+                              {% if item.title.collection %}<span class="collection">{{ item.title.collection }}</span>{% endif %}
+                              {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
+                            </div>
+                            {% if item.title.languages.all %}
+                            <div class="langList">
+                              {% for lang in item.title.languages.all %}
+                                {{ lang.language }}{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% if item.title.description %}
+                            <div class="description">{{ item.title.description }}</div>
+                            {% endif %}
+                          </div>
+                          <div class="status-label">
+                            {% if item.status == 'FREE' %}
+                              <span class="free">GRATUÏT</span>
+                            {% elif item.status == 'PREMIUM_OWNED' %}
+                              <span class="premium-owned">PREMIUM</span>
+                            {% elif item.status == 'PREMIUM_NOT_OWNED' %}
+                              <span class="premium-not-owned">PREMIUM</span>
+                            {% endif %}
+                          </div>
+                        </div>
+                        {% empty %}
+                        <p>No hi ha títols en aquest paquet.</p>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
             {% empty %}
-            <p class="card-text">No hi ha paquets en aquest producte.</p>
+            <p class="product-text">No hi ha paquets en aquest producte.</p>
             {% endfor %}
         </div>
     </div>
@@ -28,4 +73,25 @@
     <p>No hi ha productes disponibles.</p>
     {% endfor %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const accordions = document.querySelectorAll('.accordion-header');
+    accordions.forEach(accordion => {
+        accordion.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const content = this.nextElementSibling;
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                this.querySelector('.accordion-icon').textContent = '+';
+            } else {
+                content.style.display = 'block';
+                this.querySelector('.accordion-icon').textContent = '-';
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
