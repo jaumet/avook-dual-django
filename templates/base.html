@@ -10,34 +10,34 @@
 </head>
 <body>
     {% block extra_js %}{% endblock %}
-<header class="nav">
-    <div class="nav__content">
-        <a class="nav__logo" href="{% url 'home' %}">
+<header class="main-header">
+    <div class="header-left">
+        <a href="{% url 'home' %}" class="logo-link">
             <img src="{% static 'imgs/logo-dual-fons-blau.png' %}" alt="Audiovook Dual" class="logo" />
+            <span class="logo-text">Dual</span>
         </a>
-        <nav class="nav__links">
-            <a href="{% url 'home' %}">Inici</a>
-            <a href="{% url 'products:catalog' %}">Catàleg</a>
-            <a href="{% url 'products:product_list' %}">Productes</a>
-            {% if user.is_authenticated %}
-                {% if user.is_staff %}
-                    <a href="{% url 'products:product_create' %}">Afegir producte</a>
-                    <a href="{% url 'products:title_create' %}">Afegir títol</a>
-                {% endif %}
-                <div class="user-menu">
-                    <a href="#" class="user-menu-trigger">{{ user.username }}</a>
-                    <div class="user-menu-dropdown">
-                        <a href="{% url 'accounts:profile' %}">Perfil</a>
-                        <a href="{% url 'accounts:library' %}">La meva llibreria</a>
-                        <a href="{% url 'logout' %}">Tanca sessió</a>
-                    </div>
-                </div>
-            {% else %}
-                <a href="{% url 'login' %}">Inicia sessió</a>
-                <a href="{% url 'signup' %}" class="button button--small">Registra't</a>
-            {% endif %}
-        </nav>
     </div>
+    <nav class="header-right">
+        <a href="{% url 'products:catalog' %}">Catàleg</a>
+        <a href="{% url 'products:product_list' %}">Productes</a>
+        {% if user.is_authenticated %}
+            <div class="user-menu">
+                <a href="#" class="user-menu-trigger">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</a>
+                <div class="user-menu-dropdown">
+                    <a href="{% url 'accounts:profile' %}">Perfil</a>
+                    <a href="{% url 'accounts:library' %}">La meva llibreria</a>
+                    {% if user.is_staff %}
+                        <a href="{% url 'products:product_create' %}">Afegir producte</a>
+                        <a href="{% url 'products:title_create' %}">Afegir títol</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}">Tanca sessió</a>
+                </div>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}">Inicia sessió</a>
+            <a href="{% url 'signup' %}" class="button button--small">Registra't</a>
+        {% endif %}
+    </nav>
 </header>
 
 <main>

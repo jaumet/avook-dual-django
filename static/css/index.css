@@ -25,20 +25,36 @@ body {
 }
 
 header {
-  background:var(--header-bg);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:.8em 1em;
+  background: var(--header-bg);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .8em 1em;
+  flex-wrap: wrap; /* Per si no hi cap tot en una línia */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1em;
 }
 
 header a {
-  display:flex;
-  align-items:center;
-  gap:.6em;
-  text-decoration:none;
-  color:inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: .6em;
 }
 
 header img {height:40px;}
