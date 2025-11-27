@@ -5,57 +5,112 @@
 <div class="container mt-5">
     <h1>Perfil d'usuari</h1>
     <hr>
-    <form method="post">
-        {% csrf_token %}
 
-        <div class="form-group">
-            <label for="id_first_name">Nom:</label>
-            {{ form.first_name }}
-        </div>
-
-        <div class="form-group">
-            <label for="id_last_name">Cognoms:</label>
-            {{ form.last_name }}
-        </div>
-
-        <div class="form-group">
-            <label for="id_email">Email:</label>
-            {{ form.email }}
+    <!-- View Mode -->
+    <div id="view-mode">
+        <div class="profile-details">
+            <p><strong>Nom:</strong> {{ user.first_name }}</p>
+            <p><strong>Cognoms:</strong> {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
         </div>
 
         <hr>
 
         <h2>Quines llengües saps?</h2>
-        <div id="known-languages-container">
-            <!-- Dynamic language fields will be inserted here -->
-        </div>
-        <button type="button" class="btn btn-secondary" id="add-known-language">Afegir llengua</button>
+        <ul id="known-languages-view">
+            {% for lang in user.known_languages %}
+                <li>{{ lang.language }} ({{ lang.level }})</li>
+            {% empty %}
+                <li>No has afegit cap llengua.</li>
+            {% endfor %}
+        </ul>
 
         <hr>
 
         <h2>Quines llengües vols aprendre?</h2>
-        <div id="learning-languages-container">
-            <!-- Dynamic language fields will be inserted here -->
-        </div>
-        <button type="button" class="btn btn-secondary" id="add-learning-language">Afegir llengua</button>
-
-        {{ form.known_languages }}
-        {{ form.learning_languages }}
+        <ul id="learning-languages-view">
+            {% for lang in user.learning_languages %}
+                <li>{{ lang.language }} ({{ lang.level }})</li>
+            {% empty %}
+                <li>No has afegit cap llengua per aprendre.</li>
+            {% endfor %}
+        </ul>
 
         <hr>
+        <button type="button" id="edit-button" class="btn">Editar</button>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Guardar canvis</button>
-    </form>
+    <!-- Edit Mode (Initially Hidden) -->
+    <div id="edit-mode" style="display: none;">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_first_name">Nom:</label>
+                {{ form.first_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Cognoms:</label>
+                {{ form.last_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+            </div>
+
+            <hr>
+
+            <h2>Quines llengües saps?</h2>
+            <div id="known-languages-container">
+                <!-- Dynamic language fields will be inserted here -->
+            </div>
+            <button type="button" class="btn btn-secondary" id="add-known-language">Afegir llengua</button>
+
+            <hr>
+
+            <h2>Quines llengües vols aprendre?</h2>
+            <div id="learning-languages-container">
+                <!-- Dynamic language fields will be inserted here -->
+            </div>
+            <button type="button" class="btn btn-secondary" id="add-learning-language">Afegir llengua</button>
+
+            {{ form.known_languages }}
+            {{ form.learning_languages }}
+
+            <hr>
+
+            <button type="submit" class="btn btn-primary">Guardar canvis</button>
+            <button type="button" id="cancel-button" class="btn btn-secondary">Cancel·lar</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // View/Edit mode toggle logic
+    const viewMode = document.getElementById('view-mode');
+    const editMode = document.getElementById('edit-mode');
+    const editButton = document.getElementById('edit-button');
+    const cancelButton = document.getElementById('cancel-button');
+
+    editButton.addEventListener('click', () => {
+        viewMode.style.display = 'none';
+        editMode.style.display = 'block';
+    });
+
+    cancelButton.addEventListener('click', () => {
+        editMode.style.display = 'none';
+        viewMode.style.display = 'block';
+    });
+
+    // Form logic for dynamic language fields
     const languageLevels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     let languages = [];
 
-    // Fetch language list
     fetch("{% static 'js/languages.json' %}")
         .then(response => response.json())
         .then(data => {
@@ -110,22 +165,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function populateInitialData() {
-        const knownLanguages = {{ user.known_languages|safe }};
-        const learningLanguages = {{ user.learning_languages|safe }};
+        const knownLanguages = JSON.parse('{{ form.known_languages.value|escapejs }}' || '[]');
+        const learningLanguages = JSON.parse('{{ form.learning_languages.value|escapejs }}' || '[]');
+
         const knownContainer = document.getElementById('known-languages-container');
         const learningContainer = document.getElementById('learning-languages-container');
+
+        knownContainer.innerHTML = ''; // Clear previous
+        learningContainer.innerHTML = ''; // Clear previous
 
         knownLanguages.forEach(lang => createLanguageRow(knownContainer, lang.language, lang.level));
         learningLanguages.forEach(lang => createLanguageRow(learningContainer, lang.language, lang.level));
 
-        const datalist = document.createElement('datalist');
-        datalist.id = 'languages-datalist';
-        languages.forEach(lang => {
-            const option = document.createElement('option');
-            option.value = lang.nom;
-            datalist.appendChild(option);
-        });
-        document.body.appendChild(datalist);
+        if (!document.getElementById('languages-datalist')) {
+            const datalist = document.createElement('datalist');
+            datalist.id = 'languages-datalist';
+            languages.forEach(lang => {
+                const option = document.createElement('option');
+                option.value = lang.nom;
+                datalist.appendChild(option);
+            });
+            document.body.appendChild(datalist);
+        }
     }
 
     function setupEventListeners() {
