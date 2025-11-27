@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="dark">
+    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 <header class="main-header">
     <div class="header-left">
@@ -41,6 +42,10 @@
             <a href="{% url 'login' %}">Inicia sessió</a>
             <a href="{% url 'signup' %}" class="button button--small">Registra't</a>
         {% endif %}
+        <div class="rightBtns">
+            <button id="themeBtn">☀️ Clar</button>
+            <button id="infoBtn">❓ Ajuda</button>
+        </div>
     </nav>
 </header>
 
@@ -60,5 +65,55 @@
         <p>© Audiovook Dual. Comprensió i escolta de llengües a través de narracions.</p>
     </div>
 </footer>
+
+<!-- Modal ajuda -->
+<div id="infoModal">
+  <div id="infoContent">
+
+  <p>
+    Selecciona una llengua principal i una secundària, ajusta la velocitat i gaudeix de la història.
+    Pots alternar l’ordre de les llengües o escoltar només una versió.
+  </p>
+
+  <hr style="margin:1em 0;border:none;border-top:1px solid var(--accent,#f7836a);">
+
+  <h3>🟢 Consells per gaudir i aprendre</h3>
+
+  <ul style="line-height:1.6;">
+    <li><b>🎵 Escolta com si fos música:</b><br>
+    No cal entendre cada paraula ni traduir mentalment. Deixa’t portar pel ritme, la melodia i les pauses de la veu. Repetint escoltes, el significat apareixerà de manera intuïtiva.</li>
+
+    <li><b>🔁 Juga amb l’ordre de les llengües:</b><br>
+    Pots començar escoltant primer la teva llengua i després la nova, després al contrari, i finalment només la nova. Cada ordre activa parts diferents del cervell i reforça la comprensió.</li>
+
+    <li><b>🗣️ Llegeix i escolta:</b><br>
+    Aprofita que veus el text per llegir-lo alhora que l’escoltes. Compara la pronunciació i el ritme de la veu amb la teva lectura. Escriu o repeteix els fragments que més t’agradin: és una manera excel·lent de fixar vocabulari i estructura.</li>
+
+    <li><b>⚙️ Ajusta la velocitat:</b><br>
+    Si et costa seguir, redueix la velocitat fins que reconeguis paraules i patrons. Quan et sentis més segur, accelera fins al ritme natural de la parla.</li>
+
+    <li><b>🎧 Escolta amb auriculars:</b><br>
+    Et permetrà captar millor la pronunciació, la musicalitat i els detalls de la veu. Si pots, utilitza uns auriculars tancats que aïllin el soroll exterior.</li>
+
+    <li><b>👁️ Imagina el relat:</b><br>
+    Tanca els ulls i visualitza el que passa. Imaginar reforça la memòria i et connecta emocionalment amb el llenguatge.</li>
+
+    <li><b>📖 Repassa el vocabulari:</b><br>
+    Després d’escoltar, intenta recordar paraules o frases noves. No cal apuntar-ho tot: tria les que t’hagin cridat més l’atenció.</li>
+
+    <li><b>⏳ Torna-hi més endavant:</b><br>
+    Cada escolta t’aporta coses noves i consolida l’aprenentatge sense pressa. L’aprenentatge auditiu millora quan hi ha repeticions espaiades en el temps.</li>
+
+    <li><b>🌍 Gaudeix de la diversitat:</b><br>
+    Cada història i cada veu provenen d’una cultura diferent. Deixa’t sorprendre per les expressions, els accents i les formes de dir les coses.</li>
+  </ul>
+
+  <p><b>Recorda:</b> aprendre una llengua és una experiència auditiva i emocional.
+  Amb Audiovook Dual, pots aprendre escoltant històries, sense pressió i amb plaer.</p>
+
+
+    <button id="closeModal">Tanca</button>
+  </div>
+</div>
 </body>
 </html>
