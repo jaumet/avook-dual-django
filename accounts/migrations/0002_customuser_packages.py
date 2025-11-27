@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("accounts", "0001_initial"),
-        ("products", "0003_alter_package_id_alter_product_id_alter_title_id"),
+        ("products", "0002_remove_title_langs_titlelanguage"),
     ]
 
     operations = [
