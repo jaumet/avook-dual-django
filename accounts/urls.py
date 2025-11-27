@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import ProfileView, LibraryView
+from django.urls import path
+from .views import ProfileUpdateView, LibraryView
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/', ProfileUpdateView.as_view(), name='profile'),
     path('library/', LibraryView.as_view(), name='library'),
 ]
