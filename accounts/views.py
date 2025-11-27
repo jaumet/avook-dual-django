@@ -1,12 +1,24 @@
 import os
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView, ListView
 from products.models import Package
 from products.mixins import TitleContextMixin
+from .forms import ProfileUpdateForm
 
-class ProfileView(LoginRequiredMixin, TemplateView):
+User = get_user_model()
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = ProfileUpdateForm
     template_name = 'accounts/profile.html'
+    success_url = reverse_lazy('accounts:profile')
+
+    def get_object(self):
+        return self.request.user
 
 
 class LibraryView(LoginRequiredMixin, TitleContextMixin, ListView):

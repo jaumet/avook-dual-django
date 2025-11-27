@@ -70,6 +70,10 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        if self.is_default_free:
+            if Package.objects.filter(is_default_free=True).exclude(pk=self.pk).exists():
+                raise models.ValidationError(_("Ja existeix un paquet gratuït per defecte."))
     class Meta:
         verbose_name = _("Paquet")
         verbose_name_plural = _("Paquets")
