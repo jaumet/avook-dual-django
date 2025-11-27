@@ -1,73 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.title }} — Audiovook Dual{% endblock %}
+{% block title %}{{ product.name }} — Audiovook Dual{% endblock %}
 
 {% block content %}
 <section class="product-detail">
     <div class="product-detail__header">
         <div>
-            <p class="kicker">{{ product.language_pair }}</p>
-            <h1>{{ product.title }}</h1>
+            <h1>{{ product.name }}</h1>
             <p class="lead">{{ product.description }}</p>
             <p class="price">Preu: {{ product.price }} €</p>
             {% if user.is_authenticated %}
-                <a class="button button--small" href="{% url 'products:update' product.pk %}">Editar producte</a>
+                <a class="button button--small" href="{% url 'products:product_update' product.pk %}">Editar producte</a>
             {% endif %}
         </div>
         <div class="product-detail__media">
-            {% if product.cover_image %}
-                <img src="{% if product.cover_image|slice:':1' == '/' %}{{ product.cover_image }}{% else %}{% static product.cover_image %}{% endif %}" alt="{{ product.title }}" />
-            {% else %}
-                <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.title }}" />
-            {% endif %}
+            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.name }}" />
         </div>
     </div>
 
-    {% if product.audio_file %}
-        <div class="player">
-            <audio controls>
-                <source src="{{ product.audio_file.url }}" type="audio/mpeg">
-                El teu navegador no suporta la reproducció d'àudio.
-            </audio>
-        </div>
-    {% else %}
-        <p>No hi ha cap àudio associat a aquest producte encara.</p>
-    {% endif %}
-
+    {% for package in product.packages.all %}
     <div class="product-detail__titles">
-        <h2>Títols inclosos en aquest paquet</h2>
-        {% if package_titles %}
+        <h2>Títols inclosos en el paquet: {{ package.name }}</h2>
+        {% if package.titles.all %}
             <ul>
-                {% for title in package_titles %}
+                {% for title in package.titles.all %}
                     <li class="product-detail__title-item">
                         <div>
-                            <p class="kicker">Nivell {{ title.level }}</p>
-<<<<<<< ours
-<<<<<<< ours
-<<<<<<< ours
-                            <strong>{{ title.title }}</strong>
+                            <p class="kicker">Nivell {{ title.levels }}</p>
+                            <strong>{{ title.human_name }}</strong>
                             {% if title.description %}
                                 <p>{{ title.description }}</p>
                             {% endif %}
-                            <p class="product-card__meta">Idiomes: {{ title.langs|join:', ' }}</p>
-=======
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
-                            <strong>{{ title.title_human }}</strong>
-                            {% if title.description %}
-                                <p>{{ title.description }}</p>
-                            {% endif %}
-                            <p class="product-card__meta">Idiomes: {{ title.language_list|join:', ' }}</p>
-<<<<<<< ours
-<<<<<<< ours
->>>>>>> theirs
-=======
->>>>>>> theirs
-=======
->>>>>>> theirs
+                            <p class="product-card__meta">Idiomes:
+                                {% for lang in title.languages.all %}
+                                    {{ lang.language }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
                             {% if title.duration %}<p class="product-card__meta">Durada: {{ title.duration }}</p>{% endif %}
                         </div>
                     </li>
@@ -77,5 +46,6 @@
             <p>Encara no hi ha títols assignats a aquest paquet.</p>
         {% endif %}
     </div>
+    {% endfor %}
 </section>
 {% endblock %}

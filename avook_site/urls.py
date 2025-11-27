@@ -2,14 +2,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from products.views import HomeView, SignUpView
+from products.views import CatalogView, SignUpView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('products/', include('products.urls')),
-    path('', HomeView.as_view(), name='home'),
+    path('', CatalogView.as_view(), name='home'),
 ]
 
 if settings.DEBUG:

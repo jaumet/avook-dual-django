@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catàleg de Títols — Audiovook Dual{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <h2 style="text-align:center">📚 Relats disponibles</h2>
+
+    <!-- Botons de nivell -->
+    <h3 style="text-align:center">Selecciona nivell:</h3>
+    <section id="levelSection"></section>
+
+    <!-- Botó per mostrar/ocultar filtres -->
+    <div id="advancedSearchToggle">
+        <button id="toggleFiltersBtn">🔍 Cerca avançada</button>
+    </div>
+
+    <!-- Barra de filtres (oculta per defecte) -->
+    <section id="filtersBar" style="display:none;">
+        <div class="av-input">
+            <input type="text" id="searchInput" placeholder="🔍 Cerca per text o títol..." />
+        </div>
+        <div class="av-select" data-placeholder="Col·lecció">
+            <label>Col·lecció</label>
+            <select id="filterCollection"></select>
+        </div>
+        <div class="av-select" data-placeholder="Durada">
+            <label>Durada</label>
+            <select id="filterDuration"></select>
+        </div>
+        <div class="av-select" data-placeholder="Llengües">
+            <label>Llengües</label>
+            <select id="filterLang"></select>
+        </div>
+        <div class="av-select" data-placeholder="Edats">
+            <label>Edats</label>
+            <select id="filterAges"></select>
+        </div>
+    </section>
+
+    <!-- Missatge inicial -->
+    <div id="helpNote">
+        <h3 style="text-align:center">Selecciona un nivell per començar</h3>
+        <p style="text-align:center;">O utilitza la cerca avançada per trobar exactament el que busques.</p>
+    </div>
+
+    <section id="catalog"></section>
+</main>
+
+{{ titles_json|json_script:"titles-data" }}
+
+<script src="{% static 'js/catalog.js' %}"></script>
+{% endblock %}

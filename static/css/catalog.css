@@ -1,0 +1,131 @@
+/* General Body Styles */
+body {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 2em;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #f7836a;
+}
+
+/* Header and Filters */
+#levelSection {
+    display: flex;
+    justify-content: center;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.levelBtn {
+    background-color: #2a2a4e;
+    color: #e0e0e0;
+    border: 1px solid #f7836a;
+    border-radius: 15px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+
+.levelBtn.active {
+    background-color: #f7836a;
+    color: #1a1a2e;
+}
+
+#advancedSearchToggle {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+#toggleFiltersBtn {
+    background-color: transparent;
+    color: #f7836a;
+    border: 1px solid #f7836a;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#filtersBar {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+}
+
+#filtersBar input, #filtersBar select {
+    background-color: #2a2a4e;
+    color: #e0e0e0;
+    border: 1px solid #4a4a7f;
+    border-radius: 5px;
+    padding: 0.5em;
+}
+
+/* Catalog Grid */
+#catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.titleCard {
+    background-color: #2a2a4e;
+    border: 1px solid #f7836a;
+    border-radius: 10px;
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.titleCard:hover {
+    background-color: #3a3a5e;
+}
+
+.titleCard img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.titleCard .cardText {
+    flex-grow: 1;
+    position: relative;
+}
+
+.titleCard h3 {
+    margin: 0 0 0.5em 0;
+    color: #e0e0e0;
+    text-align: left;
+}
+
+.titleCard .meta, .titleCard .langList, .titleCard .description {
+    font-size: 0.9em;
+    color: #b0b0b0;
+}
+
+.titleCard .meta-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.titleCard .level, .titleCard .ages {
+    background-color: #f7836a;
+    color: #1a1a2e;
+    padding: 0.2em 0.5em;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+}
