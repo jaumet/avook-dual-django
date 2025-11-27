@@ -598,3 +598,40 @@ h2,h3 {color:var(--accent);}
 .user-menu:hover .user-menu-dropdown {
     display: block;
 }
+
+/* === New Header Styles === */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid var(--accent);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.logo-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-subtitle {
+    font-size: 0.8em;
+    color: #ccc;
+}
+
+main {
+    padding-top: 80px; /* Adjust this value based on the final header height */
+}
+
+@media (max-width: 640px) {
+    .logo-subtitle {
+        display: none;
+    }
+}
