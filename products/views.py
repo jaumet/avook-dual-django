@@ -170,4 +170,4 @@ def player_view(request, machine_name):
 
 
 def root_redirect(request):
-    return redirect(reverse('home'))
+    return redirect('/ca/')
