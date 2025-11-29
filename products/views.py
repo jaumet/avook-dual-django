@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib import messages
 from django.db.models import Q
@@ -167,3 +167,7 @@ def player_view(request, machine_name):
     title = get_object_or_404(Title, machine_name=machine_name)
     languages = title.languages.all()
     return render(request, 'products/player.html', {'title': title, 'languages': languages})
+
+
+def root_redirect(request):
+    return redirect(reverse('home'))
