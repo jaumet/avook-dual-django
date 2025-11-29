@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
-from .models import Product, Title, TitleLanguage
+from .models import Product, Title, TitleLanguage, TranslatableContent
 from .utils import load_titles_grouped_by_level
 from .mixins import TitleContextMixin
 
@@ -43,8 +43,23 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['marketing_.title'] = 'Audiovook Dual — Aprèn llengües escoltant històries'
-        context['subtitle'] = 'Escolta narracions combinades per millorar la comprensió i la pronunciació'
+
+        # Get the current language from the URL prefix
+        lang = self.request.LANGUAGE_CODE
+
+        # Fetch all translatable content objects
+        content_objects = TranslatableContent.objects.all()
+
+        # Prepare a dictionary to hold the content for the template
+        translatable_content = {}
+        for item in content_objects:
+            # Construct the field name, e.g., 'content_ca'
+            field_name = f'content_{lang}'
+            # Get the content from the appropriate language field, fallback to 'en' if empty
+            content = getattr(item, field_name, '') or getattr(item, 'content_en', '')
+            translatable_content[item.key] = content
+
+        context['translatable_content'] = translatable_content
         return context
 
 

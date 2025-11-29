@@ -8,6 +8,7 @@ from products.views import HomeView, SignUpView, root_redirect
 # Keep non-translated URLs separate
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
     path('i18n/', include('django.conf.urls.i18n')),
     path('', root_redirect, name='root_redirect'),
 ]
