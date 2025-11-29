@@ -48,3 +48,11 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('username', 'first_name', 'last_name', 'email')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_staff = False
+        user.is_superuser = False
+        if commit:
+            user.save()
+        return user
