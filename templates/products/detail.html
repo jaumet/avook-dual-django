@@ -9,9 +9,9 @@
         <div>
             <h1>{{ product.name }}</h1>
             <p class="lead">{{ product.description }}</p>
-            <p class="price">Preu: {{ product.price }} €</p>
+            <p class="price"><span data-translate-key="product_detail.price">Preu:</span> {{ product.price }} €</p>
             {% if user.is_authenticated %}
-                <a class="button button--small" href="{% url 'products:product_update' product.pk %}">Editar producte</a>
+                <a class="button button--small" href="{% url 'products:product_update' product.pk %}" data-translate-key="product_detail.edit_product">Editar producte</a>
             {% endif %}
         </div>
         <div class="product-detail__media">
@@ -21,29 +21,29 @@
 
     {% for package in product.packages.all %}
     <div class="product-detail__titles">
-        <h2>Títols inclosos en el paquet: {{ package.name }}</h2>
+        <h2><span data-translate-key="product_detail.included_titles">Títols inclosos en el paquet:</span> {{ package.name }}</h2>
         {% if package.titles.all %}
             <ul>
                 {% for title in package.titles.all %}
                     <li class="product-detail__title-item">
                         <div>
-                            <p class="kicker">Nivell {{ title.levels }}</p>
+                            <p class="kicker"><span data-translate-key="product_detail.level">Nivell</span> {{ title.levels }}</p>
                             <strong>{{ title.human_name }}</strong>
                             {% if title.description %}
                                 <p>{{ title.description }}</p>
                             {% endif %}
-                            <p class="product-card__meta">Idiomes:
+                            <p class="product-card__meta"><span data-translate-key="product_detail.languages">Idiomes:</span>
                                 {% for lang in title.languages.all %}
                                     {{ lang.language }}{% if not forloop.last %}, {% endif %}
                                 {% endfor %}
                             </p>
-                            {% if title.duration %}<p class="product-card__meta">Durada: {{ title.duration }}</p>{% endif %}
+                            {% if title.duration %}<p class="product-card__meta"><span data-translate-key="product_detail.duration">Durada:</span> {{ title.duration }}</p>{% endif %}
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Encara no hi ha títols assignats a aquest paquet.</p>
+            <p data-translate-key="product_detail.no_titles">Encara no hi ha títols assignats a aquest paquet.</p>
         {% endif %}
     </div>
     {% endfor %}

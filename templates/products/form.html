@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Gestiona producte — Audiovook Dual{% endblock %}
+{% block title %}<span data-translate-key="form.manage_product">Gestiona producte — Audiovook Dual</span>{% endblock %}
 
 {% block content %}
 <section class="form-section">
-    <h1>{% if object %}Edita producte{% else %}Nou producte{% endif %}</h1>
+    <h1>{% if object %}<span data-translate-key="form.edit_product">Edita producte</span>{% else %}<span data-translate-key="form.new_product">Nou producte</span>{% endif %}</h1>
     <form method="post" enctype="multipart/form-data" class="form">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -18,7 +18,7 @@
                 {% endfor %}
             </div>
         {% endfor %}
-        <button type="submit" class="button">Guardar</button>
+        <button type="submit" class="button" data-translate-key="form.save">Guardar</button>
     </form>
 </section>
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Gestiona títol — Audiovook Dual{% endblock %}
+{% block title %}<span data-translate-key="title_form.manage_title">Gestiona títol — Audiovook Dual</span>{% endblock %}
 
 {% block content %}
 <section class="form-section">
-    <h1>{% if form.instance.pk %}Edita títol{% else %}Nou títol{% endif %}</h1>
+    <h1>{% if form.instance.pk %}<span data-translate-key="title_form.edit_title">Edita títol</span>{% else %}<span data-translate-key="title_form.new_title">Nou títol</span>{% endif %}</h1>
     <form method="post" enctype="multipart/form-data" class="form">
         {% csrf_token %}
 
@@ -22,7 +22,7 @@
         {% endfor %}
 
         <fieldset>
-            <legend>Rutes de llengua</legend>
+            <legend data-translate-key="title_form.language_routes">Rutes de llengua</legend>
             {{ formset.management_form }}
             <div id="language-forms">
                 {% for form in formset %}
@@ -40,10 +40,10 @@
                     </div>
                 {% endfor %}
             </div>
-            <button type="button" id="add-language-form" class="button button--small">Nova llengua</button>
+            <button type="button" id="add-language-form" class="button button--small" data-translate-key="title_form.new_language">Nova llengua</button>
         </fieldset>
 
-        <button type="submit" class="button">Guardar</button>
+        <button type="submit" class="button" data-translate-key="form.save">Guardar</button>
     </form>
 </section>
 

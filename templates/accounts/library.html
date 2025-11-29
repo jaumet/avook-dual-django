@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1>La meva llibreria</h1>
+    <h1 data-translate-key="library.my_library">La meva llibreria</h1>
     <hr>
     {% for package in packages %}
     <div class="accordion">
@@ -44,20 +44,20 @@
                   </div>
                   <div class="status-label">
                     {% if item.status == 'FREE' %}
-                      <span class="free">GRATUÏT</span>
+                      <span class="free" data-translate-key="card.free">GRATUÏT</span>
                     {% elif item.status == 'PREMIUM_OWNED' %}
-                      <span class="premium-owned">PREMIUM</span>
+                      <span class="premium-owned" data-translate-key="card.premium">PREMIUM</span>
                     {% endif %}
                   </div>
                 </div>
                 {% empty %}
-                <p>No hi ha títols en aquest paquet.</p>
+                <p data-translate-key="home.no_titles_in_package">No hi ha títols en aquest paquet.</p>
                 {% endfor %}
             </section>
         </div>
     </div>
     {% empty %}
-    <p>No tens accés a cap paquet.</p>
+    <p data-translate-key="library.no_packages">No tens accés a cap paquet.</p>
     {% endfor %}
 </div>
 {% endblock %}

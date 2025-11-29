@@ -3,20 +3,19 @@
 
 {% block content %}
 <main>
-  <h3>ℹ️ Què és Audiovook Dual?</h3>
-  <p>
-    Audiovook Dual és una col·lecció d’audiorelats bilingües que et permet escoltar una mateixa història en dues llengües.
-    És una forma d’aprendre jugant amb el so, la repetició i el context.
+  <h3 data-translate-key="catalog.what_is_dual">ℹ️ Què és Audiovook Dual?</h3>
+  <p data-translate-key="catalog.what_is_dual_text">
+    Audiovook Dual és una col·lecció d’audiorelats bilingües que et permet escoltar una mateixa història en dues llengües. És una forma d’aprendre jugant amb el so, la repetició i el context.
   </p>
-  <h2 style="text-align:center">📚 Relats disponibles</h2>
+  <h2 style="text-align:center" data-translate-key="catalog.available_stories">📚 Relats disponibles</h2>
 
   <!-- Barra de filtres -->
   <form method="get" action="{% url 'products:catalog' %}" id="filtersBar">
     <div class="av-input">
-      <input type="text" name="q" placeholder="🔍 Cerca per text o títol..." value="{{ request.GET.q }}">
+      <input type="text" name="q" placeholder="🔍 Cerca per text o títol..." data-translate-key="catalog.search_placeholder" value="{{ request.GET.q }}">
     </div>
     <div class="av-select" data-placeholder="Col·lecció">
-      <label>Col·lecció</label>
+      <label data-translate-key="catalog.filter.collection">Col·lecció</label>
       <select name="collection" onchange="this.form.submit()">
         <option value="">--</option>
         {% for collection in collections %}
@@ -25,7 +24,7 @@
       </select>
     </div>
     <div class="av-select" data-placeholder="Nivell">
-      <label>Nivell</label>
+      <label data-translate-key="catalog.filter.level">Nivell</label>
       <select name="level" onchange="this.form.submit()">
         <option value="">--</option>
         {% for level in levels %}
@@ -34,7 +33,7 @@
       </select>
     </div>
     <div class="av-select" data-placeholder="Durada">
-      <label>Durada</label>
+      <label data-translate-key="catalog.filter.duration">Durada</label>
       <select name="duration" onchange="this.form.submit()">
         <option value="">--</option>
         {% for duration in durations %}
@@ -43,7 +42,7 @@
       </select>
     </div>
     <div class="av-select" data-placeholder="Llengües">
-      <label>Llengües</label>
+      <label data-translate-key="catalog.filter.languages">Llengües</label>
       <select name="lang" onchange="this.form.submit()">
         <option value="">--</option>
         {% for lang in languages %}
@@ -52,7 +51,7 @@
       </select>
     </div>
     <div class="av-select" data-placeholder="Edats">
-      <label>Edats</label>
+      <label data-translate-key="catalog.filter.ages">Edats</label>
       <select name="ages" onchange="this.form.submit()">
         <option value="">--</option>
         {% for ages in ages_list %}
@@ -60,15 +59,15 @@
         {% endfor %}
       </select>
     </div>
-    <button type="submit">Filtra</button>
+    <button type="submit" data-translate-key="catalog.filter.button">Filtra</button>
   </form>
 
   <!-- Missatge inicial -->
   <div id="helpNote">
-    <h3 style="text-align:center">Dual en 3 clics:</h3>
-    <p>1️⃣ Selecciona quin tipus de textos vols<br>
-      2️⃣ Tria un relat<br>
-      3️⃣ Aniràs al reproductor i podràs experimentar el sistema Dual</p>
+    <h3 style="text-align:center" data-translate-key="catalog.dual_in_3_clicks">Dual en 3 clics:</h3>
+    <p>1️⃣ <span data-translate-key="catalog.click1">Selecciona quin tipus de textos vols</span><br>
+      2️⃣ <span data-translate-key="catalog.click2">Tria un relat</span><br>
+      3️⃣ <span data-translate-key="catalog.click3">Aniràs al reproductor i podràs experimentar el sistema Dual</span></p>
   </div>
 
   <section id="catalog">
@@ -103,11 +102,11 @@
       </div>
       <div class="status-label">
         {% if item.status == 'FREE' %}
-          <span class="free">FREE</span>
+          <span class="free" data-translate-key="card.free">FREE</span>
         {% elif item.status == 'PREMIUM_OWNED' %}
-          <span class="premium-owned">PREMIUM</span>
+          <span class="premium-owned" data-translate-key="card.premium">PREMIUM</span>
         {% elif item.status == 'PREMIUM_NOT_OWNED' %}
-          <span class="premium-not-owned">PREMIUM</span>
+          <span class="premium-not-owned" data-translate-key="card.premium">PREMIUM</span>
         {% endif %}
       </div>
     </div>

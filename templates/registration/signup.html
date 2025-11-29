@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Crear compte — Audiovook Dual{% endblock %}
+{% block title %}<span data-translate-key="signup.title">Crear compte — Audiovook Dual</span>{% endblock %}
 
 {% block content %}
 <section class="form-section">
-    <h1>Crea un compte</h1>
+    <h1 data-translate-key="signup.header">Crea un compte</h1>
     <form method="post" class="form">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -17,7 +17,7 @@
                 {% endfor %}
             </div>
         {% endfor %}
-        <button type="submit" class="button">Registrar-me</button>
+        <button type="submit" class="button" data-translate-key="signup.submit">Registrar-me</button>
     </form>
 </section>
 {% endblock %}

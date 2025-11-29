@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1>Productes</h1>
+    <h1 data-translate-key="header.products">Productes</h1>
     <hr>
     {% for product in products %}
     <div class="product-card">
@@ -50,27 +50,27 @@
                           </div>
                           <div class="status-label">
                             {% if item.status == 'FREE' %}
-                              <span class="free">GRATUÏT</span>
+                              <span class="free" data-translate-key="card.free">GRATUÏT</span>
                             {% elif item.status == 'PREMIUM_OWNED' %}
-                              <span class="premium-owned">PREMIUM</span>
+                              <span class="premium-owned" data-translate-key="card.premium">PREMIUM</span>
                             {% elif item.status == 'PREMIUM_NOT_OWNED' %}
-                              <span class="premium-not-owned">PREMIUM</span>
+                              <span class="premium-not-owned" data-translate-key="card.premium">PREMIUM</span>
                             {% endif %}
                           </div>
                         </div>
                         {% empty %}
-                        <p>No hi ha títols en aquest paquet.</p>
+                        <p data-translate-key="home.no_titles_in_package">No hi ha títols en aquest paquet.</p>
                         {% endfor %}
                     </section>
                 </div>
             </div>
             {% empty %}
-            <p class="product-text">No hi ha paquets en aquest producte.</p>
+            <p class="product-text" data-translate-key="product_list.no_packages">No hi ha paquets en aquest producte.</p>
             {% endfor %}
         </div>
     </div>
     {% empty %}
-    <p>No hi ha productes disponibles.</p>
+    <p data-translate-key="product_list.no_products">No hi ha productes disponibles.</p>
     {% endfor %}
 </div>
 {% endblock %}
