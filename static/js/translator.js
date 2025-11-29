@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn(`No translation found for key: ${key} in language: ${lang}`);
             }
         });
+
+        // Handle the HTML content for the help modal
+        const helpModalPlaceholder = document.getElementById('help-modal-content-placeholder');
+        if (helpModalPlaceholder && translations[lang]['help_modal.html_content']) {
+            helpModalPlaceholder.innerHTML = translations[lang]['help_modal.html_content'];
+        }
     }
 
     loadTranslations();
