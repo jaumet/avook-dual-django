@@ -87,10 +87,9 @@ body {
 .header-right button:hover {opacity:.9;}
 
 main {
-  padding-top: 80px; /* Adjust this value based on the final header height */
   max-width: 980px;
   margin: 0 auto;
-  padding: 1.2em;
+  padding: 120px 1.2em 1.2em;
 }
 
 /* === User Menu === */
