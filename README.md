@@ -40,6 +40,56 @@ Per solucionar-ho, has de reiniciar la base de dades seguint aquests passos:
 
 Després de seguir aquests passos, l'aplicació hauria de funcionar correctament amb la nova estructura de dades.
 
+## Internationalization (i18n)
+
+Aquest projecte utilitza un sistema de traducció basat en JavaScript al frontend. Per afegir un nou idioma, segueix aquests passos:
+
+1.  **Afegeix l'idioma a `settings.py`**:
+    A `avook_site/settings.py`, afegeix el nou codi d'idioma a la llista `LANGUAGES`. Això és necessari perquè el sistema d'URL de Django reconegui el nou idioma. Per exemple, per afegir alemany:
+    ```python
+    LANGUAGES = [
+        ('ca', 'Català'),
+        ('en', 'English'),
+        ('es', 'Spanish'),
+        ('pt', 'Portuguese'),
+        ('it', 'Italian'),
+        ('fr', 'French'),
+        ('de', 'German'),  # Nova línia
+    ]
+    ```
+
+2.  **Afegeix les traduccions al fitxer JSON**:
+    Obre el fitxer `static/js/translations.json` i afegeix una nova secció per al teu idioma. Copia totes les claus de la secció `en` (anglès) i tradueix els valors. Per exemple, per a l'alemany (`de`):
+    ```json
+    {
+      "ca": { ... },
+      "en": { ... },
+      "es": { ... },
+      "fr": { ... },
+      "it": { ... },
+      "pt": { ... },
+      "de": {
+        "header.catalog": "Katalog",
+        "header.products": "Produkte",
+        ...
+      }
+    }
+    ```
+
+3.  **Afegeix l'opció al selector d'idioma**:
+    A `templates/base.html`, afegeix la nova opció al selector d'idioma (`<select id="language-select">`):
+    ```html
+    <select id="language-select">
+        ...
+        <option value="de">Deutsch</option>
+    </select>
+    ```
+
+4.  **Reinicia el servidor**:
+    Atura i torna a iniciar el servidor de desenvolupament perquè els canvis a les URL tinguin efecte.
+
+L'aplicació ara hauria de mostrar el nou idioma al selector i permetre als usuaris canviar-hi.
+
 ## Funcionalitats
 - Registre i inici/tancament de sessió amb el sistema d'autenticació de Django.
 - Creació i edició de productes amb camps de títol, parella de llengües, descripció, preu i fitxer d'àudio.

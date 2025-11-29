@@ -43,7 +43,7 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['marketing_title'] = 'Audiovook Dual — Aprèn llengües escoltant històries'
+        context['marketing_.title'] = 'Audiovook Dual — Aprèn llengües escoltant històries'
         context['subtitle'] = 'Escolta narracions combinades per millorar la comprensió i la pronunciació'
         return context
 

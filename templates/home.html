@@ -10,8 +10,8 @@
         <h1>{{ marketing_title }}</h1>
         <p class="hero__subtitle">{{ subtitle }}</p>
         <div class="hero__actions">
-            <a class="button" href="#productes">Descobreix els productes</a>
-            <a class="button button--ghost" href="{% url 'signup' %}">Crea un compte</a>
+            <a class="button" href="#productes" data-translate-key="home.discover_products">Descobreix els productes</a>
+            <a class="button button--ghost" href="{% url 'signup' %}" data-translate-key="home.create_account">Crea un compte</a>
         </div>
     </div>
     <div class="hero__art">
@@ -21,11 +21,11 @@
 
 <section class="features" id="productes">
     <div class="section__header">
-        <p class="kicker">Productes</p>
-        <h2>Històries curtes per practicar llengües</h2>
-        <p>Consulta el catàleg d'audiollibres bilingües. Entra a un producte per veure la descripció i reproduir l'àudio.</p>
+        <p class="kicker" data-translate-key="home.products">Productes</p>
+        <h2 data-translate-key="home.short_stories">Històries curtes per practicar llengües</h2>
+        <p data-translate-key="home.browse_catalog">Consulta el catàleg d'audiollibres bilingües. Entra a un producte per veure la descripció i reproduir l'àudio.</p>
         {% if user.is_authenticated %}
-            <a class="button button--small" href="{% url 'products:product_create' %}">Afegir un nou producte</a>
+            <a class="button button--small" href="{% url 'products:product_create' %}" data-translate-key="home.add_new_product">Afegir un nou producte</a>
         {% endif %}
     </div>
     <div class="product-grid">
@@ -37,10 +37,10 @@
                     <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
 
                     {% for package in product.packages.all %}
-                        <p class="product-card__meta">Paquet: {{ package.name }}</p>
+                        <p class="product-card__meta"><span data-translate-key="home.package">Paquet:</span> {{ package.name }}</p>
                         {% if package.titles.all %}
                             <div class="product-card__titles">
-                                <p class="kicker">Títols inclosos</p>
+                                <p class="kicker" data-translate-key="home.included_titles">Títols inclosos</p>
                                 <ul>
                                     {% for title in package.titles.all %}
                                         <li>
@@ -56,33 +56,33 @@
                                 </ul>
                             </div>
                         {% else %}
-                            <p class="product-card__meta">Cap títol assignat a aquest paquet.</p>
+                            <p class="product-card__meta" data-translate-key="home.no_titles_in_package">Cap títol assignat a aquest paquet.</p>
                         {% endif %}
                     {% endfor %}
 
                     <div class="product-card__footer">
                         <span class="product-card__price">{{ product.price }} €</span>
-                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">Veure fitxa</a>
+                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}" data-translate-key="home.view_details">Veure fitxa</a>
                     </div>
                 </div>
             </article>
         {% empty %}
-            <p>Encara no hi ha productes. Si tens permís, crea'n un!</p>
+            <p data-translate-key="home.no_products">Encara no hi ha productes. Si tens permís, crea'n un!</p>
         {% endfor %}
     </div>
 </section>
 
 <section class="cta">
     <div class="cta__text">
-        <h2>Entra a Audiovook Dual</h2>
-        <p>Registra't per gestionar productes, pujar arxius d'àudio i crear una experiència d'aprenentatge immersiva.</p>
+        <h2 data-translate-key="home.cta.title">Entra a Audiovook Dual</h2>
+        <p data-translate-key="home.cta.subtitle">Registra't per gestionar productes, pujar arxius d'àudio i crear una experiència d'aprenentatge immersiva.</p>
     </div>
     <div class="cta__actions">
         {% if user.is_authenticated %}
-            <a class="button" href="{% url 'products:product_create' %}">Crea un producte</a>
+            <a class="button" href="{% url 'products:product_create' %}" data-translate-key="home.cta.create_product">Crea un producte</a>
         {% else %}
-            <a class="button" href="{% url 'signup' %}">Comença ara</a>
-            <a class="button button--ghost" href="{% url 'login' %}">Ja tinc compte</a>
+            <a class="button" href="{% url 'signup' %}" data-translate-key="home.cta.start_now">Comença ara</a>
+            <a class="button button--ghost" href="{% url 'login' %}" data-translate-key="home.cta.have_account">Ja tinc compte</a>
         {% endif %}
     </div>
 </section>

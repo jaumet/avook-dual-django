@@ -104,6 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let sequence = [];
     let seqIndex = 0;
     const audioEl = qs('#audio');
+    let translations = {};
+
+    async function loadTranslations() {
+        try {
+            const response = await fetch('/static/js/translations.json');
+            if (response.ok) {
+                translations = await response.json();
+            }
+        } catch (error) {
+            console.error('Error fetching translations:', error);
+        }
+    }
+
+    function t(key) {
+        const lang = window.location.pathname.split('/')[1] || 'ca';
+        return translations[lang] && translations[lang][key] ? translations[lang][key] : key;
+    }
 
     function radiosMarkup(langs, name, checked) {
         return langs.map(L => `<label><input type="radio" name="${name}" value="${L}" ${checked ? 'checked' : ''}/> ${iso2to3(L)}</label>`).join('');
@@ -127,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function playNext(manual = false) {
         if (seqIndex >= sequence.length) {
-            if (!qs('#textContent').textContent.includes('Finalitzat')) {
-                qs('#textContent').innerHTML += ' ✅ Finalitzat.';
+            if (!qs('#textContent').textContent.includes(t('player.finished'))) {
+                qs('#textContent').innerHTML += ` ✅ ${t('player.finished')}.`;
             }
             updateProgress();
             audioEl.src = '';
@@ -231,9 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
         buildModes();
     }
 
-    function buildLangRadios() {
+    async function buildLangRadios() {
+        await loadTranslations();
         const L1 = radiosMarkup(availableLangs, 'l1', false);
-        const L2 = `<label><input type="radio" name="l2" value="" checked> cap</label>` + radiosMarkup(availableLangs, 'l2', false);
+        const L2 = `<label><input type="radio" name="l2" value="" checked> ${t('player.none')}</label>` + radiosMarkup(availableLangs, 'l2', false);
         qs('#radiosL1').innerHTML = L1;
         qs('#radiosL2').innerHTML = L2;
 
@@ -258,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div>
       <h2 id="relatTitle">{{ title.human_name }}</h2>
       <div id="relatDesc" style="margin:.1em 0 .3em 0;">{{ title.description }}</div>
-      <div class="langs">🌐 Idiomes: <span id="relatLangs">
+      <div class="langs">🌐 <span data-translate-key="player.languages">Idiomes:</span> <span id="relatLangs">
         {% for lang in title.languages.all %}
           {{ lang.language }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
@@ -269,16 +287,16 @@ document.addEventListener('DOMContentLoaded', () => {
   <section id="setupPanel" class="panel-soft">
     <div class="row">
       <div class="langBox">
-        <strong>Primera llengua</strong>
+        <strong data-translate-key="player.first_language">Primera llengua</strong>
         <div id="radiosL1" class="radios"></div>
-        <label style="margin-top:.6em">Velocitat 1:
+        <label style="margin-top:.6em"><span data-translate-key="player.speed1">Velocitat 1:</span>
           <select id="speed1"><option>0.5</option><option>0.7</option><option>0.8</option><option>0.9</option><option selected>1.0</option><option>1.1</option><option>1.2</option><option>1.5</option><option>2</option></select>
         </label>
       </div>
       <div class="langBox">
-        <strong>Segona llengua (opcional)</strong>
+        <strong data-translate-key="player.second_language">Segona llengua (opcional)</strong>
         <div id="radiosL2" class="radios"></div>
-        <label style="margin-top:.6em">Velocitat 2:
+        <label style="margin-top:.6em"><span data-translate-key="player.speed2">Velocitat 2:</span>
           <select id="speed2"><option>0.5</option><option>0.7</option><option>0.8</option><option>0.9</option><option selected>1.0</option><option>1.1</option><option>1.2</option><option>1.5</option><option>2</option></select>
         </label>
       </div>
@@ -286,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </section>
 
   <section id="modesPanel" style="text-align:center;margin:1em 0;">
-    <div id="modesTitle">🌐 Modes d’escolta</div>
+    <div id="modesTitle" data-translate-key="player.listening_modes">🌐 Modes d’escolta</div>
     <div id="modeButtons"></div>
   </section>
 
@@ -301,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <audio id="audio" controls></audio>
       <button id="nextBtn">⏭️</button>
     </div>
-    <a id="backBtn" href="{% url 'products:catalog' %}" class="button">⬅️ Torna al catàleg</a>
+    <a id="backBtn" href="{% url 'products:catalog' %}" class="button">⬅️ <span data-translate-key="player.back_to_catalog">Torna al catàleg</span></a>
   </section>
 </main>
 {% endblock %}
