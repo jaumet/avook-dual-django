@@ -44,3 +44,11 @@ class HomeViewTest(TestCase):
         with translation.override('ca'):
             response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
+
+    def test_home_page_renders_for_anonymous_user(self):
+        """
+        Verify that the home page renders successfully for an anonymous user.
+        """
+        with translation.override('ca'):
+            response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
