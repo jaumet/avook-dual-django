@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.templatetags.static import static
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Title(models.Model):
@@ -116,3 +117,21 @@ class UserPurchase(models.Model):
         unique_together = ('user', 'product')
         verbose_name = "Compra d'usuari"
         verbose_name_plural = "Compres d'usuaris"
+
+
+class TranslatableContent(models.Model):
+    key = models.CharField(max_length=100, unique=True, help_text="Clau única per identificar el contingut, p. ex., 'home_page_main_content'")
+    content_ca = CKEditor5Field('Contingut (Català)', blank=True)
+    content_en = CKEditor5Field('Contingut (English)', blank=True)
+    content_es = CKEditor5Field('Contingut (Español)', blank=True)
+    content_fr = CKEditor5Field('Contingut (Français)', blank=True)
+    content_pt = CKEditor5Field('Contingut (Português)', blank=True)
+    content_de = CKEditor5Field('Contingut (Deutsch)', blank=True)
+    content_it = CKEditor5Field('Contingut (Italiano)', blank=True)
+
+    def __str__(self):
+        return self.key
+
+    class Meta:
+        verbose_name = "Contingut Traduïble"
+        verbose_name_plural = "Continguts Traduïbles"

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Title, Package, UserPurchase, TitleLanguage
+from .models import Product, Title, Package, UserPurchase, TitleLanguage, TranslatableContent
 
 
 class TitleLanguageInline(admin.TabularInline):
@@ -37,3 +37,9 @@ class UserPurchaseAdmin(admin.ModelAdmin):
     list_display = ('user', 'product', 'purchase_date')
     search_fields = ('user__username', 'product__name')
     list_filter = ('purchase_date',)
+
+
+@admin.register(TranslatableContent)
+class TranslatableContentAdmin(admin.ModelAdmin):
+    list_display = ('key',)
+    search_fields = ('key',)
