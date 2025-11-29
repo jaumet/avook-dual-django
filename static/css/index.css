@@ -21,6 +21,7 @@ body {
   background:var(--bg);
   color:var(--fg);
   margin:0;
+  padding-top: 80px; /* Add padding to the body */
   transition:background .3s,color .3s;
 }
 
@@ -89,7 +90,7 @@ body {
 main {
   max-width: 980px;
   margin: 0 auto;
-  padding: 120px 1.2em 1.2em;
+  padding: 1.2em; /* Remove top padding */
 }
 
 /* === User Menu === */
