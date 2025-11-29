@@ -84,7 +84,7 @@
         {% else %}
             <a class="button" href="{% url 'signup' %}">{{ translatable_content.home_cta_start_now|safe }}</a>
             &nbsp;
-            <a class="button button--ghost" href="{% url 'login' %}">{{ translatable_content.home_cta_have_account|safe }}</a>
+            <a class="button button--ghost" href="{% url 'accounts:login' %}">{{ translatable_content.home_cta_have_account|safe }}</a>
         {% endif %}
     </div>
 </section>
