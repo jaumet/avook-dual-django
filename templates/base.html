@@ -60,11 +60,14 @@
                         <a href="{% url 'products:product_create' %}" data-translate-key="header.add_product">Afegir producte</a>
                         <a href="{% url 'products:title_create' %}" data-translate-key="header.add_title">Afegir títol</a>
                     {% endif %}
-                    <a href="{% url 'logout' %}" data-translate-key="header.logout">Tanca sessió</a>
+                    <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="button-link" data-translate-key="header.logout">Tanca sessió</button>
+                    </form>
                 </div>
             </div>
         {% else %}
-            <a href="{% url 'login' %}" data-translate-key="header.login">Inicia sessió</a>
+            <a href="{% url 'accounts:login' %}" data-translate-key="header.login">Inicia sessió</a>
             <a href="{% url 'signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
         {% endif %}
         <div class="rightBtns">
