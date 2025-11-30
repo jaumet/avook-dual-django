@@ -95,3 +95,19 @@ L'aplicació ara hauria de mostrar el nou idioma al selector i permetre als usua
 - Creació i edició de productes amb camps de títol, parella de llengües, descripció, preu i fitxer d'àudio.
 - Llista pública de productes i pàgina de detall amb reproductor d'àudio.
 - Panell d'admin per gestionar productes (`/admin/`).
+
+---
+
+## Edició del contingut de la pàgina d'inici
+
+El contingut de la pàgina d'inici (Homepage) es gestiona a través d'una secció dedicada al panell d'administració.
+
+### Per a Editors de Contingut:
+
+1.  **Accedeix al Panell d'Administració**: Navega a `/admin/`.
+2.  **Ves a "Homepage Content"**: Al menú, busca la secció "Products" i fes clic a "Homepage Content".
+3.  **Edita el Contingut**: S'obrirà un formulari amb camps de text enriquit per a cada tros de text de la pàgina d'inici. Edita el contingut directament en aquests camps. No hi ha JSON del qual preocupar-se.
+
+### Per a Desenvolupadors:
+
+El contingut inicial de la pàgina d'inici es crea automàticament a través d'una migració de dades. El `populate_content` ja no és necessari per a la pàgina d'inici.
