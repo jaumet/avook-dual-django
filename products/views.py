@@ -33,7 +33,8 @@ class ProductListView(TitleContextMixin, ListView):
         return context
 
 
-import json
+from .models import HomePageContent
+
 class HomeView(ListView):
     model = Product
     template_name = 'home.html'
@@ -46,15 +47,13 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
         lang = self.request.LANGUAGE_CODE
 
-        try:
-            home_content_obj = TranslatableContent.objects.get(key='home_content')
-            field_name = f'content_{lang}'
-            content_json = getattr(home_content_obj, field_name, '{}')
-            context['translatable_content'] = json.loads(content_json)
-        except TranslatableContent.DoesNotExist:
-            context['translatable_content'] = {}
-        except json.JSONDecodeError:
-            context['translatable_content'] = {}
+        content_obj = HomePageContent.objects.first()
+        translatable_content = {}
+        if content_obj:
+            for field in content_obj._meta.fields:
+                if field.name.endswith(f'_{lang}'):
+                    key = field.name.replace(f'_{lang}', '')
+                    translatable_content[key] = getattr(content_obj, field.name)
 
         return context
 

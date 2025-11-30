@@ -100,35 +100,14 @@ L'aplicació ara hauria de mostrar el nou idioma al selector i permetre als usua
 
 ## Edició del contingut de la pàgina d'inici
 
-El contingut de la pàgina d'inici (Homepage) es gestiona a través del panell d'administració, però ha estat consolidat en una única entrada per facilitar-ne la gestió.
+El contingut de la pàgina d'inici (Homepage) es gestiona a través d'una secció dedicada al panell d'administració.
 
 ### Per a Editors de Contingut:
 
 1.  **Accedeix al Panell d'Administració**: Navega a `/admin/`.
-2.  **Ves a "Continguts Traduïbles"**: Al menú, busca la secció "Products" i fes clic a "Continguts Traduïbles".
-3.  **Busca i Obre `home_content`**: A la llista, trobaràs una única entrada amb la clau (`key`) **`home_content`**. Fes-hi clic per editar-la.
-4.  **Edita el Contingut en Format JSON**:
-    *   Per a cada idioma (Català, English, etc.), veuràs un editor de text que conté un bloc de text en format JSON.
-    *   Per editar un text, **modifica el valor que es troba a la dreta dels dos punts (`:`)**, entre les cometes dobles (`"`).
-    *   **Important**: Has de ser molt curós de no esborrar les cometes, les comes, o les claus (`{}`), ja que això trencaria l'estructura de la pàgina.
+2.  **Ves a "Homepage Content"**: Al menú, busca la secció "Products" i fes clic a "Homepage Content".
+3.  **Edita el Contingut**: S'obrirà un formulari amb camps de text enriquit per a cada tros de text de la pàgina d'inici. Edita el contingut directament en aquests camps. No hi ha JSON del qual preocupar-se.
 
-    Exemple d'edició del títol principal en català:
-    ```json
-    {
-      "cta_title": "<h1>Aquí el teu nou títol</h1>",
-      "cta_subtitle": "<p>Aquí el teu nou subtítol.</p>",
-      ...
-    }
-    ```
+### Per a Desenvolupadors:
 
-### Nota per a Desenvolupadors:
-
-El contingut traduïble inicial es pot carregar a la base de dades executant la següent comanda. Aquesta és la manera recomanada de poblar inicialment el contingut editable del lloc:
-
-```bash
-python manage.py populate_content
-```
-
-Aquesta comanda llegirà el fitxer `static/js/translations.json` i crearà les entrades de contingut a la base de dades, incloent l'entrada `home_content` consolidada.
-
-**Important**: Aquesta comanda és no destructiva. Només crearà les entrades de contingut si no existeixen. No sobreescriurà cap canvi que hagis fet des del panell d'administració.
+El contingut inicial de la pàgina d'inici es crea automàticament a través d'una migració de dades. El `populate_content` ja no és necessari per a la pàgina d'inici.

@@ -75,8 +75,8 @@
 
 <section class="cta">
     <div class="cta__text">
-        <h2>{{ translatable_content.cta_title|safe }}</h2>
-        <p>{{ translatable_content.cta_subtitle|safe }}</p>
+        <h2>{{ translatable_content.final_cta_title|safe }}</h2>
+        <p>{{ translatable_content.final_cta_subtitle|safe }}</p>
     </div>
     <div class="cta__actions">
         {% if user.is_authenticated %}

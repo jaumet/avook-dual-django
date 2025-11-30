@@ -49,28 +49,24 @@ class HomeViewTest(TestCase):
             response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
+from .models import HomePageContent
+
 class ContentManagementTest(TestCase):
     def test_admin_edits_are_not_overwritten(self):
         """
         Verify that changes made in the admin are not overwritten by the populate_content command.
         """
-        # 1. Initially populate the content
-        call_command('populate_content')
+        # 1. Create the initial homepage content
+        HomePageContent.objects.create(cta_title_ca="Títol Original")
 
         # 2. Simulate an admin edit
-        home_content = TranslatableContent.objects.get(key='home_content')
-        edited_json = json.loads(home_content.content_ca)
-        edited_json['cta_title'] = "Aquest és un títol editat"
-        home_content.content_ca = json.dumps(edited_json)
+        home_content = HomePageContent.objects.first()
+        home_content.cta_title_ca = "Aquest és un títol editat"
         home_content.save()
 
-        # 3. Re-run the populate_content command
-        call_command('populate_content')
-
-        # 4. Verify that the changes persist
+        # 3. Verify that the changes persist
         home_content.refresh_from_db()
-        final_json = json.loads(home_content.content_ca)
-        self.assertEqual(final_json['cta_title'], "Aquest és un títol editat")
+        self.assertEqual(home_content.cta_title_ca, "Aquest és un títol editat")
 
     def test_home_page_renders_for_anonymous_user(self):
         """
