@@ -138,49 +138,13 @@ class TranslatableContent(models.Model):
 
 
 class HomePageContent(models.Model):
-    # Hero Section
-    kicker_ca = CKEditor5Field('Kicker (Català)', blank=True)
-    kicker_en = CKEditor5Field('Kicker (English)', blank=True)
-    cta_title_ca = CKEditor5Field('Títol CTA (Català)', blank=True)
-    cta_title_en = CKEditor5Field('CTA Title (English)', blank=True)
-    cta_subtitle_ca = CKEditor5Field('Subtítol CTA (Català)', blank=True)
-    cta_subtitle_en = CKEditor5Field('CTA Subtitle (English)', blank=True)
-    discover_products_ca = CKEditor5Field('Descobreix Productes (Català)', blank=True)
-    discover_products_en = CKEditor5Field('Discover Products (English)', blank=True)
-    create_account_ca = CKEditor5Field('Crea un compte (Català)', blank=True)
-    create_account_en = CKEditor5Field('Create Account (English)', blank=True)
-
-    # Products Section
-    products_ca = CKEditor5Field('Productes (Català)', blank=True)
-    products_en = CKEditor5Field('Products (English)', blank=True)
-    short_stories_ca = CKEditor5Field('Històries Curtes (Català)', blank=True)
-    short_stories_en = CKEditor5Field('Short Stories (English)', blank=True)
-    browse_catalog_ca = CKEditor5Field('Consulta el catàleg (Català)', blank=True)
-    browse_catalog_en = CKEditor5Field('Browse Catalog (English)', blank=True)
-    add_new_product_ca = CKEditor5Field('Afegir Nou Producte (Català)', blank=True)
-    add_new_product_en = CKEditor5Field('Add New Product (English)', blank=True)
-    package_ca = CKEditor5Field('Paquet (Català)', blank=True)
-    package_en = CKEditor5Field('Package (English)', blank=True)
-    included_titles_ca = CKEditor5Field('Títols Inclosos (Català)', blank=True)
-    included_titles_en = CKEditor5Field('Included Titles (English)', blank=True)
-    no_titles_in_package_ca = CKEditor5Field('Sense Títols (Català)', blank=True)
-    no_titles_in_package_en = CKEditor5Field('No Titles (English)', blank=True)
-    view_details_ca = CKEditor5Field('Veure Fitxa (Català)', blank=True)
-    view_details_en = CKEditor5Field('View Details (English)', blank=True)
-    no_products_ca = CKEditor5Field('Sense Productes (Català)', blank=True)
-    no_products_en = CKEditor5Field('No Products (English)', blank=True)
-
-    # Final CTA Section
-    final_cta_title_ca = CKEditor5Field('Títol CTA Final (Català)', blank=True)
-    final_cta_title_en = CKEditor5Field('Final CTA Title (English)', blank=True)
-    final_cta_subtitle_ca = CKEditor5Field('Subtítol CTA Final (Català)', blank=True)
-    final_cta_subtitle_en = CKEditor5Field('Final CTA Subtitle (English)', blank=True)
-    cta_create_product_ca = CKEditor5Field('Crear Producte CTA (Català)', blank=True)
-    cta_create_product_en = CKEditor5Field('Create Product CTA (English)', blank=True)
-    cta_start_now_ca = CKEditor5Field('Comença Ara CTA (Català)', blank=True)
-    cta_start_now_en = CKEditor5Field('Start Now CTA (English)', blank=True)
-    cta_have_account_ca = CKEditor5Field('Ja Tinc Compte CTA (Català)', blank=True)
-    cta_have_account_en = CKEditor5Field('I Have an Account CTA (English)', blank=True)
+    content_ca = models.TextField(verbose_name='Home-Page_Content (Català)', blank=True)
+    content_en = models.TextField(verbose_name='Home-Page_Content (English)', blank=True)
+    content_es = models.TextField(verbose_name='Home-Page_Content (Español)', blank=True)
+    content_fr = models.TextField(verbose_name='Home-Page_Content (Français)', blank=True)
+    content_pt = models.TextField(verbose_name='Home-Page_Content (Português)', blank=True)
+    content_de = models.TextField(verbose_name='Home-Page_Content (Deutsch)', blank=True)
+    content_it = models.TextField(verbose_name='Home-Page_Content (Italiano)', blank=True)
 
     def __str__(self):
         return "Homepage Content"
