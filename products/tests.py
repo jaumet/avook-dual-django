@@ -57,16 +57,16 @@ class ContentManagementTest(TestCase):
         Verify that changes made in the admin are not overwritten by the populate_content command.
         """
         # 1. Create the initial homepage content
-        HomePageContent.objects.create(cta_title_ca="Títol Original")
+        HomePageContent.objects.create(content_ca="Títol Original")
 
         # 2. Simulate an admin edit
         home_content = HomePageContent.objects.first()
-        home_content.cta_title_ca = "Aquest és un títol editat"
+        home_content.content_ca = "Aquest és un títol editat"
         home_content.save()
 
         # 3. Verify that the changes persist
         home_content.refresh_from_db()
-        self.assertEqual(home_content.cta_title_ca, "Aquest és un títol editat")
+        self.assertEqual(home_content.content_ca, "Aquest és un títol editat")
 
     def test_home_page_renders_for_anonymous_user(self):
         """
