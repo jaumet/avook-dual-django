@@ -46,15 +46,12 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         lang = self.request.LANGUAGE_CODE
-
         content_obj = HomePageContent.objects.first()
-        translatable_content = {}
-        if content_obj:
-            for field in content_obj._meta.fields:
-                if field.name.endswith(f'_{lang}'):
-                    key = field.name.replace(f'_{lang}', '')
-                    translatable_content[key] = getattr(content_obj, field.name)
 
+        if content_obj:
+            context['home_page_content'] = getattr(content_obj, f'content_{lang}', '')
+        else:
+            context['home_page_content'] = ''
         return context
 
 
