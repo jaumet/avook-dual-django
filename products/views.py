@@ -55,7 +55,6 @@ class HomeView(ListView):
                     key = field.name.replace(f'_{lang}', '')
                     translatable_content[key] = getattr(content_obj, field.name)
 
-        context['translatable_content'] = translatable_content
         return context
 
 
