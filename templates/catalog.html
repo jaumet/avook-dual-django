@@ -14,44 +14,38 @@
     <div class="av-input">
       <input type="text" name="q" placeholder="🔍 Cerca per text o títol..." data-translate-key="catalog.search_placeholder" value="{{ request.GET.q }}">
     </div>
-    <div class="av-select" data-placeholder="Col·lecció">
+    <div class="filter-labels">
       <label data-translate-key="catalog.filter.collection">Col·lecció</label>
+      <label data-translate-key="catalog.filter.level">Nivell</label>
+      <label data-translate-key="catalog.filter.duration">Durada</label>
+      <label data-translate-key="catalog.filter.languages">Llengües</label>
+      <label data-translate-key="catalog.filter.ages">Edats</label>
+    </div>
+    <div class="filter-dropdowns">
       <select name="collection" onchange="this.form.submit()">
         <option value="">--</option>
         {% for collection in collections %}
         <option value="{{ collection }}" {% if request.GET.collection == collection %}selected{% endif %}>{{ collection }}</option>
         {% endfor %}
       </select>
-    </div>
-    <div class="av-select" data-placeholder="Nivell">
-      <label data-translate-key="catalog.filter.level">Nivell</label>
       <select name="level" onchange="this.form.submit()">
         <option value="">--</option>
         {% for level in levels %}
         <option value="{{ level }}" {% if request.GET.level == level %}selected{% endif %}>{{ level }}</option>
         {% endfor %}
       </select>
-    </div>
-    <div class="av-select" data-placeholder="Durada">
-      <label data-translate-key="catalog.filter.duration">Durada</label>
       <select name="duration" onchange="this.form.submit()">
         <option value="">--</option>
         {% for duration in durations %}
         <option value="{{ duration }}" {% if request.GET.duration == duration %}selected{% endif %}>{{ duration }}</option>
         {% endfor %}
       </select>
-    </div>
-    <div class="av-select" data-placeholder="Llengües">
-      <label data-translate-key="catalog.filter.languages">Llengües</label>
       <select name="lang" onchange="this.form.submit()">
         <option value="">--</option>
         {% for lang in languages %}
         <option value="{{ lang }}" {% if request.GET.lang == lang %}selected{% endif %}>{{ lang }}</option>
         {% endfor %}
       </select>
-    </div>
-    <div class="av-select" data-placeholder="Edats">
-      <label data-translate-key="catalog.filter.ages">Edats</label>
       <select name="ages" onchange="this.form.submit()">
         <option value="">--</option>
         {% for ages in ages_list %}
