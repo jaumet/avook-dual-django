@@ -18,7 +18,6 @@ urlpatterns += i18n_patterns(
     path('', HomeView.as_view(), name='home'),
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/', include('accounts.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('products/', include('products.urls')),
 )
 

@@ -6,27 +6,27 @@
 {% block content %}
 <section class="hero">
     <div class="hero__text">
-        <p class="hero__kicker">Dual Understanding And Listening</p>
-        <h1>{{ translatable_content.home_cta_title|safe }}</h1>
-        <p class="hero__subtitle">{{ translatable_content.home_cta_subtitle|safe }}</p>
+        <p class="hero__kicker">{{ translatable_content.kicker|safe }}</p>
+        <h1>{{ translatable_content.cta_title|safe }}</h1>
+        <p class="hero__subtitle">{{ translatable_content.cta_subtitle|safe }}</p>
         <div class="hero__actions">
-            <a class="button" href="#productes">{{ translatable_content.home_discover_products|safe }}</a>
+            <a class="button" href="#productes">{{ translatable_content.discover_products|safe }}</a>
             &nbsp;
-            <a class="button button--ghost" href="{% url 'signup' %}">{{ translatable_content.home_create_account|safe }}</a>
+            <a class="button button--ghost" href="{% url 'signup' %}">{{ translatable_content.create_account|safe }}</a>
         </div>
     </div>
     <div class="hero__art">
-        <img src="{% static 'imgs/mockup_portada.png' %}" alt="Mockup Audiovook" />
+        <img src="{% static 'imgs/logo-dual-fons-blau.png' %}" alt="Mockup Audiovook" />
     </div>
 </section>
 
 <section class="features" id="productes">
     <div class="section__header">
-        <p class="kicker">{{ translatable_content.home_products|safe }}</p>
-        <h2>{{ translatable_content.home_short_stories|safe }}</h2>
-        <p>{{ translatable_content.home_browse_catalog|safe }}</p>
+        <p class="kicker">{{ translatable_content.products|safe }}</p>
+        <h2>{{ translatable_content.short_stories|safe }}</h2>
+        <p>{{ translatable_content.browse_catalog|safe }}</p>
         {% if user.is_authenticated %}
-            <a class="button button--small" href="{% url 'products:product_create' %}">{{ translatable_content.home_add_new_product|safe }}</a>
+            <a class="button button--small" href="{% url 'products:product_create' %}">{{ translatable_content.add_new_product|safe }}</a>
         {% endif %}
     </div>
     <div class="product-grid">
@@ -38,10 +38,10 @@
                     <p class="product-card__description">{{ product.description|truncatewords:30 }}</p>
 
                     {% for package in product.packages.all %}
-                        <p class="product-card__meta"><span>{{ translatable_content.home_package|safe }}</span> {{ package.name }}</p>
+                        <p class="product-card__meta"><span>{{ translatable_content.package|safe }}</span> {{ package.name }}</p>
                         {% if package.titles.all %}
                             <div class="product-card__titles">
-                                <p class="kicker">{{ translatable_content.home_included_titles|safe }}</p>
+                                <p class="kicker">{{ translatable_content.included_titles|safe }}</p>
                                 <ul>
                                     {% for title in package.titles.all %}
                                         <li>
@@ -57,34 +57,34 @@
                                 </ul>
                             </div>
                         {% else %}
-                            <p class="product-card__meta">{{ translatable_content.home_no_titles_in_package|safe }}</p>
+                            <p class="product-card__meta">{{ translatable_content.no_titles_in_package|safe }}</p>
                         {% endif %}
                     {% endfor %}
 
                     <div class="product-card__footer">
                         <span class="product-card__price">{{ product.price }} €</span>
-                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">{{ translatable_content.home_view_details|safe }}</a>
+                        <a class="button button--small" href="{% url 'products:product_detail' product.pk %}">{{ translatable_content.view_details|safe }}</a>
                     </div>
                 </div>
             </article>
         {% empty %}
-            <p>{{ translatable_content.home_no_products|safe }}</p>
+            <p>{{ translatable_content.no_products|safe }}</p>
         {% endfor %}
     </div>
 </section>
 
 <section class="cta">
     <div class="cta__text">
-        <h2>{{ translatable_content.home_cta_title|safe }}</h2>
-        <p>{{ translatable_content.home_cta_subtitle|safe }}</p>
+        <h2>{{ translatable_content.cta_title|safe }}</h2>
+        <p>{{ translatable_content.cta_subtitle|safe }}</p>
     </div>
     <div class="cta__actions">
         {% if user.is_authenticated %}
-            <a class="button" href="{% url 'products:product_create' %}">{{ translatable_content.home_cta_create_product|safe }}</a>
+            <a class="button" href="{% url 'products:product_create' %}">{{ translatable_content.cta_create_product|safe }}</a>
         {% else %}
-            <a class="button" href="{% url 'signup' %}">{{ translatable_content.home_cta_start_now|safe }}</a>
+            <a class="button" href="{% url 'signup' %}">{{ translatable_content.cta_start_now|safe }}</a>
             &nbsp;
-            <a class="button button--ghost" href="{% url 'login' %}">{{ translatable_content.home_cta_have_account|safe }}</a>
+            <a class="button button--ghost" href="{% url 'accounts:login' %}">{{ translatable_content.cta_have_account|safe }}</a>
         {% endif %}
     </div>
 </section>
