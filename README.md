@@ -3,12 +3,15 @@
 Aquest projecte converteix el lloc estàtic d'Audiovook Dual en una aplicació Django amb gestió d'usuaris i catàleg de productes.
 
 ## Configuració
+
 1. Crea i activa un entorn virtual.
 2. Instal·la les dependències:
+   
    ```bash
    pip install -r requirements.txt
    ```
 3. Executa les migracions i arrenca el servidor:
+   
    ```bash
    python manage.py migrate
    python manage.py runserver
@@ -20,23 +23,27 @@ Recentment, s'ha fet una reestructuració completa dels models de dades (`Title`
 
 Per solucionar-ho, has de reiniciar la base de dades seguint aquests passos:
 
-1.  **Atura el servidor de desenvolupament** (si l'estàs executant).
-2.  **Esborra el fitxer de la base de dades local**:
-    ```bash
-    rm db.sqlite3
-    ```
-3.  **Aplica les noves migracions** per crear la nova estructura de la base de dades:
-    ```bash
-    python manage.py migrate
-    ```
-4.  **Crea un nou superusuari** per poder accedir al panell d'administració:
-    ```bash
-    python manage.py createsuperuser
-    ```
-5.  **Inicia el servidor de nou**:
-    ```bash
-    python manage.py runserver
-    ```
+1. **Atura el servidor de desenvolupament** (si l'estàs executant).
+2. **Esborra el fitxer de la base de dades local**:
+   
+   ```bash
+   rm db.sqlite3
+   ```
+3. **Aplica les noves migracions** per crear la nova estructura de la base de dades:
+   
+   ```bash
+   python manage.py migrate
+   ```
+4. **Crea un nou superusuari** per poder accedir al panell d'administració:
+   
+   ```bash
+   python manage.py createsuperuser
+   ```
+5. **Inicia el servidor de nou**:
+   
+   ```bash
+   python manage.py runserver
+   ```
 
 Després de seguir aquests passos, l'aplicació hauria de funcionar correctament amb la nova estructura de dades.
 
@@ -44,53 +51,57 @@ Després de seguir aquests passos, l'aplicació hauria de funcionar correctament
 
 Aquest projecte utilitza un sistema de traducció basat en JavaScript al frontend. Per afegir un nou idioma, segueix aquests passos:
 
-1.  **Afegeix l'idioma a `settings.py`**:
-    A `avook_site/settings.py`, afegeix el nou codi d'idioma a la llista `LANGUAGES`. Això és necessari perquè el sistema d'URL de Django reconegui el nou idioma. Per exemple, per afegir alemany:
-    ```python
-    LANGUAGES = [
-        ('ca', 'Català'),
-        ('en', 'English'),
-        ('es', 'Spanish'),
-        ('pt', 'Portuguese'),
-        ('it', 'Italian'),
-        ('fr', 'French'),
-        ('de', 'German'),  # Nova línia
-    ]
-    ```
+1. **Afegeix l'idioma a `settings.py`**:
+   A `avook_site/settings.py`, afegeix el nou codi d'idioma a la llista `LANGUAGES`. Això és necessari perquè el sistema d'URL de Django reconegui el nou idioma. Per exemple, per afegir alemany:
+   
+   ```python
+   LANGUAGES = [
+       ('ca', 'Català'),
+       ('en', 'English'),
+       ('es', 'Spanish'),
+       ('pt', 'Portuguese'),
+       ('it', 'Italian'),
+       ('fr', 'French'),
+       ('de', 'German'),  # Nova línia
+   ]
+   ```
 
-2.  **Afegeix les traduccions al fitxer JSON**:
-    Obre el fitxer `static/js/translations.json` i afegeix una nova secció per al teu idioma. Copia totes les claus de la secció `en` (anglès) i tradueix els valors. Per exemple, per a l'alemany (`de`):
-    ```json
-    {
-      "ca": { ... },
-      "en": { ... },
-      "es": { ... },
-      "fr": { ... },
-      "it": { ... },
-      "pt": { ... },
-      "de": {
-        "header.catalog": "Katalog",
-        "header.products": "Produkte",
-        ...
-      }
-    }
-    ```
+2. **Afegeix les traduccions al fitxer JSON**:
+   Obre el fitxer `static/js/translations.json` i afegeix una nova secció per al teu idioma. Copia totes les claus de la secció `en` (anglès) i tradueix els valors. Per exemple, per a l'alemany (`de`):
+   
+   ```json
+   {
+     "ca": { ... },
+     "en": { ... },
+     "es": { ... },
+     "fr": { ... },
+     "it": { ... },
+     "pt": { ... },
+     "de": {
+       "header.catalog": "Katalog",
+       "header.products": "Produkte",
+       ...
+     }
+   }
+   ```
 
-3.  **Afegeix l'opció al selector d'idioma**:
-    A `templates/base.html`, afegeix la nova opció al selector d'idioma (`<select id="language-select">`):
-    ```html
-    <select id="language-select">
-        ...
-        <option value="de">Deutsch</option>
-    </select>
-    ```
+3. **Afegeix l'opció al selector d'idioma**:
+   A `templates/base.html`, afegeix la nova opció al selector d'idioma (`<select id="language-select">`):
+   
+   ```html
+   <select id="language-select">
+       ...
+       <option value="de">Deutsch</option>
+   </select>
+   ```
 
-4.  **Reinicia el servidor**:
-    Atura i torna a iniciar el servidor de desenvolupament perquè els canvis a les URL tinguin efecte.
+4. **Reinicia el servidor**:
+   Atura i torna a iniciar el servidor de desenvolupament perquè els canvis a les URL tinguin efecte.
 
 L'aplicació ara hauria de mostrar el nou idioma al selector i permetre als usuaris canviar-hi.
 
 ## Funcionalitats
+
 - Registre i inici/tancament de sessió amb el sistema d'autenticació de Django.
 - Creació i edició de productes amb camps de títol, parella de llengües, descripció, preu i fitxer d'àudio.
 - Llista pública de productes i pàgina de detall amb reproductor d'àudio.
@@ -104,10 +115,103 @@ El contingut de la pàgina d'inici (Homepage) es gestiona a través d'una secci�
 
 ### Per a Editors de Contingut:
 
-1.  **Accedeix al Panell d'Administració**: Navega a `/admin/`.
-2.  **Ves a "Homepage Content"**: Al menú, busca la secció "Products" i fes clic a "Homepage Content".
-3.  **Edita el Contingut**: S'obrirà un formulari amb camps de text enriquit per a cada tros de text de la pàgina d'inici. Edita el contingut directament en aquests camps. No hi ha JSON del qual preocupar-se.
+1. **Accedeix al Panell d'Administració**: Navega a `/admin/`.
+2. **Ves a "Homepage Content"**: Al menú, busca la secció "Products" i fes clic a "Homepage Content".
+3. **Edita el Contingut**: S'obrirà un formulari amb camps de text enriquit per a cada tros de text de la pàgina d'inici. Edita el contingut directament en aquests camps. No hi ha JSON del qual preocupar-se.
 
 ### Per a Desenvolupadors:
 
 El contingut inicial de la pàgina d'inici es crea automàticament a través d'una migració de dades. El `populate_content` ja no és necessari per a la pàgina d'inici.
+
+
+
+---------------------------------------------------------------
+
+
+
+## How to add contents to the pages:
+
+
+
+To add a new translatable text variable like `products_paragraf1` and have it appear on the Products page, you'll need to make small 
+adjustments in three places: the Admin, the View, and the Template.
+
+Here’s a step-by-step guide on how you would do it:
+
+### Step 1: Add Your New Content in the Django Admin
+
+You've already got the first step right! You would go to the admin panel, navigate to **Continguts Traduïbles** (Translatable Content), and create a new entry.
+
+1. For the **Key** field, you would enter: `products_paragraf1`
+2. For the **Contingut (Català)** field, you would type the paragraph you want to display in Catalan.
+3. You can then do the same for the other languages (English, Spanish, etc.).
+
+However, just creating it in the admin isn't enough to make it 
+appear. We now need to tell the Products page to fetch and display this 
+new content.
+
+### Step 2: Update the View to Fetch the Content
+
+The view is the Python code that prepares the data for the page. We need to edit `products/views.py` to tell the `ProductListView` to grab the content you just created.
+
+I would modify the `get_context_data` method to look like this:
+
+```
+from .models import TranslatableContent
+
+class ProductListView(TitleContextMixin, ListView):
+    # ... (other code remains the same) ...
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        lang = self.request.LANGUAGE_CODE
+
+        # --- I would add this part ---
+        # Get all translatable content keys for the product page
+        keys = ['products_title', 'products_paragraf1'] # Add any other keys you need here
+
+        translatable_content = {}
+        content_items = TranslatableContent.objects.filter(key__in=keys)
+
+        for item in content_items:
+            # Get the content for the current language, e.g., 'content_ca'
+            content_value = getattr(item, f'content_{lang}', '')
+            translatable_content[item.key] = content_value
+
+        context['translatable_content'] = translatable_content
+        # --- End of added part ---
+
+        for product in context['products']:
+            for package in product.packages.all():
+                package.titles_with_status = self.get_titles_with_status(package.titles.all())
+        return context
+```
+
+This code fetches the content for `products_paragagraf1` (and any other keys we list) from the database and passes it to the template.
+
+### Step 3: Update the Template to Display the Content
+
+Finally, we need to edit the template file `templates/products/product_list.html` to tell it where to place the new text. You mentioned you want it right after the title.
+
+I would find the title in that file and add your new variable right below it, like so:
+
+```
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    {# This is the title #}
+    <h2>{{ translatable_content.products_title|safe }}</h2>
+
+    {# I would add your new paragraph right here #}
+    <p>{{ translatable_content.products_paragraf1|safe }}</p>
+
+    {# ... the rest of the page that lists the products ... #}
+</main>
+{% endblock %}
+```
+
+By adding `<p>{{ translatable_content.products_paragraf1|safe }}</p>`, we're telling the page to render the content you created in the admin. The `|safe` filter is important to ensure any HTML you add (like bold tags `<b>`) is rendered correctly.
+
+And that's it! If you'd like me to go ahead and implement this for you, just let me know.
