@@ -12,19 +12,42 @@ class Command(BaseCommand):
         with open(translations_path, 'r', encoding='utf-8') as f:
             translations = json.load(f)
 
-        for lang, trans_dict in translations.items():
-            for key, value in trans_dict.items():
-                if key.startswith('home.') or key == 'help_modal.html_content':
-                    content_key = key.replace('.', '_')
-                    obj, created = TranslatableContent.objects.get_or_create(key=content_key)
+        # Prepare a dictionary to hold the consolidated home content for each language
+        home_content_by_lang = {lang: {} for lang in translations.keys()}
 
-                    # We map the language from the JSON file to the corresponding model field
-                    field_name = f'content_{lang}'
-                    if hasattr(obj, field_name):
-                        setattr(obj, field_name, value)
-                        obj.save()
-                        self.stdout.write(self.style.SUCCESS(f'Successfully updated {content_key} for language {lang}'))
-                    else:
-                        self.stdout.write(self.style.WARNING(f'Field {field_name} not found in model for key {content_key}'))
+        # Keep track of other content, like the help modal
+        other_content = {}
+
+        for lang, trans_dict in translations.items():
+            other_content[lang] = {}
+            for key, value in trans_dict.items():
+                if key.startswith('home.'):
+                    # Strip 'home.' prefix and store in the consolidated dictionary
+                    simple_key = key.replace('home.', '')
+                    home_content_by_lang[lang][simple_key] = value
+                elif key == 'help_modal.html_content':
+                    # Handle other specific keys separately
+                    other_content[lang][key.replace('.', '_')] = value
+
+        # Create or update the single home_content entry
+        home_content_defaults = {
+            f'content_{lang}': json.dumps(content, ensure_ascii=False, indent=2)
+            for lang, content in home_content_by_lang.items()
+        }
+        TranslatableContent.objects.update_or_create(
+            key='home_content',
+            defaults=home_content_defaults
+        )
+        self.stdout.write(self.style.SUCCESS('Successfully populated/updated home_content.'))
+
+        # Create or update any other content entries
+        for lang, content_dict in other_content.items():
+            for key, value in content_dict.items():
+                obj, created = TranslatableContent.objects.get_or_create(key=key)
+                field_name = f'content_{lang}'
+                if hasattr(obj, field_name):
+                    setattr(obj, field_name, value)
+                    obj.save()
+                    self.stdout.write(self.style.SUCCESS(f'Successfully updated {key} for language {lang}'))
 
         self.stdout.write(self.style.SUCCESS('Finished populating translatable content.'))

@@ -121,12 +121,12 @@ El contingut de la pàgina d'inici (Homepage) es gestiona a través del panell d
     }
     ```
 
-### Per a Desenvolupadors:
+### Nota per a Desenvolupadors:
 
-Després de fer un `git pull` de les últimes actualitzacions, és possible que la teva base de dades local encara contingui les antigues entrades de contingut (`home_...`). Per migrar aquestes dades al nou format consolidat, has d'executar la següent comanda:
+El contingut traduïble, incloent la pàgina d'inici, es pobla a la base de dades executant la següent comanda. Aquesta és la manera recomanada de carregar o actualitzar el contingut editable del lloc:
 
 ```bash
-python manage.py consolidate_home_content
+python manage.py populate_content
 ```
 
-Aquesta comanda buscarà totes les entrades antigues, les combinarà a la nova entrada `home_content`, i les esborrarà. Després d'executar-la, el contingut a l'administració apareixerà correctament.
+Aquesta comanda llegirà el fitxer `static/js/translations.json` i crearà o actualitzarà les entrades de contingut a la base de dades, incloent l'entrada `home_content` consolidada.
