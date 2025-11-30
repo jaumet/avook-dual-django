@@ -1,0 +1,5 @@
+/* Dark theme for CKEditor 5 */
+.ck-editor__editable {
+    background: #333 !important;
+    color: #f1f1f1 !important;
+}

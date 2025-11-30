@@ -43,3 +43,8 @@ class UserPurchaseAdmin(admin.ModelAdmin):
 class TranslatableContentAdmin(admin.ModelAdmin):
     list_display = ('key',)
     search_fields = ('key',)
+
+    class Media:
+        css = {
+            'all': ('css/custom_ckeditor.css',)
+        }
