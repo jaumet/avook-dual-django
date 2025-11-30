@@ -24,23 +24,32 @@ class Command(BaseCommand):
                 elif key == 'help_modal.html_content':
                     other_content[lang][key.replace('.', '_')] = value
 
-        home_content_defaults = {
-            f'content_{lang}': json.dumps(content, ensure_ascii=False, indent=2)
-            for lang, content in home_content_by_lang.items()
-        }
-        TranslatableContent.objects.update_or_create(
-            key='home_content',
-            defaults=home_content_defaults
-        )
-        self.stdout.write(self.style.SUCCESS('Successfully populated/updated home_content.'))
+        # Create the single home_content entry only if it does not exist
+        if not TranslatableContent.objects.filter(key='home_content').exists():
+            home_content_defaults = {
+                f'content_{lang}': json.dumps(content, ensure_ascii=False, indent=2)
+                for lang, content in home_content_by_lang.items()
+            }
+            TranslatableContent.objects.create(
+                key='home_content',
+                **home_content_defaults
+            )
+            self.stdout.write(self.style.SUCCESS('Successfully populated home_content.'))
+        else:
+            self.stdout.write(self.style.WARNING('home_content already exists, skipping.'))
 
+        # Create other content entries only if they do not exist
         for lang, content_dict in other_content.items():
             for key, value in content_dict.items():
-                obj, created = TranslatableContent.objects.get_or_create(key=key)
-                field_name = f'content_{lang}'
-                if hasattr(obj, field_name):
-                    setattr(obj, field_name, value)
-                    obj.save()
-                    self.stdout.write(self.style.SUCCESS(f'Successfully updated {key} for language {lang}'))
+                if not TranslatableContent.objects.filter(key=key).exists():
+                    obj = TranslatableContent.objects.create(key=key)
+                    field_name = f'content_{lang}'
+                    if hasattr(obj, field_name):
+                        setattr(obj, field_name, value)
+                        obj.save()
+                        self.stdout.write(self.style.SUCCESS(f'Successfully created {key} for language {lang}'))
+                else:
+                    self.stdout.write(self.style.WARNING(f'{key} already exists, skipping.'))
+
 
         self.stdout.write(self.style.SUCCESS('Finished populating translatable content.'))

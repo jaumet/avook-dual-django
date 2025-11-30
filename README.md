@@ -123,12 +123,12 @@ El contingut de la pàgina d'inici (Homepage) es gestiona a través del panell d
 
 ### Nota per a Desenvolupadors:
 
-El contingut traduïble, incloent la pàgina d'inici, es pobla a la base de dades executant la següent comanda. Aquesta és la manera recomanada de carregar o actualitzar el contingut editable del lloc:
+El contingut traduïble inicial es pot carregar a la base de dades executant la següent comanda. Aquesta és la manera recomanada de poblar inicialment el contingut editable del lloc:
 
 ```bash
 python manage.py populate_content
 ```
 
-Aquesta comanda llegirà el fitxer `static/js/translations.json` i crearà o actualitzarà les entrades de contingut a la base de dades, incloent l'entrada `home_content` consolidada.
+Aquesta comanda llegirà el fitxer `static/js/translations.json` i crearà les entrades de contingut a la base de dades, incloent l'entrada `home_content` consolidada.
 
-**Important**: Després de les últimes actualitzacions, has de tornar a executar aquesta comanda per assegurar-te que el contingut de la pàgina d'inici es desa amb el format JSON correcte.
+**Important**: Aquesta comanda és no destructiva. Només crearà les entrades de contingut si no existeixen. No sobreescriurà cap canvi que hagis fet des del panell d'administració.
