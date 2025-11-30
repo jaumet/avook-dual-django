@@ -6,7 +6,7 @@
 {% block content %}
 <section class="hero">
     <div class="hero__text">
-        <p class="hero__kicker">Dual Understanding And Listening</p>
+        <p class="hero__kicker">{{ translatable_content.kicker|safe }}</p>
         <h1>{{ translatable_content.cta_title|safe }}</h1>
         <p class="hero__subtitle">{{ translatable_content.cta_subtitle|safe }}</p>
         <div class="hero__actions">

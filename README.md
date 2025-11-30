@@ -130,3 +130,5 @@ python manage.py populate_content
 ```
 
 Aquesta comanda llegirà el fitxer `static/js/translations.json` i crearà o actualitzarà les entrades de contingut a la base de dades, incloent l'entrada `home_content` consolidada.
+
+**Important**: Després de les últimes actualitzacions, has de tornar a executar aquesta comanda per assegurar-te que el contingut de la pàgina d'inici es desa amb el format JSON correcte.

@@ -12,24 +12,18 @@ class Command(BaseCommand):
         with open(translations_path, 'r', encoding='utf-8') as f:
             translations = json.load(f)
 
-        # Prepare a dictionary to hold the consolidated home content for each language
         home_content_by_lang = {lang: {} for lang in translations.keys()}
-
-        # Keep track of other content, like the help modal
         other_content = {}
 
         for lang, trans_dict in translations.items():
             other_content[lang] = {}
             for key, value in trans_dict.items():
                 if key.startswith('home.'):
-                    # Strip 'home.' prefix and store in the consolidated dictionary
-                    simple_key = key.replace('home.', '')
+                    simple_key = key.replace('home.', '').replace('.', '_')
                     home_content_by_lang[lang][simple_key] = value
                 elif key == 'help_modal.html_content':
-                    # Handle other specific keys separately
                     other_content[lang][key.replace('.', '_')] = value
 
-        # Create or update the single home_content entry
         home_content_defaults = {
             f'content_{lang}': json.dumps(content, ensure_ascii=False, indent=2)
             for lang, content in home_content_by_lang.items()
@@ -40,7 +34,6 @@ class Command(BaseCommand):
         )
         self.stdout.write(self.style.SUCCESS('Successfully populated/updated home_content.'))
 
-        # Create or update any other content entries
         for lang, content_dict in other_content.items():
             for key, value in content_dict.items():
                 obj, created = TranslatableContent.objects.get_or_create(key=key)
