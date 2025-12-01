@@ -10,6 +10,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
 from django.contrib import messages
 from django.db.models import Q
+from django.http import JsonResponse
 
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
 from .models import Product, Title, TitleLanguage, TranslatableContent
@@ -131,43 +132,35 @@ class CatalogView(TitleContextMixin, ListView):
     template_name = 'catalog.html'
     context_object_name = 'titles'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        query = self.request.GET.get('q')
-        level = self.request.GET.get('level')
-        collection = self.request.GET.get('collection')
-        duration = self.request.GET.get('duration')
-        lang = self.request.GET.get('lang')
-        ages = self.request.GET.get('ages')
+def catalog_json(request):
+    titles = Title.objects.all()
+    titles_with_status = TitleContextMixin().get_titles_with_status(titles)
 
-        if query:
-            queryset = queryset.filter(
-                Q(human_name__icontains=query) |
-                Q(description__icontains=query)
-            )
-        if level:
-            queryset = queryset.filter(levels=level)
-        if collection:
-            queryset = queryset.filter(collection=collection)
-        if duration:
-            queryset = queryset.filter(duration=duration)
-        if lang:
-            queryset = queryset.filter(languages__language=lang)
-        if ages:
-            queryset = queryset.filter(ages=ages)
-
-        return queryset.distinct()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['collections'] = Title.objects.values_list('collection', flat=True).distinct()
-        context['durations'] = Title.objects.values_list('duration', flat=True).distinct()
-        context['languages'] = TitleLanguage.objects.values_list('language', flat=True).distinct()
-        context['ages_list'] = Title.objects.values_list('ages', flat=True).distinct()
-        context['levels'] = Title.objects.values_list('levels', flat=True).distinct()
-
-        context['titles_with_status'] = self.get_titles_with_status(context['titles'])
-        return context
+    data = {
+        'titles': [
+            {
+                'title': {
+                    'human_name': item.title.human_name,
+                    'machine_name': item.title.machine_name,
+                    'description': item.title.description,
+                    'collection': item.title.collection,
+                    'duration': item.title.duration,
+                    'levels': item.title.levels,
+                    'ages': item.title.ages,
+                    'image_url': item.image_url,
+                    'languages': [lang.language for lang in item.title.languages.all()]
+                },
+                'status': item.status
+            }
+            for item in titles_with_status
+        ],
+        'collections': list(Title.objects.values_list('collection', flat=True).distinct()),
+        'durations': list(Title.objects.values_list('duration', flat=True).distinct()),
+        'languages': list(TitleLanguage.objects.values_list('language', flat=True).distinct()),
+        'ages_list': list(Title.objects.values_list('ages', flat=True).distinct()),
+        'levels': list(Title.objects.values_list('levels', flat=True).distinct())
+    }
+    return JsonResponse(data)
 
 
 def player_view(request, machine_name):
