@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
 from django.contrib import messages
 from django.db.models import Q
 
@@ -178,3 +178,19 @@ def player_view(request, machine_name):
 
 def root_redirect(request):
     return redirect('/ca/')
+
+
+class CookiesView(TemplateView):
+    template_name = 'legal/cookies.html'
+
+
+class NoticeView(TemplateView):
+    template_name = 'legal/notice.html'
+
+
+class PrivacyView(TemplateView):
+    template_name = 'legal/privacy.html'
+
+
+class RightsView(TemplateView):
+    template_name = 'legal/rights.html'

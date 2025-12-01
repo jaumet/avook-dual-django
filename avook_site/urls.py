@@ -3,7 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from products.views import HomeView, SignUpView, root_redirect
+from products.views import HomeView, SignUpView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
 
 # Keep non-translated URLs separate
 urlpatterns = [
@@ -19,6 +19,10 @@ urlpatterns += i18n_patterns(
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
+    path('legal/cookies/', CookiesView.as_view(), name='cookies'),
+    path('legal/notice/', NoticeView.as_view(), name='notice'),
+    path('legal/privacy/', PrivacyView.as_view(), name='privacy'),
+    path('legal/rights/', RightsView.as_view(), name='rights'),
 )
 
 if settings.DEBUG:
