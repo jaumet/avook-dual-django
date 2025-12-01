@@ -3,6 +3,10 @@
 
 {% block title %}Audiovook Dual — Històries en dues llengües{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home_hero.css' %}">
+{% endblock %}
+
 {% block content %}
     <div class="content">
         {{ home_page_content|safe }}
