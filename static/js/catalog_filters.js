@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       initFilters(data);
+      applyFilters(); // Ensure filters are applied on initial load
     }
 
     const filters = { text:'', colection:'', levels:[], duration:'', lang:'', ages:'' };
@@ -107,27 +108,30 @@ document.addEventListener('DOMContentLoaded', () => {
         filters.colection || filters.duration || filters.lang || filters.ages;
 
       cards.forEach(card => {
-        const txt = card.textContent.toLowerCase();
-        const cardLevel = card.querySelector('.level')?.textContent.trim().toLowerCase() || '';
-        const cardLangs = (card.querySelector('.langList')?.textContent || '')
-          .split(/[,\s]+/)
-          .map(l => l.trim().toUpperCase())
-          .filter(Boolean);
+        let visible = true; // Assume visible by default
 
-        let visible = true;
-        if (!anyFilterActive) visible = false;
-        if (visible && filters.text && !txt.includes(filters.text)) visible = false;
-        if (visible && filters.levels.length > 0) {
-          const wanted = filters.levels.map(l => l.toLowerCase());
-          if (!wanted.includes(cardLevel)) visible = false;
+        // Only apply filters if one is active
+        if (anyFilterActive) {
+          const txt = card.textContent.toLowerCase();
+          const cardLevel = card.querySelector('.level')?.textContent.trim().toLowerCase() || '';
+          const cardLangs = (card.querySelector('.langList')?.textContent || '')
+            .split(/[,\s]+/)
+            .map(l => l.trim().toUpperCase())
+            .filter(Boolean);
+
+          if (filters.text && !txt.includes(filters.text)) visible = false;
+          if (visible && filters.levels.length > 0) {
+            const wanted = filters.levels.map(l => l.toLowerCase());
+            if (!wanted.includes(cardLevel)) visible = false;
+          }
+          if (visible && filters.lang) {
+            const wantedLang = filters.lang.trim().toUpperCase();
+            if (!cardLangs.includes(wantedLang)) visible = false;
+          }
+          if (visible && filters.colection && !txt.includes(filters.colection.toLowerCase())) visible = false;
+          if (visible && filters.duration && !txt.includes(filters.duration.toLowerCase())) visible = false;
+          if (visible && filters.ages && !txt.includes(filters.ages.toLowerCase())) visible = false;
         }
-        if (visible && filters.lang) {
-          const wantedLang = filters.lang.trim().toUpperCase();
-          if (!cardLangs.includes(wantedLang)) visible = false;
-        }
-        if (visible && filters.colection && !txt.includes(filters.colection.toLowerCase())) visible = false;
-        if (visible && filters.duration && !txt.includes(filters.duration.toLowerCase())) visible = false;
-        if (visible && filters.ages && !txt.includes(filters.ages.toLowerCase())) visible = false;
 
         card.style.display = visible ? 'flex' : 'none';
         if (visible) anyVisible = true;

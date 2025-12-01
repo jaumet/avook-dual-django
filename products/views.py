@@ -127,10 +127,8 @@ class SignUpView(SuccessMessageMixin, CreateView):
         return response
 
 
-class CatalogView(TitleContextMixin, ListView):
-    model = Title
+class CatalogView(TemplateView):
     template_name = 'catalog.html'
-    context_object_name = 'titles'
 
 def catalog_json(request):
     titles = Title.objects.all()
