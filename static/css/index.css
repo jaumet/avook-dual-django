@@ -304,35 +304,6 @@ h2,h3 {color:var(--accent);}
   flex: 1 1 150px;
 }
 
-.main-footer {
-  background: var(--header-bg);
-  color: #fff;
-  padding: 1.5em 1em;
-  text-align: center;
-  border-top: 1px solid var(--accent);
-  position: sticky;
-  top: 100vh;
-}
-
-.footer-content {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.footer-nav {
-  margin-top: 1em;
-}
-
-.footer-nav a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 1em;
-}
-
-.footer-nav a:hover {
-  text-decoration: underline;
-}
-
 
 @media (max-width: 640px) {
     .logo-subtitle {
