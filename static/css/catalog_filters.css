@@ -1,0 +1,190 @@
+:root {
+  --bg:#0d0e37;
+  --fg:#f5f5f7;
+  --panel-bg:#18194a;
+  --panel-fg:#fff;
+  --accent:#f7836a;
+  --header-bg:#0d0e37;
+}
+
+body.light-theme {
+  --bg:#f5f5f7;
+  --fg:#222;
+  --panel-bg:#fff;
+  --panel-fg:#222;
+  --accent:#0d0e37;
+  --header-bg:#0d0e37;
+}
+
+/* === Barra de filtres === */
+#filtersBar {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.6em;
+  background:var(--panel-bg);
+  border:0;
+  border-radius:10px;
+  padding:.6em;
+  margin:1em auto;
+  max-width:900px;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+
+#filtersBar .av-select {
+  position: relative;
+  flex: 1 1 120px;
+  min-width: 130px;
+  max-height: 36px;
+  border-radius: 8px;
+  background: var(--panel-bg);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  overflow: visible;
+}
+
+
+#filtersBar input,
+#filtersBar select {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  line-height: 1.2;
+  padding: 0 .8em;
+  box-sizing: border-box;
+  border: 0;
+  background: var(--panel-bg);
+  color: var(--panel-fg);
+  font-size: .95em;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+#filtersBar input:focus,
+#filtersBar select:focus {
+  outline:none;
+  box-shadow:0 0 6px var(--accent);
+}
+
+.av-select {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.av-select label {
+  font-size:0.8em;
+  color:#aaa;
+  margin-bottom:0.2em;
+}
+
+/* === Botons de nivell === */
+#levelSection {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:0.6em;
+  margin:1.2em 0;
+}
+
+.levelBtn {
+  background-color:#1a1c60;
+  color:#fff;
+  border:2px solid #f7836a;
+  border-radius:8px;
+  padding:0.6em 1.4em;
+  font-size:1.1em;
+  cursor:pointer;
+  transition:transform 0.1s ease,background 0.2s ease,border 0.2s ease,box-shadow 0.2s ease;
+  box-shadow:0 0 4px rgba(0,0,0,0.2);
+}
+.levelBtn:hover {
+  transform:scale(1.05);
+  background-color:#2b2e80;
+  border-color:#ff9d80;
+}
+.levelBtn.active {
+  background-color:#f7836a;
+  border-color:#f7836a;
+  color:#fff;
+  box-shadow:0 0 8px rgba(247,131,106,0.5);
+}
+
+#advancedSearchToggle {
+  text-align: center;
+  margin-top: 0.8em;
+}
+
+#toggleFiltersBtn {
+  background-color: #0d0e37;
+  color: #fff;
+  border: 2px solid #f7836a;
+  border-radius: 8px;
+  padding: 0.6em 1.4em;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#toggleFiltersBtn:hover {
+  background-color: #1a1c60;
+  border-color: #ff9d80;
+}
+
+@media (max-width:640px){
+  #filtersBar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .45em;
+    padding: .5em;
+    justify-content: center;
+  }
+
+  #filtersBar .av-input,
+  #filtersBar .av-select {
+    position: relative;
+    height: 34px;
+    max-height: 34px;
+    overflow: visible !important;
+    flex: 1 1 140px;
+    min-width: 130px;
+    border-radius: 8px;
+    background: var(--panel-bg);
+    box-shadow: inset 0 0 0 1px var(--accent);
+    display: inline-flex;
+    vertical-align: top;
+  }
+
+  #filtersBar input,
+  #filtersBar select {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 34px;
+    padding: 0 .6em;
+    font-size: .9em;
+    color: var(--panel-fg);
+    background: var(--panel-bg);
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    line-height: 1.1;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    #filtersBar select {
+      line-height: normal;
+      transform: translateY(-2px);
+    }
+  }
+}

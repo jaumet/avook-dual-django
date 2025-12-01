@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="dark">
+<body>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/translator.js' %}"></script>
     <script>
@@ -36,7 +36,9 @@
             });
         });
     </script>
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+        <script src="{% static 'js/theme_switcher.js' %}"></script>
+    {% endblock %}
 <header class="main-header">
     <div class="header-left">
         <a href="{% url 'home' %}" class="logo-link">

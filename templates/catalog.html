@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
+{% endblock %}
+
 {% block content %}
 <main>
   <h3 data-translate-key="catalog.what_is_dual">ℹ️ Què és Audiovook Dual?</h3>
@@ -9,52 +13,37 @@
   </p>
   <h2 style="text-align:center" data-translate-key="catalog.available_stories">📚 Relats disponibles</h2>
 
-  <!-- Barra de filtres -->
-  <form method="get" action="{% url 'products:catalog' %}" id="filtersBar">
+  <!-- Botons de nivell -->
+  <h3 style="text-align:center">Selecciona nivell:</h3>
+  <section id="levelSection"></section>
+
+  <!-- Botó per mostrar/ocultar filtres -->
+  <div id="advancedSearchToggle">
+    <button id="toggleFiltersBtn">🔍 Cerca avançada</button>
+  </div>
+
+  <!-- Barra de filtres (oculta per defecte) -->
+  <section id="filtersBar" style="display:none;">
     <div class="av-input">
-      <input type="text" name="q" placeholder="🔍 Cerca per text o títol..." data-translate-key="catalog.search_placeholder" value="{{ request.GET.q }}">
+      <input type="text" id="searchInput" placeholder="🔍 Cerca per text o títol..." />
     </div>
-    <div class="filter-labels">
-      <label data-translate-key="catalog.filter.collection">Col·lecció</label>
-      <label data-translate-key="catalog.filter.level">Nivell</label>
-      <label data-translate-key="catalog.filter.duration">Durada</label>
-      <label data-translate-key="catalog.filter.languages">Llengües</label>
-      <label data-translate-key="catalog.filter.ages">Edats</label>
+    <div class="av-select" data-placeholder="Col·lecció">
+      <label>Col·lecció</label>
+      <select id="filterColection"></select>
     </div>
-    <div class="filter-dropdowns">
-      <select name="collection" onchange="this.form.submit()">
-        <option value="">--</option>
-        {% for collection in collections %}
-        <option value="{{ collection }}" {% if request.GET.collection == collection %}selected{% endif %}>{{ collection }}</option>
-        {% endfor %}
-      </select>
-      <select name="level" onchange="this.form.submit()">
-        <option value="">--</option>
-        {% for level in levels %}
-        <option value="{{ level }}" {% if request.GET.level == level %}selected{% endif %}>{{ level }}</option>
-        {% endfor %}
-      </select>
-      <select name="duration" onchange="this.form.submit()">
-        <option value="">--</option>
-        {% for duration in durations %}
-        <option value="{{ duration }}" {% if request.GET.duration == duration %}selected{% endif %}>{{ duration }}</option>
-        {% endfor %}
-      </select>
-      <select name="lang" onchange="this.form.submit()">
-        <option value="">--</option>
-        {% for lang in languages %}
-        <option value="{{ lang }}" {% if request.GET.lang == lang %}selected{% endif %}>{{ lang }}</option>
-        {% endfor %}
-      </select>
-      <select name="ages" onchange="this.form.submit()">
-        <option value="">--</option>
-        {% for ages in ages_list %}
-        <option value="{{ ages }}" {% if request.GET.ages == ages %}selected{% endif %}>{{ ages }}</option>
-        {% endfor %}
-      </select>
+    <div class="av-select" data-placeholder="Durada">
+      <label>Durada</label>
+      <select id="filterDuration"></select>
     </div>
-    <button type="submit" data-translate-key="catalog.filter.button">Filtra</button>
-  </form>
+    <div class="av-select" data-placeholder="Llengües">
+      <label>Llengües</label>
+      <select id="filterLang"></select>
+    </div>
+    <div class="av-select" data-placeholder="Edats">
+      <label>Edats</label>
+      <select id="filterAges"></select>
+    </div>
+  </section>
 
   <!-- Missatge inicial -->
   <div id="helpNote">
@@ -64,48 +53,12 @@
       3️⃣ <span data-translate-key="catalog.click3">Aniràs al reproductor i podràs experimentar el sistema Dual</span></p>
   </div>
 
-  <section id="catalog">
-    {% for item in titles_with_status %}
-    <div class="titleCard">
-      <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}" class="title-image" />
-      <div class="meta-top">
-        {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
-        {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
-      </div>
-      <div class="cardText">
-        <h3 class="title-container">
-          {{ item.title.human_name }}
-          <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
-            <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
-          </a>
-        </h3>
-        <div class="meta">
-          {% if item.title.collection %}<span class="collection">{{ item.title.collection }}</span>{% endif %}
-          {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
-        </div>
-        {% if item.title.languages.all %}
-        <div class="langList">
-          {% for lang in item.title.languages.all %}
-            {{ lang.language }}{% if not forloop.last %}, {% endif %}
-          {% endfor %}
-        </div>
-        {% endif %}
-        {% if item.title.description %}
-        <div class="description">{{ item.title.description }}</div>
-        {% endif %}
-      </div>
-      <div class="status-label">
-        {% if item.status == 'FREE' %}
-          <span class="free" data-translate-key="card.free">FREE</span>
-        {% elif item.status == 'PREMIUM_OWNED' %}
-          <span class="premium-owned" data-translate-key="card.premium">PREMIUM</span>
-        {% elif item.status == 'PREMIUM_NOT_OWNED' %}
-          <span class="premium-not-owned" data-translate-key="card.premium">PREMIUM</span>
-        {% endif %}
-      </div>
-    </div>
-    {% endfor %}
-  </section>
+  <section id="catalog"></section>
   <div id="helpIcon">❔</div>
 </main>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="{% static 'js/catalog_filters.js' %}"></script>
 {% endblock %}
