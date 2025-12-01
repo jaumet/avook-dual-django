@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
 from django.contrib import messages
 from django.db.models import Q
 
@@ -46,15 +46,12 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         lang = self.request.LANGUAGE_CODE
-
         content_obj = HomePageContent.objects.first()
-        translatable_content = {}
-        if content_obj:
-            for field in content_obj._meta.fields:
-                if field.name.endswith(f'_{lang}'):
-                    key = field.name.replace(f'_{lang}', '')
-                    translatable_content[key] = getattr(content_obj, field.name)
 
+        if content_obj:
+            context['home_page_content'] = getattr(content_obj, f'content_{lang}', '')
+        else:
+            context['home_page_content'] = ''
         return context
 
 
@@ -181,3 +178,19 @@ def player_view(request, machine_name):
 
 def root_redirect(request):
     return redirect('/ca/')
+
+
+class CookiesView(TemplateView):
+    template_name = 'legal/cookies.html'
+
+
+class NoticeView(TemplateView):
+    template_name = 'legal/notice.html'
+
+
+class PrivacyView(TemplateView):
+    template_name = 'legal/privacy.html'
+
+
+class RightsView(TemplateView):
+    template_name = 'legal/rights.html'
