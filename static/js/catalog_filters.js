@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     async function loadCatalog(){
-      const res = await fetch('/catalog/json/');
+      const res = await fetch('/products/catalog/json/');
       const data = await res.json();
       const catalog = document.getElementById('catalog');
       catalog.innerHTML = '';
       catalog.style.display = 'none';
+
+      if (data.message) {
+          catalog.innerHTML = `<p>${data.message}</p>`;
+          catalog.style.display = 'block';
+          document.getElementById('filtersBar').style.display = 'none';
+          document.getElementById('levelSection').style.display = 'none';
+          return;
+      }
 
       data.titles.forEach(item => {
         const i = item.title;
