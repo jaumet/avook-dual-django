@@ -1,0 +1,98 @@
+.title-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.titleCard {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.titleCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    position: relative;
+}
+
+.card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-details {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+}
+
+.card-collection {
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem;
+    color: var(--text-secondary-color);
+}
+
+.card-collection strong {
+    color: var(--text-color);
+}
+
+.langList {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.card-meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    font-size: 0.8rem;
+}
+
+.card-meta > span {
+    background-color: var(--accent-color-trans);
+    color: var(--accent-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 1rem 1rem;
+}
+
+.action-btn {
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: var(--accent-color-trans);
+}

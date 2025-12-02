@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (anyFilterActive) {
           const txt = card.textContent.toLowerCase();
           const cardLevel = card.querySelector('.level')?.textContent.trim().toLowerCase() || '';
-          const cardLangs = (card.querySelector('.langList')?.textContent || '')
+          const cardLangs = (card.querySelector('.langList')?.dataset.codes || '')
             .split(/[,\s]+/)
             .map(l => l.trim().toUpperCase())
             .filter(Boolean);
@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = visible ? 'flex' : 'none';
         if (visible) anyVisible = true;
       });
+
+      const noResultsMessage = document.getElementById('noResultsMessage');
+      if (noResultsMessage) {
+        noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+      }
     }
 
     document.querySelectorAll('#levelSection .levelBtn').forEach(btn => {

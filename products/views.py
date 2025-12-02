@@ -24,10 +24,11 @@ class ProductListView(TitleContextMixin, ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles__packages')
+        return super().get_queryset().prefetch_related('packages__titles__languages')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['language_map'] = dict(settings.LANGUAGES)
         for product in context['products']:
             for package in product.packages.all():
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
@@ -133,16 +134,15 @@ class CatalogView(TitleContextMixin, ListView):
     context_object_name = 'titles_with_status'
 
     def get_queryset(self):
-        return Title.objects.all()
+        return Title.objects.prefetch_related('languages').all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         titles = context['object_list']
 
-        # Add status and image_url to each title
         context['titles_with_status'] = self.get_titles_with_status(titles)
 
-        # Prepare data for filters, ensuring values are unique and sorted
+        context['language_map'] = dict(settings.LANGUAGES)
         context['collections'] = sorted(list(titles.values_list('collection', flat=True).distinct()))
         context['durations'] = sorted(list(titles.values_list('duration', flat=True).distinct()))
         context['languages'] = sorted(list(TitleLanguage.objects.filter(title__in=titles).values_list('language', flat=True).distinct()))

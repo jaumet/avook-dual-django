@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-5">
     <h1 data-translate-key="header.products">Productes</h1>
@@ -18,48 +22,11 @@
                     <span class="accordion-icon">+</span>
                 </div>
                 <div class="accordion-content">
-                    <section class="catalog-grid">
+                    <section class="title-cards-container">
                         {% for item in package.titles_with_status %}
-                        <div class="titleCard">
-                          <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}" class="title-image" />
-                          <div class="meta-top">
-                            {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
-                            {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
-                          </div>
-                          <div class="cardText">
-                            <h3 class="title-container">
-                              {{ item.title.human_name }}
-                              <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
-                                <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
-                              </a>
-                            </h3>
-                            <div class="meta">
-                              {% if item.title.collection %}<span class="collection">{{ item.title.collection }}</span>{% endif %}
-                              {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
-                            </div>
-                            {% if item.title.languages.all %}
-                            <div class="langList">
-                              {% for lang in item.title.languages.all %}
-                                {{ lang.language }}{% if not forloop.last %}, {% endif %}
-                              {% endfor %}
-                            </div>
-                            {% endif %}
-                            {% if item.title.description %}
-                            <div class="description">{{ item.title.description }}</div>
-                            {% endif %}
-                          </div>
-                          <div class="status-label">
-                            {% if item.status == 'FREE' %}
-                              <span class="free" data-translate-key="card.free">GRATUÏT</span>
-                            {% elif item.status == 'PREMIUM_OWNED' %}
-                              <span class="premium-owned" data-translate-key="card.premium">PREMIUM</span>
-                            {% elif item.status == 'PREMIUM_NOT_OWNED' %}
-                              <span class="premium-not-owned" data-translate-key="card.premium">PREMIUM</span>
-                            {% endif %}
-                          </div>
-                        </div>
+                            {% include 'products/_title_card.html' with item=item %}
                         {% empty %}
-                        <p data-translate-key="home.no_titles_in_package">No hi ha títols en aquest paquet.</p>
+                            <p data-translate-key="home.no_titles_in_package">No hi ha títols en aquest paquet.</p>
                         {% endfor %}
                     </section>
                 </div>

@@ -3,6 +3,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
+    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -61,39 +62,14 @@
     </div>
   </section>
 
-  <section id="catalog">
+  <section id="catalog" class="title-cards-container">
     {% for item in titles_with_status %}
-      <div class="titleCard">
-        <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}">
-        <div class="meta-top">
-          {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
-          {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
-        </div>
-        <div class="cardText">
-          <h3>{{ item.title.human_name }}</h3>
-          <div class="meta">
-            {% if item.title.collection %}<span class="colection">{{ item.title.collection }}</span>{% endif %}
-            {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
-          </div>
-          {% if item.title.languages.all %}
-            <div class="langList">
-              {{ item.title.languages.all|join:", " }}
-            </div>
-          {% endif %}
-          {% if item.title.description %}<div class="description">{{ item.title.description }}</div>{% endif %}
-        </div>
-        <div class="cardAction">
-          {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
-            <a href="{% url 'products:player' item.title.machine_name %}" class="av-btn av-btn-primary">Play</a>
-          {% else %}
-            <a href="{% url 'products:product_list' %}" class="av-btn">Compra'l</a>
-          {% endif %}
-        </div>
-      </div>
+      {% include 'products/_title_card.html' with item=item %}
     {% empty %}
-      <p>No hi ha títols publicats actualment.</p>
+      <p>No hi ha títols disponibles actualment.</p>
     {% endfor %}
   </section>
+  <p id="noResultsMessage" style="display: none;" data-translate-key="catalog.no_results">No s'han trobat resultats per a la teva cerca.</p>
 </main>
 {% endblock %}
 
