@@ -131,7 +131,11 @@ class CatalogView(TemplateView):
     template_name = 'catalog.html'
 
 def catalog_json(request):
-    titles = Title.objects.all()
+    titles = Title.objects.filter(packages__products__isnull=False).distinct()
+
+    if not titles.exists():
+        return JsonResponse({'message': 'No hi ha títols publicats actualment.'})
+
     titles_with_status = TitleContextMixin().get_titles_with_status(titles)
 
     data = {
@@ -152,11 +156,11 @@ def catalog_json(request):
             }
             for item in titles_with_status
         ],
-        'collections': list(Title.objects.values_list('collection', flat=True).distinct()),
-        'durations': list(Title.objects.values_list('duration', flat=True).distinct()),
-        'languages': list(TitleLanguage.objects.values_list('language', flat=True).distinct()),
-        'ages_list': list(Title.objects.values_list('ages', flat=True).distinct()),
-        'levels': list(Title.objects.values_list('levels', flat=True).distinct())
+        'collections': list(titles.values_list('collection', flat=True).distinct()),
+        'durations': list(titles.values_list('duration', flat=True).distinct()),
+        'languages': list(TitleLanguage.objects.filter(title__in=titles).values_list('language', flat=True).distinct()),
+        'ages_list': list(titles.values_list('ages', flat=True).distinct()),
+        'levels': list(titles.values_list('levels', flat=True).distinct())
     }
     return JsonResponse(data)
 
