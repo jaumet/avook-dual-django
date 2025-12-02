@@ -1,4 +1,4 @@
-from django import forms
+import uuid
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -51,8 +51,10 @@ class SignUpForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        user.is_active = False  # Deactivate account until email confirmation
         user.is_staff = False
         user.is_superuser = False
+        user.confirmation_token = uuid.uuid4()
         if commit:
             user.save()
         return user

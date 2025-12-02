@@ -1,8 +1,14 @@
+import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 class CustomUser(AbstractUser):
+    email_confirmed = models.BooleanField(default=False)
+    confirmation_token = models.UUIDField(
+        null=True,
+        blank=True,
+    )
     first_name = models.CharField("Nom", max_length=150, blank=False)
     last_name = models.CharField("Cognoms", max_length=150, blank=False)
     username = models.CharField(

@@ -5,6 +5,8 @@ from django.views.generic import UpdateView, ListView
 from products.models import Package
 from products.mixins import TitleContextMixin
 from .forms import ProfileUpdateForm
+from django.shortcuts import redirect
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -34,3 +36,17 @@ class LibraryView(LoginRequiredMixin, TitleContextMixin, ListView):
         for package in context['packages']:
             package.titles_with_status = self.get_titles_with_status(package.titles.all())
         return context
+
+
+def activate_account(request, token):
+    try:
+        user = User.objects.get(confirmation_token=token)
+        user.is_active = True
+        user.email_confirmed = True
+        user.confirmation_token = None
+        user.save()
+        messages.success(request, 'El teu compte ha estat activat correctament. Ara pots iniciar sessió.')
+        return redirect('accounts:login')
+    except User.DoesNotExist:
+        messages.error(request, 'El token d\'activació és invàlid o ha expirat.')
+        return redirect('home')
