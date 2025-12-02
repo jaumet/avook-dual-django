@@ -3,6 +3,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
+    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,48 +14,62 @@
   </p>
   <h2 style="text-align:center" data-translate-key="catalog.available_stories">📚 Relats disponibles</h2>
 
-  <!-- Botons de nivell -->
+  <!-- Level buttons -->
   <h3 style="text-align:center">Selecciona nivell:</h3>
-  <section id="levelSection"></section>
+  <section id="levelSection">
+    {% for level in levels %}
+      <button class="levelBtn">{{ level }}</button>
+    {% endfor %}
+  </section>
 
-  <!-- Botó per mostrar/ocultar filtres -->
+  <!-- Toggle filters button -->
   <div id="advancedSearchToggle">
     <button id="toggleFiltersBtn">🔍 Cerca avançada</button>
   </div>
 
-  <!-- Barra de filtres (oculta per defecte) -->
+  <!-- Filters bar (hidden by default) -->
   <section id="filtersBar" style="display:none;">
     <div class="av-input">
       <input type="text" id="searchInput" placeholder="🔍 Cerca per text o títol..." />
     </div>
     <div class="av-select" data-placeholder="Col·lecció">
       <label>Col·lecció</label>
-      <select id="filterColection"></select>
+      <select id="filterColection">
+        <option value="">—</option>
+        {% for collection in collections %}<option value="{{ collection }}">{{ collection }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Durada">
       <label>Durada</label>
-      <select id="filterDuration"></select>
+      <select id="filterDuration">
+        <option value="">—</option>
+        {% for duration in durations %}<option value="{{ duration }}">{{ duration }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Llengües">
       <label>Llengües</label>
-      <select id="filterLang"></select>
+      <select id="filterLang">
+        <option value="">—</option>
+        {% for language in languages %}<option value="{{ language }}">{{ language }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Edats">
       <label>Edats</label>
-      <select id="filterAges"></select>
+      <select id="filterAges">
+        <option value="">—</option>
+        {% for age in ages_list %}<option value="{{ age }}">{{ age }}</option>{% endfor %}
+      </select>
     </div>
   </section>
 
-  <!-- Missatge inicial -->
-  <div id="helpNote">
-    <h3 style="text-align:center" data-translate-key="catalog.dual_in_3_clicks">Dual en 3 clics:</h3>
-    <p>1️⃣ <span data-translate-key="catalog.click1">Selecciona quin tipus de textos vols</span><br>
-      2️⃣ <span data-translate-key="catalog.click2">Tria un relat</span><br>
-      3️⃣ <span data-translate-key="catalog.click3">Aniràs al reproductor i podràs experimentar el sistema Dual</span></p>
-  </div>
-
-  <section id="catalog"></section>
-  <div id="helpIcon">❔</div>
+  <section id="catalog" class="title-cards-container">
+    {% for item in titles_with_status %}
+      {% include 'products/_title_card.html' with item=item %}
+    {% empty %}
+      <p>No hi ha títols disponibles actualment.</p>
+    {% endfor %}
+  </section>
+  <p id="noResultsMessage" style="display: none;" data-translate-key="catalog.no_results">No s'han trobat resultats per a la teva cerca.</p>
 </main>
 {% endblock %}
 

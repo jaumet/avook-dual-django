@@ -1,0 +1,38 @@
+{% comment %}
+This template expects an `item` object in the context, which should contain:
+- item.title: The Title model instance.
+- item.image_url: The URL for the title's cover image.
+- item.status: The user's access status ('FREE', 'PREMIUM_OWNED', etc.).
+- item.language_names: A list of full language names for the title.
+{% endcomment %}
+<div class="titleCard">
+    <div class="card-image">
+        <img src="{{ item.image_url }}" alt="Cover for {{ item.title.human_name }}">
+    </div>
+    <div class="card-details">
+        <h3 class="card-title">{{ item.title.human_name }}</h3>
+
+        {% if item.title.collection %}
+            <p class="card-collection">
+                <strong data-translate-key="catalog.collection">Col·lecció</strong>: <span class="colection">{{ item.title.collection }}</span>
+            </p>
+        {% endif %}
+
+        <div class="langList" data-codes="{% for lang in item.title.languages.all %}{{ lang.language }},{% endfor %}">
+            {{ item.language_names|join:", " }}
+        </div>
+
+        <div class="card-meta">
+            {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
+            {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
+            {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
+        </div>
+    </div>
+    <div class="card-actions">
+        {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
+            <a href="{% url 'products:player' item.title.machine_name %}" class="action-btn play-btn" title="Play">▶️</a>
+        {% else %}
+            <a href="{% url 'products:product_list' %}" class="action-btn buy-btn" title="Compra'l">🛒</a>
+        {% endif %}
+    </div>
+</div>

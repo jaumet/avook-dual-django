@@ -24,10 +24,11 @@ class ProductListView(TitleContextMixin, ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles__packages')
+        return super().get_queryset().prefetch_related('packages__titles__languages')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['language_map'] = dict(settings.LANGUAGES)
         for product in context['products']:
             for package in product.packages.all():
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
@@ -127,38 +128,28 @@ class SignUpView(SuccessMessageMixin, CreateView):
         return response
 
 
-class CatalogView(TemplateView):
+class CatalogView(TitleContextMixin, ListView):
+    model = Title
     template_name = 'catalog.html'
+    context_object_name = 'titles_with_status'
 
-def catalog_json(request):
-    titles = Title.objects.all()
-    titles_with_status = TitleContextMixin().get_titles_with_status(titles)
+    def get_queryset(self):
+        return Title.objects.prefetch_related('languages').all()
 
-    data = {
-        'titles': [
-            {
-                'title': {
-                    'human_name': item.title.human_name,
-                    'machine_name': item.title.machine_name,
-                    'description': item.title.description,
-                    'collection': item.title.collection,
-                    'duration': item.title.duration,
-                    'levels': item.title.levels,
-                    'ages': item.title.ages,
-                    'image_url': item.image_url,
-                    'languages': [lang.language for lang in item.title.languages.all()]
-                },
-                'status': item.status
-            }
-            for item in titles_with_status
-        ],
-        'collections': list(Title.objects.values_list('collection', flat=True).distinct()),
-        'durations': list(Title.objects.values_list('duration', flat=True).distinct()),
-        'languages': list(TitleLanguage.objects.values_list('language', flat=True).distinct()),
-        'ages_list': list(Title.objects.values_list('ages', flat=True).distinct()),
-        'levels': list(Title.objects.values_list('levels', flat=True).distinct())
-    }
-    return JsonResponse(data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        titles = context['object_list']
+
+        context['titles_with_status'] = self.get_titles_with_status(titles)
+
+        context['language_map'] = dict(settings.LANGUAGES)
+        context['collections'] = sorted(list(titles.values_list('collection', flat=True).distinct()))
+        context['durations'] = sorted(list(titles.values_list('duration', flat=True).distinct()))
+        context['languages'] = sorted(list(TitleLanguage.objects.filter(title__in=titles).values_list('language', flat=True).distinct()))
+        context['ages_list'] = sorted(list(titles.values_list('ages', flat=True).distinct()))
+        context['levels'] = sorted(list(titles.values_list('levels', flat=True).distinct()))
+
+        return context
 
 
 def player_view(request, machine_name):
