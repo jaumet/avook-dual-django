@@ -1,110 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    async function loadCatalog(){
-      const res = await fetch('/products/catalog/json/');
-      const data = await res.json();
-      const catalog = document.getElementById('catalog');
-      catalog.innerHTML = '';
-      catalog.style.display = 'none';
-
-      if (data.message) {
-          catalog.innerHTML = `<p>${data.message}</p>`;
-          catalog.style.display = 'block';
-          document.getElementById('filtersBar').style.display = 'none';
-          document.getElementById('levelSection').style.display = 'none';
-          return;
-      }
-
-      data.titles.forEach(item => {
-        const i = item.title;
-        const img = resolveImagePath(i.image_url);
-        const human = i.human_name || i.machine_name;
-
-        const colection = i.collection && i.collection.trim() !== "" ? `<span class="colection">${i.collection}</span>` : "";
-        const levels    = i.levels && i.levels.trim() !== ""       ? `<span class="level">${i.levels}</span>` : "";
-        const ages      = i.ages && i.ages.trim() !== ""           ? `<span class="ages">${i.ages}</span>` : "";
-        const duration  = i.duration && i.duration.trim() !== ""   ? `<span class="duration">${i.duration}</span>` : "";
-        let langs = '';
-        if (i.languages && i.languages.length > 0) {
-            langs = `<div class="langList">${i.languages.join(', ')}</div>`;
-        }
-        const desc      = i.description && i.description.trim() !== "" ? `<div class="description">${i.description}</div>` : "";
-
-        const metaTop = (levels || ages)
-          ? `<div class="meta-top">${levels}${ages}</div>`
-          : "";
-
-        const meta = (colection || duration)
-          ? `<div class="meta">${colection}${duration}</div>`
-          : "";
-
-        const card = document.createElement('div');
-        card.className = 'titleCard';
-        card.innerHTML = `
-          <img src="${img}" alt="${human}">
-          ${metaTop}
-          <div class="cardText">
-            <h3>${human}</h3>
-            ${meta}
-            ${langs}
-            ${desc}
-          </div>
-        `;
-        card.onclick = () => {
-          window.location.href = `/products/player/${i.machine_name}/`;
-        };
-        catalog.appendChild(card);
-      });
-
-      initFilters(data);
-      applyFilters(); // Ensure filters are applied on initial load
-    }
-
     const filters = { text:'', colection:'', levels:[], duration:'', lang:'', ages:'' };
-
-    function fillSelect(id,set){
-      const sel=document.querySelector(id);
-      if(!sel)return;
-      const opt0=document.createElement('option');
-      opt0.value=''; opt0.textContent='—';
-      sel.appendChild(opt0);
-      [...set].sort().forEach(v=>{
-        const opt=document.createElement('option');
-        opt.value=v; opt.textContent=v;
-        sel.appendChild(opt);
-      });
-    }
-
-    async function initFilters(data){
-        const colSet = new Set(data.collections);
-        const levSet = new Set(data.levels);
-        const durSet = new Set(data.durations);
-        const langSet = new Set(data.languages);
-        const ageSet = new Set(data.ages_list);
-
-        fillSelect('#filterColection', colSet);
-        fillSelect('#filterDuration', durSet);
-        fillSelect('#filterLang', langSet);
-        fillSelect('#filterAges', ageSet);
-
-        const levelSection = document.getElementById('levelSection');
-        levelSection.innerHTML = '';
-        [...levSet].sort().forEach(l => {
-            const btn = document.createElement('button');
-            btn.className = 'levelBtn';
-            btn.textContent = l;
-            btn.onclick = () => {
-                btn.classList.toggle('active');
-                if (btn.classList.contains('active')) {
-                    if (!filters.levels.includes(l)) filters.levels.push(l);
-                } else {
-                    filters.levels = filters.levels.filter(x => x !== l);
-                }
-                applyFilters();
-            };
-            levelSection.appendChild(btn);
-        });
-        setupFakeSelects();
-    }
 
     function applyFilters(){
       const cards = document.querySelectorAll('#catalog .titleCard');
@@ -116,9 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         filters.colection || filters.duration || filters.lang || filters.ages;
 
       cards.forEach(card => {
-        let visible = true; // Assume visible by default
+        let visible = true;
 
-        // Only apply filters if one is active
         if (anyFilterActive) {
           const txt = card.textContent.toLowerCase();
           const cardLevel = card.querySelector('.level')?.textContent.trim().toLowerCase() || '';
@@ -144,23 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = visible ? 'flex' : 'none';
         if (visible) anyVisible = true;
       });
-
-      const catalog = document.getElementById('catalog');
-      const help = document.getElementById('helpNote');
-      const helpIcon = document.getElementById('helpIcon');
-
-      catalog.style.display = anyVisible ? 'flex' : 'none';
-      help.style.display = anyVisible ? 'none' : 'block';
-      helpIcon.style.display = anyVisible ? 'flex' : 'none';
     }
 
-    function resolveImagePath(imgPath){
-        if (!imgPath) return '';
-        if (imgPath.startsWith('/static')) {
-            return imgPath;
+    document.querySelectorAll('#levelSection .levelBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const level = btn.textContent;
+        if (btn.classList.contains('active')) {
+          if (!filters.levels.includes(level)) filters.levels.push(level);
+        } else {
+          filters.levels = filters.levels.filter(x => x !== level);
         }
-        return `/static/${imgPath}`;
-    }
+        applyFilters();
+      });
+    });
 
     document.addEventListener('input', (e) => {
       if (e.target.id === 'searchInput') {
@@ -192,12 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
-      const filters = document.getElementById('filtersBar');
+      const filtersBar = document.getElementById('filtersBar');
       const btn = document.getElementById('toggleFiltersBtn');
-      const visible = filters.style.display !== 'none';
-      filters.style.display = visible ? 'none' : 'flex';
+      const visible = filtersBar.style.display !== 'none';
+      filtersBar.style.display = visible ? 'none' : 'flex';
       btn.textContent = visible ? '🔍 Cerca avançada' : '✖️ Amaga filtres';
     });
 
-    loadCatalog();
+    setupFakeSelects();
+    applyFilters();
 });

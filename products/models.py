@@ -34,7 +34,7 @@ class Title(models.Model):
         """
         if self.packages.filter(is_free=True).exists():
             return 'FREE'
-        if user.is_authenticated and user.packages.filter(titles=self).exists():
+        if user and user.is_authenticated and user.packages.filter(titles=self).exists():
             return 'PREMIUM_OWNED'
         return 'PREMIUM_NOT_OWNED'
 

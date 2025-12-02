@@ -13,48 +13,87 @@
   </p>
   <h2 style="text-align:center" data-translate-key="catalog.available_stories">📚 Relats disponibles</h2>
 
-  <!-- Botons de nivell -->
+  <!-- Level buttons -->
   <h3 style="text-align:center">Selecciona nivell:</h3>
-  <section id="levelSection"></section>
+  <section id="levelSection">
+    {% for level in levels %}
+      <button class="levelBtn">{{ level }}</button>
+    {% endfor %}
+  </section>
 
-  <!-- Botó per mostrar/ocultar filtres -->
+  <!-- Toggle filters button -->
   <div id="advancedSearchToggle">
     <button id="toggleFiltersBtn">🔍 Cerca avançada</button>
   </div>
 
-  <!-- Barra de filtres (oculta per defecte) -->
+  <!-- Filters bar (hidden by default) -->
   <section id="filtersBar" style="display:none;">
     <div class="av-input">
       <input type="text" id="searchInput" placeholder="🔍 Cerca per text o títol..." />
     </div>
     <div class="av-select" data-placeholder="Col·lecció">
       <label>Col·lecció</label>
-      <select id="filterColection"></select>
+      <select id="filterColection">
+        <option value="">—</option>
+        {% for collection in collections %}<option value="{{ collection }}">{{ collection }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Durada">
       <label>Durada</label>
-      <select id="filterDuration"></select>
+      <select id="filterDuration">
+        <option value="">—</option>
+        {% for duration in durations %}<option value="{{ duration }}">{{ duration }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Llengües">
       <label>Llengües</label>
-      <select id="filterLang"></select>
+      <select id="filterLang">
+        <option value="">—</option>
+        {% for language in languages %}<option value="{{ language }}">{{ language }}</option>{% endfor %}
+      </select>
     </div>
     <div class="av-select" data-placeholder="Edats">
       <label>Edats</label>
-      <select id="filterAges"></select>
+      <select id="filterAges">
+        <option value="">—</option>
+        {% for age in ages_list %}<option value="{{ age }}">{{ age }}</option>{% endfor %}
+      </select>
     </div>
   </section>
 
-  <!-- Missatge inicial -->
-  <div id="helpNote">
-    <h3 style="text-align:center" data-translate-key="catalog.dual_in_3_clicks">Dual en 3 clics:</h3>
-    <p>1️⃣ <span data-translate-key="catalog.click1">Selecciona quin tipus de textos vols</span><br>
-      2️⃣ <span data-translate-key="catalog.click2">Tria un relat</span><br>
-      3️⃣ <span data-translate-key="catalog.click3">Aniràs al reproductor i podràs experimentar el sistema Dual</span></p>
-  </div>
-
-  <section id="catalog"></section>
-  <div id="helpIcon">❔</div>
+  <section id="catalog">
+    {% for item in titles_with_status %}
+      <div class="titleCard">
+        <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}">
+        <div class="meta-top">
+          {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
+          {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
+        </div>
+        <div class="cardText">
+          <h3>{{ item.title.human_name }}</h3>
+          <div class="meta">
+            {% if item.title.collection %}<span class="colection">{{ item.title.collection }}</span>{% endif %}
+            {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
+          </div>
+          {% if item.title.languages.all %}
+            <div class="langList">
+              {{ item.title.languages.all|join:", " }}
+            </div>
+          {% endif %}
+          {% if item.title.description %}<div class="description">{{ item.title.description }}</div>{% endif %}
+        </div>
+        <div class="cardAction">
+          {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
+            <a href="{% url 'products:player' item.title.machine_name %}" class="av-btn av-btn-primary">Play</a>
+          {% else %}
+            <a href="{% url 'products:product_list' %}" class="av-btn">Compra'l</a>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p>No hi ha títols publicats actualment.</p>
+    {% endfor %}
+  </section>
 </main>
 {% endblock %}
 
