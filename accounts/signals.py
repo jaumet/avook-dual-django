@@ -45,7 +45,7 @@ def send_confirmation_email(sender, instance, created, **kwargs):
 
         # Render the HTML and plain text versions of the email
         html_message = render_to_string('emails/account_confirmation.html', context)
-        plain_message = strip_tags(html_message)
+        plain_message = render_to_string('emails/account_confirmation.txt', context)
 
         # Send the email
         send_mail(
