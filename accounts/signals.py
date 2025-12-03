@@ -43,15 +43,15 @@ def send_confirmation_email(sender, instance, created, **kwargs):
             'token_url': token_url,
         }
 
-        # Render the HTML and plain text versions of the email
+        # Render the HTML version of the email
         html_message = render_to_string('emails/account_confirmation.html', context)
-        plain_message = strip_tags(html_message)
 
-        # Send the email
+        # Send an HTML-only email by passing the HTML content as the main message.
+        # The custom ResendEmailBackend will send this content in the 'html' field.
         send_mail(
             'Confirma el teu compte a Audiovook',
-            plain_message,
+            html_message,  # Use HTML content as the main body
             settings.DEFAULT_FROM_EMAIL,
             [instance.email],
-            html_message=html_message
+            html_message=html_message  # Pass it here as well to ensure content type is text/html
         )
