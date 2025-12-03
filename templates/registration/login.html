@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}<span data-translate-key="login.title">Inicia sessió — Audiovook Dual</span>{% endblock %}
 
@@ -21,6 +22,9 @@
             {% for error in form.password.errors %}
                 <p class="form__error">{{ error }}</p>
             {% endfor %}
+            <div class="form__help" style="text-align: right; margin-top: 5px;">
+              <a href="{% url 'accounts:password_reset' %}">{% trans "Has oblidat la contrasenya?" %}</a>
+            </div>
         </div>
         <button type="submit" class="button" data-translate-key="login.submit">Accedir</button>
         <p class="form__help"><span data-translate-key="login.no_account">No tens compte?</span> <a href="{% url 'signup' %}" data-translate-key="header.signup">Registra't</a></p>

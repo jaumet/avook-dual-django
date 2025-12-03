@@ -43,9 +43,16 @@ def send_confirmation_email(sender, instance, created, **kwargs):
             'token_url': token_url,
         }
 
-        # Render the HTML and plain text versions of the email
+        # Render the HTML version of the email
         html_message = render_to_string('emails/account_confirmation.html', context)
-        plain_message = strip_tags(html_message)
+        # Manually create the plain text version to avoid template rendering issues
+        plain_message = (
+            f"Benvingut/da a Audiovook, {instance.first_name}!\n\n"
+            f"Gràcies per registrar-te. Si us plau, copia i enganxa el següent enllaç al teu navegador per activar el teu compte:\n\n"
+            f"{token_url}\n\n"
+            f"Si no has creat aquest compte, si us plau, ignora aquest correu.\n\n"
+            f"L'equip d'Audiovook"
+        )
 
         # Send the email
         send_mail(
