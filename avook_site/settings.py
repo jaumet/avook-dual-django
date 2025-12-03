@@ -106,6 +106,13 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+## Preparing the API_KEY varriable
+from pathlib import Path
+import os
+from dotenv import load_dotenv
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
 # Resend (SMTP) email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.resend.com'
@@ -114,3 +121,8 @@ EMAIL_HOST_USER = 'resend'
 EMAIL_HOST_PASSWORD = os.environ.get('RESEND_API_KEY')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'no-reply@audiovook.com'
+
+## ADDED
+EMAIL_BACKEND = "avook_site.email_backend.ResendEmailBackend"
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@audiovook.com")
