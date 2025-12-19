@@ -3,6 +3,8 @@ from django.conf import settings
 from django.db import models
 from django.templatetags.static import static
 from django_ckeditor_5.fields import CKEditor5Field
+from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 
 
 class Title(models.Model):
@@ -34,8 +36,15 @@ class Title(models.Model):
         """
         if self.packages.filter(is_free=True).exists():
             return 'FREE'
-        if user and user.is_authenticated and user.packages.filter(titles=self).exists():
-            return 'PREMIUM_OWNED'
+        if user and user.is_authenticated:
+            # Check if the user has an active purchase for a product containing this title
+            now = timezone.now()
+            if UserPurchase.objects.filter(
+                user=user,
+                product__packages__titles=self,
+                expiry_date__gt=now
+            ).exists():
+                return 'PREMIUM_OWNED'
         return 'PREMIUM_NOT_OWNED'
 
     class Meta:
@@ -88,6 +97,14 @@ class Product(models.Model):
     is_free = models.BooleanField(default=False, help_text="És un producte gratuït?")
     packages = models.ManyToManyField(Package, related_name='products', help_text="Paquets inclosos en aquest producte")
 
+    PRODUCT_CATEGORIES = (
+        ('dual_start', 'Dual Start'),
+        ('dual_progress', 'Dual Progress'),
+        ('dual_full_access', 'Dual Full Access'),
+    )
+    category = models.CharField(max_length=20, choices=PRODUCT_CATEGORIES, default='dual_start', help_text="Categoria del producte")
+    duration = models.IntegerField(default=3, help_text="Durada de l'accés en mesos")
+
     def __str__(self):
         return self.name
 
@@ -109,6 +126,12 @@ class UserPurchase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchases')
     purchase_date = models.DateTimeField(auto_now_add=True)
+    expiry_date = models.DateTimeField(null=True, blank=True, help_text="Data de caducitat de l'accés al producte")
+
+    def save(self, *args, **kwargs):
+        if not self.expiry_date and self.product.duration:
+            self.expiry_date = timezone.now() + relativedelta(months=self.product.duration)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} - {self.product.name}"

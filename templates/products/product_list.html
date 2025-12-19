@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
@@ -7,41 +8,34 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1 data-translate-key="header.products">Productes</h1>
+    <h1 data-translate-key="header.products">{% trans "Products" %}</h1>
     <hr>
-    {% for product in products %}
-    <div class="product-card">
-        <div class="product-header">
-            <h2>{{ product.name }} - {{ product.price }} {{ product.currency }}</h2>
-        </div>
-        <div class="product-body">
-            {% for package in product.packages.all %}
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h4 class="package-title">{{ package.name }}</h4>
-                    <span class="accordion-icon">+</span>
+
+    {% regroup products by category as category_list %}
+
+    {% for category in category_list %}
+        <h2>{{ category.grouper|title }}</h2>
+        <div class="row">
+            {% for product in category.list %}
+                <div class="col-md-4">
+                    <div class="card product-card mb-4">
+                        <div class="card-header">
+                            <h3>{{ product.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ product.description }}</p>
+                            <p><strong>{% trans "Price" %}:</strong> {{ product.price }} {{ product.currency }}</p>
+                            <p><strong>{% trans "Duration" %}:</strong> {{ product.duration }} {% trans "months" %}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">{% trans "Buy Now" %}</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="accordion-content">
-                    <section class="title-cards-container">
-                        {% for item in package.titles_with_status %}
-                            {% include 'products/_title_card.html' with item=item %}
-                        {% empty %}
-                            <p data-translate-key="home.no_titles_in_package">No hi ha títols en aquest paquet.</p>
-                        {% endfor %}
-                    </section>
-                </div>
-            </div>
-            {% empty %}
-            <p class="product-text" data-translate-key="product_list.no_packages">No hi ha paquets en aquest producte.</p>
             {% endfor %}
         </div>
-    </div>
     {% empty %}
-    <p data-translate-key="product_list.no_products">No hi ha productes disponibles.</p>
+        <p data-translate-key="product_list.no_products">{% trans "No products available." %}</p>
     {% endfor %}
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/accordion.js' %}"></script>
 {% endblock %}
