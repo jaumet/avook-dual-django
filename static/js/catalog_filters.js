@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const filters = { text:'', colection:'', levels:[], duration:'', lang:'', ages:'' };
+    const filters = { text: '', collection: '', levels: [], duration: '', lang: '', ages: '' };
 
-    function applyFilters(){
-      const cards = document.querySelectorAll('#catalog .titleCard');
+    function applyFilters() {
+        const cards = document.querySelectorAll('#catalog .titleCard');
       let anyVisible = false;
 
       const anyFilterActive =
         (filters.text && filters.text.length > 0) ||
         (filters.levels && filters.levels.length > 0) ||
-        filters.colection || filters.duration || filters.lang || filters.ages;
+        filters.collection || filters.duration || filters.lang || filters.ages;
 
       cards.forEach(card => {
         let visible = true;
@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .split(/[,\s]+/)
             .map(l => l.trim().toUpperCase())
             .filter(Boolean);
+          const cardCollection = card.querySelector('.collection')?.textContent.trim().toLowerCase() || '';
+          const cardDuration = card.querySelector('.duration')?.textContent.trim().toLowerCase() || '';
+          const cardAges = card.querySelector('.ages')?.textContent.trim().toLowerCase() || '';
 
           if (filters.text && !txt.includes(filters.text)) visible = false;
           if (visible && filters.levels.length > 0) {
@@ -30,9 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const wantedLang = filters.lang.trim().toUpperCase();
             if (!cardLangs.includes(wantedLang)) visible = false;
           }
-          if (visible && filters.colection && !txt.includes(filters.colection.toLowerCase())) visible = false;
-          if (visible && filters.duration && !txt.includes(filters.duration.toLowerCase())) visible = false;
-          if (visible && filters.ages && !txt.includes(filters.ages.toLowerCase())) visible = false;
+          if (visible && filters.collection && cardCollection !== filters.collection) visible = false;
+          if (visible && filters.duration && cardDuration !== filters.duration) visible = false;
+          if (visible && filters.ages && cardAges !== filters.ages) visible = false;
         }
 
         card.style.display = visible ? 'flex' : 'none';
@@ -66,9 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('change', (e) => {
-      if (e.target.matches('#filterColection, #filterDuration, #filterLang, #filterAges')) {
+      if (e.target.matches('#filterCollection, #filterDuration, #filterAges')) {
         const key = e.target.id.replace('filter', '').toLowerCase();
-        filters[key] = e.target.value || '';
+        filters[key] = e.target.value.toLowerCase() || '';
+        applyFilters();
+      } else if (e.target.matches('#filterLang')) {
+        filters.lang = e.target.value || '';
         applyFilters();
       }
     });
