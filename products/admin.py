@@ -5,14 +5,14 @@ from .models import Product, Title, Package, UserPurchase, TitleLanguage, Transl
 class TitleLanguageInline(admin.TabularInline):
     model = TitleLanguage
     extra = 1
+    fields = ('language', 'human_name', 'directory', 'json_file')
 
 
 @admin.register(Title)
 class TitleAdmin(admin.ModelAdmin):
-    list_display = ('human_name', 'levels', 'collection')
-    search_fields = ('human_name', 'machine_name', 'collection')
+    list_display = ('machine_name', 'levels', 'collection')
+    search_fields = ('machine_name', 'collection')
     list_filter = ('levels', 'collection')
-    prepopulated_fields = {'machine_name': ('human_name',)}
     inlines = [TitleLanguageInline]
 
 

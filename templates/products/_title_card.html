@@ -7,10 +7,10 @@ This template expects an `item` object in the context, which should contain:
 {% endcomment %}
 <div class="titleCard">
     <div class="card-image">
-        <img src="{{ item.image_url }}" alt="Cover for {{ item.title.human_name }}">
+        <img src="{{ item.image_url }}" alt="Cover for {{ item.human_name }}">
     </div>
     <div class="card-details">
-        <h3 class="card-title">{{ item.title.human_name }}</h3>
+        <h3 class="card-title">{{ item.human_name }}</h3>
 
         {% if item.title.collection %}
             <p class="card-collection">

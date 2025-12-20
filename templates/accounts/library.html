@@ -15,14 +15,14 @@
             <section class="catalog-grid">
                 {% for item in package.titles_with_status %}
                 <div class="titleCard">
-                  <img src="{{ item.image_url }}" alt="{{ item.title.human_name }}" class="title-image" />
+                  <img src="{{ item.image_url }}" alt="{{ item.human_name }}" class="title-image" />
                   <div class="meta-top">
                     {% if item.title.levels %}<span class="level">{{ item.title.levels }}</span>{% endif %}
                     {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
                   </div>
                   <div class="cardText">
                     <h3 class="title-container">
-                      {{ item.title.human_name }}
+                      {{ item.human_name }}
                       <a href="{% url 'products:player' machine_name=item.title.machine_name %}" class="play-button">
                         <img src="{% static 'imgs/Boto-Play.png' %}" alt="Play" />
                       </a>

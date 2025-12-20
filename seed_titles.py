@@ -10,20 +10,14 @@ def seed_titles():
     with open('samples/audios.json') as f:
         data = json.load(f)
 
-    last_title = Title.objects.order_by('-id').first()
-    next_id = 10001
-    if last_title:
-        try:
-            next_id = int(last_title.id) + 1
-        except (ValueError, TypeError):
-            pass
+    # Clear existing titles and languages to ensure a clean slate
+    Title.objects.all().delete()
+    TitleLanguage.objects.all().delete()
 
     for machine_name, details in data['AUDIOS'].items():
         title, created = Title.objects.get_or_create(
             machine_name=machine_name,
             defaults={
-                'id': str(next_id),
-                'human_name': details.get('title-human', machine_name),
                 'description': details.get('description', ''),
                 'levels': details.get('levels', ''),
                 'ages': details.get('ages', ''),
@@ -32,23 +26,22 @@ def seed_titles():
             }
         )
         if created:
-            print(f"Created title: {title.human_name}")
-            next_id += 1
-            langs = details.get('langs', '').split(',')
-            for lang in langs:
-                lang = lang.strip().upper()
-                if lang:
-                    TitleLanguage.objects.get_or_create(
-                        title=title,
-                        language=lang,
-                        defaults={
-                            'directory': f"/AUDIOS/{machine_name}/{lang}/",
-                            'json_file': f"{lang}-{machine_name}.json"
-                        }
-                    )
-                    print(f"  - Added language: {lang}")
+            print(f"Created title: {title.machine_name}")
         else:
-            print(f"Title already exists: {title.human_name}")
+            print(f"Title already exists: {title.machine_name}")
+
+        if 'text_versions' in details:
+            for lang_code, lang_details in details['text_versions'].items():
+                TitleLanguage.objects.update_or_create(
+                    title=title,
+                    language=lang_code.upper(),
+                    defaults={
+                        'human_name': lang_details.get('human_name', ''),
+                        'directory': lang_details.get('directory', ''),
+                        'json_file': lang_details.get('json_file', '')
+                    }
+                )
+                print(f"  - Added/Updated language: {lang_code.upper()}")
 
 if __name__ == "__main__":
     seed_titles()

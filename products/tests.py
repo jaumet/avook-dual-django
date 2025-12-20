@@ -80,12 +80,15 @@ class ContentManagementTest(TestCase):
             response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
+from products.models import TitleLanguage
+
 class ProductAccessTest(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(username='testuser', password='password')
 
         self.level_a2_package = Package.objects.create(name='A2 Package', level_range='A2')
-        self.title_a2 = Title.objects.create(machine_name='a2-title', human_name='A2 Title', levels='A2')
+        self.title_a2 = Title.objects.create(machine_name='a2-title', levels='A2')
+        TitleLanguage.objects.create(title=self.title_a2, language='EN', human_name='A2 Title')
         self.level_a2_package.titles.add(self.title_a2)
 
         self.product_a2 = Product.objects.create(

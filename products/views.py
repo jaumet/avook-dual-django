@@ -11,6 +11,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView, T
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+from django.utils import translation
 
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
 from .models import Product, Title, TitleLanguage, TranslatableContent
@@ -69,6 +70,20 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = context['product']
+        current_lang = translation.get_language()
+
+        for package in product.packages.all():
+            for title in package.titles.prefetch_related('languages'):
+                title_lang = title.languages.filter(language=current_lang.upper()).first()
+                if not title_lang and title.languages.exists():
+                    title_lang = title.languages.first()
+                title.display_name = title_lang.human_name if title_lang else title.machine_name
+
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -161,9 +176,21 @@ class CatalogView(TitleContextMixin, ListView):
 
 
 def player_view(request, machine_name):
-    title = get_object_or_404(Title, machine_name=machine_name)
-    languages = title.languages.all()
-    return render(request, 'products/player.html', {'title': title, 'languages': languages})
+    title = get_object_or_404(Title.objects.prefetch_related('languages'), machine_name=machine_name)
+
+    current_lang = translation.get_language()
+    title_lang = title.languages.filter(language=current_lang.upper()).first()
+    if not title_lang and title.languages.exists():
+        title_lang = title.languages.first()
+
+    human_name = title_lang.human_name if title_lang else title.machine_name
+
+    context = {
+        'title': title,
+        'human_name': human_name,
+        'languages': title.languages.all()
+    }
+    return render(request, 'products/player.html', context)
 
 
 def root_redirect(request):

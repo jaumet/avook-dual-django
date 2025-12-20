@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <section id="topInfo" class="topCard">
     <img id="relatImg" src="{% static 'imgs/book-icon.png' %}" alt="Imatge relat"/>
     <div>
-      <h2 id="relatTitle">{{ title.human_name }}</h2>
+      <h2 id="relatTitle">{{ human_name }}</h2>
       <div id="relatDesc" style="margin:.1em 0 .3em 0;">{{ title.description }}</div>
       <div class="langs">🌐 <span data-translate-key="player.languages">Idiomes:</span> <span id="relatLangs">
         {% for lang in title.languages.all %}

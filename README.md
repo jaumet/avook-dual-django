@@ -222,26 +222,36 @@ To add a large number of titles to the database at once, you can use the `seed_t
 
 ### Step 1: Format Your Titles in JSON
 
-You need to add your titles to the `samples/audios.json` file. Each title should follow this structure:
+You need to add your titles to the `samples/audios.json` file. Each title has a unique `machine_name` and contains general metadata. The language-specific details, including the human-readable title, are nested under a `text_versions` object.
+
+Here is the structure for a single title:
 
 ```json
 "your-unique-machine-name": {
-  "title-human": "The Human-Readable Title",
   "description": "A brief description of the title.",
   "levels": "A2",
-  "langs": "CA, EN, FR",
   "ages": "10-16",
-  "colection": "Name of the Collection",
-  "duration": "00:05:30"
+  "collection": "Name of the Collection",
+  "duration": "00:05:30",
+  "text_versions": {
+    "CA": {
+      "human_name": "Títol en Català",
+      "directory": "/AUDIOS/your-unique-machine-name/CA/",
+      "json_file": "CA-your-unique-machine-name.json"
+    },
+    "EN": {
+      "human_name": "Title in English",
+      "directory": "/AUDIOS/your-unique-machine-name/EN/",
+      "json_file": "EN-your-unique-machine-name.json"
+    }
+  }
 }
 ```
 
 -   `your-unique-machine-name`: A unique identifier for the title, with no spaces (use hyphens).
--   `title-human`: The display name of the title.
--   `description`: The description.
--   `levels`: The language level (e.g., 'A1', 'B2').
--   `langs`: A comma-separated list of language codes (e.g., 'CA, EN, ES').
--   `ages`, `colection`, `duration`: Optional metadata fields.
+-   `text_versions`: An object containing the language-specific versions of the title.
+-   `human_name`: The display name of the title in that specific language.
+-   `directory` and `json_file`: Paths to the audio and sentence data for that language.
 
 Add each title as a new entry inside the `"AUDIOS": { ... }` block in `samples/audios.json`.
 
@@ -253,4 +263,4 @@ Once the JSON file is updated, run the following command from the project's root
 python seed_titles.py
 ```
 
-This will read the JSON file and create the `Title` and `TitleLanguage` entries in the database. The script is designed to skip titles that already exist, so it is safe to run multiple times.
+This will read the JSON file, clear the existing titles, and create the new `Title` and `TitleLanguage` entries in the database based on the new structure.
