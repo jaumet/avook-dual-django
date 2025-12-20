@@ -2,6 +2,7 @@ import os
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.templatetags.static import static
 from django_ckeditor_5.fields import CKEditor5Field
@@ -38,12 +39,17 @@ class Title(models.Model):
             return 'FREE'
 
         if user and user.is_authenticated:
-            # Check for active purchases that grant access to this title
-            user_purchases = user.purchases.filter(expiry_date__gte=timezone.now())
-            for purchase in user_purchases:
-                for package in purchase.product.packages.all():
-                    if self in package.titles.all():
-                        return 'PREMIUM_OWNED'
+            # This is an optimized query to check for access.
+            # It avoids N+1 queries by performing a single DB lookup.
+            is_owned = UserPurchase.objects.filter(
+                user=user,
+                product__packages__titles=self
+            ).filter(
+                Q(expiry_date__gte=timezone.now()) | Q(expiry_date__isnull=True)
+            ).exists()
+
+            if is_owned:
+                return 'PREMIUM_OWNED'
 
         return 'PREMIUM_NOT_OWNED'
 
