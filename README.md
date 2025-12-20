@@ -215,3 +215,42 @@ I would find the title in that file and add your new variable right below it, li
 By adding `<p>{{ translatable_content.products_paragraf1|safe }}</p>`, we're telling the page to render the content you created in the admin. The `|safe` filter is important to ensure any HTML you add (like bold tags `<b>`) is rendered correctly.
 
 And that's it! If you'd like me to go ahead and implement this for you, just let me know.
+
+## Bulk-Inserting Titles
+
+To add a large number of titles to the database at once, you can use the `seed_titles.py` script. This script reads title data from `samples/audios.json` and populates the database.
+
+### Step 1: Format Your Titles in JSON
+
+You need to add your titles to the `samples/audios.json` file. Each title should follow this structure:
+
+```json
+"your-unique-machine-name": {
+  "title-human": "The Human-Readable Title",
+  "description": "A brief description of the title.",
+  "levels": "A2",
+  "langs": "CA, EN, FR",
+  "ages": "10-16",
+  "colection": "Name of the Collection",
+  "duration": "00:05:30"
+}
+```
+
+-   `your-unique-machine-name`: A unique identifier for the title, with no spaces (use hyphens).
+-   `title-human`: The display name of the title.
+-   `description`: The description.
+-   `levels`: The language level (e.g., 'A1', 'B2').
+-   `langs`: A comma-separated list of language codes (e.g., 'CA, EN, ES').
+-   `ages`, `colection`, `duration`: Optional metadata fields.
+
+Add each title as a new entry inside the `"AUDIOS": { ... }` block in `samples/audios.json`.
+
+### Step 2: Run the Seeding Command
+
+Once the JSON file is updated, run the following command from the project's root directory:
+
+```bash
+python seed_titles.py
+```
+
+This will read the JSON file and create the `Title` and `TitleLanguage` entries in the database. The script is designed to skip titles that already exist, so it is safe to run multiple times.
