@@ -21,17 +21,25 @@ from .mixins import TitleContextMixin
 class ProductListView(TitleContextMixin, ListView):
     model = Product
     template_name = 'products/product_list.html'
-    context_object_name = 'products'
+    context_object_name = 'products_by_category'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles__languages')
+        return super().get_queryset().prefetch_related('packages__titles__languages').order_by('price')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+        products_by_category = {
+            'start': list(products.filter(category='start')),
+            'progress': list(products.filter(category='progress')),
+            'full_access': list(products.filter(category='full_access')),
+        }
+        context['products_by_category'] = products_by_category
         context['language_map'] = dict(settings.LANGUAGES)
-        for product in context['products']:
-            for package in product.packages.all():
-                package.titles_with_status = self.get_titles_with_status(package.titles.all())
+        for category in products_by_category.values():
+            for product in category:
+                for package in product.packages.all():
+                    package.titles_with_status = self.get_titles_with_status(package.titles.all())
         return context
 
 
