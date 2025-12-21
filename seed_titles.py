@@ -23,7 +23,6 @@ def seed_titles():
             machine_name=machine_name,
             defaults={
                 'id': str(next_id),
-                'human_name': details.get('title-human', machine_name),
                 'description': details.get('description', ''),
                 'levels': details.get('levels', ''),
                 'ages': details.get('ages', ''),
@@ -32,23 +31,24 @@ def seed_titles():
             }
         )
         if created:
-            print(f"Created title: {title.human_name}")
+            print(f"Created title: {machine_name}")
             next_id += 1
-            langs = details.get('langs', '').split(',')
-            for lang in langs:
-                lang = lang.strip().upper()
-                if lang:
-                    TitleLanguage.objects.get_or_create(
-                        title=title,
-                        language=lang,
-                        defaults={
-                            'directory': f"/AUDIOS/{machine_name}/{lang}/",
-                            'json_file': f"{lang}-{machine_name}.json"
-                        }
-                    )
-                    print(f"  - Added language: {lang}")
+            if 'text_versions' in details:
+                for lang, lang_details in details['text_versions'].items():
+                    lang = lang.strip().upper()
+                    if lang:
+                        TitleLanguage.objects.get_or_create(
+                            title=title,
+                            language=lang,
+                            defaults={
+                                'human_name': lang_details.get('title-human', machine_name),
+                                'directory': lang_details.get('Directory', f"/AUDIOS/{machine_name}/{lang}/"),
+                                'json_file': lang_details.get('json_file', f"{lang}-{machine_name}.json")
+                            }
+                        )
+                        print(f"  - Added language: {lang}")
         else:
-            print(f"Title already exists: {title.human_name}")
+            print(f"Title already exists: {machine_name}")
 
 if __name__ == "__main__":
     seed_titles()

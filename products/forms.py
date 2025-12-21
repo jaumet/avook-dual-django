@@ -11,7 +11,6 @@ class TitleForm(forms.ModelForm):
         fields = [
             'id',
             'machine_name',
-            'human_name',
             'description',
             'levels',
             'ages',
@@ -23,7 +22,7 @@ class TitleForm(forms.ModelForm):
 class TitleLanguageForm(forms.ModelForm):
     class Meta:
         model = TitleLanguage
-        fields = ['language', 'directory', 'json_file']
+        fields = ['language', 'human_name', 'directory', 'json_file']
 
 
 class ProductForm(forms.ModelForm):
