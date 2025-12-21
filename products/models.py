@@ -11,7 +11,6 @@ from django_ckeditor_5.fields import CKEditor5Field
 class Title(models.Model):
     id = models.AutoField(primary_key=True)
     machine_name = models.SlugField(unique=True, help_text="Nom intern sense espais, p. ex., 'el-meu-titol'")
-    human_name = models.CharField(max_length=255, help_text="Nom del títol per mostrar")
     description = models.TextField(blank=True, help_text="Descripció del títol")
     levels = models.CharField(max_length=50, blank=True, help_text="Nivells, p. ex., 'A2'")
     ages = models.CharField(max_length=20, blank=True, help_text="Rang d’edat, p. ex., '10-16'")
@@ -19,7 +18,7 @@ class Title(models.Model):
     duration = models.CharField(max_length=20, blank=True, help_text="Durada en format HH:MM:SS")
 
     def __str__(self):
-        return self.human_name
+        return self.machine_name
 
     def get_image_url(self):
         image_path = f"AUDIOS/{self.machine_name}/{self.machine_name}.png"
@@ -61,11 +60,12 @@ class Title(models.Model):
 class TitleLanguage(models.Model):
     title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='languages')
     language = models.CharField(max_length=2, help_text="Codi de l'idioma, p. ex., 'CA'")
+    human_name = models.CharField(max_length=255, help_text="Nom del títol per mostrar en l'idioma especificat")
     directory = models.CharField(max_length=255, help_text="Ruta al directori de l'idioma")
     json_file = models.CharField(max_length=255, help_text="Nom del fitxer JSON de l'idioma")
 
     def __str__(self):
-        return f"{self.title.human_name} ({self.language})"
+        return f"{self.human_name} ({self.language})"
 
     class Meta:
         unique_together = ('title', 'language')

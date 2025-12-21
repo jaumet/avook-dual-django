@@ -226,22 +226,33 @@ You need to add your titles to the `samples/audios.json` file. Each title should
 
 ```json
 "your-unique-machine-name": {
-  "title-human": "The Human-Readable Title",
   "description": "A brief description of the title.",
   "levels": "A2",
-  "langs": "CA, EN, FR",
   "ages": "10-16",
   "colection": "Name of the Collection",
-  "duration": "00:05:30"
+  "duration": "00:05:30",
+  "text_versions": {
+    "CA": {
+      "title-human": "El títol en català",
+      "Directory": "/AUDIOS/your-unique-machine-name/CA/",
+      "json_file": "CA-your-unique-machine-name.json"
+    },
+    "EN": {
+      "title-human": "The title in English",
+      "Directory": "/AUDIOS/your-unique-machine-name/EN/",
+      "json_file": "EN-your-unique-machine-name.json"
+    }
+  }
 }
 ```
 
 -   `your-unique-machine-name`: A unique identifier for the title, with no spaces (use hyphens).
--   `title-human`: The display name of the title.
--   `description`: The description.
--   `levels`: The language level (e.g., 'A1', 'B2').
--   `langs`: A comma-separated list of language codes (e.g., 'CA, EN, ES').
--   `ages`, `colection`, `duration`: Optional metadata fields.
+-   `description`, `levels`, `ages`, `colection`, `duration`: Metadata fields for the title.
+-   `text_versions`: An object containing language-specific information.
+    -   `CA`, `EN`, etc.: Language codes.
+        -   `title-human`: The display name of the title in that language.
+        -   `Directory`: The path to the directory containing the audio files for that language.
+        -   `json_file`: The name of the JSON file containing the sentences for that language.
 
 Add each title as a new entry inside the `"AUDIOS": { ... }` block in `samples/audios.json`.
 
