@@ -11,6 +11,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView, T
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+from django.utils.translation import gettext_lazy as _
 
 from django.urls import reverse
 from post_office.utils import send_templated_email
@@ -130,7 +131,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     form_class = SignUpForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('home')
-    success_message = 'Compte creat! Ja pots iniciar sessió.'
+    success_message = _("Your account has been created successfully! Please check your email to activate your account.")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -154,7 +155,6 @@ class SignUpView(SuccessMessageMixin, CreateView):
             user.email
         )
 
-        login(self.request, user)
         return response
 
 

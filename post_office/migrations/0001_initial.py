@@ -134,15 +134,6 @@ class Migration(migrations.Migration):
                 (
                     "language",
                     models.CharField(
-                        choices=[
-                            ("ca", "Catalan"),
-                            ("en", "English"),
-                            ("es", "Spanish"),
-                            ("fr", "French"),
-                            ("de", "German"),
-                            ("it", "Italian"),
-                            ("pt", "Portuguese"),
-                        ],
                         max_length=10,
                     ),
                 ),

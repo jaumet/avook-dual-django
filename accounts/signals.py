@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.utils import translation
 from .models import CustomUser
 from products.models import Package
-from post_office.utils import send_templated_email
 
 logger = logging.getLogger(__name__)
 
