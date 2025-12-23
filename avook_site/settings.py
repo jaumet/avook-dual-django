@@ -115,4 +115,4 @@ load_dotenv(BASE_DIR / ".env")
 
 EMAIL_BACKEND = "avook_site.email_backend.ResendEmailBackend"
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-DEFAULT_FROM_EMAIL = "no-reply@audiovook.com"
+DEFAULT_FROM_EMAIL = "info@dual.cat"
