@@ -12,6 +12,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
 
+from django.urls import reverse
+from post_office.utils import send_templated_email
 from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
 from .models import Product, Title, TitleLanguage, TranslatableContent
 from .utils import load_titles_grouped_by_level
@@ -132,7 +134,27 @@ class SignUpView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        login(self.request, self.object)
+
+        user = self.object
+
+        # Send confirmation email
+        activation_path = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
+        domain = self.request.get_host()
+        protocol = 'https' if self.request.is_secure() else 'http'
+        token_url = f"{protocol}://{domain}{activation_path}"
+
+        context = {
+            'user': user,
+            'token_url': token_url,
+        }
+
+        send_templated_email(
+            'account_confirmation',
+            context,
+            user.email
+        )
+
+        login(self.request, user)
         return response
 
 
