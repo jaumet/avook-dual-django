@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, ListView
 from products.models import Package
@@ -7,6 +8,7 @@ from products.mixins import TitleContextMixin
 from .forms import ProfileUpdateForm
 from django.shortcuts import redirect
 from django.contrib import messages
+from post_office.utils import send_templated_email
 
 User = get_user_model()
 
@@ -50,3 +52,13 @@ def activate_account(request, token):
     except User.DoesNotExist:
         messages.error(request, 'El token d\'activació és invàlid o ha expirat.')
         return redirect('home')
+
+
+class CustomPasswordResetView(PasswordResetView):
+    def send_mail(self, subject_template_name, email_template_name, context, from_email, to_email, html_email_template_name=None):
+        send_templated_email(
+            'password_reset',
+            context,
+            to_email,
+            from_email
+        )
