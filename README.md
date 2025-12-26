@@ -17,6 +17,23 @@ Aquest projecte converteix el lloc estàtic d'Audiovook Dual en una aplicació D
    python manage.py runserver
    ```
 
+## Configuració d'enviament de correus
+
+El registre d'usuaris requereix l'enviament d'un correu electrònic per a l'activació del compte. Aquest projecte utilitza [Resend](https://resend.com/) per a la gestió de correus.
+
+Perquè funcioni correctament, has de seguir aquests passos:
+
+1.  **Crea un fitxer `.env`** a l'arrel del projecte (al mateix nivell que `manage.py`).
+2.  **Afegeix la teva clau d'API de Resend** al fitxer `.env` de la següent manera:
+
+    ```
+    RESEND_API_KEY=la_teva_clau_api_aqui
+    ```
+
+    Substitueix `la_teva_clau_api_aqui` per la clau real que pots obtenir del teu compte de Resend.
+
+Sense aquesta configuració, el sistema no podrà enviar correus i els nous usuaris no podran activar el seu compte.
+
 ## Important: Actualització de la base de dades (Novembre 2025)
 
 Recentment, s'ha fet una reestructuració completa dels models de dades (`Title`, `Package`, `Product`). Si tenies una versió anterior de l'aplicació, la teva base de dades local no serà compatible.
