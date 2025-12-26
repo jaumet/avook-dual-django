@@ -130,7 +130,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     form_class = SignUpForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('home')
-    success_message = 'Compte creat! Ja pots iniciar sessió.'
+    success_message = "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 
     def form_valid(self, form):
         response = super().form_valid(form)
