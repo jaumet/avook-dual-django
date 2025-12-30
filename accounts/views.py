@@ -1,6 +1,8 @@
+
+import logging
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, ListView
 from products.models import Package
@@ -11,6 +13,7 @@ from django.contrib import messages
 from post_office.utils import send_templated_email
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -62,3 +65,13 @@ class CustomPasswordResetView(PasswordResetView):
             to_email,
             from_email
         )
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    def form_valid(self, form):
+        try:
+            return super().form_valid(form)
+        except Exception as e:
+            logger.error(f"Error saving new password for user {form.user.username}: {e}")
+            # Reraise the exception to maintain the original behavior
+            raise
