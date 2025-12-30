@@ -93,8 +93,8 @@
 {% load json_script_tag %}
 <script>
     // Pass data from Django to JavaScript in a safe way
-    const knownLanguagesData = {{ user.known_languages|json_script_tag }};
-    const learningLanguagesData = {{ user.learning_languages|json_script_tag }};
+    window.knownLanguagesData = {{ user.known_languages|json_script_tag }};
+    window.learningLanguagesData = {{ user.learning_languages|json_script_tag }};
     document.body.dataset.languagesUrl = "{% static 'js/languages.json' %}";
 </script>
 <script src="{% static 'js/profile.js' %}"></script>
