@@ -86,9 +86,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function populateInitialData() {
-        // We get the data from the hidden form fields
-        const knownLanguages = JSON.parse(knownLanguagesInput.value || '[]');
-        const learningLanguages = JSON.parse(learningLanguagesInput.value || '[]');
+        // We get the data from the global variables defined in the template
+        const knownLanguages = window.knownLanguagesData || [];
+        const learningLanguages = window.learningLanguagesData || [];
 
         const knownContainer = document.getElementById('known-languages-container');
         const learningContainer = document.getElementById('learning-languages-container');
