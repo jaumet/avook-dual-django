@@ -1,0 +1,147 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-02 18:52+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/admin.py:12
+msgid "Personal info"
+msgstr "Persönliche Informationen"
+
+#: accounts/admin.py:13
+msgid "Idiomes"
+msgstr "Sprachen"
+
+#: accounts/admin.py:14
+msgid "Paquets"
+msgstr "Pakete"
+
+#: accounts/admin.py:16
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: accounts/admin.py:27
+msgid "Important dates"
+msgstr "Wichtige Daten"
+
+#: accounts/views.py:51
+msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+msgstr "Ihr Konto wurde erfolgreich aktiviert. Sie können sich jetzt anmelden."
+
+#: accounts/views.py:54
+msgid "El token d'activació és invàlid o ha expirat."
+msgstr "Der Aktivierungstoken ist ungültig oder abgelaufen."
+
+#: avook_site/settings.py:70
+msgid "Catalan"
+msgstr "Katalanisch"
+
+#: avook_site/settings.py:71
+msgid "English"
+msgstr "Englisch"
+
+#: avook_site/settings.py:72
+msgid "Spanish"
+msgstr "Spanisch"
+
+#: avook_site/settings.py:73
+msgid "French"
+msgstr "Französisch"
+
+#: avook_site/settings.py:74
+msgid "German"
+msgstr "Deutsch"
+
+#: avook_site/settings.py:75
+msgid "Italian"
+msgstr "Italienisch"
+
+#: avook_site/settings.py:76
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+#: products/views.py:134
+msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+msgstr "Danke für deine Registrierung! Wir haben dir eine E-Mail geschickt, um dein Konto zu aktivieren."
+
+#: templates/registration/login.html:26
+msgid "Has oblidat la contrasenya?"
+msgstr "Passwort vergessen?"
+
+#: templates/registration/password_reset_complete.html:10
+msgid "Contrasenya canviada"
+msgstr "Passwort geändert"
+
+#: templates/registration/password_reset_complete.html:13
+msgid "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
+msgstr "Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit dem neuen Passwort anmelden."
+
+#: templates/registration/password_reset_complete.html:14
+msgid "Inicia la sessió"
+msgstr "Anmelden"
+
+#: templates/registration/password_reset_confirm.html:10
+msgid "Estableix una nova contrasenya"
+msgstr "Neues Passwort festlegen"
+
+#: templates/registration/password_reset_confirm.html:17
+msgid "Canvia la meva contrasenya"
+msgstr "Mein Passwort ändern"
+
+#: templates/registration/password_reset_confirm.html:20
+msgid "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
+msgstr "Der Link zum Zurücksetzen des Passworts ist ungültig, möglicherweise weil er bereits verwendet wurde. Bitte fordern Sie eine neue Passwortrücksetzung an."
+
+#: templates/registration/password_reset_done.html:10
+msgid "Instruccions enviades"
+msgstr "Anweisungen gesendet"
+
+#: templates/registration/password_reset_done.html:13
+msgid "Hem enviat un correu electrònic amb instruccions per restablir la teva contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
+msgstr "Wir haben eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts gesendet. Wenn Sie sie nicht erhalten, überprüfen Sie Ihren Spam-Ordner."
+
+#: templates/registration/password_reset_email.html:3
+msgid "Hola,"
+msgstr "Hallo,"
+
+#: templates/registration/password_reset_email.html:5
+msgid "Has sol·licitat restablir la teva contrasenya a Audiovook. Fes clic a l'enllaç següent per establir una nova contrasenya:"
+msgstr "Sie haben beantragt, Ihr Passwort bei Audiovook zurückzusetzen. Klicken Sie auf den folgenden Link, um ein neues Passwort festzulegen:"
+
+#: templates/registration/password_reset_email.html:9
+msgid "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
+msgstr "Wenn Sie diese Änderung nicht beantragt haben, können Sie diese E-Mail ignorieren."
+
+#: templates/registration/password_reset_email.html:11
+msgid "Gràcies,"
+msgstr "Danke,"
+
+#: templates/registration/password_reset_email.html:12
+msgid "L'equip d'Audiovook"
+msgstr "Das Audiovook-Team"
+
+#: templates/registration/password_reset_form.html:10
+msgid "Restablir la contrasenya"
+msgstr "Passwort zurücksetzen"
+
+#: templates/registration/password_reset_form.html:13
+msgid "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
+msgstr "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres Passworts."
+
+#: templates/registration/password_reset_form.html:17
+msgid "Envia l'enllaç de restabliment"
+msgstr "Link zum Zurücksetzen senden"
