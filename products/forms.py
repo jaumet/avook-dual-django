@@ -1,6 +1,7 @@
 import uuid
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 from .models import Product, Title, TitleLanguage
 
@@ -40,17 +41,25 @@ class ProductForm(forms.ModelForm):
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, help_text='Nom.')
-    last_name = forms.CharField(max_length=30, required=True, help_text='Cognoms.')
-    email = forms.EmailField(max_length=254, required=True, help_text='Correu electrònic.')
+    first_name = forms.CharField(max_length=30, required=True, label=_('First name'))
+    last_name = forms.CharField(max_length=30, required=True, label=_('Last name'))
+    email = forms.EmailField(max_length=254, required=True, label=_('Email'))
 
     class Meta:
         model = get_user_model()
         fields = ('username', 'first_name', 'last_name', 'email')
+        labels = {
+            'username': _('Username'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        self.fields['password2'].label = _("Password confirmation")
+
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_active = False  # Deactivate account until email confirmation
+        user.is_active = False
         user.is_staff = False
         user.is_superuser = False
         user.confirmation_token = uuid.uuid4()
