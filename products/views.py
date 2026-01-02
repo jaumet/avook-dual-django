@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from django.db.models import Q
 from django.http import JsonResponse
 
@@ -130,7 +131,7 @@ class SignUpView(SuccessMessageMixin, CreateView):
     form_class = SignUpForm
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('home')
-    success_message = "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+    success_message = _("Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte.")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -151,7 +152,8 @@ class SignUpView(SuccessMessageMixin, CreateView):
         send_templated_email(
             'account_confirmation',
             context,
-            user.email
+            user.email,
+            language=self.request.LANGUAGE_CODE
         )
 
         login(self.request, user)

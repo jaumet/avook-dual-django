@@ -7,11 +7,12 @@ from .models import EmailTemplate
 
 logger = logging.getLogger(__name__)
 
-def send_templated_email(template_name, context, to_email, from_email=None):
+def send_templated_email(template_name, context, to_email, from_email=None, language=None):
     if from_email is None:
         from_email = settings.DEFAULT_FROM_EMAIL
 
-    language = translation.get_language() or settings.LANGUAGE_CODE
+    if language is None:
+        language = translation.get_language() or settings.LANGUAGE_CODE
     language_code = language.split('-')[0]
 
     try:
