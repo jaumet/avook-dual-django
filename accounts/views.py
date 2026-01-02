@@ -8,6 +8,7 @@ from products.mixins import TitleContextMixin
 from .forms import ProfileUpdateForm
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from post_office.utils import send_templated_email
 
 User = get_user_model()
@@ -47,10 +48,10 @@ def activate_account(request, token):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        messages.success(request, 'El teu compte ha estat activat correctament. Ara pots iniciar sessió.')
+        messages.success(request, _('El teu compte ha estat activat correctament. Ara pots iniciar sessió.'))
         return redirect('accounts:login')
     except User.DoesNotExist:
-        messages.error(request, 'El token d\'activació és invàlid o ha expirat.')
+        messages.error(request, _('El token d\'activació és invàlid o ha expirat.'))
         return redirect('home')
 
 
@@ -60,5 +61,6 @@ class CustomPasswordResetView(PasswordResetView):
             'password_reset',
             context,
             to_email,
-            from_email
+            from_email,
+            language=self.request.LANGUAGE_CODE
         )
