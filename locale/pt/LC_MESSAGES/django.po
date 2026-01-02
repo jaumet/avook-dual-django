@@ -38,6 +38,21 @@ msgstr "Permissões"
 msgid "Important dates"
 msgstr "Datas importantes"
 
+#: accounts/forms.py:16
+#: products/forms.py:48
+msgid "First name"
+msgstr "Nome"
+
+#: accounts/forms.py:17
+#: products/forms.py:49
+msgid "Last name"
+msgstr "Apelido"
+
+#: accounts/forms.py:18
+#: products/forms.py:50
+msgid "Email"
+msgstr "Email"
+
 #: accounts/views.py:51
 msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 msgstr "A sua conta foi ativada com sucesso. Agora pode iniciar sessão."
@@ -73,6 +88,14 @@ msgstr "Italiano"
 #: avook_site/settings.py:76
 msgid "Portuguese"
 msgstr "Português"
+
+#: products/forms.py:54
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: products/forms.py:58
+msgid "Password confirmation"
+msgstr "Confirmação de senha"
 
 #: products/views.py:134
 msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
@@ -145,3 +168,15 @@ msgstr "Introduza o seu endereço de e-mail e enviar-lhe-emos instruções para 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
 msgstr "Enviar link de redefinição"
+
+#: templates/registration/signup.html:4
+msgid "Crear compte"
+msgstr "Criar conta"
+
+#: templates/registration/signup.html:8
+msgid "Crea un compte"
+msgstr "Criar conta"
+
+#: templates/registration/signup.html:18
+msgid "Registrar-me"
+msgstr "Registar-me"

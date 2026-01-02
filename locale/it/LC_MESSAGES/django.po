@@ -38,6 +38,21 @@ msgstr "Permessi"
 msgid "Important dates"
 msgstr "Date importanti"
 
+#: accounts/forms.py:16
+#: products/forms.py:48
+msgid "First name"
+msgstr "Nome"
+
+#: accounts/forms.py:17
+#: products/forms.py:49
+msgid "Last name"
+msgstr "Cognome"
+
+#: accounts/forms.py:18
+#: products/forms.py:50
+msgid "Email"
+msgstr "Email"
+
 #: accounts/views.py:51
 msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 msgstr "Il tuo account è stato attivato con successo. Ora puoi accedere."
@@ -74,6 +89,14 @@ msgstr "Italiano"
 msgid "Portuguese"
 msgstr "Portoghese"
 
+#: products/forms.py:54
+msgid "Username"
+msgstr "Nome utente"
+
+#: products/forms.py:58
+msgid "Password confirmation"
+msgstr "Conferma password"
+
 #: products/views.py:134
 msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr "Grazie per esserti registrato! Ti abbiamo inviato un'email per attivare il tuo account."
@@ -103,7 +126,7 @@ msgid "Canvia la meva contrasenya"
 msgstr "Cambia la mia password"
 
 #: templates/registration/password_reset_confirm.html:20
-msgid "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
+msgid "L'enllaç de restabliment de contrasenya no è vàlid, possiblement perché ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
 msgstr "Il link per il ripristino della password non è valido, probabilmente perché è già stato utilizzato. Per favore, richiedi un nuovo ripristino della password."
 
 #: templates/registration/password_reset_done.html:10
@@ -145,3 +168,15 @@ msgstr "Inserisci il tuo indirizzo email e ti invieremo le istruzioni per reimpo
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
 msgstr "Invia link di ripristino"
+
+#: templates/registration/signup.html:4
+msgid "Crear compte"
+msgstr "Creare un account"
+
+#: templates/registration/signup.html:8
+msgid "Crea un compte"
+msgstr "Creare un account"
+
+#: templates/registration/signup.html:18
+msgid "Registrar-me"
+msgstr "Registrati"
