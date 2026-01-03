@@ -1,5 +1,6 @@
 {% load static %}
 {% load content_tags %}
+{% load cart_tags %}
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -52,6 +53,10 @@
     <nav class="header-right">
         <a href="{% url 'products:catalog' %}" data-translate-key="header.catalog">Catàleg</a>
         <a href="{% url 'products:product_list' %}" data-translate-key="header.products">Productes</a>
+        <a href="{% url 'products:cart' %}" class="cart-link">
+            <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.21 9l-4.38-6.56a.993.993 0 0 0-.81-.44H7.98c-.45 0-.85.3-.98.73L2.25 12l-1.02 2.03c-.2.4.18.9.6.9h19.54c.41 0 .79-.49.59-.9L21 12l-3.79-3zM7 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM4.33 13l2.84-5.67.63 2.67H16.2l.63-2.67L19.67 13H4.33z"/></svg>
+            <span class="cart-count">{% cart_item_count %}</span>
+        </a>
         {% if user.is_authenticated %}
             <div class="user-menu">
                 <a href="#" class="user-menu-trigger">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</a>

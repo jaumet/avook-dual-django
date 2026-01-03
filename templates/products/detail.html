@@ -1,49 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ product.name }} — Audiovook Dual{% endblock %}
 
 {% block content %}
 <section class="product-detail">
     <div class="product-detail__header">
-        <div>
-            <h1>{{ product.name }}</h1>
-            <p class="lead">{{ product.description }}</p>
-            <p class="price"><span data-translate-key="product_detail.price">Preu:</span> {{ product.price }} €</p>
-            {% if user.is_authenticated %}
-                <a class="button button--small" href="{% url 'products:product_update' product.pk %}" data-translate-key="product_detail.edit_product">Editar producte</a>
-            {% endif %}
-        </div>
         <div class="product-detail__media">
             <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.name }}" />
         </div>
+        <div>
+            <h1>{{ product.name }}</h1>
+            <p class="lead">{{ product.description }}</p>
+            <div class="product-detail__meta">
+                <p class="price">{% trans "Preu:" %} {{ product.price }} €</p>
+                <p>{% trans "Durada:" %} {{ product.duration }} {% trans "mesos" %}</p>
+            </div>
+            <a class="button button--primary" href="{% url 'products:add_to_cart' product.id %}">{% trans "Comprar ara" %}</a>
+             {% if user.is_authenticated and user.is_staff %}
+                <a class="button button--small" href="{% url 'products:product_update' product.pk %}">{% trans "Editar producte" %}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="product-detail__legal">
+        <h2>{% trans "Condicions del producte" %}</h2>
+        <ul>
+            <li>{% trans "Accés durant" %} {{ product.duration }} {% trans "mesos a tots els títols inclosos." %}</li>
+            <li>{% trans "Accés des de qualsevol dispositiu." %}</li>
+            <li>{% trans "Suport per correu electrònic." %}</li>
+        </ul>
     </div>
 
     {% for package in product.packages.all %}
     <div class="product-detail__titles">
-        <h2><span data-translate-key="product_detail.included_titles">Títols inclosos en el paquet:</span> {{ package.name }}</h2>
+        <h2>{% trans "Títols inclosos en el paquet:" %} {{ package.name }}</h2>
         {% if package.titles.all %}
             <ul>
                 {% for title in package.titles.all %}
                     <li class="product-detail__title-item">
                         <div>
-                            <p class="kicker"><span data-translate-key="product_detail.level">Nivell</span> {{ title.levels }}</p>
+                            <p class="kicker">{% trans "Nivell" %} {{ title.levels }}</p>
                             <strong>{{ title.human_name }}</strong>
                             {% if title.description %}
                                 <p>{{ title.description }}</p>
                             {% endif %}
-                            <p class="product-card__meta"><span data-translate-key="product_detail.languages">Idiomes:</span>
+                            <p class="product-card__meta">{% trans "Idiomes:" %}
                                 {% for lang in title.languages.all %}
                                     {{ lang.language }}{% if not forloop.last %}, {% endif %}
                                 {% endfor %}
                             </p>
-                            {% if title.duration %}<p class="product-card__meta"><span data-translate-key="product_detail.duration">Durada:</span> {{ title.duration }}</p>{% endif %}
+                            {% if title.duration %}<p class="product-card__meta">{% trans "Durada:" %} {{ title.duration }}</p>{% endif %}
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p data-translate-key="product_detail.no_titles">Encara no hi ha títols assignats a aquest paquet.</p>
+            <p>{% trans "Encara no hi ha títols assignats a aquest paquet." %}</p>
         {% endif %}
     </div>
     {% endfor %}
