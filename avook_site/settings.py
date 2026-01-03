@@ -25,6 +25,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'avook_site.middleware.language.BrowserLanguageMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -76,7 +77,7 @@ LANGUAGES = [
     ('pt', _('Portuguese')),
 ]
 
-LANGUAGE_CODE = 'ca'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 USE_I18N = True
