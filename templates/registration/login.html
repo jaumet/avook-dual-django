@@ -1,33 +1,25 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}<span data-translate-key="login.title">Inicia sessió — Audiovook Dual</span>{% endblock %}
+{% block title %}{% trans "Inicia sessió" %} — dual.cat{% endblock %}
 
 {% block content %}
 <section class="form-section">
-    <h1 data-translate-key="login.header">Inicia sessió</h1>
+    <h1>{% trans "Inicia sessió" %}</h1>
     <form method="post" class="form">
         {% csrf_token %}
         {{ form.non_field_errors }}
-        <div class="form__field">
-            <label for="id_username" data-translate-key="login.user">Usuari</label>
-            {{ form.username }}
-            {% for error in form.username.errors %}
-                <p class="form__error">{{ error }}</p>
-            {% endfor %}
-        </div>
-        <div class="form__field">
-            <label for="id_password" data-translate-key="login.password">Contrasenya</label>
-            {{ form.password }}
-            {% for error in form.password.errors %}
-                <p class="form__error">{{ error }}</p>
-            {% endfor %}
-            <div class="form__help" style="text-align: right; margin-top: 5px;">
-              <a href="{% url 'accounts:password_reset' %}">{% trans "Has oblidat la contrasenya?" %}</a>
+        {% for field in form %}
+            <div class="form__field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                    <p class="form__error">{{ error }}</p>
+                {% endfor %}
             </div>
-        </div>
-        <button type="submit" class="button" data-translate-key="login.submit">Accedir</button>
-        <p class="form__help"><span data-translate-key="login.no_account">No tens compte?</span> <a href="{% url 'signup' %}" data-translate-key="header.signup">Registra't</a></p>
+        {% endfor %}
+        <button type="submit" class="button">{% trans "Inicia sessió" %}</button>
     </form>
+    <p><a href="{% url 'accounts:password_reset' %}">{% trans "Has oblidat la contrasenya?" %}</a></p>
 </section>
 {% endblock %}

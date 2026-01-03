@@ -1,6 +1,6 @@
-# Audiovook Dual — Django
+# Dual — Django
 
-Aquest projecte converteix el lloc estàtic d'Audiovook Dual en una aplicació Django amb gestió d'usuaris i catàleg de productes.
+Aquest projecte converteix el lloc estàtic de Dual en una aplicació Django amb gestió d'usuaris i catàleg de productes.
 
 ## Configuració
 
@@ -66,56 +66,29 @@ Després de seguir aquests passos, l'aplicació hauria de funcionar correctament
 
 ## Internationalization (i18n)
 
-Aquest projecte utilitza un sistema de traducció basat en JavaScript al frontend. Per afegir un nou idioma, segueix aquests passos:
+Aquest projecte utilitza el sistema d'internacionalització de Django. Per afegir o modificar traduccions, segueix aquests passos:
 
-1. **Afegeix l'idioma a `settings.py`**:
-   A `avook_site/settings.py`, afegeix el nou codi d'idioma a la llista `LANGUAGES`. Això és necessari perquè el sistema d'URL de Django reconegui el nou idioma. Per exemple, per afegir alemany:
+1. **Marca les cadenes de text per a traducció**:
+   - En plantilles HTML, utilitza `{% trans "Text a traduir" %}`.
+   - En codi Python (vistes, formularis), utilitza `from django.utils.translation import gettext_lazy as _` i després `_("Text a traduir")`.
+
+2. **Genera o actualitza els fitxers de traducció (.po)**:
+   Executa la següent comanda per a cada idioma que vulguis actualitzar (per exemple, `es` per a l'espanyol):
    
-   ```python
-   LANGUAGES = [
-       ('ca', 'Català'),
-       ('en', 'English'),
-       ('es', 'Spanish'),
-       ('pt', 'Portuguese'),
-       ('it', 'Italian'),
-       ('fr', 'French'),
-       ('de', 'German'),  # Nova línia
-   ]
+   ```bash
+   python manage.py makemessages -l es
    ```
+   Això crearà o actualitzarà el fitxer `locale/es/LC_MESSAGES/django.po`.
 
-2. **Afegeix les traduccions al fitxer JSON**:
-   Obre el fitxer `static/js/translations.json` i afegeix una nova secció per al teu idioma. Copia totes les claus de la secció `en` (anglès) i tradueix els valors. Per exemple, per a l'alemany (`de`):
+3. **Edita els fitxers .po**:
+   Obre el fitxer `.po` generat i afegeix les traduccions corresponents per a cada `msgid`.
+
+4. **Compila els missatges**:
+   Un cop hagis guardat les traduccions, compila els fitxers per a Django:
    
-   ```json
-   {
-     "ca": { ... },
-     "en": { ... },
-     "es": { ... },
-     "fr": { ... },
-     "it": { ... },
-     "pt": { ... },
-     "de": {
-       "header.catalog": "Katalog",
-       "header.products": "Produkte",
-       ...
-     }
-   }
+   ```bash
+   python manage.py compilemessages
    ```
-
-3. **Afegeix l'opció al selector d'idioma**:
-   A `templates/base.html`, afegeix la nova opció al selector d'idioma (`<select id="language-select">`):
-   
-   ```html
-   <select id="language-select">
-       ...
-       <option value="de">Deutsch</option>
-   </select>
-   ```
-
-4. **Reinicia el servidor**:
-   Atura i torna a iniciar el servidor de desenvolupament perquè els canvis a les URL tinguin efecte.
-
-L'aplicació ara hauria de mostrar el nou idioma al selector i permetre als usuaris canviar-hi.
 
 ## Funcionalitats
 
@@ -180,7 +153,7 @@ class ProductListView(TitleContextMixin, ListView):
     # ... (other code remains the same) ...
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(self, **kwargs)
         lang = self.request.LANGUAGE_CODE
 
         # --- I would add this part ---
