@@ -1,1 +1,47 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
 
+{% block title %}{% trans "Product Page" %} — Audiovook Dual{% endblock %}
+
+{% block content %}
+<section class="product-detail">
+    <div class="product-detail__header">
+        <div>
+            <h1>{{ product.name }}</h1>
+            <p class="lead">{{ product.description }}</p>
+            <p class="price">{% trans "Price:" %} {{ product.price }} €</p>
+            {% if user.is_authenticated %}
+                <a class="button button--small" href="#">{% trans "Edit product" %}</a>
+            {% endif %}
+        </div>
+        <div class="product-detail__media">
+            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.name }}" />
+        </div>
+    </div>
+
+    <div class="product-detail__titles">
+        <h2>{% trans "Included titles in the package:" %}</h2>
+        <ul>
+            <li class="product-detail__title-item">
+                <div>
+                    <p class="kicker">{% trans "Level" %} A1</p>
+                    <strong>{% trans "Example Title 1" %}</strong>
+                    <p>{% trans "This is a short description for the first example title." %}</p>
+                    <p class="product-card__meta">{% trans "Languages:" %} {% trans "English, Spanish" %}</p>
+                    <p class="product-card__meta">{% trans "Duration:" %} 30m</p>
+                </div>
+            </li>
+            <li class="product-detail__title-item">
+                <div>
+                    <p class="kicker">{% trans "Level" %} B2</p>
+                    <strong>{% trans "Example Title 2" %}</strong>
+                    <p>{% trans "This is a short description for the second example title." %}</p>
+                    <p class="product-card__meta">{% trans "Languages:" %} {% trans "French, German" %}</p>
+                    <p class="product-card__meta">{% trans "Duration:" %} 45m</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+{% endblock %}
