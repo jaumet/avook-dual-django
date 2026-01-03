@@ -234,8 +234,12 @@ class CartView(TemplateView):
         context['total_price'] = total_price
         return context
 
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
     cart[str(product_id)] = cart.get(str(product_id), 0) + 1
     request.session['cart'] = cart
+    messages.success(request, _("Producte afegit a la cistella correctament."))
     return redirect('products:cart')

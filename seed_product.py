@@ -4,7 +4,16 @@ import django
 def seed():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'avook_site.settings')
     django.setup()
-    from products.models import Product, Package, Title
+    from products.models import Product, Package, Title, TranslatableContent
+
+    # Create translatable content for product terms
+    TranslatableContent.objects.get_or_create(
+        key='product_terms',
+        defaults={
+            'content_ca': 'Aquests són els termes i condicions generals del producte.',
+            'content_en': 'These are the general terms and conditions of the product.',
+        }
+    )
 
     # Create packages for each level
     levels = ['A2', 'B1', 'B2', 'C1']

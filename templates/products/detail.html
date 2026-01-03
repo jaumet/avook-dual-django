@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load content_tags %}
 
 {% block title %}{{ product.name }} — Audiovook Dual{% endblock %}
 
@@ -31,6 +32,9 @@
             <li>{% trans "Accés des de qualsevol dispositiu." %}</li>
             <li>{% trans "Suport per correu electrònic." %}</li>
         </ul>
+        <div class="product-detail__general-terms">
+            {% get_translatable_content 'product_terms'|safe %}
+        </div>
     </div>
 
     {% for package in product.packages.all %}
