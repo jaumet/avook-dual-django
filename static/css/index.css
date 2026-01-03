@@ -87,6 +87,30 @@ body {
 
 .header-right button:hover {opacity:.9;}
 
+.cart-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
 main {
   max-width: 980px;
   margin: 0 auto;
