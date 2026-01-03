@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Cistella" %} — Audiovook Dual{% endblock %}
+
+{% block content %}
+<section class="cart">
+    <h1>{% trans "La teva cistella" %}</h1>
+    {% if cart_items %}
+        <table class="cart__table">
+            <thead>
+                <tr>
+                    <th>{% trans "Producte" %}</th>
+                    <th>{% trans "Preu" %}</th>
+                    <th>{% trans "Quantitat" %}</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.price }} €</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="cart__total">Total: {{ total_price }} €</p>
+    {% else %}
+        <p>{% trans "La teva cistella està buida." %}</p>
+    {% endif %}
+</section>
+{% endblock %}

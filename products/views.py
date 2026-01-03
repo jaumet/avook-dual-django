@@ -208,3 +208,34 @@ class PrivacyView(TemplateView):
 
 class RightsView(TemplateView):
     template_name = 'legal/rights.html'
+
+
+from django.shortcuts import redirect
+
+class CartView(TemplateView):
+    template_name = 'products/cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart = self.request.session.get('cart', {})
+        products = Product.objects.filter(id__in=cart.keys())
+        cart_items = []
+        total_price = 0
+        for product in products:
+            quantity = cart[str(product.id)]
+            item_total = product.price * quantity
+            cart_items.append({
+                'product': product,
+                'quantity': quantity,
+                'total': item_total,
+            })
+            total_price += item_total
+        context['cart_items'] = cart_items
+        context['total_price'] = total_price
+        return context
+
+def add_to_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    cart[str(product_id)] = cart.get(str(product_id), 0) + 1
+    request.session['cart'] = cart
+    return redirect('products:cart')
