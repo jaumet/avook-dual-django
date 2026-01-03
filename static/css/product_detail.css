@@ -1,0 +1,10 @@
+.scrollable-div {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+#buy-button {
+    display: none;
+}
