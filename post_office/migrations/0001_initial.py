@@ -13,37 +13,37 @@ def create_initial_email_templates(apps, schema_editor):
     EmailTemplateTranslation.objects.create(
         template=account_confirmation,
         language='ca',
-        subject='Confirma el teu compte a Audiovook',
+        subject='Confirma el teu compte a Dual',
         body="""
-        <h2>Benvingut/da a Audiovook, {{ user.first_name }}!</h2>
+        <h2>Benvingut/da a Dual, {{ user.first_name }}!</h2>
         <p>Gràcies per registrar-te. Si us plau, fes clic a l'enllaç següent per activar el teu compte:</p>
         <a href="{{ token_url }}">Activa el teu compte</a>
         <p>Si no has creat aquest compte, si us plau, ignora aquest correu.</p>
-        <p>L'equip d'Audiovook</p>
+        <p>L'equip de Dual</p>
         """
     )
     EmailTemplateTranslation.objects.create(
         template=account_confirmation,
         language='en',
-        subject='Confirm your account at Audiovook',
+        subject='Confirm your account at Dual',
         body="""
-        <h2>Welcome to Audiovook, {{ user.first_name }}!</h2>
+        <h2>Welcome to Dual, {{ user.first_name }}!</h2>
         <p>Thanks for signing up. Please click the link below to activate your account:</p>
         <a href="{{ token_url }}">Activate your account</a>
         <p>If you did not create this account, please ignore this email.</p>
-        <p>The Audiovook Team</p>
+        <p>The Dual Team</p>
         """
     )
     EmailTemplateTranslation.objects.create(
         template=account_confirmation,
         language='es',
-        subject='Confirma tu cuenta en Audiovook',
+        subject='Confirma tu cuenta en Dual',
         body="""
-        <h2>¡Bienvenido/a a Audiovook, {{ user.first_name }}!</h2>
+        <h2>¡Bienvenido/a a Dual, {{ user.first_name }}!</h2>
         <p>Gracias por registrarte. Por favor, haz clic en el siguiente enlace para activar tu cuenta:</p>
         <a href="{{ token_url }}">Activa tu cuenta</a>
         <p>Si no has creado esta cuenta, por favor, ignora este correo.</p>
-        <p>El equipo de Audiovook</p>
+        <p>El equipo de Dual</p>
         """
     )
 
@@ -55,11 +55,11 @@ def create_initial_email_templates(apps, schema_editor):
         subject='Restabliment de la contrasenya',
         body="""
         <p>Hola,</p>
-        <p>Has sol·licitat restablir la teva contrasenya a Audiovook. Fes clic a l'enllaç següent per establir una nova contrasenya:</p>
+        <p>Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:</p>
         <p><a href="{{ protocol }}://{{ domain }}{% url 'accounts:password_reset_confirm' uidb64=uid token=token %}">Restablir la contrasenya</a></p>
         <p>Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic.</p>
         <p>Gràcies,</p>
-        <p>L'equip d'Audiovook</p>
+        <p>L'equip de Dual</p>
         """
     )
     EmailTemplateTranslation.objects.create(
@@ -68,11 +68,11 @@ def create_initial_email_templates(apps, schema_editor):
         subject='Password Reset',
         body="""
         <p>Hello,</p>
-        <p>You have requested to reset your password at Audiovook. Click the link below to set a new password:</p>
+        <p>You have requested to reset your password at Dual. Click the link below to set a new password:</p>
         <p><a href="{{ protocol }}://{{ domain }}{% url 'accounts:password_reset_confirm' uidb64=uid token=token %}">Reset your password</a></p>
         <p>If you did not request this change, you can ignore this email.</p>
         <p>Thanks,</p>
-        <p>The Audiovook Team</p>
+        <p>The Dual Team</p>
         """
     )
     EmailTemplateTranslation.objects.create(
@@ -81,11 +81,11 @@ def create_initial_email_templates(apps, schema_editor):
         subject='Restablecimiento de contraseña',
         body="""
         <p>Hola,</p>
-        <p>Has solicitado restablecer tu contraseña en Audiovook. Haz clic en el siguiente enlace para establecer una nueva contraseña:</p>
+        <p>Has solicitado restablecer tu contraseña en Dual. Haz clic en el siguiente enlace para establecer una nueva contraseña:</p>
         <p><a href="{{ protocol }}://{{ domain }}{% url 'accounts:password_reset_confirm' uidb64=uid token=token %}">Restablecer la contraseña</a></p>
         <p>Si no has solicitado este cambio, puedes ignorar este correo electrónico.</p>
         <p>Gracias,</p>
-        <p>El equipo de Audiovook</p>
+        <p>El equipo de Dual</p>
         """
     )
 

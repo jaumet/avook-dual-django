@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 23:10+0000\n"
+"POT-Creation-Date: 2026-01-02 18:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,22 +38,24 @@ msgstr "Permissions"
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: accounts/forms.py:17 products/forms.py:44
+#: accounts/forms.py:16
+#: products/forms.py:48
 msgid "First name"
 msgstr "Prénom"
 
-#: accounts/forms.py:18 products/forms.py:45
+#: accounts/forms.py:17
+#: products/forms.py:49
 msgid "Last name"
 msgstr "Nom de famille"
 
-#: accounts/forms.py:19 products/forms.py:46
+#: accounts/forms.py:18
+#: products/forms.py:50
 msgid "Email"
 msgstr "Courriel"
 
 #: accounts/views.py:51
 msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
-msgstr ""
-"Votre compte a été activé avec succès. Vous pouvez maintenant vous connecter."
+msgstr "Votre compte a été activé avec succès. Vous pouvez maintenant vous connecter."
 
 #: accounts/views.py:54
 msgid "El token d'activació és invàlid o ha expirat."
@@ -87,20 +89,23 @@ msgstr "Italien"
 msgid "Portuguese"
 msgstr "Portugais"
 
-#: products/forms.py:52
+#: products/forms.py:54
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: products/forms.py:57
+#: products/forms.py:58
 msgid "Password confirmation"
 msgstr "Confirmation du mot de passe"
 
 #: products/views.py:134
-msgid ""
-"Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
-msgstr ""
-"Merci de vous être inscrit ! Nous vous avons envoyé un e-mail pour activer "
-"votre compte."
+msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+msgstr "Merci de vous être inscrit ! Nous vous avons envoyé un e-mail pour activer votre compte."
+
+#: templates/registration/login.html:4
+#: templates/registration/login.html:8
+#: templates/registration/login.html:18
+msgid "Inicia sessió"
+msgstr "Se connecter"
 
 #: templates/registration/login.html:26
 msgid "Has oblidat la contrasenya?"
@@ -111,16 +116,8 @@ msgid "Contrasenya canviada"
 msgstr "Mot de passe changé"
 
 #: templates/registration/password_reset_complete.html:13
-msgid ""
-"La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
-"la nova contrasenya."
-msgstr ""
-"Votre mot de passe a été changé avec succès. Vous pouvez maintenant vous "
-"connecter avec le nouveau mot de passe."
-
-#: templates/registration/password_reset_complete.html:14
-msgid "Inicia la sessió"
-msgstr "Se connecter"
+msgid "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
+msgstr "Votre mot de passe a été changé avec succès. Vous pouvez maintenant vous connecter avec le nouveau mot de passe."
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Estableix una nova contrasenya"
@@ -131,78 +128,55 @@ msgid "Canvia la meva contrasenya"
 msgstr "Changer mon mot de passe"
 
 #: templates/registration/password_reset_confirm.html:20
-msgid ""
-"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
-"ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
-"contrasenya."
-msgstr ""
-"Le lien de réinitialisation du mot de passe est invalide, peut-être parce "
-"qu'il a déjà été utilisé. Veuillez demander une nouvelle réinitialisation du "
-"mot de passe."
+msgid "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
+msgstr "Le lien de réinitialisation du mot de passe est invalide, peut-être parce qu'il a déjà été utilisé. Veuillez demander une nouvelle réinitialisation du mot de passe."
 
 #: templates/registration/password_reset_done.html:10
 msgid "Instruccions enviades"
 msgstr "Instructions envoyées"
 
 #: templates/registration/password_reset_done.html:13
-msgid ""
-"Hem enviat un correu electrònic amb instruccions per restablir la teva "
-"contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
-msgstr ""
-"Nous avons envoyé un e-mail avec des instructions pour réinitialiser votre "
-"mot de passe. Si vous ne le recevez pas, vérifiez votre dossier de courrier "
-"indésirable."
+msgid "Hem enviat un correu electrònic amb instruccions per restablir la teva contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
+msgstr "Nous avons envoyé un e-mail avec des instructions pour réinitialiser votre mot de passe. Si vous ne le recevez pas, vérifiez votre dossier de courrier indésirable."
 
 #: templates/registration/password_reset_email.html:3
 msgid "Hola,"
 msgstr "Bonjour,"
 
 #: templates/registration/password_reset_email.html:5
-msgid ""
-"Has sol·licitat restablir la teva contrasenya a Audiovook. Fes clic a "
-"l'enllaç següent per establir una nova contrasenya:"
-msgstr ""
-"Vous avez demandé à réinitialiser votre mot de passe sur Audiovook. Cliquez "
-"sur le lien suivant pour définir un nouveau mot de passe :"
+msgid "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:"
+msgstr "Vous avez demandé à réinitialiser votre mot de passe sur Dual. Cliquez sur le lien suivant pour définir un nouveau mot de passe :"
+
+#: templates/registration/password_reset_email.html:7
+#: templates/registration/password_reset_form.html:10
+msgid "Restablir la contrasenya"
+msgstr "Réinitialiser le mot de passe"
 
 #: templates/registration/password_reset_email.html:9
-msgid ""
-"Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
-msgstr ""
-"Si vous n'avez pas demandé ce changement, vous pouvez ignorer cet e-mail."
+msgid "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
+msgstr "Si vous n'avez pas demandé ce changement, vous pouvez ignorer cet e-mail."
 
 #: templates/registration/password_reset_email.html:11
 msgid "Gràcies,"
 msgstr "Merci,"
 
 #: templates/registration/password_reset_email.html:12
-msgid "L'equip d'Audiovook"
-msgstr "L'équipe d'Audiovook"
-
-#: templates/registration/password_reset_form.html:10
-msgid "Restablir la contrasenya"
-msgstr "Réinitialiser le mot de passe"
+msgid "L'equip de Dual"
+msgstr "L'équipe de Dual"
 
 #: templates/registration/password_reset_form.html:13
-msgid ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
-"restablir la teva contrasenya."
-msgstr ""
-"Entrez votre adresse e-mail et nous vous enverrons des instructions pour "
-"réinitialiser votre mot de passe."
+msgid "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
+msgstr "Entrez votre adresse e-mail et nous vous enverrons des instructions pour réinitialiser votre mot de passe."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
 msgstr "Envoyer le lien de réinitialisation"
 
 #: templates/registration/signup.html:4
+#: templates/registration/signup.html:8
 msgid "Crear compte"
 msgstr "Créer un compte"
 
-#: templates/registration/signup.html:8
-msgid "Crea un compte"
-msgstr "Créer un compte"
-
-#: templates/registration/signup.html:21
+#: templates/registration/signup.html:18
 msgid "Registrar-me"
 msgstr "S'inscrire"

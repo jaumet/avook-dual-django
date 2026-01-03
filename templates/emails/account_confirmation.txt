@@ -1,9 +1,9 @@
-Benvingut/da a Audiovook, {{ user.first_name }}!
+Benvingut/da a Dual, {{ user.first_name }}!
 
-Gràcies per registrar-te. Si us plau, copia i enganxa el següent enllaç al teu navegador per activar el teu compte:
+Gràcies per registrar-te. Si us plau, fes clic a l'enllaç següent per activar el teu compte:
 
 {{ token_url }}
 
 Si no has creat aquest compte, si us plau, ignora aquest correu.
 
-L'equip d'Audiovook
+L'equip de Dual

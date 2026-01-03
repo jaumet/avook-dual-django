@@ -101,6 +101,12 @@ msgstr "Conferma password"
 msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr "Grazie per esserti registrato! Ti abbiamo inviato un'email per attivare il tuo account."
 
+#: templates/registration/login.html:4
+#: templates/registration/login.html:8
+#: templates/registration/login.html:18
+msgid "Inicia sessió"
+msgstr "Accedi"
+
 #: templates/registration/login.html:26
 msgid "Has oblidat la contrasenya?"
 msgstr "Hai dimenticato la password?"
@@ -112,10 +118,6 @@ msgstr "Password modificata"
 #: templates/registration/password_reset_complete.html:13
 msgid "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
 msgstr "La tua password è stata modificata correttamente. Ora puoi accedere con la nuova password."
-
-#: templates/registration/password_reset_complete.html:14
-msgid "Inicia la sessió"
-msgstr "Accedi"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Estableix una nova contrasenya"
@@ -142,8 +144,13 @@ msgid "Hola,"
 msgstr "Ciao,"
 
 #: templates/registration/password_reset_email.html:5
-msgid "Has sol·licitat restablir la teva contrasenya a Audiovook. Fes clic a l'enllaç següent per establir una nova contrasenya:"
-msgstr "Hai richiesto di reimpostare la tua password su Audiovook. Clicca sul seguente link per impostare una nuova password:"
+msgid "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:"
+msgstr "Hai richiesto di reimpostare la tua password su Dual. Clicca sul seguente link per impostare una nuova password:"
+
+#: templates/registration/password_reset_email.html:7
+#: templates/registration/password_reset_form.html:10
+msgid "Restablir la contrasenya"
+msgstr "Reimposta la password"
 
 #: templates/registration/password_reset_email.html:9
 msgid "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
@@ -154,12 +161,8 @@ msgid "Gràcies,"
 msgstr "Grazie,"
 
 #: templates/registration/password_reset_email.html:12
-msgid "L'equip d'Audiovook"
-msgstr "Il team di Audiovook"
-
-#: templates/registration/password_reset_form.html:10
-msgid "Restablir la contrasenya"
-msgstr "Reimposta la password"
+msgid "L'equip de Dual"
+msgstr "Il team di Dual"
 
 #: templates/registration/password_reset_form.html:13
 msgid "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
@@ -170,11 +173,8 @@ msgid "Envia l'enllaç de restabliment"
 msgstr "Invia link di ripristino"
 
 #: templates/registration/signup.html:4
-msgid "Crear compte"
-msgstr "Creare un account"
-
 #: templates/registration/signup.html:8
-msgid "Crea un compte"
+msgid "Crear compte"
 msgstr "Creare un account"
 
 #: templates/registration/signup.html:18
