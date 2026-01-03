@@ -8,8 +8,6 @@ from .views import (
     player_view,
     title_create,
     title_update,
-    CartView,
-    add_to_cart,
 )
 
 app_name = 'products'
@@ -23,6 +21,4 @@ urlpatterns = [
     path('product/<pk>/editar/', ProductUpdateView.as_view(), name='product_update'),
     path('title/nou/', title_create, name='title_create'),
     path('title/<pk>/editar/', title_update, name='title_update'),
-    path('cart/', CartView.as_view(), name='cart'),
-    path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
 ]

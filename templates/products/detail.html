@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load content_tags %}
 
 {% block title %}{{ product.name }} — Audiovook Dual{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="product-detail">
@@ -18,7 +21,6 @@
                 <p class="price">{% trans "Preu:" %} {{ product.price }} €</p>
                 <p>{% trans "Durada:" %} {{ product.duration }} {% trans "mesos" %}</p>
             </div>
-            <a class="button button--primary" href="{% url 'products:add_to_cart' product.id %}">{% trans "Comprar ara" %}</a>
              {% if user.is_authenticated and user.is_staff %}
                 <a class="button button--small" href="{% url 'products:product_update' product.pk %}">{% trans "Editar producte" %}</a>
             {% endif %}
@@ -26,15 +28,28 @@
     </div>
 
     <div class="product-detail__legal">
-        <h2>{% trans "Condicions del producte" %}</h2>
-        <ul>
-            <li>{% trans "Accés durant" %} {{ product.duration }} {% trans "mesos a tots els títols inclosos." %}</li>
-            <li>{% trans "Accés des de qualsevol dispositiu." %}</li>
-            <li>{% trans "Suport per correu electrònic." %}</li>
-        </ul>
-        <div class="product-detail__general-terms">
-            {% get_translatable_content 'product_terms'|safe %}
+        <h2>{% trans "Condicions de venda" %}</h2>
+        <div class="scrollable-div">
+            <h3>{% trans "1. Objecte" %}</h3>
+            <p>{% trans "Les presents Condicions Generals de Venda tenen per objecte regular la relació contractual de compravenda nascuda entre el Venedor i el Client en el moment en què aquest accepta durant el procés de contractació en línia la casella corresponent." %}</p>
+
+            <h3>{% trans "2. Durada" %}</h3>
+            <p>{% trans "La relació contractual s'entendrà formalitzada des del moment de la compra i tindrà la durada corresponent al període de subscripció seleccionat pel Client." %}</p>
+
+            <h3>{% trans "3. Preu i forma de pagament" %}</h3>
+            <p>{% trans "El preu del servei serà el que s'indiqui en la nostra pàgina web en el moment de la compra. El pagament es realitzarà mitjançant targeta de crèdit o dèbit a través de la passarel·la de pagament segura." %}</p>
+
+            <h3>{% trans "4. Obligacions del Client" %}</h3>
+            <p>{% trans "El Client es compromet a utilitzar el servei de forma diligent i correcta, així com a facilitar dades veraces en el procés de registre i compra." %}</p>
         </div>
+    </div>
+
+    <div class="product-detail__purchase">
+        <div class="form-check">
+            <input type="checkbox" id="accept-conditions" class="form--input">
+            <label for="accept-conditions" class="form-check-label">{% trans "Accepto les condicions de venda" %}</label>
+        </div>
+        <button id="buy-button" class="button button--primary">{% trans "Comprar ara" %}</button>
     </div>
 
     {% for package in product.packages.all %}
@@ -66,4 +81,21 @@
     </div>
     {% endfor %}
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const acceptConditions = document.getElementById('accept-conditions');
+    const buyButton = document.getElementById('buy-button');
+
+    acceptConditions.addEventListener('change', function() {
+        if (this.checked) {
+            buyButton.style.display = 'block';
+        } else {
+            buyButton.style.display = 'none';
+        }
+    });
+});
+</script>
 {% endblock %}
