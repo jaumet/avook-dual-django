@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Title, Package, UserPurchase, TitleLanguage, TranslatableContent, ProductTranslation
+from .models import Product, Title, Package, UserPurchase, TranslatableContent, ProductTranslation
 
 
 class ProductTranslationInline(admin.TabularInline):
@@ -7,33 +7,27 @@ class ProductTranslationInline(admin.TabularInline):
     extra = 1
 
 
-class TitleLanguageInline(admin.TabularInline):
-    model = TitleLanguage
-    extra = 1
-
-
 @admin.register(Title)
 class TitleAdmin(admin.ModelAdmin):
-    list_display = ('machine_name', 'levels', 'collection')
-    search_fields = ('machine_name', 'collection')
-    list_filter = ('levels', 'collection')
-    inlines = [TitleLanguageInline]
+    list_display = ('machine_name', 'level')
+    search_fields = ('machine_name', 'level')
+    list_filter = ('level',)
 
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'level_range', 'is_free')
-    search_fields = ('name', 'level_range')
-    list_filter = ('level_range', 'is_free')
+    list_display = ('name', 'level')
+    search_fields = ('name', 'level')
+    list_filter = ('level',)
     filter_horizontal = ('titles',)
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductTranslationInline]
-    list_display = ('get_name', 'price', 'currency', 'is_free')
+    list_display = ('get_name', 'price', 'currency')
     search_fields = ('translations__name', 'price')
-    list_filter = ('is_free', 'currency')
+    list_filter = ('currency',)
     filter_horizontal = ('packages',)
 
     def get_name(self, obj):

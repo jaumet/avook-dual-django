@@ -12,11 +12,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 class Title(models.Model):
     id = models.AutoField(primary_key=True)
     machine_name = models.SlugField(unique=True, help_text="Nom intern sense espais, p. ex., 'el-meu-titol'")
-    description = models.TextField(blank=True, help_text="Descripció del títol")
-    levels = models.CharField(max_length=50, blank=True, help_text="Nivells, p. ex., 'A2'")
-    ages = models.CharField(max_length=20, blank=True, help_text="Rang d’edat, p. ex., '10-16'")
-    collection = models.CharField(max_length=100, blank=True, help_text="Col·lecció a la qual pertany")
-    duration = models.CharField(max_length=20, blank=True, help_text="Durada en format HH:MM:SS")
+    level = models.CharField(max_length=50, blank=True, help_text="Nivell, p. ex., 'A2'")
 
     def __str__(self):
         return self.machine_name
@@ -33,11 +29,8 @@ class Title(models.Model):
     def get_user_status(self, user):
         """
         Determina l'estat del títol per a un usuari específic.
-        Retorna 'FREE', 'PREMIUM_OWNED', o 'PREMIUM_NOT_OWNED'.
+        Retorna 'PREMIUM_OWNED', o 'PREMIUM_NOT_OWNED'.
         """
-        if self.packages.filter(is_free=True).exists():
-            return 'FREE'
-
         if user and user.is_authenticated:
             # This is an optimized query to check for access.
             # It avoids N+1 queries by performing a single DB lookup.
@@ -58,38 +51,27 @@ class Title(models.Model):
         verbose_name_plural = "Títols"
 
 
-class TitleLanguage(models.Model):
-    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='languages')
-    language = models.CharField(max_length=2, help_text="Codi de l'idioma, p. ex., 'CA'")
-    human_name = models.CharField(max_length=255, help_text="Nom del títol per mostrar en l'idioma especificat")
-    directory = models.CharField(max_length=255, help_text="Ruta al directori de l'idioma")
-    json_file = models.CharField(max_length=255, help_text="Nom del fitxer JSON de l'idioma")
-
-    def __str__(self):
-        return f"{self.human_name} ({self.language})"
-
-    class Meta:
-        unique_together = ('title', 'language')
-        verbose_name = "Ruta d'idioma del títol"
-        verbose_name_plural = "Rutes d'idioma del títol"
-
-
 class Package(models.Model):
+    LEVEL_CHOICES = [
+        ('A0', 'A0'),
+        ('A1', 'A1'),
+        ('A2', 'A2'),
+        ('B1', 'B1'),
+        ('B2', 'B2'),
+        ('C1', 'C1'),
+    ]
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, help_text="Nom del paquet")
-    level_range = models.CharField(max_length=50, blank=True, help_text="Rang de nivells del paquet, p. ex., 'A0'")
-    description = models.TextField(blank=True, help_text="Descripció del paquet")
-    is_free = models.BooleanField(default=False, help_text="És un paquet gratuït?")
-    is_default_free = models.BooleanField(default=False, help_text="Marca si aquest és el paquet gratuït per defecte per a nous usuaris")
+    level = models.CharField(
+        max_length=2,
+        choices=LEVEL_CHOICES,
+        help_text="Nivell del paquet"
+    )
     titles = models.ManyToManyField(Title, related_name='packages', help_text="Títols inclosos en aquest paquet")
 
     def __str__(self):
         return self.name
 
-    def clean(self):
-        if self.is_default_free:
-            if Package.objects.filter(is_default_free=True).exclude(pk=self.pk).exists():
-                raise models.ValidationError("Ja existeix un paquet gratuït per defecte.")
     class Meta:
         verbose_name = "Paquet"
         verbose_name_plural = "Paquets"
@@ -99,7 +81,6 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preu del producte")
     currency = models.CharField(max_length=10, default='euro', help_text="Moneda del preu")
-    is_free = models.BooleanField(default=False, help_text="És un producte gratuït?")
     packages = models.ManyToManyField(Package, related_name='products', help_text="Paquets inclosos en aquest producte")
     duration = models.IntegerField(default=0, help_text="Durada del producte en mesos")
     category = models.CharField(max_length=50, blank=True, help_text="Categoria del producte")

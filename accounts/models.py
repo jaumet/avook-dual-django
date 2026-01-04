@@ -22,13 +22,6 @@ class CustomUser(AbstractUser):
         },
     )
     email = models.EmailField('email address', blank=False)
-    packages = models.ManyToManyField(
-        'products.Package',
-        verbose_name="paquets",
-        blank=True,
-        help_text="Els paquets als que aquest usuari té accés.",
-        related_name="users",
-    )
     known_languages = models.JSONField(
         "Llengües conegudes",
         default=list,
