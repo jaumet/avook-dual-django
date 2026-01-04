@@ -111,11 +111,27 @@ class Product(models.Model):
         if not language_code:
             language_code = get_language()
 
-        try:
-            return self.translations.get(language_code=language_code)
-        except ProductTranslation.DoesNotExist:
-            # Fallback to the default language if the translation doesn't exist
-            return self.translations.get(language_code=settings.LANGUAGE_CODE)
+        # Try to get the translation in the requested language
+        translation = self.translations.filter(language_code=language_code).first()
+        if translation:
+            return translation
+
+        # Fallback to the default language
+        translation = self.translations.filter(language_code=settings.LANGUAGE_CODE).first()
+        if translation:
+            return translation
+
+        # Fallback to the first available translation
+        translation = self.translations.first()
+        if translation:
+            return translation
+
+        # If no translations exist, return a dummy object
+        class DummyTranslation:
+            name = "No Name Available"
+            description = "No Description Available"
+
+        return DummyTranslation()
 
 
     @property
