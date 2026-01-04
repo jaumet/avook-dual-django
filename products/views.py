@@ -28,7 +28,7 @@ class ProductListView(TitleContextMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related(
-            'packages__titles__languages', 'translations'
+            'packages__titles', 'translations'
         ).order_by('price')
 
     def get_context_data(self, **kwargs):
@@ -145,7 +145,7 @@ class CatalogView(TitleContextMixin, ListView):
     context_object_name = 'titles_with_status'
 
     def get_queryset(self):
-        return Title.objects.prefetch_related('languages').all()
+        return Title.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -154,19 +154,14 @@ class CatalogView(TitleContextMixin, ListView):
         context['titles_with_status'] = self.get_titles_with_status(titles)
 
         context['language_map'] = dict(settings.LANGUAGES)
-        context['collections'] = sorted(list(titles.values_list('collection', flat=True).distinct()))
-        context['durations'] = sorted(list(titles.values_list('duration', flat=True).distinct()))
-        context['languages'] = sorted(list(TitleLanguage.objects.filter(title__in=titles).values_list('language', flat=True).distinct()))
-        context['ages_list'] = sorted(list(titles.values_list('ages', flat=True).distinct()))
-        context['levels'] = sorted(list(titles.values_list('levels', flat=True).distinct()))
+        context['levels'] = sorted(list(titles.values_list('level', flat=True).distinct()))
 
         return context
 
 
 def player_view(request, machine_name):
     title = get_object_or_404(Title, machine_name=machine_name)
-    languages = title.languages.all()
-    return render(request, 'products/player.html', {'title': title, 'languages': languages})
+    return render(request, 'products/player.html', {'title': title})
 
 
 def root_redirect(request):
