@@ -8,3 +8,8 @@
 #buy-button {
     display: none;
 }
+
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+}

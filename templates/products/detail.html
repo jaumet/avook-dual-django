@@ -27,20 +27,12 @@
         </div>
     </div>
 
+{% load content_tags %}
     <div class="product-detail__legal">
         <h2>{% trans "Condicions de venda" %}</h2>
         <div class="scrollable-div">
-            <h3>{% trans "1. Objecte" %}</h3>
-            <p>{% trans "Les presents Condicions Generals de Venda tenen per objecte regular la relació contractual de compravenda nascuda entre el Venedor i el Client en el moment en què aquest accepta durant el procés de contractació en línia la casella corresponent." %}</p>
-
-            <h3>{% trans "2. Durada" %}</h3>
-            <p>{% trans "La relació contractual s'entendrà formalitzada des del moment de la compra i tindrà la durada corresponent al període de subscripció seleccionat pel Client." %}</p>
-
-            <h3>{% trans "3. Preu i forma de pagament" %}</h3>
-            <p>{% trans "El preu del servei serà el que s'indiqui en la nostra pàgina web en el moment de la compra. El pagament es realitzarà mitjançant targeta de crèdit o dèbit a través de la passarel·la de pagament segura." %}</p>
-
-            <h3>{% trans "4. Obligacions del Client" %}</h3>
-            <p>{% trans "El Client es compromet a utilitzar el servei de forma diligent i correcta, així com a facilitar dades veraces en el procés de registre i compra." %}</p>
+            {% get_translatable_content 'product_terms' as sales_conditions %}
+            {{ sales_conditions|safe }}
         </div>
     </div>
 
