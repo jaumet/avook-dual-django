@@ -53,42 +53,12 @@ class HomeViewTest(TestCase):
             response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
-from .models import HomePageContent
-
-class ContentManagementTest(TestCase):
-    def test_admin_edits_are_not_overwritten(self):
-        """
-        Verify that changes made in the admin are not overwritten by the populate_content command.
-        """
-        # 1. Create the initial homepage content
-        HomePageContent.objects.create(content_ca="Títol Original")
-
-        # 2. Simulate an admin edit
-        home_content = HomePageContent.objects.first()
-        home_content.content_ca = "Aquest és un títol editat"
-        home_content.save()
-
-        # 3. Verify that the changes persist
-        home_content.refresh_from_db()
-        self.assertEqual(home_content.content_ca, "Aquest és un títol editat")
-
-    def test_home_page_renders_for_anonymous_user(self):
-        """
-        Verify that the home page renders successfully for an anonymous user.
-        """
-        with translation.override('ca'):
-            response = self.client.get(reverse('home'))
-        self.assertEqual(response.status_code, 200)
-
-from .models import TitleLanguage
-
 class ProductAccessTest(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(username='testuser', password='password')
 
-        self.level_a2_package = Package.objects.create(name='A2 Package', level_range='A2')
-        self.title_a2 = Title.objects.create(machine_name='a2-title', levels='A2')
-        TitleLanguage.objects.create(title=self.title_a2, language='EN', human_name='A2 Title', directory='/', json_file='a.json')
+        self.level_a2_package = Package.objects.create(name='A2 Package', level='A2')
+        self.title_a2 = Title.objects.create(machine_name='a2-title', level='A2')
         self.level_a2_package.titles.add(self.title_a2)
 
         self.product_a2 = Product.objects.create(

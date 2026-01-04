@@ -4,63 +4,53 @@ from products.models import Product, ProductTranslation, Package, Title
 Product.objects.all().delete()
 Package.objects.all().delete()
 
-# Create Packages
-package_a1 = Package.objects.create(name='A1', level_range='A1')
-package_a2 = Package.objects.create(name='A2', level_range='A2')
-package_b1 = Package.objects.create(name='B1', level_range='B1')
+# Create Packages for each level and assign all titles of that level
+levels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1']
+packages = {}
+for level in levels:
+    package, created = Package.objects.get_or_create(name=level, level=level)
+    titles = Title.objects.filter(level=level)
+    package.titles.set(titles)
+    packages[level] = package
 
-# Add titles to packages
-package_a1.titles.add(Title.objects.get(machine_name='0-1-Salutacions-i-emocions'))
-package_a2.titles.add(Title.objects.get(machine_name='0-2-D-on-ets'))
-package_b1.titles.add(Title.objects.get(machine_name='0-3-Bon-dia-bona-nit'))
-
-# Create Products and Translations
 # Product 1: Dual Start
-product_start = Product.objects.create(price=29.99, duration=3, category='start')
-product_start.packages.add(package_a1)
+product_start = Product.objects.create(price=19, duration=3, category='start')
+product_start.packages.add(packages['A0'], packages['A1'])
 ProductTranslation.objects.create(
-    product=product_start,
-    language_code='ca',
-    name='Dual Start',
-    description='Accés durant 3 mesos al nivell A1'
+    product=product_start, language_code='ca', name='Dual Start', description='Nivells A0 i A1'
 )
 ProductTranslation.objects.create(
-    product=product_start,
-    language_code='en',
-    name='Dual Start',
-    description='3-month access to level A1'
+    product=product_start, language_code='en', name='Dual Start', description='Levels A0 & A1'
 )
 
 # Product 2: Dual Progress
-product_progress = Product.objects.create(price=39.99, duration=3, category='progress')
-product_progress.packages.add(package_a2)
+product_progress = Product.objects.create(price=29, duration=3, category='progress')
+product_progress.packages.add(packages['A2'], packages['B1'])
 ProductTranslation.objects.create(
-    product=product_progress,
-    language_code='ca',
-    name='Dual Progress',
-    description='Accés durant 3 mesos al nivell A2'
+    product=product_progress, language_code='ca', name='Dual Progress', description='Nivells A2 i B1'
 )
 ProductTranslation.objects.create(
-    product=product_progress,
-    language_code='en',
-    name='Dual Progress',
-    description='3-month access to level A2'
+    product=product_progress, language_code='en', name='Dual Progress', description='Levels A2 & B1'
 )
 
-# Product 3: Dual Full Access
-product_full = Product.objects.create(price=99.99, duration=12, category='full_access')
-product_full.packages.add(package_a1, package_a2, package_b1)
+# Product 3: Dual Advanced
+product_advanced = Product.objects.create(price=36, duration=3, category='advanced')
+product_advanced.packages.add(packages['B2'], packages['C1'])
 ProductTranslation.objects.create(
-    product=product_full,
-    language_code='ca',
-    name='Dual Full Access',
-    description='Accés durant 12 mesos a tots els nivells'
+    product=product_advanced, language_code='ca', name='Dual Advanced', description='Nivells B2 i C1'
 )
 ProductTranslation.objects.create(
-    product=product_full,
-    language_code='en',
-    name='Dual Full Access',
-    description='12-month access to all levels'
+    product=product_advanced, language_code='en', name='Dual Advanced', description='Levels B2 & C1'
 )
 
-print("Database seeded successfully with products and packages.")
+# Product 4: Dual Full Access
+product_full = Product.objects.create(price=49, duration=6, category='full_access')
+product_full.packages.set(packages.values())
+ProductTranslation.objects.create(
+    product=product_full, language_code='ca', name='Dual Full Access', description='Tots els nivells'
+)
+ProductTranslation.objects.create(
+    product=product_full, language_code='en', name='Dual Full Access', description='All levels'
+)
+
+print("Database seeded successfully with new products and packages.")

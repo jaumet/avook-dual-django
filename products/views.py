@@ -15,8 +15,8 @@ from django.http import JsonResponse
 
 from django.urls import reverse
 from post_office.utils import send_templated_email
-from .forms import ProductForm, SignUpForm, TitleForm, TitleLanguageForm
-from .models import Product, Title, TitleLanguage, TranslatableContent
+from .forms import ProductForm, SignUpForm, TitleForm
+from .models import Product, Title, TranslatableContent
 from .utils import load_titles_grouped_by_level
 from .mixins import TitleContextMixin
 
@@ -104,41 +104,6 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('home')
 
 
-TitleLanguageFormSet = inlineformset_factory(
-    Title, TitleLanguage, form=TitleLanguageForm, extra=1, can_delete=True
-)
-
-@login_required
-def title_create(request):
-    if request.method == 'POST':
-        form = TitleForm(request.POST)
-        formset = TitleLanguageFormSet(request.POST, instance=Title())
-        if form.is_valid() and formset.is_valid():
-            title = form.save()
-            formset.instance = title
-            formset.save()
-            messages.success(request, 'Títol creat correctament.')
-            return redirect('home')
-    else:
-        form = TitleForm()
-        formset = TitleLanguageFormSet(instance=Title())
-    return render(request, 'products/title_form.html', {'form': form, 'formset': formset})
-
-@login_required
-def title_update(request, pk):
-    title = Title.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = TitleForm(request.POST, instance=title)
-        formset = TitleLanguageFormSet(request.POST, instance=title)
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            messages.success(request, 'Títol actualitzat correctament.')
-            return redirect('home')
-    else:
-        form = TitleForm(instance=title)
-        formset = TitleLanguageFormSet(instance=title)
-    return render(request, 'products/title_form.html', {'form': form, 'formset': formset})
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
