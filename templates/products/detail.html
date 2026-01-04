@@ -52,17 +52,8 @@
                 {% for title in package.titles.all %}
                     <li class="product-detail__title-item">
                         <div>
-                            <p class="kicker">{% trans "Nivell" %} {{ title.levels }}</p>
-                            <strong>{{ title.human_name }}</strong>
-                            {% if title.description %}
-                                <p>{{ title.description }}</p>
-                            {% endif %}
-                            <p class="product-card__meta">{% trans "Idiomes:" %}
-                                {% for lang in title.languages.all %}
-                                    {{ lang.language }}{% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </p>
-                            {% if title.duration %}<p class="product-card__meta">{% trans "Durada:" %} {{ title.duration }}</p>{% endif %}
+                            <p class="kicker">{% trans "Nivell" %} {{ title.level }}</p>
+                            <strong>{{ title.machine_name }}</strong>
                         </div>
                     </li>
                 {% endfor %}
