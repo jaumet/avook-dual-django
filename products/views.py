@@ -43,13 +43,6 @@ class ProductListView(TitleContextMixin, ListView):
         }
         context['products_by_category'] = products_by_category
 
-        # Prepare translations
-        product_translations = {
-            prod.id: prod.get_translation(self.request.LANGUAGE_CODE)
-            for cat in products_by_category.values() for prod in cat
-        }
-        context['product_translations'] = product_translations
-
         context['language_map'] = dict(settings.LANGUAGES)
         for category in products_by_category.values():
             for product in category:
@@ -84,6 +77,9 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
     context_object_name = 'product'
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('translations')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,13 +1,12 @@
-{% load product_tags %}
 <a href="{% url 'products:product_detail' product.pk %}" class="product-card-link">
     <div class="product-card">
-        {% with product_translation=product_translations|get_item:product.id %}
+        {% with product_translation=product.get_translation %}
         <div class="product-header">
             <h2>{{ product_translation.name }} - {{ product.price }} {{ product.currency }}</h2>
         </div>
         <div class="product-body">
             <p>{{ product_translation.description }}</p>
-            {% endwith %}
+        {% endwith %}
             {% for package in product.packages.all %}
             <div class="accordion">
                 <div class="accordion-header">

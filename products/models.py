@@ -111,25 +111,29 @@ class Product(models.Model):
         if not language_code:
             language_code = get_language()
 
-        # Try to get the translation in the requested language
-        translation = self.translations.filter(language_code=language_code).first()
+        # Use prefetched translations if available
+        if hasattr(self, '_prefetched_objects_cache') and 'translations' in self._prefetched_objects_cache:
+            translations = self._prefetched_objects_cache['translations']
+        else:
+            translations = self.translations.all()
+
+        # Create a dictionary for quick lookups
+        trans_dict = {t.language_code: t for t in translations}
+
+        # Try to get the requested language
+        translation = trans_dict.get(language_code)
         if translation:
             return translation
 
         # Fallback to the default language
-        translation = self.translations.filter(language_code=settings.LANGUAGE_CODE).first()
+        translation = trans_dict.get(settings.LANGUAGE_CODE)
         if translation:
             return translation
 
-        # Fallback to the first available translation
-        translation = self.translations.first()
-        if translation:
-            return translation
-
-        # If no translations exist, return a dummy object
+        # If no suitable translation is found, return a dummy object
         class DummyTranslation:
-            name = "No Name Available"
-            description = "No Description Available"
+            name = "Not Available"
+            description = "Translation not available for this product."
 
         return DummyTranslation()
 

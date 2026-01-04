@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 18:52+0000\n"
+"POT-Creation-Date: 2026-01-04 17:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,18 +37,15 @@ msgstr "Permisos"
 msgid "Important dates"
 msgstr "Fechas importantes"
 
-#: accounts/forms.py:16
-#: products/forms.py:48
+#: accounts/forms.py:17 products/forms.py:42
 msgid "First name"
 msgstr "Nombre"
 
-#: accounts/forms.py:17
-#: products/forms.py:49
+#: accounts/forms.py:18 products/forms.py:43
 msgid "Last name"
 msgstr "Apellidos"
 
-#: accounts/forms.py:18
-#: products/forms.py:50
+#: accounts/forms.py:19 products/forms.py:44
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -89,25 +85,146 @@ msgstr "Italiano"
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: products/forms.py:54
+#: products/forms.py:50
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: products/forms.py:58
+#: products/forms.py:55
 msgid "Password confirmation"
 msgstr "Confirmación de contraseña"
 
-#: products/views.py:134
-msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
-msgstr "¡Gracias por registrarte! Te hemos enviado un correo para activar tu cuenta."
+#: products/views.py:148
+msgid ""
+"Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+msgstr ""
+"¡Gracias por registrarte! Te hemos enviado un correo para activar tu cuenta."
 
-#: templates/registration/login.html:4
-#: templates/registration/login.html:8
-#: templates/registration/login.html:18
+#: samples/product_default.html:5
+msgid "Product Page"
+msgstr "Página de producto"
+
+#: samples/product_default.html:13
+msgid "Price:"
+msgstr "Precio:"
+
+#: samples/product_default.html:15
+msgid "Edit product"
+msgstr "Editar producto"
+
+#: samples/product_default.html:24
+msgid "Included titles in the package:"
+msgstr "Títulos incluidos en el paquete:"
+
+#: samples/product_default.html:28 samples/product_default.html:37
+msgid "Level"
+msgstr "Nivel"
+
+#: samples/product_default.html:29
+msgid "Example Title 1"
+msgstr "Título de ejemplo 1"
+
+#: samples/product_default.html:30
+msgid "This is a short description for the first example title."
+msgstr "Esta es una breve descripción para el primer título de ejemplo."
+
+#: samples/product_default.html:31 samples/product_default.html:40
+msgid "Languages:"
+msgstr "Idiomas:"
+
+#: samples/product_default.html:31
+msgid "English, Spanish"
+msgstr "Inglés, Español"
+
+#: samples/product_default.html:32 samples/product_default.html:41
+msgid "Duration:"
+msgstr "Duración:"
+
+#: samples/product_default.html:38
+msgid "Example Title 2"
+msgstr "Título de ejemplo 2"
+
+#: samples/product_default.html:39
+msgid "This is a short description for the second example title."
+msgstr "Esta es una breve descripción para el segundo título de ejemplo."
+
+#: samples/product_default.html:40
+msgid "French, German"
+msgstr "Francés, Alemán"
+
+#: templates/products/cart.html:4
+msgid "Cistella"
+msgstr "Cesta"
+
+#: templates/products/cart.html:8
+msgid "La teva cistella"
+msgstr "Tu cesta"
+
+#: templates/products/cart.html:13
+msgid "Producte"
+msgstr "Producto"
+
+#: templates/products/cart.html:14
+msgid "Preu"
+msgstr "Precio"
+
+#: templates/products/cart.html:15
+msgid "Quantitat"
+msgstr "Cantidad"
+
+#: templates/products/cart.html:32
+msgid "La teva cistella està buida."
+msgstr "Tu cesta está vacía."
+
+#: templates/products/detail.html:21
+msgid "Preu:"
+msgstr "Precio:"
+
+#: templates/products/detail.html:22 templates/products/detail.html:65
+msgid "Durada:"
+msgstr "Duración:"
+
+#: templates/products/detail.html:22
+msgid "mesos"
+msgstr "meses"
+
+#: templates/products/detail.html:25
+msgid "Editar producte"
+msgstr "Editar producto"
+
+#: templates/products/detail.html:32
+msgid "Condicions de venda"
+msgstr "Condiciones de venta"
+
+#: templates/products/detail.html:42
+msgid "Accepto les condicions de venda"
+msgstr "Acepto las condiciones de venta"
+
+#: templates/products/detail.html:44
+msgid "Comprar ara"
+msgstr "Comprar ahora"
+
+#: templates/products/detail.html:49
+msgid "Títols inclosos en el paquet:"
+msgstr "Títulos incluidos en el paquete:"
+
+#: templates/products/detail.html:55
+msgid "Nivell"
+msgstr "Nivel"
+
+#: templates/products/detail.html:60
+msgid "Idiomes:"
+msgstr "Idiomas:"
+
+#: templates/products/detail.html:71
+msgid "Encara no hi ha títols assignats a aquest paquet."
+msgstr "Todavía no hay títulos asignados a este paquete."
+
+#: templates/registration/login.html:4 templates/registration/login.html:8
+#: templates/registration/login.html:21
 msgid "Inicia sessió"
 msgstr "Iniciar sesión"
 
-#: templates/registration/login.html:26
+#: templates/registration/login.html:23
 msgid "Has oblidat la contrasenya?"
 msgstr "¿Has olvidado la contraseña?"
 
@@ -116,8 +233,16 @@ msgid "Contrasenya canviada"
 msgstr "Contraseña cambiada"
 
 #: templates/registration/password_reset_complete.html:13
-msgid "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
-msgstr "Tu contraseña se ha cambiado correctamente. Ahora puedes iniciar sesión con la nueva contraseña."
+msgid ""
+"La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
+"la nova contrasenya."
+msgstr ""
+"Tu contraseña se ha cambiado correctamente. Ahora puedes iniciar sesión con "
+"la nueva contraseña."
+
+#: templates/registration/password_reset_complete.html:14
+msgid "Inicia la sessió"
+msgstr "Iniciar sesión"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Estableix una nova contrasenya"
@@ -128,55 +253,78 @@ msgid "Canvia la meva contrasenya"
 msgstr "Cambiar mi contraseña"
 
 #: templates/registration/password_reset_confirm.html:20
-msgid "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
-msgstr "El enlace de restablecimiento de contraseña no es válido, posiblemente porque ya ha sido utilizado. Por favor, solicita un nuevo restablecimiento de contraseña."
+msgid ""
+"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
+"ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
+"contrasenya."
+msgstr ""
+"El enlace de restablecimiento de contraseña no es válido, posiblemente "
+"porque ya ha sido utilizado. Por favor, solicita un nuevo restablecimiento "
+"de contraseña."
 
 #: templates/registration/password_reset_done.html:10
 msgid "Instruccions enviades"
 msgstr "Instrucciones enviadas"
 
 #: templates/registration/password_reset_done.html:13
-msgid "Hem enviat un correu electrònic amb instruccions per restablir la teva contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
-msgstr "Hemos enviado un correo electrónico con instrucciones para restablecer tu contraseña. Si no lo recibes, comprueba tu carpeta de correo no deseado."
+msgid ""
+"Hem enviat un correu electrònic amb instruccions per restablir la teva "
+"contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
+msgstr ""
+"Hemos enviado un correo electrónico con instrucciones para restablecer tu "
+"contraseña. Si no lo recibes, comprueba tu carpeta de correo no deseado."
 
-#: templates/registration/password_reset_email.html:3
+#: templates/registration/password_reset_email.html:2
 msgid "Hola,"
 msgstr "Hola,"
 
-#: templates/registration/password_reset_email.html:5
-msgid "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:"
-msgstr "Has solicitado restablecer tu contraseña en Dual. Haz clic en el siguiente enlace para establecer una nueva contraseña:"
+#: templates/registration/password_reset_email.html:4
+msgid ""
+"Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç "
+"següent per establir una nova contrasenya:"
+msgstr ""
+"Has solicitado restablecer tu contraseña en Dual. Haz clic en el siguiente "
+"enlace para establecer una nueva contraseña:"
 
-#: templates/registration/password_reset_email.html:7
+#: templates/registration/password_reset_email.html:6
 #: templates/registration/password_reset_form.html:10
 msgid "Restablir la contrasenya"
 msgstr "Restablecer la contraseña"
 
-#: templates/registration/password_reset_email.html:9
-msgid "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
-msgstr "Si no has solicitado este cambio, puedes ignorar este correo electrónico."
+#: templates/registration/password_reset_email.html:8
+msgid ""
+"Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
+msgstr ""
+"Si no has solicitado este cambio, puedes ignorar este correo electrónico."
 
-#: templates/registration/password_reset_email.html:11
+#: templates/registration/password_reset_email.html:10
 msgid "Gràcies,"
 msgstr "Gracias,"
 
-#: templates/registration/password_reset_email.html:12
+#: templates/registration/password_reset_email.html:11
 msgid "L'equip de Dual"
 msgstr "El equipo de Dual"
 
 #: templates/registration/password_reset_form.html:13
-msgid "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
-msgstr "Introduce tu dirección de correo electrónico y te enviaremos instrucciones para restablecer tu contraseña."
+msgid ""
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
+"restablir la teva contrasenya."
+msgstr ""
+"Introduce tu dirección de correo electrónico y te enviaremos instrucciones "
+"para restablecer tu contraseña."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
 msgstr "Enviar enlace de restablecimiento"
 
 #: templates/registration/signup.html:4
-#: templates/registration/signup.html:8
 msgid "Crear compte"
 msgstr "Crear cuenta"
 
-#: templates/registration/signup.html:18
+#: templates/registration/signup.html:8
+msgid "Crea un compte"
+msgstr "Crear una cuenta"
+
+#: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrarme"
