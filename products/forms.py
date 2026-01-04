@@ -31,10 +31,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = [
             'id',
-            'name',
             'price',
             'currency',
-            'description',
             'is_free',
             'packages',
         ]

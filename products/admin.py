@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Product, Title, Package, UserPurchase, TitleLanguage, TranslatableContent
+from .models import Product, Title, Package, UserPurchase, TitleLanguage, TranslatableContent, ProductTranslation
+
+
+class ProductTranslationInline(admin.TabularInline):
+    model = ProductTranslation
+    extra = 1
 
 
 class TitleLanguageInline(admin.TabularInline):
@@ -25,10 +30,16 @@ class PackageAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'currency', 'is_free')
-    search_fields = ('name', 'price')
+    inlines = [ProductTranslationInline]
+    list_display = ('get_name', 'price', 'currency', 'is_free')
+    search_fields = ('translations__name', 'price')
     list_filter = ('is_free', 'currency')
     filter_horizontal = ('packages',)
+
+    def get_name(self, obj):
+        translation = obj.get_translation()
+        return translation.name if translation else 'No Name'
+    get_name.short_description = 'Name'
 
 
 @admin.register(UserPurchase)

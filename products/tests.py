@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import translation
 import datetime
 from django.utils import timezone
-from products.models import Product, Title, Package, UserPurchase
+from products.models import Product, Title, Package, UserPurchase, ProductTranslation
 
 
 User = get_user_model()
@@ -92,10 +92,15 @@ class ProductAccessTest(TestCase):
         self.level_a2_package.titles.add(self.title_a2)
 
         self.product_a2 = Product.objects.create(
-            name='Dual Progress A2',
             price=39.99,
             duration=3,
             category='progress'
+        )
+        ProductTranslation.objects.create(
+            product=self.product_a2,
+            language_code='en',
+            name='Dual Progress A2',
+            description='Test Description'
         )
         self.product_a2.packages.add(self.level_a2_package)
 

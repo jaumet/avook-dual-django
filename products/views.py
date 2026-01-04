@@ -27,17 +27,29 @@ class ProductListView(TitleContextMixin, ListView):
     context_object_name = 'products_by_category'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles__languages').order_by('price')
+        return super().get_queryset().prefetch_related(
+            'packages__titles__languages', 'translations'
+        ).order_by('price')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         products = self.get_queryset()
+
+        # Separating products by category
         products_by_category = {
             'start': list(products.filter(category='start')),
             'progress': list(products.filter(category='progress')),
             'full_access': list(products.filter(category='full_access')),
         }
         context['products_by_category'] = products_by_category
+
+        # Prepare translations
+        product_translations = {
+            prod.id: prod.get_translation(self.request.LANGUAGE_CODE)
+            for cat in products_by_category.values() for prod in cat
+        }
+        context['product_translations'] = product_translations
+
         context['language_map'] = dict(settings.LANGUAGES)
         for category in products_by_category.values():
             for product in category:
@@ -72,6 +84,12 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context['product_translation'] = product.get_translation(self.request.LANGUAGE_CODE)
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

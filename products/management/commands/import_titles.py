@@ -4,7 +4,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 
-from products.models import Title
+from products.models import Title, TitleLanguage
 from products.utils import _normalize_languages
 
 
@@ -23,20 +23,27 @@ class Command(BaseCommand):
         updated = 0
 
         for slug, metadata in data.get("AUDIOS", {}).items():
-            defaults = {
-                "title_human": metadata.get("title-human", ""),
+            title_defaults = {
                 "description": metadata.get("description", ""),
-                "level": metadata.get("levels", ""),
-                "languages": ", ".join(_normalize_languages(metadata.get("langs", ""))),
+                "levels": metadata.get("levels", ""),
                 "ages": metadata.get("ages", ""),
                 "collection": metadata.get("colection", ""),
                 "duration": metadata.get("duration", ""),
             }
 
-            _, created_obj = Title.objects.update_or_create(
-                slug=slug,
-                defaults=defaults,
+            title, created_obj = Title.objects.update_or_create(
+                machine_name=slug,
+                defaults=title_defaults,
             )
+
+            language_code = "ca"
+            human_name = metadata.get("title-human", "")
+            TitleLanguage.objects.update_or_create(
+                title=title,
+                language=language_code,
+                defaults={"human_name": human_name, "directory": "/", "json_file": "a.json"},
+            )
+
             if created_obj:
                 created += 1
             else:
