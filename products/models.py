@@ -36,9 +36,8 @@ class Title(models.Model):
             # It avoids N+1 queries by performing a single DB lookup.
             is_owned = UserPurchase.objects.filter(
                 user=user,
-                product__packages__titles=self
-            ).filter(
-                Q(expiry_date__gte=timezone.now()) | Q(expiry_date__isnull=True)
+                product__packages__titles=self,
+                expiry_date__gte=timezone.now()
             ).exists()
 
             if is_owned:
