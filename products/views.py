@@ -17,8 +17,8 @@ from django.http import JsonResponse
 from django.urls import reverse
 from post_office.utils import send_templated_email
 from .forms import ProductForm, SignUpForm, TitleForm
-from .models import Product, Title, TranslatableContent
-from .utils import load_titles_grouped_by_level
+from .models import Product, Title, TitleTranslation
+from django.db import models
 from .mixins import TitleContextMixin
 
 
@@ -130,17 +130,28 @@ class CatalogView(TitleContextMixin, ListView):
     context_object_name = 'titles_with_status'
 
     def get_queryset(self):
-        return Title.objects.all()
+        lang_code = self.request.LANGUAGE_CODE[:2]
+        return Title.objects.prefetch_related(
+            models.Prefetch(
+                "translations",
+                queryset=TitleTranslation.objects.filter(language_code=lang_code),
+                to_attr="translated",
+            )
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         titles = context['object_list']
+        titles_with_status = self.get_titles_with_status(titles)
 
-        context['titles_with_status'] = self.get_titles_with_status(titles)
+        titles_by_level = {}
+        for item in titles_with_status:
+            level = item['title'].level
+            if level not in titles_by_level:
+                titles_by_level[level] = []
+            titles_by_level[level].append(item)
 
-        context['language_map'] = dict(settings.LANGUAGES)
-        context['levels'] = sorted(list(titles.values_list('level', flat=True).distinct()))
-
+        context['titles_by_level'] = titles_by_level
         return context
 
 

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
@@ -15,16 +16,16 @@
   <h2 style="text-align:center" data-translate-key="catalog.available_stories">📚 Relats disponibles</h2>
 
   <!-- Level buttons -->
-  <h3 style="text-align:center">Selecciona nivell:</h3>
+  <h3 style="text-align:center">{% trans "Selecciona nivell:" %}</h3>
   <section id="levelSection">
-    {% for level in levels %}
+    {% for level, items in titles_by_level.items %}
       <button class="levelBtn">{{ level }}</button>
     {% endfor %}
   </section>
 
   <!-- Toggle filters button -->
   <div id="advancedSearchToggle">
-    <button id="toggleFiltersBtn">🔍 Cerca avançada</button>
+    <button id="toggleFiltersBtn">🔍 {% trans "Cerca avançada" %}</button>
   </div>
 
   <!-- Filters bar (hidden by default) -->
@@ -62,9 +63,16 @@
     </div>
   </section>
 
-  <section id="catalog" class="title-cards-container">
-    {% for item in titles_with_status %}
-      {% include 'products/_title_card.html' with item=item %}
+  <section id="catalog">
+    {% for level, items in titles_by_level.items %}
+      <div class="level-container">
+        <h2>{{ level }}</h2>
+        <div class="title-cards-container">
+          {% for item in items %}
+            {% include 'products/_title_card.html' with item=item %}
+          {% endfor %}
+        </div>
+      </div>
     {% empty %}
       <p>No hi ha títols disponibles actualment.</p>
     {% endfor %}
