@@ -1,29 +1,32 @@
 {
   "PATH_AUDIOS": "/AUDIOS/",
-  "AUDIOS": {
-    "Test-1": {
-      "title": {
-      	"CA": {
-	      		"human-title":"Test CAT",
-    	  		"description": "Description CAT"
-      		},
-      	"EN": {
-	      		"human-title":"Test ENG",
-    	  		"description": "Description ENG"
-      		},
-      	"ES": {
-	      		"human-title":"Test ESP",
-    	  		"description": "Description ESP"
-      		}
-      },
+  "AUDIOS": [
+    {
+      "machine_name": "Test-1",
       "levels": "A1",
-      "langs": "CA,EN,PT",
       "ages": "0-99",
       "colection": "Test",
       "duration": "00:00:40",
-      "PT-Test-1.json": "file",
-      "EN-Test-1.json": "file",
-      "CA-Test-1.json": "file"
+      "text_versions": [
+        {
+          "lang": "CA",
+          "human-title": "Test CAT",
+          "description": "Description CAT",
+          "json_file": "CA-Test-1.json"
+        },
+        {
+          "lang": "EN",
+          "human-title": "Test ENG",
+          "description": "Description ENG",
+          "json_file": "EN-Test-1.json"
+        },
+        {
+          "lang": "ES",
+          "human-title": "Test ESP",
+          "description": "Description ESP",
+          "json_file": "ES-Test-1.json"
+        }
+      ]
     }
-  }
+  ]
 }

@@ -160,36 +160,50 @@ def player_view(request, machine_name):
     json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
 
     try:
-        with open(json_path, 'r') as f:
+        with open(json_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-    except FileNotFoundError:
-        return render(request, 'products/player.html', {'error': 'audios.json not found'})
+    except (FileNotFoundError, json.JSONDecodeError):
+        return render(request, 'products/player.html', {'error': 'audios.json not found or is invalid'})
 
-    title_data = data.get('AUDIOS', {}).get(machine_name)
+    audios_list = data.get('AUDIOS', [])
+    audios_map = {item['machine_name']: item for item in audios_list}
+    title_data = audios_map.get(machine_name)
 
     if not title_data:
         return render(request, 'products/player.html', {'error': 'Title not found'})
 
-    title_info = title_data.get('title', {}).get(lang_code)
+    text_versions = title_data.get('text_versions', [])
+    title_info = None
 
+    # Find the requested language in text_versions
+    for version in text_versions:
+        if version.get('lang', '').upper() == lang_code:
+            title_info = version
+            break
+
+    # Fallback to English if requested language is not found
     if not title_info:
-        # Fallback to default language or first available
-        fallback_lang = 'EN'
-        title_info = title_data.get('title', {}).get(fallback_lang, {})
-        if not title_info:
-            # If no EN translation, get the first one available
-            available_langs = title_data.get('title', {})
-            if available_langs:
-                first_lang_code = next(iter(available_langs))
-                title_info = available_langs[first_lang_code]
-            else:
-                title_info = {'human-title': machine_name, 'description': ''}
+        for version in text_versions:
+            if version.get('lang', '').upper() == 'EN':
+                title_info = version
+                break
+
+    # If still not found, fallback to the first available language
+    if not title_info and text_versions:
+        title_info = text_versions[0]
+
+    # If no text versions exist at all
+    if not title_info:
+        title_info = {'human-title': machine_name, 'description': ''}
+
+    # Get all available languages from text_versions
+    languages = [v.get('lang') for v in text_versions if 'lang' in v]
 
     context = {
         'machine_name': machine_name,
         'human_title': title_info.get('human-title', machine_name),
         'description': title_info.get('description', ''),
-        'languages': title_data.get('langs', '').split(','),
+        'languages': languages,
     }
 
     return render(request, 'products/player.html', {'title': context})
