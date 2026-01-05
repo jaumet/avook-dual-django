@@ -85,7 +85,10 @@ class Product(models.Model):
     category = models.CharField(max_length=50, blank=True, help_text="Categoria del producte")
 
     def __str__(self):
-        return f"Product {self.id}"
+        translation = self.get_translation()
+        if translation and translation.name != "Not Available":
+            return translation.name
+        return f"Product {self.id} (no translation)"
 
     def get_translation(self, language_code=None):
         if not language_code:
