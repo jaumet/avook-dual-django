@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{{ product.name }} — Audiovook Dual{% endblock %}
+{% block title %}{{ product.get_translation.name }} — Audiovook Dual{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
@@ -12,11 +12,11 @@
 <section class="product-detail">
     <div class="product-detail__header">
         <div class="product-detail__media">
-            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.name }}" />
+            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.get_translation.name }}" />
         </div>
         <div>
-            <h1>{{ product.name }}</h1>
-            <p class="lead">{{ product.description }}</p>
+            <h1>{{ product.get_translation.name }}</h1>
+            <p class="lead">{{ product.get_translation.description|default:_("No hi ha descripció per a aquest producte.") }}</p>
             <div class="product-detail__meta">
                 <p class="price">{% trans "Preu:" %} {{ product.price }} €</p>
                 <p>{% trans "Durada:" %} {{ product.duration }} {% trans "mesos" %}</p>
