@@ -34,11 +34,14 @@ class TitleContextMixin:
                     else:
                         title_info = {'human-title': machine_name, 'description': ''}
 
+            context_data = title_data.copy()
+            context_data.update(title_info)
+
             titles_with_status.append({
                 'title': title,
                 'status': title.get_user_status(user),
                 'image_url': title.get_image_url(),
-                'json_info': title_info,
+                'json_info': context_data,
             })
 
         return titles_with_status

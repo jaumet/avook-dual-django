@@ -1,0 +1,45 @@
+.custom-title-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.custom-title-card .title-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 1rem;
+}
+
+.custom-title-card .title-info {
+    flex-grow: 1;
+}
+
+.custom-title-card .title-info h5 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+}
+
+.custom-title-card .title-info p {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+}
+
+.custom-title-card .title-meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+}
+
+.custom-title-card .title-meta p {
+    margin-bottom: 0.25rem;
+}
+
+.custom-title-card .card-actions {
+    margin-left: 1rem;
+}
