@@ -10,6 +10,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+import json
 from django.db.models import Q
 from django.http import JsonResponse
 
@@ -24,7 +25,7 @@ from .mixins import TitleContextMixin
 class ProductListView(TitleContextMixin, ListView):
     model = Product
     template_name = 'products/product_list.html'
-    context_object_name = 'products_by_category'
+    context_object_name = 'products'
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related(
@@ -33,21 +34,17 @@ class ProductListView(TitleContextMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        products = self.get_queryset()
 
-        # Separating products by category
-        products_by_category = {
-            'start': list(products.filter(category='start')),
-            'progress': list(products.filter(category='progress')),
-            'full_access': list(products.filter(category='full_access')),
-        }
-        context['products_by_category'] = products_by_category
+        # Load titles info from audios.json
+        try:
+            audios_json_path = os.path.join(settings.STATICFILES_DIRS[0], 'audios.json')
+            with open(audios_json_path, 'r', encoding='utf-8') as f:
+                audios_data = json.load(f)
+                context['titles_info'] = audios_data.get("AUDIOS", {})
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            # Handle error if file is not found or is invalid JSON
+            context['titles_info'] = {}
 
-        context['language_map'] = dict(settings.LANGUAGES)
-        for category in products_by_category.values():
-            for product in category:
-                for package in product.packages.all():
-                    package.titles_with_status = self.get_titles_with_status(package.titles.all())
         return context
 
 

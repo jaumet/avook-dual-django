@@ -78,6 +78,7 @@ class Package(models.Model):
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
+    machine_name = models.SlugField(unique=True, help_text="Nom intern sense espais, p. ex., 'el-meu-producte'", blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preu del producte")
     currency = models.CharField(max_length=10, default='euro', help_text="Moneda del preu")
     packages = models.ManyToManyField(Package, related_name='products', help_text="Paquets inclosos en aquest producte")

@@ -25,10 +25,15 @@ class PackageAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductTranslationInline]
-    list_display = ('get_name', 'price', 'currency')
-    search_fields = ('translations__name', 'price')
+    list_display = ('get_name', 'machine_name', 'price', 'currency')
+    search_fields = ('translations__name', 'machine_name', 'price')
     list_filter = ('currency',)
     filter_horizontal = ('packages',)
+    fieldsets = (
+        (None, {
+            'fields': ('machine_name', 'price', 'currency', 'category', 'duration', 'packages')
+        }),
+    )
 
     def get_name(self, obj):
         translation = obj.get_translation()
