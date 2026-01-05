@@ -1,35 +1,48 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Cistella" %} — Audiovook Dual{% endblock %}
+{% block title %}{% trans "Carretó" %}{% endblock %}
 
 {% block content %}
-<section class="cart">
-    <h1>{% trans "La teva cistella" %}</h1>
-    {% if cart_items %}
-        <table class="cart__table">
+<section class="cart-summary">
+    <h1>{% trans "El teu carretó" %}</h1>
+    {% if cart %}
+        <table class="table">
             <thead>
                 <tr>
                     <th>{% trans "Producte" %}</th>
-                    <th>{% trans "Preu" %}</th>
                     <th>{% trans "Quantitat" %}</th>
-                    <th>Total</th>
+                    <th>{% trans "Preu" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in cart_items %}
+                {% for item in cart %}
                     <tr>
-                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.get_translation.name }}</td>
+                        <td>
+                            <form action="{% url 'products:cart_update' item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                                <button type="submit">{% trans "Actualitzar" %}</button>
+                            </form>
+                        </td>
                         <td>{{ item.product.price }} €</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.total }} €</td>
+                        <td>{{ item.total_price }} €</td>
+                        <td>
+                            <a href="{% url 'products:cart_remove' item.product.id %}">{% trans "Eliminar" %}</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <p class="cart__total">Total: {{ total_price }} €</p>
+        <div class="cart-total">
+            <h3>{% trans "Total:" %} {{ cart.get_total_price }} €</h3>
+            <a href="#" class="button">{% trans "Procedir al pagament" %}</a>
+        </div>
     {% else %}
-        <p>{% trans "La teva cistella està buida." %}</p>
+        <p>{% trans "El teu carretó està buit." %}</p>
     {% endif %}
 </section>
 {% endblock %}
