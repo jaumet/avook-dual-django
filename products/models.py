@@ -159,7 +159,12 @@ class UserPurchase(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.name}"
+        product_name = "N/A"
+        if self.product:
+            translation = self.product.get_translation()
+            if translation:
+                product_name = translation.name
+        return f"{self.user.username} - {product_name}"
 
     class Meta:
         unique_together = ('user', 'product')

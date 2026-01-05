@@ -38,9 +38,15 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(UserPurchase)
 class UserPurchaseAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'purchase_date')
-    search_fields = ('user__username', 'product__name')
-    list_filter = ('purchase_date',)
+    list_display = ('user', 'get_product_name', 'purchase_date', 'expiry_date')
+    search_fields = ('user__username', 'product__translations__name')
+    list_filter = ('purchase_date', 'expiry_date')
+    raw_id_fields = ('user', 'product')
+
+    def get_product_name(self, obj):
+        translation = obj.product.get_translation()
+        return translation.name if translation else 'N/A'
+    get_product_name.short_description = 'Product'
 
 
 from .models import HomePageContent
