@@ -84,11 +84,22 @@ class Product(models.Model):
     duration = models.IntegerField(default=0, help_text="Durada del producte en mesos")
     category = models.CharField(max_length=50, blank=True, help_text="Categoria del producte")
 
-    def __str__(self):
+    @property
+    def name(self):
         translation = self.get_translation()
-        if translation and translation.name != "Not Available":
+        if translation.name != "Not Available":
             return translation.name
         return f"Product {self.id} (no translation)"
+
+    @property
+    def description(self):
+        translation = self.get_translation()
+        if translation.name != "Not Available":
+            return translation.description
+        return "No description available for this product."
+
+    def __str__(self):
+        return self.name
 
     def get_translation(self, language_code=None):
         if not language_code:

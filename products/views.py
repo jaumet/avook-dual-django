@@ -81,12 +81,6 @@ class ProductDetailView(DetailView):
     def get_queryset(self):
         return super().get_queryset().prefetch_related('translations')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        product = self.get_object()
-        context['product_translation'] = product.get_translation(self.request.LANGUAGE_CODE)
-        return context
-
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Product
