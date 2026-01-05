@@ -54,6 +54,21 @@ class Title(models.Model):
         verbose_name_plural = "Títols"
 
 
+class TitleTranslation(models.Model):
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='translations')
+    language_code = models.CharField(max_length=10)
+    human_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        unique_together = ('title', 'language_code')
+        verbose_name = "Traducció de Títol"
+        verbose_name_plural = "Traduccions de Títol"
+
+    def __str__(self):
+        return f"{self.human_name} ({self.language_code})"
+
+
 class Package(models.Model):
     LEVEL_CHOICES = [
         ('A0', 'A0'),

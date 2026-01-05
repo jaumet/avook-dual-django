@@ -1,28 +1,42 @@
 import json
-from products.models import Title
+from pathlib import Path
+from django.conf import settings
+from products.models import Title, TitleTranslation
 
 def run():
-    with open('samples/audios.json') as f:
-        data = json.load(f)
+    json_path = Path(settings.BASE_DIR) / "static" / "audios.json"
+    if not json_path.exists():
+        print("audios.json not found")
+        return
 
-    last_title = Title.objects.order_by('-id').first()
-    next_id = 10001
-    if last_title:
-        try:
-            next_id = int(last_title.id) + 1
-        except (ValueError, TypeError):
-            pass
+    with json_path.open(encoding="utf-8") as fh:
+        data = json.load(fh)
+
+    created_count = 0
+    updated_count = 0
 
     for machine_name, details in data['AUDIOS'].items():
-        title, created = Title.objects.get_or_create(
+        title, created = Title.objects.update_or_create(
             machine_name=machine_name,
             defaults={
-                'id': str(next_id),
                 'level': details.get('levels', ''),
             }
         )
+
         if created:
-            print(f"Created title: {machine_name}")
-            next_id += 1
+            created_count += 1
         else:
-            print(f"Title already exists: {machine_name}")
+            updated_count += 1
+
+        for lang_code, lang_data in details.get("title", {}).items():
+            TitleTranslation.objects.update_or_create(
+                title=title,
+                language_code=lang_code.lower(),
+                defaults={
+                    "human_name": lang_data.get("human-title", ""),
+                    "description": lang_data.get("description", ""),
+                },
+            )
+
+    print(f"Created titles: {created_count}")
+    print(f"Updated titles: {updated_count}")
