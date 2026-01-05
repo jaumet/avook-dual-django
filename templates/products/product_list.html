@@ -4,7 +4,7 @@
 {% load product_tags %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_title_card.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -32,12 +32,7 @@
                                 <span class="accordion-icon">+</span>
                             </div>
                             <div class="accordion-content">
-                                {% if item.json_info %}
-                                    <h5>{{ item.json_info|get_item:'human-title' }}</h5>
-                                    <p>{{ item.json_info.description }}</p>
-                                {% else %}
-                                    <p>{% trans "Informació no disponible" %}</p>
-                                {% endif %}
+                                {% include 'products/_title_card.html' with item=item %}
                             </div>
                         </div>
                     {% endfor %}
