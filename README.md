@@ -208,50 +208,56 @@ And that's it! If you'd like me to go ahead and implement this for you, just let
 
 ## Bulk-Inserting Titles
 
-To add a large number of titles to the database at once, you can use the `seed_titles.py` script. This script reads title data from `samples/audios.json` and populates the database.
+To add a large number of titles to the database at once, you can use the `seed_titles.py` script. This script reads title data from `static/audios.json` and populates the database.
 
 ### Step 1: Format Your Titles in JSON
 
-You need to add your titles to the `samples/audios.json` file. Each title should follow this structure:
+You need to add your titles to the `static/audios.json` file. The `AUDIOS` key should contain a list of title objects, where each object follows this structure:
 
 ```json
-"your-unique-machine-name": {
-  "description": "A brief description of the title.",
-  "levels": "A2",
-  "ages": "10-16",
-  "colection": "Name of the Collection",
-  "duration": "00:05:30",
-  "text_versions": {
-    "CA": {
-      "title-human": "El títol en català",
-      "Directory": "/AUDIOS/your-unique-machine-name/CA/",
-      "json_file": "CA-your-unique-machine-name.json"
-    },
-    "EN": {
-      "title-human": "The title in English",
-      "Directory": "/AUDIOS/your-unique-machine-name/EN/",
-      "json_file": "EN-your-unique-machine-name.json"
+{
+  "AUDIOS": [
+    {
+      "machine_name": "your-unique-machine-name",
+      "levels": "A2",
+      "ages": "10-16",
+      "colection": "Name of the Collection",
+      "duration": "00:05:30",
+      "text_versions": [
+        {
+          "lang": "CA",
+          "human-title": "El títol en català",
+          "description": "Descripció en català.",
+          "json_file": "CA-your-unique-machine-name.json"
+        },
+        {
+          "lang": "EN",
+          "human-title": "The title in English",
+          "description": "Description in English.",
+          "json_file": "EN-your-unique-machine-name.json"
+        }
+      ]
     }
-  }
+  ]
 }
 ```
 
--   `your-unique-machine-name`: A unique identifier for the title, with no spaces (use hyphens).
--   `description`, `levels`, `ages`, `colection`, `duration`: Metadata fields for the title.
--   `text_versions`: An object containing language-specific information.
-    -   `CA`, `EN`, etc.: Language codes.
-        -   `title-human`: The display name of the title in that language.
-        -   `Directory`: The path to the directory containing the audio files for that language.
-        -   `json_file`: The name of the JSON file containing the sentences for that language.
+-   `machine_name`: A unique identifier for the title, with no spaces (use hyphens).
+-   `levels`, `ages`, `colection`, `duration`: Metadata fields for the title.
+-   `text_versions`: A list of objects, each containing language-specific information.
+    -   `lang`: The language code (e.g., `CA`, `EN`).
+    -   `human-title`: The display name of the title in that language.
+    -   `description`: The description in that language.
+    -   `json_file`: The name of the JSON file containing the sentences for that language.
 
-Add each title as a new entry inside the `"AUDIOS": { ... }` block in `samples/audios.json`.
+Add each new title as a new object inside the `"AUDIOS": [ ... ]` list in `static/audios.json`.
 
 ### Step 2: Run the Seeding Command
 
-Once the JSON file is updated, run the following command from the project's root directory:
+Once the JSON file is updated, run the following command from the project's root directory using `runscript`:
 
 ```bash
-python seed_titles.py
+python manage.py runscript seed_titles
 ```
 
-This will read the JSON file and create the `Title` and `TitleLanguage` entries in the database. The script is designed to skip titles that already exist, so it is safe to run multiple times.
+This will read the JSON file and create or update the `Title` and `TitleTranslation` entries in the database. The script is designed to skip titles that already exist, so it is safe to run multiple times.
