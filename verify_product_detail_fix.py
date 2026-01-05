@@ -10,15 +10,17 @@ def run(playwright):
     page = context.new_page()
 
     try:
-        # Log in
-        page.goto("http://127.0.0.1:8000/accounts/login/")
+        # Go to the English login page
+        page.goto("http://127.0.0.1:8000/en/accounts/login/")
         page.fill("input[name='username']", "admin")
         page.fill("input[name='password']", "admin")
         page.click("button[type='submit']")
-        page.wait_for_url("http://127.0.0.1:8000/", timeout=60000)
+
+        # Wait for the English home page
+        page.wait_for_url("http://127.0.0.1:8000/en/", timeout=60000)
 
         # Go to the product detail page
-        page.goto("http://127.0.0.1:8000/products/product/30001/")
+        page.goto("http://127.0.0.1:8000/en/products/product/13/")
 
         # Take a screenshot to verify
         page.screenshot(path="verification/product_detail_fixed.png")
