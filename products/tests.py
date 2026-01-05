@@ -97,3 +97,45 @@ class ProductAccessTest(TestCase):
         purchase.save()
         status = self.title_a2.get_user_status(self.user)
         self.assertEqual(status, 'PREMIUM_OWNED')
+
+
+class PlayerViewTest(TestCase):
+    def setUp(self):
+        self.test_title_machine_name = 'Test-1'
+        self.non_existent_title = 'non-existent-title'
+
+    def test_player_view_with_existing_title(self):
+        """
+        Verify that the player view correctly loads data from audios.json.
+        """
+        # Test with English language
+        with translation.override('en'):
+            response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('title', response.context)
+            title_context = response.context['title']
+            self.assertEqual(title_context['machine_name'], 'Test-1')
+            self.assertEqual(title_context['human_title'], 'Test ENG')
+            self.assertEqual(title_context['description'], 'Description ENG')
+            self.assertEqual(title_context['languages'], ['CA', 'EN', 'PT'])
+
+            self.assertContains(response, '<h2 id="relatTitle">Test ENG</h2>', html=True)
+            self.assertContains(response, '<div id="relatDesc" style="margin:.1em 0 .3em 0;">Description ENG</div>', html=True)
+
+        # Test with Catalan language to check translation
+        with translation.override('ca'):
+            response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
+            self.assertEqual(response.status_code, 200)
+            title_context = response.context['title']
+            self.assertEqual(title_context['human_title'], 'Test CAT')
+            self.assertEqual(title_context['description'], 'Description CAT')
+            self.assertContains(response, '<h2 id="relatTitle">Test CAT</h2>', html=True)
+
+    def test_player_view_with_non_existent_title(self):
+        """
+        Verify that the player view handles a title not found in audios.json.
+        """
+        response = self.client.get(reverse('products:player', kwargs={'machine_name': self.non_existent_title}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('error', response.context)
+        self.assertEqual(response.context['error'], 'Title not found')

@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qsa = s => [...document.querySelectorAll(s)];
     const iso2to3 = c => ({ CA: 'cat', EN: 'eng', PT: 'por', FR: 'fra', IT: 'ita', ES: 'spa' })[c] || c.toLowerCase();
 
-    const availableLangs = [{% for lang in languages %}"{{ lang.language }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    const availableLangs = [{% for lang in title.languages %}"{{ lang }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
     let langData = {};
     let sequence = [];
     let seqIndex = 0;
@@ -274,12 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
   <section id="topInfo" class="topCard">
     <img id="relatImg" src="{% static 'imgs/book-icon.png' %}" alt="Imatge relat"/>
     <div>
-      <h2 id="relatTitle">{{ title.human_name }}</h2>
+      <h2 id="relatTitle">{{ title.human_title }}</h2>
       <div id="relatDesc" style="margin:.1em 0 .3em 0;">{{ title.description }}</div>
       <div class="langs">🌐 <span data-translate-key="player.languages">Idiomes:</span> <span id="relatLangs">
-        {% for lang in title.languages.all %}
-          {{ lang.language }}{% if not forloop.last %}, {% endif %}
-        {% endfor %}
+        {{ title.languages|join:", " }}
       </span></div>
     </div>
   </section>
