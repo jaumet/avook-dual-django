@@ -156,8 +156,43 @@ class CatalogView(TitleContextMixin, ListView):
 
 
 def player_view(request, machine_name):
-    title = get_object_or_404(Title, machine_name=machine_name)
-    return render(request, 'products/player.html', {'title': title})
+    lang_code = request.LANGUAGE_CODE.upper()
+    json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
+
+    try:
+        with open(json_path, 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        return render(request, 'products/player.html', {'error': 'audios.json not found'})
+
+    title_data = data.get('AUDIOS', {}).get(machine_name)
+
+    if not title_data:
+        return render(request, 'products/player.html', {'error': 'Title not found'})
+
+    title_info = title_data.get('title', {}).get(lang_code)
+
+    if not title_info:
+        # Fallback to default language or first available
+        fallback_lang = 'EN'
+        title_info = title_data.get('title', {}).get(fallback_lang, {})
+        if not title_info:
+            # If no EN translation, get the first one available
+            available_langs = title_data.get('title', {})
+            if available_langs:
+                first_lang_code = next(iter(available_langs))
+                title_info = available_langs[first_lang_code]
+            else:
+                title_info = {'human-title': machine_name, 'description': ''}
+
+    context = {
+        'machine_name': machine_name,
+        'human_title': title_info.get('human-title', machine_name),
+        'description': title_info.get('description', ''),
+        'languages': title_data.get('langs', '').split(','),
+    }
+
+    return render(request, 'products/player.html', {'title': context})
 
 
 def root_redirect(request):
