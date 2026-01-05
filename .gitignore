@@ -8,3 +8,7 @@ venv/
 staticfiles/
 media/
 *.log
+samples/
+static/AUDIOS/
+z-jules-prompts.txt
+=*
