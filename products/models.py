@@ -166,8 +166,13 @@ class UserPurchase(models.Model):
         product_name = "N/A"
         if self.product:
             translation = self.product.get_translation()
-            if translation:
+            # Safely check for 'name' attribute before accessing it
+            if hasattr(translation, 'name') and translation.name != "Not Available":
                 product_name = translation.name
+            else:
+                # Fallback to product ID if no translation is available
+                product_name = f"Product {self.product.pk}"
+
         return f"{self.user.username} - {product_name}"
 
     class Meta:
