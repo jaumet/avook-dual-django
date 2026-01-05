@@ -1,35 +1,20 @@
+{% load i18n %}
 {% load product_tags %}
-{% comment %}
-This template expects an `item` object in the context, which should contain:
-- item.title: The Title model instance.
-- item.image_url: The URL for the title's cover image.
-- item.status: The user's access status ('FREE', 'PREMIUM_OWNED', etc.).
-- item.json_info: A dictionary with the translated title and description.
-{% endcomment %}
-<div class="titleCard">
-    <div class="card-image">
-        <img src="{{ item.image_url }}" alt="Cover for {% if item.json_info %}{{ item.json_info|get_item:'human-title' }}{% else %}{{ item.title.machine_name }}{% endif %}">
-    </div>
-    <div class="card-details">
-        <h3 class="card-title">{% if item.json_info %}{{ item.json_info|get_item:'human-title' }}{% else %}{{ item.title.machine_name }}{% endif %}</h3>
 
-        {% if item.title.collection %}
-            <p class="card-collection">
-                <strong data-translate-key="catalog.collection">Col·lecció</strong>: <span class="collection">{{ item.title.collection }}</span>
-            </p>
-        {% endif %}
-
-        <div class="langList" data-codes="">
-            {{ item.title.translations.all|join:", " }}
-        </div>
-
-        <div class="card-meta">
-            {% if item.title.level %}<span class="level">{{ item.title.level }}</span>{% endif %}
-            {% if item.title.ages %}<span class="ages">{{ item.title.ages }}</span>{% endif %}
-            {% if item.title.duration %}<span class="duration">{{ item.title.duration }}</span>{% endif %}
+<div class="custom-title-card">
+    <img src="{{ item.image_url }}" alt="Cover for {{ item.json_info|get_item:'human-title' }}" class="title-image">
+    <div class="title-info">
+        <h5>{{ item.json_info|get_item:'human-title' }}</h5>
+        <p>{{ item.json_info.description }}</p>
+        <div class="title-meta">
+            <p><strong>{% trans "Languages" %}:</strong> {{ item.json_info.langs }}</p>
+            <p><strong>{% trans "Level" %}:</strong> {{ item.json_info.levels }}</p>
+            <p><strong>{% trans "Ages" %}:</strong> {{ item.json_info.ages }}</p>
+            <p><strong>{% trans "Collection" %}:</strong> {{ item.json_info.colection }}</p>
+            <p><strong>{% trans "Duration" %}:</strong> {{ item.json_info.duration }}</p>
         </div>
     </div>
-    <div class="card-actions">
+     <div class="card-actions">
         {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
             <a href="{% url 'products:player' item.title.machine_name %}" class="action-btn play-btn" title="Play">▶️</a>
         {% endif %}
