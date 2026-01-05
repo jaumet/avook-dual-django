@@ -59,7 +59,7 @@ class HomeView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('packages__titles')
+        return super().get_queryset().prefetch_related('packages__titles', 'translations')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

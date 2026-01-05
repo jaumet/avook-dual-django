@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'products',
     'accounts',
     'post_office',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

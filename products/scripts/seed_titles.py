@@ -1,12 +1,7 @@
-import os
-import django
 import json
+from products.models import Title
 
-def seed_titles():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'avook_site.settings')
-    django.setup()
-    from products.models import Title
-
+def run():
     with open('samples/audios.json') as f:
         data = json.load(f)
 
@@ -31,6 +26,3 @@ def seed_titles():
             next_id += 1
         else:
             print(f"Title already exists: {machine_name}")
-
-if __name__ == "__main__":
-    seed_titles()
