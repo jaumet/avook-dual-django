@@ -32,7 +32,11 @@ class Title(models.Model):
         Retorna 'PREMIUM_OWNED', o 'PREMIUM_NOT_OWNED'.
         """
         if user and user.is_authenticated:
-            # This is an optimized query to check for access.
+            # Grant access to staff/admin users immediately
+            if user.is_staff:
+                return 'PREMIUM_OWNED'
+
+            # This is an optimized query to check for access for regular users.
             # It avoids N+1 queries by performing a single DB lookup.
             is_owned = UserPurchase.objects.filter(
                 user=user,
