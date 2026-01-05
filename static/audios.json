@@ -1,20 +1,21 @@
 {
   "PATH_AUDIOS": "/AUDIOS/",
   "AUDIOS": {
+    "t
     "Test-1": {
       "title": {
-        "CA": {
-          "human-title": "Test CAT",
-          "description": "Description CAT"
-        },
-        "EN": {
-          "human-title": "Test ENG",
-          "description": "Description ENG"
-        },
-        "ES": {
-          "human-title": "Test ESP",
-          "description": "Description ESP"
-        }
+      	"CA": {
+	      		"human-title":"Test CAT",
+    	  		"description": "Description CAT"
+      		},
+      	"EN": {
+	      		"human-title":"Test ENG",
+    	  		"description": "Description ENG"
+      		},
+      	"ES": {
+	      		"human-title":"Test ESP",
+    	  		"description": "Description ESP"
+      		}
       },
       "levels": "A1",
       "langs": "CA,EN,PT",
@@ -24,30 +25,6 @@
       "PT-Test-1.json": "file",
       "EN-Test-1.json": "file",
       "CA-Test-1.json": "file"
-    },
-    "el-mapa-de-la-biblioteca": {
-      "title": {
-        "CA": {
-          "human-title": "El mapa de la biblioteca",
-          "description": "quí descripció"
-        },
-        "EN": {
-          "human-title": "The Library Map",
-          "description": "description here"
-        },
-        "FR": {
-          "human-title": "Le plan de la bibliothèque",
-          "description": "description ici"
-        }
-      },
-      "levels": "A2",
-      "langs": "CA, EN, Fr",
-      "ages": "10-16",
-      "colection": "Misteria i enigmes",
-      "duration": "00:02:00",
-      "CA-el-mapa-de-la-biblioteca.json": "file",
-      "EN-el-mapa-de-la-biblioteca.json": "file",
-      "FR-el-mapa-de-la-biblioteca.json": "file"
     }
   }
 }
