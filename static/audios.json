@@ -8,7 +8,7 @@
         {
           "lang": "CA",
           "human-title": "Test CAT",
-          "description": "Description CAT",
+          "description": "Descripción CAT",
           "ages": "0-99",
           "colection": "Test",
           "duration": "00:00:40",
@@ -26,7 +26,7 @@
         {
           "lang": "ES",
           "human-title": "Test ESP",
-          "description": "Description ESP",
+          "description": "Descripçao ESP",
           "ages": "0-99",
           "colection": "Test",
           "duration": "00:00:40",
