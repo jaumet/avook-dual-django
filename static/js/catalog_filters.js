@@ -1,106 +1,132 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const filters = { text: '', collection: '', levels: [], duration: '', lang: '', ages: '' };
+    const filters = {
+        text: '',
+        collection: '',
+        levels: [],
+        duration: '',
+        lang: '',
+        ages: ''
+    };
 
     function applyFilters() {
-        const cards = document.querySelectorAll('#catalog .titleCard');
-      let anyVisible = false;
+        const cards = document.querySelectorAll('#catalog .custom-title-card');
+        const levelContainers = document.querySelectorAll('#catalog .level-container');
+        let hasVisibleCards = false;
 
-      const anyFilterActive =
-        (filters.text && filters.text.length > 0) ||
-        (filters.levels && filters.levels.length > 0) ||
-        filters.collection || filters.duration || filters.lang || filters.ages;
+        const anyFilterActive =
+            (filters.text && filters.text.length > 0) ||
+            (filters.levels && filters.levels.length > 0) ||
+            filters.collection || filters.duration || filters.lang || filters.ages;
 
-      cards.forEach(card => {
-        let visible = true;
+        cards.forEach(card => {
+            // If no filters are active, the card is not visible.
+            // Otherwise, assume it's visible and let the specific filters hide it if it doesn't match.
+            let isVisible = anyFilterActive;
 
-        if (anyFilterActive) {
-          const txt = card.textContent.toLowerCase();
-          const cardLevel = card.querySelector('.level')?.textContent.trim().toLowerCase() || '';
-          const cardLangs = (card.querySelector('.langList')?.dataset.codes || '')
-            .split(/[,\s]+/)
-            .map(l => l.trim().toUpperCase())
-            .filter(Boolean);
-          const cardCollection = card.querySelector('.collection')?.textContent.trim().toLowerCase() || '';
-          const cardDuration = card.querySelector('.duration')?.textContent.trim().toLowerCase() || '';
-          const cardAges = card.querySelector('.ages')?.textContent.trim().toLowerCase() || '';
+            // Apply level filter
+            if (isVisible && filters.levels.length > 0) {
+                if (!filters.levels.includes(card.dataset.level)) {
+                    isVisible = false;
+                }
+            }
 
-          if (filters.text && !txt.includes(filters.text)) visible = false;
-          if (visible && filters.levels.length > 0) {
-            const wanted = filters.levels.map(l => l.toLowerCase());
-            if (!wanted.includes(cardLevel)) visible = false;
-          }
-          if (visible && filters.lang) {
-            const wantedLang = filters.lang.trim().toUpperCase();
-            if (!cardLangs.includes(wantedLang)) visible = false;
-          }
-          if (visible && filters.collection && cardCollection !== filters.collection) visible = false;
-          if (visible && filters.duration && cardDuration !== filters.duration) visible = false;
-          if (visible && filters.ages && cardAges !== filters.ages) visible = false;
+            // Apply text search filter
+            if (isVisible && filters.text) {
+                if (!card.textContent.toLowerCase().includes(filters.text)) {
+                    isVisible = false;
+                }
+            }
+
+            // Apply collection filter
+            if (isVisible && filters.collection) {
+                if (card.dataset.collection.toLowerCase() !== filters.collection.toLowerCase()) {
+                    isVisible = false;
+                }
+            }
+
+            // Apply duration filter
+            if (isVisible && filters.duration) {
+                if (card.dataset.duration !== filters.duration) {
+                    isVisible = false;
+                }
+            }
+
+            // Apply ages filter
+            if (isVisible && filters.ages) {
+                if (card.dataset.ages !== filters.ages) {
+                    isVisible = false;
+                }
+            }
+
+            // Apply language filter
+            if (isVisible && filters.lang) {
+                const cardLangs = (card.dataset.languages || '').split(',');
+                if (!cardLangs.includes(filters.lang.toUpperCase())) {
+                    isVisible = false;
+                }
+            }
+
+            card.style.display = isVisible ? 'flex' : 'none';
+            if (isVisible) {
+                hasVisibleCards = true;
+            }
+        });
+
+        // Hide or show the level containers based on whether they have visible cards
+        levelContainers.forEach(container => {
+            const containerHasVisibleCard = container.querySelector('.custom-title-card[style*="display: flex"]');
+            container.style.display = containerHasVisibleCard ? 'block' : 'none';
+        });
+
+        // Show "no results" message if filters are active but no cards are visible
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        if (noResultsMessage) {
+            noResultsMessage.style.display = anyFilterActive && !hasVisibleCards ? 'block' : 'none';
         }
-
-        card.style.display = visible ? 'flex' : 'none';
-        if (visible) anyVisible = true;
-      });
-
-      const noResultsMessage = document.getElementById('noResultsMessage');
-      if (noResultsMessage) {
-        noResultsMessage.style.display = anyVisible ? 'none' : 'block';
-      }
     }
 
+    // --- Event Listeners ---
+
+    // Level buttons
     document.querySelectorAll('#levelSection .levelBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const level = btn.textContent;
-        if (btn.classList.contains('active')) {
-          if (!filters.levels.includes(level)) filters.levels.push(level);
-        } else {
-          filters.levels = filters.levels.filter(x => x !== level);
-        }
-        applyFilters();
-      });
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const level = btn.textContent.trim();
+            if (btn.classList.contains('active')) {
+                if (!filters.levels.includes(level)) {
+                    filters.levels.push(level);
+                }
+            } else {
+                filters.levels = filters.levels.filter(l => l !== level);
+            }
+            applyFilters();
+        });
     });
 
-    document.addEventListener('input', (e) => {
-      if (e.target.id === 'searchInput') {
+    // Search input
+    document.getElementById('searchInput').addEventListener('input', (e) => {
         filters.text = e.target.value.trim().toLowerCase();
         applyFilters();
-      }
     });
 
-    document.addEventListener('change', (e) => {
-      if (e.target.matches('#filterCollection, #filterDuration, #filterAges')) {
-        const key = e.target.id.replace('filter', '').toLowerCase();
-        filters[key] = e.target.value.toLowerCase() || '';
-        applyFilters();
-      } else if (e.target.matches('#filterLang')) {
-        filters.lang = e.target.value || '';
-        applyFilters();
-      }
+    // Select dropdowns
+    document.querySelectorAll('#filtersBar select').forEach(select => {
+        select.addEventListener('change', (e) => {
+            const filterKey = e.target.id.replace('filter', '').toLowerCase();
+            filters[filterKey] = e.target.value;
+            applyFilters();
+        });
     });
 
-    function setupFakeSelects(){
-      document.querySelectorAll('#filtersBar .av-select select').forEach(sel=>{
-        const wrap = sel.parentElement;
-        const setLabel = () => {
-          const idx = sel.selectedIndex;
-          const txt = idx >= 0 ? sel.options[idx].text : '';
-          wrap.setAttribute('data-value', txt);
-          if (idx === 0) sel.style.color = '#999'; else sel.style.color = '';
-        };
-        sel.addEventListener('change', setLabel);
-        setLabel();
-      });
-    }
-
+    // --- Advanced Search Toggle ---
     document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
-      const filtersBar = document.getElementById('filtersBar');
-      const btn = document.getElementById('toggleFiltersBtn');
-      const visible = filtersBar.style.display !== 'none';
-      filtersBar.style.display = visible ? 'none' : 'flex';
-      btn.textContent = visible ? '🔍 Cerca avançada' : '✖️ Amaga filtres';
+        const filtersBar = document.getElementById('filtersBar');
+        const btn = document.getElementById('toggleFiltersBtn');
+        const visible = filtersBar.style.display !== 'none';
+        filtersBar.style.display = visible ? 'none' : 'flex';
+        btn.textContent = visible ? '🔍 Cerca avançada' : '✖️ Amaga filtres';
     });
 
-    setupFakeSelects();
-    applyFilters();
+    // --- Initial State ---
+    applyFilters(); // Call on load to hide everything
 });
