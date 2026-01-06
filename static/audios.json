@@ -4,26 +4,32 @@
     {
       "machine_name": "Test-1",
       "levels": "A1",
-      "ages": "0-99",
-      "colection": "Test",
-      "duration": "00:00:40",
       "text_versions": [
         {
           "lang": "CA",
           "human-title": "Test CAT",
           "description": "Description CAT",
+          "ages": "0-99",
+          "colection": "Test",
+          "duration": "00:00:40",
           "json_file": "CA-Test-1.json"
         },
         {
           "lang": "EN",
           "human-title": "Test ENG",
           "description": "Description ENG",
+          "ages": "0-99",
+          "colection": "Test",
+          "duration": "00:00:40",
           "json_file": "EN-Test-1.json"
         },
         {
           "lang": "ES",
           "human-title": "Test ESP",
           "description": "Description ESP",
+          "ages": "0-99",
+          "colection": "Test",
+          "duration": "00:00:40",
           "json_file": "ES-Test-1.json"
         }
       ]

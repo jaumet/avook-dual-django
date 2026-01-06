@@ -203,6 +203,9 @@ def player_view(request, machine_name):
         'machine_name': machine_name,
         'human_title': title_info.get('human-title', machine_name),
         'description': title_info.get('description', ''),
+        'ages': title_info.get('ages', ''),
+        'colection': title_info.get('colection', ''),
+        'duration': title_info.get('duration', ''),
         'languages': languages,
     }
 
