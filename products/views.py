@@ -34,9 +34,7 @@ class ProductListView(TitleContextMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        products = context['products']
-
-        for product in products:
+        for product in context['products']:
             for package in product.packages.all():
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
         return context
@@ -130,86 +128,77 @@ class CatalogView(TitleContextMixin, ListView):
     context_object_name = 'titles_with_status'
 
     def get_queryset(self):
-        lang_code = self.request.LANGUAGE_CODE[:2]
-        return Title.objects.prefetch_related(
-            models.Prefetch(
-                "translations",
-                queryset=TitleTranslation.objects.filter(language_code=lang_code),
-                to_attr="translated",
-            )
-        )
+        return Title.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         titles = context['object_list']
         titles_with_status = self.get_titles_with_status(titles)
 
+        # Group titles by level using data from audios.json
         titles_by_level = {}
         for item in titles_with_status:
-            level = item['title'].level
+            level = item['json_info']['levels']
             if level not in titles_by_level:
                 titles_by_level[level] = []
             titles_by_level[level].append(item)
-
         context['titles_by_level'] = titles_by_level
+
+        # Prepare data for the filters
+        json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                audios_data = json.load(f).get('AUDIOS', [])
+        except (FileNotFoundError, json.JSONDecodeError):
+            audios_data = []
+
+        lang_code = self.request.LANGUAGE_CODE[:2].upper()
+        collections = set()
+        durations = set()
+        languages = set()
+        ages_list = set()
+
+        for audio in audios_data:
+            # Add all available languages for the language filter
+            for version in audio.get('text_versions', []):
+                if version.get('lang'):
+                    languages.add(version['lang'])
+
+            # Add other filters based on the current language
+            for version in audio.get('text_versions', []):
+                if version.get('lang', '').upper() == lang_code:
+                    if version.get('colection'):
+                        collections.add(_(version['colection']))
+                    if version.get('duration'):
+                        durations.add(_(version['duration']))
+                    if version.get('ages'):
+                        ages_list.add(_(version['ages']))
+
+        context['collections'] = sorted(list(collections))
+        context['durations'] = sorted(list(durations))
+        context['languages'] = sorted(list(languages))
+        context['ages_list'] = sorted(list(ages_list))
+
+        # Pass the titles_with_status to the main context
+        context['titles_with_status'] = titles_with_status
         return context
 
 
 def player_view(request, machine_name):
-    lang_code = request.LANGUAGE_CODE.upper()
-    json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
+    title = get_object_or_404(Title, machine_name=machine_name)
 
-    try:
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return render(request, 'products/player.html', {'error': 'audios.json not found or is invalid'})
+    # Use the mixin to get the title info
+    mixin = TitleContextMixin()
+    mixin.request = request
+    titles_with_status = mixin.get_titles_with_status([title])
 
-    audios_list = data.get('AUDIOS', [])
-    audios_map = {item['machine_name']: item for item in audios_list}
-    title_data = audios_map.get(machine_name)
-
-    if not title_data:
+    if not titles_with_status:
         return render(request, 'products/player.html', {'error': 'Title not found'})
 
-    text_versions = title_data.get('text_versions', [])
-    title_info = None
-
-    # Find the requested language in text_versions
-    for version in text_versions:
-        if version.get('lang', '').upper() == lang_code:
-            title_info = version
-            break
-
-    # Fallback to English if requested language is not found
-    if not title_info:
-        for version in text_versions:
-            if version.get('lang', '').upper() == 'EN':
-                title_info = version
-                break
-
-    # If still not found, fallback to the first available language
-    if not title_info and text_versions:
-        title_info = text_versions[0]
-
-    # If no text versions exist at all
-    if not title_info:
-        title_info = {'human-title': machine_name, 'description': ''}
-
-    # Get all available languages from text_versions
-    languages = [v.get('lang') for v in text_versions if 'lang' in v]
-
     context = {
-        'machine_name': machine_name,
-        'human_title': title_info.get('human-title', machine_name),
-        'description': title_info.get('description', ''),
-        'ages': title_info.get('ages', ''),
-        'colection': title_info.get('colection', ''),
-        'duration': title_info.get('duration', ''),
-        'languages': languages,
+        'title': titles_with_status[0]['json_info']
     }
-
-    return render(request, 'products/player.html', {'title': context})
+    return render(request, 'products/player.html', context)
 
 
 def root_redirect(request):
