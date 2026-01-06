@@ -49,9 +49,9 @@ class TitleContextMixin:
             context_data = {
                 'machine_name': machine_name,
                 'levels': title_data.get('levels', ''),
-                'ages': title_data.get('ages', ''),
-                'colection': title_data.get('colection', ''),
-                'duration': title_data.get('duration', ''),
+                'ages': title_info.get('ages', ''),
+                'colection': title_info.get('colection', ''),
+                'duration': title_info.get('duration', ''),
                 'human_title': title_info.get('human-title', machine_name),
                 'description': title_info.get('description', ''),
                 'languages': [v.get('lang') for v in text_versions if 'lang' in v]
