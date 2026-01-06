@@ -103,6 +103,8 @@ class PlayerViewTest(TestCase):
     def setUp(self):
         self.test_title_machine_name = 'Test-1'
         self.non_existent_title = 'non-existent-title'
+        # Create the Title object in the test database
+        Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
 
     def test_player_view_with_existing_title(self):
         """
@@ -128,14 +130,12 @@ class PlayerViewTest(TestCase):
             self.assertEqual(response.status_code, 200)
             title_context = response.context['title']
             self.assertEqual(title_context['human_title'], 'Test CAT')
-            self.assertEqual(title_context['description'], 'Description CAT')
+            self.assertEqual(title_context['description'], 'Descripció CAT')
             self.assertContains(response, '<h2 id="relatTitle">Test CAT</h2>', html=True)
 
     def test_player_view_with_non_existent_title(self):
         """
-        Verify that the player view handles a title not found in audios.json.
+        Verify that the player view returns a 404 for a non-existent title.
         """
         response = self.client.get(reverse('products:player', kwargs={'machine_name': self.non_existent_title}))
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('error', response.context)
-        self.assertEqual(response.context['error'], 'Title not found')
+        self.assertEqual(response.status_code, 404)

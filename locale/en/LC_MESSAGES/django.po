@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-05 16:14+0000\n"
+"POT-Creation-Date: 2026-01-06 01:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr "Password confirmation"
 msgid "Contingut no trobat per a la clau: '{key}'"
 msgstr ""
 
-#: products/views.py:98
+#: products/views.py:96
 msgid ""
 "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr ""
@@ -122,6 +122,7 @@ msgid "Included titles in the package:"
 msgstr "Included titles in the package:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
+#: templates/products/_title_card.html:11
 msgid "Level"
 msgstr "Level"
 
@@ -164,6 +165,26 @@ msgstr "Select level:"
 #: templates/catalog.html:28
 msgid "Cerca avançada"
 msgstr "Advanced search"
+
+#: templates/products/_title_card.html:10
+#, fuzzy
+#| msgid "Languages:"
+msgid "Languages"
+msgstr "Languages:"
+
+#: templates/products/_title_card.html:12
+msgid "Ages"
+msgstr ""
+
+#: templates/products/_title_card.html:13
+msgid "Collection"
+msgstr ""
+
+#: templates/products/_title_card.html:14
+#, fuzzy
+#| msgid "Duration:"
+msgid "Duration"
+msgstr "Duration:"
 
 #: templates/products/cart.html:4
 msgid "Carretó"
@@ -260,17 +281,13 @@ msgstr "There are no titles assigned to this package yet."
 msgid "Productes"
 msgstr "Products"
 
-#: templates/products/product_list.html:39
-msgid "Informació no disponible"
-msgstr ""
-
-#: templates/products/product_list.html:48
+#: templates/products/product_list.html:43
 #, fuzzy
 #| msgid "Comprar ara"
 msgid "Compra'l"
 msgstr "Buy now"
 
-#: templates/products/product_list.html:53
+#: templates/products/product_list.html:48
 msgid "No hi ha productes disponibles."
 msgstr ""
 
