@@ -119,7 +119,7 @@ class PlayerViewTest(TestCase):
             self.assertEqual(title_context['machine_name'], 'Test-1')
             self.assertEqual(title_context['human_title'], 'Test ENG')
             self.assertEqual(title_context['description'], 'Description ENG')
-            self.assertEqual(title_context['languages'], ['CA', 'EN', 'ES'])
+            self.assertEqual(title_context['languages'], ['CA', 'EN', 'ES', 'DE'])
 
             self.assertContains(response, '<h2 id="relatTitle">Test ENG</h2>', html=True)
             self.assertContains(response, '<div id="relatDesc" style="margin:.1em 0 .3em 0;">Description ENG</div>', html=True)

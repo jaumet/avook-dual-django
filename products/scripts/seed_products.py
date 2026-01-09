@@ -23,6 +23,9 @@ def run():
     ProductTranslation.objects.create(
         product=product_start, language_code='en', name='Dual Start', description='Levels A0 & A1'
     )
+    ProductTranslation.objects.create(
+        product=product_start, language_code='de', name='Dual Start', description='Stufen A0 & A1'
+    )
 
     # Product 2: Dual Progress
     product_progress = Product.objects.create(machine_name='dual-progress', price=29, duration=3, category='progress')
@@ -32,6 +35,9 @@ def run():
     )
     ProductTranslation.objects.create(
         product=product_progress, language_code='en', name='Dual Progress', description='Levels A2 & B1'
+    )
+    ProductTranslation.objects.create(
+        product=product_progress, language_code='de', name='Dual Progress', description='Stufen A2 & B1'
     )
 
     # Product 3: Dual Advanced
@@ -43,6 +49,9 @@ def run():
     ProductTranslation.objects.create(
         product=product_advanced, language_code='en', name='Dual Advanced', description='Levels B2 & C1'
     )
+    ProductTranslation.objects.create(
+        product=product_advanced, language_code='de', name='Dual Advanced', description='Stufen B2 & C1'
+    )
 
     # Product 4: Dual Full Access
     product_full = Product.objects.create(machine_name='dual-full-access', price=49, duration=6, category='full_access')
@@ -52,6 +61,9 @@ def run():
     )
     ProductTranslation.objects.create(
         product=product_full, language_code='en', name='Dual Full Access', description='All levels'
+    )
+    ProductTranslation.objects.create(
+        product=product_full, language_code='de', name='Dual Full Access', description='Alle Stufen'
     )
 
     print("Database seeded successfully with new products and packages.")

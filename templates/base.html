@@ -26,7 +26,7 @@
                 const pathParts = window.location.pathname.split('/');
 
                 // Replace the language part of the URL, or add it if it's not there
-                if (pathParts.length > 1 && ['ca', 'en', 'es', 'fr', 'it', 'pt'].includes(pathParts[1])) {
+                if (pathParts.length > 1 && ['ca', 'en', 'es', 'fr', 'de', 'it', 'pt'].includes(pathParts[1])) {
                     pathParts[1] = newLang;
                 } else {
                     pathParts.splice(1, 0, newLang);
@@ -82,6 +82,7 @@
                 <option value="en">English</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
                 <option value="it">Italiano</option>
                 <option value="pt">Português</option>
             </select>
