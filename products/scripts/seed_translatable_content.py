@@ -24,7 +24,12 @@ def run():
             """,
             'content_fr': "",
             'content_pt': "",
-            'content_de': "",
+            'content_de': """
+                <h3>1. Gegenstand</h3>
+                <p>Zweck dieser Allgemeinen Verkaufsbedingungen ist die Regelung des vertraglichen Kaufverhältnisses, das zwischen dem Verkäufer und dem Kunden in dem Moment entsteht, in dem der Kunde während des Online-Vertragsprozesses das entsprechende Kästchen akzeptiert.</p>
+                <h3>2. Dauer</h3>
+                <p>Das Vertragsverhältnis gilt ab dem Zeitpunkt des Kaufs als formalisiert und hat die Dauer, die dem vom Kunden gewählten Abonnementzeitraum entspricht.</p>
+            """,
             'content_it': ""
         }
     )

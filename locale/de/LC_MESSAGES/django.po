@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-02 18:52+0000\n"
+"POT-Creation-Date: 2026-01-09 21:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,18 +38,15 @@ msgstr "Berechtigungen"
 msgid "Important dates"
 msgstr "Wichtige Daten"
 
-#: accounts/forms.py:16
-#: products/forms.py:48
+#: accounts/forms.py:17 products/forms.py:31
 msgid "First name"
 msgstr "Vorname"
 
-#: accounts/forms.py:17
-#: products/forms.py:49
+#: accounts/forms.py:18 products/forms.py:32
 msgid "Last name"
 msgstr "Nachname"
 
-#: accounts/forms.py:18
-#: products/forms.py:50
+#: accounts/forms.py:19 products/forms.py:33
 msgid "Email"
 msgstr "Email"
 
@@ -61,53 +58,237 @@ msgstr "Ihr Konto wurde erfolgreich aktiviert. Sie können sich jetzt anmelden."
 msgid "El token d'activació és invàlid o ha expirat."
 msgstr "Der Aktivierungstoken ist ungültig oder abgelaufen."
 
-#: avook_site/settings.py:70
+#: avook_site/settings.py:71
 msgid "Catalan"
 msgstr "Katalanisch"
 
-#: avook_site/settings.py:71
+#: avook_site/settings.py:72
 msgid "English"
 msgstr "Englisch"
 
-#: avook_site/settings.py:72
+#: avook_site/settings.py:73
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: avook_site/settings.py:73
+#: avook_site/settings.py:74
 msgid "French"
 msgstr "Französisch"
 
-#: avook_site/settings.py:74
+#: avook_site/settings.py:75
 msgid "German"
 msgstr "Deutsch"
 
-#: avook_site/settings.py:75
+#: avook_site/settings.py:76
 msgid "Italian"
 msgstr "Italienisch"
 
-#: avook_site/settings.py:76
+#: avook_site/settings.py:77
 msgid "Portuguese"
 msgstr "Portugiesisch"
 
-#: products/forms.py:54
+#: products/forms.py:39
 msgid "Username"
 msgstr "Benutzername"
 
-#: products/forms.py:58
+#: products/forms.py:44
 msgid "Password confirmation"
 msgstr "Passwortbestätigung"
 
-#: products/views.py:134
-msgid "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
-msgstr "Danke für deine Registrierung! Wir haben dir eine E-Mail geschickt, um dein Konto zu aktivieren."
+#: products/templatetags/content_tags.py:19
+#, python-brace-format
+msgid "Contingut no trobat per a la clau: '{key}'"
+msgstr "Inhalt für Schlüssel '{key}' nicht gefunden"
 
-#: templates/registration/login.html:4
-#: templates/registration/login.html:8
-#: templates/registration/login.html:18
+#: products/views.py:96
+msgid ""
+"Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+msgstr ""
+"Danke für deine Registrierung! Wir haben dir eine E-Mail geschickt, um dein "
+"Konto zu aktivieren."
+
+#: samples/product_default.html:5
+msgid "Product Page"
+msgstr "Produktseite"
+
+#: samples/product_default.html:13
+msgid "Price:"
+msgstr "Preis:"
+
+#: samples/product_default.html:15
+msgid "Edit product"
+msgstr "Produkt bearbeiten"
+
+#: samples/product_default.html:24
+msgid "Included titles in the package:"
+msgstr "Im Paket enthaltene Titel:"
+
+#: samples/product_default.html:28 samples/product_default.html:37
+#: templates/products/_title_card.html:11
+msgid "Level"
+msgstr "Niveau"
+
+#: samples/product_default.html:29
+msgid "Example Title 1"
+msgstr "Beispieltitel 1"
+
+#: samples/product_default.html:30
+msgid "This is a short description for the first example title."
+msgstr "Dies ist eine kurze Beschreibung für den ersten Beispieltitel."
+
+#: samples/product_default.html:31 samples/product_default.html:40
+msgid "Languages:"
+msgstr "Sprachen:"
+
+#: samples/product_default.html:31
+msgid "English, Spanish"
+msgstr "Englisch, Spanisch"
+
+#: samples/product_default.html:32 samples/product_default.html:41
+msgid "Duration:"
+msgstr "Dauer:"
+
+#: samples/product_default.html:38
+msgid "Example Title 2"
+msgstr "Beispieltitel 2"
+
+#: samples/product_default.html:39
+msgid "This is a short description for the second example title."
+msgstr "Dies ist eine kurze Beschreibung für den zweiten Beispieltitel."
+
+#: samples/product_default.html:40
+msgid "French, German"
+msgstr "Französisch, Deutsch"
+
+#: templates/catalog.html:19
+msgid "Selecciona nivell:"
+msgstr "Niveau auswählen:"
+
+#: templates/catalog.html:28
+msgid "Cerca avançada"
+msgstr "Erweiterte Suche"
+
+#: templates/products/_title_card.html:10
+msgid "Languages"
+msgstr "Sprachen"
+
+#: templates/products/_title_card.html:12
+msgid "Ages"
+msgstr "Alter"
+
+#: templates/products/_title_card.html:13
+msgid "Collection"
+msgstr "Sammlung"
+
+#: templates/products/_title_card.html:14
+msgid "Duration"
+msgstr "Dauer"
+
+#: templates/products/cart.html:4
+msgid "Carretó"
+msgstr "Warenkorb"
+
+#: templates/products/cart.html:8
+msgid "El teu carretó"
+msgstr "Ihr Warenkorb"
+
+#: templates/products/cart.html:13
+msgid "Producte"
+msgstr "Produkt"
+
+#: templates/products/cart.html:14
+msgid "Quantitat"
+msgstr "Menge"
+
+#: templates/products/cart.html:15
+msgid "Preu"
+msgstr "Preis"
+
+#: templates/products/cart.html:16
+msgid "Total"
+msgstr "Gesamt"
+
+#: templates/products/cart.html:28
+msgid "Actualitzar"
+msgstr "Aktualisieren"
+
+#: templates/products/cart.html:34
+msgid "Eliminar"
+msgstr "Entfernen"
+
+#: templates/products/cart.html:41
+msgid "Total:"
+msgstr "Gesamt:"
+
+#: templates/products/cart.html:42
+msgid "Procedir al pagament"
+msgstr "Zur Kasse gehen"
+
+#: templates/products/cart.html:45
+msgid "El teu carretó està buit."
+msgstr "Ihr Warenkorb ist leer."
+
+#: templates/products/detail.html:19
+msgid "No hi ha descripció per a aquest producte."
+msgstr "Für dieses Produkt ist keine Beschreibung verfügbar."
+
+#: templates/products/detail.html:21
+msgid "Preu:"
+msgstr "Preis:"
+
+#: templates/products/detail.html:22
+msgid "Durada:"
+msgstr "Dauer:"
+
+#: templates/products/detail.html:22
+msgid "mesos"
+msgstr "Monate"
+
+#: templates/products/detail.html:25
+msgid "Editar producte"
+msgstr "Produkt bearbeiten"
+
+#: templates/products/detail.html:32
+msgid "Condicions de venda"
+msgstr "Verkaufsbedingungen"
+
+#: templates/products/detail.html:42
+msgid "Accepto les condicions de venda"
+msgstr "Ich akzeptiere die Verkaufsbedingungen"
+
+#: templates/products/detail.html:44
+msgid "Comprar ara"
+msgstr "Jetzt kaufen"
+
+#: templates/products/detail.html:49
+msgid "Títols inclosos en el paquet:"
+msgstr "Im Paket enthaltene Titel:"
+
+#: templates/products/detail.html:55
+msgid "Nivell"
+msgstr "Niveau"
+
+#: templates/products/detail.html:62
+msgid "Encara no hi ha títols assignats a aquest paquet."
+msgstr "Diesem Paket sind noch keine Titel zugeordnet."
+
+#: templates/products/product_list.html:12
+msgid "Productes"
+msgstr "Produkte"
+
+#: templates/products/product_list.html:43
+msgid "Compra'l"
+msgstr "Kaufen"
+
+#: templates/products/product_list.html:48
+msgid "No hi ha productes disponibles."
+msgstr "Keine Produkte verfügbar."
+
+#: templates/registration/login.html:4 templates/registration/login.html:8
+#: templates/registration/login.html:21
 msgid "Inicia sessió"
 msgstr "Anmelden"
 
-#: templates/registration/login.html:26
+#: templates/registration/login.html:23
 msgid "Has oblidat la contrasenya?"
 msgstr "Passwort vergessen?"
 
@@ -116,8 +297,16 @@ msgid "Contrasenya canviada"
 msgstr "Passwort geändert"
 
 #: templates/registration/password_reset_complete.html:13
-msgid "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
-msgstr "Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit dem neuen Passwort anmelden."
+msgid ""
+"La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
+"la nova contrasenya."
+msgstr ""
+"Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit dem neuen "
+"Passwort anmelden."
+
+#: templates/registration/password_reset_complete.html:14
+msgid "Inicia la sessió"
+msgstr "Anmelden"
 
 #: templates/registration/password_reset_confirm.html:10
 msgid "Estableix una nova contrasenya"
@@ -128,55 +317,78 @@ msgid "Canvia la meva contrasenya"
 msgstr "Mein Passwort ändern"
 
 #: templates/registration/password_reset_confirm.html:20
-msgid "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
-msgstr "Der Link zum Zurücksetzen des Passworts ist ungültig, möglicherweise weil er bereits verwendet wurde. Bitte fordern Sie eine neue Passwortrücksetzung an."
+msgid ""
+"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
+"ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
+"contrasenya."
+msgstr ""
+"Der Link zum Zurücksetzen des Passworts ist ungültig, möglicherweise weil er "
+"bereits verwendet wurde. Bitte fordern Sie eine neue Passwortrücksetzung an."
 
 #: templates/registration/password_reset_done.html:10
 msgid "Instruccions enviades"
 msgstr "Anweisungen gesendet"
 
 #: templates/registration/password_reset_done.html:13
-msgid "Hem enviat un correu electrònic amb instruccions per restablir la teva contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
-msgstr "Wir haben eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts gesendet. Wenn Sie sie nicht erhalten, überprüfen Sie Ihren Spam-Ordner."
+msgid ""
+"Hem enviat un correu electrònic amb instruccions per restablir la teva "
+"contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
+msgstr ""
+"Wir haben eine E-Mail mit Anweisungen zum Zurücksetzen Ihres Passworts "
+"gesendet. Wenn Sie sie nicht erhalten, überprüfen Sie Ihren Spam-Ordner."
 
-#: templates/registration/password_reset_email.html:3
+#: templates/registration/password_reset_email.html:2
 msgid "Hola,"
 msgstr "Hallo,"
 
-#: templates/registration/password_reset_email.html:5
-msgid "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:"
-msgstr "Sie haben beantragt, Ihr Passwort bei Dual zurückzusetzen. Klicken Sie auf den folgenden Link, um ein neues Passwort festzulegen:"
+#: templates/registration/password_reset_email.html:4
+msgid ""
+"Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç "
+"següent per establir una nova contrasenya:"
+msgstr ""
+"Sie haben beantragt, Ihr Passwort bei Dual zurückzusetzen. Klicken Sie auf "
+"den folgenden Link, um ein neues Passwort festzulegen:"
 
-#: templates/registration/password_reset_email.html:7
+#: templates/registration/password_reset_email.html:6
 #: templates/registration/password_reset_form.html:10
 msgid "Restablir la contrasenya"
 msgstr "Passwort zurücksetzen"
 
-#: templates/registration/password_reset_email.html:9
-msgid "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
-msgstr "Wenn Sie diese Änderung nicht beantragt haben, können Sie diese E-Mail ignorieren."
+#: templates/registration/password_reset_email.html:8
+msgid ""
+"Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
+msgstr ""
+"Wenn Sie diese Änderung nicht beantragt haben, können Sie diese E-Mail "
+"ignorieren."
 
-#: templates/registration/password_reset_email.html:11
+#: templates/registration/password_reset_email.html:10
 msgid "Gràcies,"
 msgstr "Danke,"
 
-#: templates/registration/password_reset_email.html:12
+#: templates/registration/password_reset_email.html:11
 msgid "L'equip de Dual"
 msgstr "Das Dual-Team"
 
 #: templates/registration/password_reset_form.html:13
-msgid "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
-msgstr "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres Passworts."
+msgid ""
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
+"restablir la teva contrasenya."
+msgstr ""
+"Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen zum "
+"Zurücksetzen Ihres Passworts."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
 msgstr "Link zum Zurücksetzen senden"
 
 #: templates/registration/signup.html:4
-#: templates/registration/signup.html:8
 msgid "Crear compte"
 msgstr "Konto erstellen"
 
-#: templates/registration/signup.html:18
+#: templates/registration/signup.html:8
+msgid "Crea un compte"
+msgstr "Konto erstellen"
+
+#: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrieren"

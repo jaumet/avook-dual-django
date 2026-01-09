@@ -31,6 +31,15 @@
           "colection": "Test",
           "duration": "00:00:40",
           "json_file": "ES-Test-1.json"
+        },
+        {
+          "lang": "DE",
+          "human-title": "Test DE",
+          "description": "Beschreibung DE",
+          "ages": "0-99",
+          "colection": "Test",
+          "duration": "00:00:40",
+          "json_file": "DE-Test-1.json"
         }
       ]
     }
