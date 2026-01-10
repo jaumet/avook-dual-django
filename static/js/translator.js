@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const supportedLangs = ['ca', 'en', 'es', 'fr', 'it', 'pt'];
+    const supportedLangs = ['ca', 'en', 'es', 'fr', 'de', 'it', 'pt'];
     let translations = {};
 
     function getCurrentLanguage() {
