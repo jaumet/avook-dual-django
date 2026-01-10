@@ -1,0 +1,251 @@
+<div id="dual-embed" lang="fr">
+  <a class="skip-link" href="#dual-embed-content">Aller au contenu</a>
+
+  <header>
+    <div class="wrap">
+      <div class="nav" role="navigation" aria-label="Navigation principale">
+        <nav class="navlinks" aria-label="Sections">
+          <a href="#dual-embed-metode">Méthode</a>
+          <a href="#dual-embed-llengues">Langues</a>
+          <a href="#dual-embed-faq">FAQ</a>
+        </nav>
+
+        <div class="cta">
+          <a class="btn btn-accent" href="#dual-embed-packs">Commencer maintenant</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="dual-embed-content">
+    <div class="wrap">
+      <section class="hero" aria-label="Présentation">
+        <div>
+          <div class="kicker"><span class="kdot" aria-hidden="true"></span>Une phrase. Deux langues. Une méthode.</div>
+          <h1>Apprenez des langues en écoutant des histoires.</h1>
+          <p class="subtitle">
+            Dual est une plateforme pour apprendre des langues avec une alternance phrase par phrase (L1↔L2).
+            Vous comprenez le contexte et, ensuite, vous pratiquez la langue que vous souhaitez apprendre.
+          </p>
+
+          <ul class="bullets">
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Entrée authentique, sans artifices.</strong><br><span style="color:var(--muted)">Histoires courtes et compréhensibles, par niveau.</span></div></li>
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Ordre flexible.</strong><br><span style="color:var(--muted)">Vous pouvez écouter d’abord votre langue ou la langue cible.</span></div></li>
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Progression A0→C1.</strong><br><span style="color:var(--muted)">Durées croissantes : de 1–2 minutes jusqu’à 10–12 minutes.</span></div></li>
+          </ul>
+
+          <div class="hero-cta">
+            <a class="btn btn-secondary" href="#dual-embed-metode">Comment ça fonctionne</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Résumé rapide">
+          <h2>7 langues disponibles</h2>
+          <p class="mini">Catalan · Allemand · Anglais · Espagnol · Français · Italien · Portugais</p>
+
+          <div class="langbar" aria-label="Langues">
+            <span class="pill"><strong>CA</strong></span>
+            <span class="pill"><strong>DE</strong></span>
+            <span class="pill"><strong>EN</strong></span>
+            <span class="pill"><strong>ES</strong></span>
+            <span class="pill"><strong>FR</strong></span>
+            <span class="pill"><strong>IT</strong></span>
+            <span class="pill"><strong>PT</strong></span>
+          </div>
+
+          <div class="highlight" aria-label="Offres phares">
+            <div class="row"><span>Dual Start</span><span class="price">A0 + A1 · 19 € / 3 mois</span></div>
+            <div class="row"><span>Dual Progress</span><span class="price">A2 + B1 · 29 € / 3 mois</span></div>
+            <div class="row"><span>Dual Advanced</span><span class="price">B2 + C1 · 36 € / 3 mois</span></div>
+            <div class="row"><span>Dual Full Access</span><span class="price">A0 → C1 · 49 € / 6 mois</span></div>
+          </div>
+
+          <p class="mini" style="margin-top:12px">
+            * Tous les packs sont <strong>bidirectionnels</strong> (L1↔L2).<br>
+            * Avec 3 langues, vous avez 6 combinaisons (A↔B, A↔C, B↔C).
+            <div class="cta">
+              <a class="btn btn-accent" href="#dual-embed-packs">Commencer maintenant</a>
+            </div>
+          </p>
+        </aside>
+      </section>
+
+      <section id="dual-embed-metode" aria-label="La méthode Dual">
+        <h2 class="section-title">La méthode Dual</h2>
+        <p class="section-lead">
+          Chaque phrase est écoutée dans deux langues. Vous pouvez choisir l’ordre et répéter si nécessaire.
+          D’abord vous comprenez le sens. Ensuite vous consolidez la langue.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>1) Alternance phrase par phrase</h3>
+            <p>Écoutez la phrase dans votre langue puis, immédiatement après, dans la langue cible (ou l’inverse).</p>
+            <ul>
+              <li>Ordre L1→L2 ou L2→L1</li>
+              <li>Répétition de segments</li>
+              <li>Pauses et rythme contrôlés</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>2) Histoires et contexte</h3>
+            <p>Vous apprenez à l’intérieur d’un récit, et non à travers des exercices déconnectés. Les durées varient selon le niveau.</p>
+            <ul>
+              <li>A0 : 1–2 minutes</li>
+              <li>A1 : 2–3 minutes</li>
+              <li>A2 : 2–4 minutes</li>
+              <li>B1 : 3–5 minutes</li>
+              <li>B2 : 4–7 minutes</li>
+              <li>C1 : 10–12 minutes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note" role="note" aria-label="Note sur la bidirectionnalité">
+          <strong>Bidirectionnel par conception :</strong> si vous avez le pack CA↔EN, vous avez aussi EN↔CA.
+          La méthode Dual permet d’écouter d’abord la langue que vous comprenez ou celle que vous apprenez.
+        </div>
+      </section>
+
+      <section id="dual-embed-llengues" aria-label="Langues">
+        <h2 class="section-title">Langues disponibles</h2>
+        <p class="section-lead">
+          Dual fonctionne avec un minimum de <strong>deux langues</strong>. Avec <strong>trois</strong>, vous multipliez les combinaisons.
+        </p>
+
+        <div class="card">
+          <h3>CA · DE · EN · ES · FR · IT · PT</h3>
+          <p>
+            Avec 3 langues, vous avez 3 paires et 6 combinaisons possibles : A↔B, A↔C, B↔C.
+            <strong>L’ordre d’écoute fait partie de la méthode.</strong>
+          </p>
+
+          <p class="dual-steps">
+            <span class="dual-steps__lead">La méthode Dual recommande ces 4 phases pour chaque récit :</span>
+
+            <ol class="dual-steps__list" aria-label="4 phases d’écoute">
+              <li><strong>Première</strong> : écoutez votre langue pour comprendre l’histoire.</li>
+              <li><strong>Deuxième</strong> : écoutez votre langue suivie (phrase par phrase) de la nouvelle langue.</li>
+              <li><strong>Troisième</strong> : l’inverse — la nouvelle langue suivie (phrase par phrase) de la vôtre.</li>
+              <li><strong>Quatrième</strong> : écoutez uniquement la nouvelle langue.</li>
+            </ol>
+
+            <small class="dual-steps__note">
+              Chaque phase active différentes zones du cerveau et renforce la compréhension.
+            </small>
+          </p>
+        </div>
+      </section>
+
+      <section id="dual-embed-packs" aria-label="Packs et tarifs">
+        <h2 class="section-title">Choisissez votre pack</h2>
+        <p class="section-lead">
+          Des prix simples et directs. Un accès temporaire pour pratiquer réellement.
+        </p>
+
+        <div class="offers">
+
+          <article class="card offer" aria-label="Dual Start">
+            <div class="tag"><span class="dot"></span>Dual Start</div>
+            <div class="big">Commencez depuis zéro</div>
+            <p class="desc">Pour les premiers contacts avec la langue.</p>
+            <ul>
+              <li><strong>7 langues incluses</strong></li>
+              <li>Niveaux <strong>A0 + A1</strong></li>
+            </ul>
+            <div class="bar">
+              <div><div class="p">19 €</div><small>/ 3 mois</small></div>
+              <a class="btn btn-primary">Commencer</a>
+            </div>
+          </article>
+
+          <article class="card offer" aria-label="Dual Progress">
+            <div class="tag"><span class="dot"></span>Dual Progress</div>
+            <div class="big">Consolidez et avancez</div>
+            <p class="desc">Gagnez en fluidité et en assurance.</p>
+            <ul>
+              <li><strong>7 langues incluses</strong></li>
+              <li>Niveaux <strong>A2 + B1</strong></li>
+            </ul>
+            <div class="bar">
+              <div><div class="p">29 €</div><small>/ 3 mois</small></div>
+              <a class="btn btn-secondary">Avancer</a>
+            </div>
+          </article>
+
+          <article class="card offer" aria-label="Dual Advanced">
+            <div class="ribbon">AVANCÉ</div>
+            <div class="tag"><span class="dot"></span>Dual Advanced</div>
+            <div class="big">Langue authentique</div>
+            <p class="desc">Registres, nuances et profondeur.</p>
+            <ul>
+              <li><strong>7 langues incluses</strong></li>
+              <li>Niveaux <strong>B2 + C1</strong></li>
+            </ul>
+            <div class="bar">
+              <div><div class="p">36 €</div><small>/ 3 mois</small></div>
+              <a class="btn btn-secondary">Approfondir</a>
+            </div>
+          </article>
+
+          <article class="card offer" aria-label="Dual Full Access">
+            <div class="ribbon">COMPLET</div>
+            <div class="tag"><span class="dot"></span>Dual Full Access</div>
+            <div class="big">Accès total</div>
+            <p class="desc">Toute la méthode, sans limites.</p>
+            <ul>
+              <li><strong>7 langues incluses</strong></li>
+              <li>Niveaux <strong>A0 → C1</strong></li>
+            </ul>
+            <div class="bar">
+              <div><div class="p">49 €</div><small>/ 6 mois</small></div>
+              <a class="btn btn-accent">Accès total</a>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="note" role="note" aria-label="Note sur les combinaisons">
+          <strong>Rappel :</strong> 3 langues = 6 combinaisons (A↔B, A↔C, B↔C).
+          Une manière d’apprendre plus flexible et de réduire les blocages.
+        </div>
+      </section>
+
+      <section id="dual-embed-faq" aria-label="Questions fréquentes">
+        <h2 class="section-title">FAQ</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Le pack CA↔EN inclut-il EN↔CA ?</h3>
+            <p>Oui. Dual est bidirectionnel par conception.</p>
+          </div>
+          <div class="card">
+            <h3>Pourquoi un accès temporaire ?</h3>
+            <p>Parce que Dual repose sur une pratique continue, pas sur une consommation ponctuelle.</p>
+          </div>
+          <div class="card">
+            <h3>Puis-je commencer depuis zéro ?</h3>
+            <p>Oui. Dual Start est conçu pour A0/A1 avec des textes courts et une intonation claire.</p>
+          </div>
+          <div class="card">
+            <h3>Plus de langues ?</h3>
+            <p><strong>Bientôt plus de langues.</strong> Pour toute information : <a href="mailto:info@dual.cat">info@dual.cat</a>.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer">
+        <div>
+          <strong>dual</strong> — Apprenez des langues en écoutant des histoires.
+          <div style="margin-top:6px;">🔜 <strong>Bientôt plus de langues.</strong></div>
+        </div>
+        <div class="mail">Demandez des informations à <a href="mailto:info@dual.cat">info@dual.cat</a></div>
+      </div>
+    </div>
+  </footer>
+</div>
+

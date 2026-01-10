@@ -1,425 +1,6 @@
-:root {
-  --dual-page-bg: radial-gradient(circle at top left, #141633 0, #050713 55%, #02030a 100%);
-  --dual-page-color: #0b1020;
-  --dual-badge-bg: rgba(255, 255, 255, 0.06);
-  --dual-badge-border: rgba(255, 255, 255, 0.12);
-  --dual-badge-color: #c9d4ff;
-  --dual-badge-dot-bg: #f7836a;
-  --dual-badge-dot-shadow: 0 0 12px rgba(247, 131, 106, 0.9);
-  --dual-title-color: #f5f6ff;
-  --dual-title-span-color: #f7836a;
-  --dual-subtitle-color: #c0c6e5;
-  --dual-btn-primary-bg: linear-gradient(135deg, #f7836a, #ffb15a);
-  --dual-btn-primary-color: #160f2a;
-  --dual-btn-primary-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
-  --dual-btn-ghost-color: #e0e4ff;
-  --dual-btn-ghost-border: rgba(230, 235, 255, 0.25);
-  --dual-hero-note-color: #9ba3cc;
-  --dual-pill-bg: rgba(15, 23, 42, 0.85);
-  --dual-pill-border: rgba(148, 163, 255, 0.5);
-  --dual-pill-color: #d1dcff;
-  --dual-pill-bullet-bg: #f7836a;
-  --dual-orbit-bg: radial-gradient(circle at 10% 0%, rgba(247, 131, 106, 0.28) 0, transparent 50%),
-    radial-gradient(circle at 90% 100%, rgba(75, 148, 255, 0.35) 0, transparent 55%);
-  --dual-card-bg: linear-gradient(150deg, #0d0e37, #14174b 45%, #050715 100%);
-  --dual-card-shadow: 0 20px 60px rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(148, 163, 255, 0.35);
-  --dual-card-color: #e5e7ff;
-  --dual-card-lang-color: #aeb6ff;
-  --dual-card-badge-bg: rgba(15, 23, 42, 0.85);
-  --dual-card-badge-border: rgba(248, 181, 120, 0.9);
-  --dual-card-lines-bg: rgba(15, 23, 42, 0.95);
-  --dual-line-text-strong-color: #fef3c7;
-  --dual-dot-bg: linear-gradient(90deg, #f7836a, #fbbf77);
-  --dual-timeline-label-color: #9ca3ff;
-  --dual-card-footer-color: #a7b0ff;
-  --dual-card-footer-strong-color: #f5f5ff;
-  --dual-bottom-border: rgba(148, 163, 255, 0.25);
-  --dual-steps-title-color: #e5e7ff;
-  --dual-steps-list-color: #c0c6e5;
-  --dual-steps-list-span-color: #f9c77a;
-  --dual-video-placeholder-border: rgba(148, 163, 255, 0.6);
-  --dual-video-placeholder-color: #cbd2ff;
-  --dual-video-placeholder-bg: radial-gradient(circle at 10% 0%, rgba(247, 131, 106, 0.15) 0, transparent 50%);
-  --dual-play-border: rgba(249, 198, 122, 0.8);
-}
-
-body.light-theme {
-  --dual-page-bg: #f5f6ff;
-  --dual-page-color: #0b1020;
-  --dual-badge-bg: rgba(0, 0, 0, 0.06);
-  --dual-badge-border: rgba(0, 0, 0, 0.12);
-  --dual-badge-color: #4a5568;
-  --dual-badge-dot-bg: #f7836a;
-  --dual-badge-dot-shadow: 0 0 12px rgba(247, 131, 106, 0.9);
-  --dual-title-color: #1a202c;
-  --dual-title-span-color: #f7836a;
-  --dual-subtitle-color: #4a5568;
-  --dual-btn-primary-bg: linear-gradient(135deg, #f7836a, #ffb15a);
-  --dual-btn-primary-color: #160f2a;
-  --dual-btn-primary-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  --dual-btn-ghost-color: #1a202c;
-  --dual-btn-ghost-border: rgba(0, 0, 0, 0.25);
-  --dual-hero-note-color: #718096;
-  --dual-pill-bg: rgba(0, 0, 0, 0.05);
-  --dual-pill-border: rgba(0, 0, 0, 0.1);
-  --dual-pill-color: #4a5568;
-  --dual-pill-bullet-bg: #f7836a;
-  --dual-orbit-bg: transparent;
-  --dual-card-bg: #ffffff;
-  --dual-card-shadow: 0 20px 60px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(0, 0, 0, 0.1);
-  --dual-card-color: #1a202c;
-  --dual-card-lang-color: #718096;
-  --dual-card-badge-bg: rgba(0, 0, 0, 0.05);
-  --dual-card-badge-border: rgba(248, 181, 120, 0.9);
-  --dual-card-lines-bg: #f7fafc;
-  --dual-line-text-strong-color: #2d3748;
-  --dual-dot-bg: linear-gradient(90deg, #f7836a, #fbbf77);
-  --dual-timeline-label-color: #718096;
-  --dual-card-footer-color: #718096;
-  --dual-card-footer-strong-color: #1a202c;
-  --dual-bottom-border: rgba(0, 0, 0, 0.1);
-  --dual-steps-title-color: #1a202c;
-  --dual-steps-list-color: #4a5568;
-  --dual-steps-list-span-color: #f7836a;
-  --dual-video-placeholder-border: rgba(0, 0, 0, 0.2);
-  --dual-video-placeholder-color: #4a5568;
-  --dual-video-placeholder-bg: #f7fafc;
-  --dual-play-border: rgba(249, 198, 122, 0.8);
-}
-
-.dual-page {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--dual-page-color);
-    background: var(--dual-page-bg);
-  }
-
-  .dual-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 4rem;
-  }
-
-  .dual-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 3rem;
-    align-items: center;
-  }
-
-  /* TEXT PRINCIPAL */
-
-  .dual-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    background: var(--dual-badge-bg);
-    border: 1px solid var(--dual-badge-border);
-    color: var(--dual-badge-color);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 0.75rem;
-  }
-
-  .dual-badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--dual-badge-dot-bg);
-    box-shadow: var(--dual-badge-dot-shadow);
-  }
-
-  .dual-title {
-    font-size: clamp(2.4rem, 3vw + 1.4rem, 3.4rem);
-    line-height: 1.05;
-    color: var(--dual-title-color);
-    margin: 0 0 0.9rem;
-  }
-
-  .dual-title span {
-    color: var(--dual-title-span-color);
-  }
-
-  .dual-subtitle {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--dual-subtitle-color);
-    max-width: 32rem;
-    margin-bottom: 1.8rem;
-  }
-
-  .dual-cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 1.3rem;
-  }
-
-  .dual-btn-primary,
-  .dual-btn-ghost {
-    border-radius: 999px;
-    padding: 0.7rem 1.4rem;
-    font-size: 0.95rem;
-    border: 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .dual-btn-primary {
-    background: var(--dual-btn-primary-bg);
-    color: var(--dual-btn-primary-color);
-    font-weight: 600;
-    box-shadow: var(--dual-btn-primary-shadow);
-  }
-
-  .dual-btn-primary span.icon {
-    font-size: 1.2rem;
-  }
-
-  .dual-btn-ghost {
-    background: transparent;
-    color: var(--dual-btn-ghost-color);
-    border: 1px solid var(--dual-btn-ghost-border);
-  }
-
-  .dual-hero-note {
-    font-size: 0.8rem;
-    color: var(--dual-hero-note-color);
-  }
-
-  /* PILLES EXPLICATIVES */
-
-  .dual-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 1.4rem;
-  }
-
-  .dual-pill {
-    font-size: 0.78rem;
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-    background: var(--dual-pill-bg);
-    border: 1px solid var(--dual-pill-border);
-    color: var(--dual-pill-color);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .dual-pill-bullet {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--dual-pill-bullet-bg);
-  }
-
-  /* TARGETA / MOCKUP DRET */
-
-  .dual-card-wrapper {
-    position: relative;
-  }
-
-  .dual-orbit {
-    position: absolute;
-    inset: -20%;
-    background: var(--dual-orbit-bg);
-    filter: blur(2px);
-    opacity: 0.9;
-    z-index: 0;
-  }
-
-  .dual-card {
-    position: relative;
-    z-index: 1;
-    border-radius: 1.5rem;
-    padding: 1.6rem 1.5rem 1.4rem;
-    background: var(--dual-card-bg);
-    box-shadow: var(--dual-card-shadow);
-    color: var(--dual-card-color);
-    max-width: 360px;
-    margin: 0 auto;
-  }
-
-  .dual-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.1rem;
-  }
-
-  .dual-card-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .dual-card-lang {
-    font-size: 0.7rem;
-    color: var(--dual-card-lang-color);
-  }
-
-  .dual-card-badge {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    background: var(--dual-card-badge-bg);
-    border: 1px solid var(--dual-card-badge-border);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .dual-card-badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--dual-badge-dot-bg);
-  }
-
-  .dual-card-lines {
-    border-radius: 0.9rem;
-    padding: 0.9rem 0.75rem;
-    background: var(--dual-card-lines-bg);
-    margin-bottom: 0.9rem;
-    font-size: 0.8rem;
-    line-height: 1.6;
-  }
-
-  .dual-line {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .dual-line-label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.11em;
-    opacity: 0.65;
-    min-width: 2.2rem;
-  }
-
-  .dual-line-text {
-    flex: 1;
-  }
-
-  .dual-line-text strong {
-    color: var(--dual-line-text-strong-color);
-    font-weight: 500;
-  }
-
-  .dual-timeline {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.35rem;
-    align-items: center;
-    font-size: 0.7rem;
-    margin-bottom: 0.9rem;
-  }
-
-  .dual-dot {
-    height: 5px;
-    border-radius: 999px;
-    background: var(--dual-dot-bg);
-  }
-
-  .dual-timeline-label {
-    color: var(--dual-timeline-label-color);
-    text-align: right;
-  }
-
-  .dual-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-    color: var(--dual-card-footer-color);
-  }
-
-  .dual-card-footer strong {
-    color: var(--dual-card-footer-strong-color);
-  }
-
-  /* SECCIÓ INFERIOR BREU: “COM FUNCIONA” */
-
-  .dual-bottom {
-    margin-top: 3rem;
-    border-top: 1px solid var(--dual-bottom-border);
-    padding-top: 1.8rem;
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-    gap: 2.5rem;
-  }
-
-  .dual-steps-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--dual-steps-title-color);
-    margin-bottom: 0.7rem;
-  }
-
-  .dual-steps-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.85rem;
-    color: var(--dual-steps-list-color);
-    display: grid;
-    gap: 0.4rem;
-  }
-
-  .dual-steps-list li span {
-    font-weight: 600;
-    color: var(--dual-steps-list-span-color);
-    margin-right: 0.35rem;
-  }
-
-  .dual-video-placeholder {
-    border-radius: 1.1rem;
-    border: 1px dashed var(--dual-video-placeholder-border);
-    padding: 1.2rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: var(--dual-video-placeholder-color);
-    font-size: 0.85rem;
-    background: var(--dual-video-placeholder-bg);
-  }
-
-  .dual-play {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    border: 1px solid var(--dual-play-border);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 840px) {
-    .dual-hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .dual-bottom {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
-
-    /* --- ADDED Scoped styles: tot queda dins #dual-embed --- */
+<div id="dual-embed" lang="ca">
+  <style>
+    /* --- Scoped styles: tot queda dins #dual-embed --- */
     #dual-embed{
       --navy:#0d0e37;
       --coral:#f7836a;
@@ -813,3 +394,258 @@ body.light-theme {
 
 
   </style>
+
+  <a class="skip-link" href="#dual-embed-content">Salta al contingut</a>
+
+  <header>
+    <div class="wrap">
+      <div class="nav" role="navigation" aria-label="Navegació principal">
+        <nav class="navlinks" aria-label="Seccions">
+          <a href="#dual-embed-metode">Mètode</a>
+          <a href="#dual-embed-llengues">Llengües</a>
+          <a href="#dual-embed-faq">FAQ</a>
+        </nav>
+
+        <div class="cta">
+          <a class="btn btn-accent" href="#dual-embed-packs">Comença ara</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="dual-embed-content">
+    <div class="wrap">
+      <section class="hero" aria-label="Presentació">
+        <div>
+          <div class="kicker"><span class="kdot" aria-hidden="true"></span>Una frase. Dues llengües. Un mètode.</div>
+          <h1>Aprèn llengües escoltant històries.</h1>
+          <p class="subtitle">
+            Dual és una plataforma per aprendre llengües amb alternança frase a frase (L1↔L2).
+            Entens el context i, tot seguit, practiques la llengua que vols aprendre.
+          </p>
+
+          <ul class="bullets">
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Input real, sense artificis.</strong><br><span style="color:var(--muted)">Històries curtes i comprensibles, per nivell.</span></div></li>
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Ordre flexible.</strong><br><span style="color:var(--muted)">Pots escoltar primer la teva llengua o la llengua objectiu.</span></div></li>
+            <li><span class="check" aria-hidden="true">✓</span><div><strong>Progressió A0→C1.</strong><br><span style="color:var(--muted)">Durades creixents: d’1–2 minuts fins a 10–12 minuts.</span></div></li>
+          </ul>
+
+          <div class="hero-cta">
+            <a class="btn btn-secondary" href="#dual-embed-metode">Com funciona</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Resum ràpid">
+          <h2>7 llengües disponibles</h2>
+          <p class="mini">Català · Alemany · Anglès · Español · Francès · Italià · Portuguès</p>
+
+          <div class="langbar" aria-label="Llengües">
+            <span class="pill"><strong>CA</strong></span>
+            <span class="pill"><strong>DE</strong></span>
+            <span class="pill"><strong>EN</strong></span>
+            <span class="pill"><strong>ES</strong></span>
+            <span class="pill"><strong>FR</strong></span>
+            <span class="pill"><strong>IT</strong></span>
+            <span class="pill"><strong>PT</strong></span>
+          </div>
+
+       <div class="highlight" aria-label="Ofertes destacades">
+        <div class="row"><span>Dual Start</span><span class="price">A0 + A1 · 19 € / 3 mesos</span></div>
+        <div class="row"><span>Dual Progress</span><span class="price">A2 + B1 · 29 € / 3 mesos</span></div>
+        <div class="row"><span>Dual Advanced</span><span class="price">B2 + C1 · 36 € / 3 mesos</span></div>
+        <div class="row"><span>Dual Full Access</span><span class="price">A0 → C1 · 49 € / 6 mesos</span></div>
+      </div>
+
+
+          <p class="mini" style="margin-top:12px">
+            * Tots els packs són <strong>bidireccionals</strong> (L1↔L2).<br>
+            * Amb 3 llengües tens 6 combinacions (A↔B, A↔C, B↔C).
+            <div class="cta">
+          <a class="btn btn-accent" href="#dual-embed-packs">Comença ara</a>
+        </div>
+          </p>
+        </aside>
+      </section>
+
+      <section id="dual-embed-metode" aria-label="El mètode Dual">
+        <h2 class="section-title">El mètode Dual</h2>
+        <p class="section-lead">
+          Cada frase s’escolta en dues llengües. Pots triar l’ordre i repetir quan calgui.
+          Primer entens el sentit. Després consolides la llengua.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>1) Alternança frase a frase</h3>
+            <p>Escolta la frase en la teva llengua i, tot seguit, en la llengua objectiu (o a l’inrevés).</p>
+            <ul>
+              <li>Ordre L1→L2 o L2→L1</li>
+              <li>Repetició de fragments</li>
+              <li>Pausas i ritme controlats</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>2) Històries i context</h3>
+            <p>Aprens dins d’un relat. No a base d’exercicis desconnectats. Les durades dels relats varien segons el nivell.</p>
+            <ul>
+              <li>A0: 1–2 minuts</li>
+              <li>A1: 2–3 minuts</li>
+              <li>A2: 2–4 minuts</li>
+              <li>B1: 3–5 minuts</li>
+              <li>B2: 4–7 minuts</li>
+              <li>C1: 10–12 minuts</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note" role="note" aria-label="Nota sobre bidireccionalitat">
+          <strong>Bidireccional per disseny:</strong> si tens el pack CA↔EN, també tens EN↔CA.
+          El mètode Dual permet escoltar primer la llengua que entens o la que aprens.
+        </div>
+      </section>
+
+      <section id="dual-embed-llengues" aria-label="Llengües">
+        <h2 class="section-title">Llengües disponibles</h2>
+        <p class="section-lead">
+          Dual funciona amb un mínim de <strong>dues llengües</strong>. Amb <strong>tres</strong>, multipliques les combinacions.
+        </p>
+
+        <div class="card">
+          <h3>CA · DE · EN · ES · FR · IT · PT</h3>
+          <p>
+            Amb 3 llengües tens 3 parelles i 6 combinacions possibles: A↔B, A↔C, B↔C.
+            <strong>L'ordre d'escolta és part del mètode.</strong>
+          </p>
+<p class="dual-steps">
+  <span class="dual-steps__lead">Elmèstode Dual recoman aquestes 4 fases per a cada relat:</span>
+
+  <ol class="dual-steps__list" aria-label="4 fases d’escolta">
+    <li><strong>Primer</strong>: escolta la teva llengua per entendre la història.</li>
+    <li><strong>Segon</strong>: escolta la teva llengua seguida (frase a frase) de la nova llengua.</li>
+    <li><strong>Tercer</strong>: al revés — la nova llengua seguida (frase a frase) de la teva.</li>
+    <li><strong>Quart</strong>: escolta només la nova llengua.</li>
+  </ol>
+
+  <small class="dual-steps__note">
+    Cada fase activa parts diferents del cervell i reforça la comprensió.
+  </small>
+</p>
+
+        </div>
+      </section>
+
+      <section id="dual-embed-packs" aria-label="Packs i preus">
+        <h2 class="section-title">Tria el teu pack</h2>
+        <p class="section-lead">
+          Preus simples i directes. Accés temporal per practicar de veritat.
+        </p>
+
+        <div class="offers">
+          <!-- Dual Start -->
+<article class="card offer" aria-label="Dual Start">
+  <div class="tag"><span class="dot"></span>Dual Start</div>
+  <div class="big">Comença des de zero</div>
+  <p class="desc">Per a primers contactes amb la llengua.</p>
+  <ul>
+    <li><strong>7 llengües incloses</strong></li>
+    <li>Nivells <strong>A0 + A1</strong></li>
+  </ul>
+  <div class="bar">
+    <div><div class="p">19 €</div><small>/ 3 mesos</small></div>
+    <a class="btn btn-primary">Comença</a>
+  </div>
+</article>
+
+<!-- Dual Progress -->
+<article class="card offer" aria-label="Dual Progress">
+  <div class="tag"><span class="dot"></span>Dual Progress</div>
+  <div class="big">Consolida i avança</div>
+  <p class="desc">Guanya fluïdesa i seguretat.</p>
+  <ul>
+    <li><strong>7 llengües incloses</strong></li>
+    <li>Nivells <strong>A2 + B1</strong></li>
+  </ul>
+  <div class="bar">
+    <div><div class="p">29 €</div><small>/ 3 mesos</small></div>
+    <a class="btn btn-secondary">Avança</a>
+  </div>
+</article>
+
+
+<!-- Dual Advanced -->
+<article class="card offer" aria-label="Dual Advanced">
+  <div class="ribbon">AVANÇAT</div>
+  <div class="tag"><span class="dot"></span>Dual Advanced</div>
+  <div class="big">Llengua real</div>
+  <p class="desc">Registres, matisos i profunditat.</p>
+  <ul>
+    <li><strong>7 llengües incloses</strong></li>
+    <li>Nivells <strong>B2 + C1</strong></li>
+  </ul>
+  <div class="bar">
+    <div><div class="p">36 €</div><small>/ 3 mesos</small></div>
+    <a class="btn btn-secondary">Aprofundeix</a>
+  </div>
+</article>
+
+<!-- Dual Full Access -->
+<article class="card offer" aria-label="Dual Full Access">
+  <div class="ribbon">COMPLET</div>
+  <div class="tag"><span class="dot"></span>Dual Full Access</div>
+  <div class="big">Accés total</div>
+  <p class="desc">Tot el mètode, sense límits.</p>
+  <ul>
+    <li><strong>7 llengües incloses</strong></li>
+    <li>Nivells <strong>A0 → C1</strong></li>
+  </ul>
+  <div class="bar">
+    <div><div class="p">49 €</div><small>/ 6 mesos</small></div>
+    <a class="btn btn-accent">Accés total</a>
+  </div>
+</article>
+
+        </div>
+
+        <div class="note" role="note" aria-label="Nota de combinacions">
+          <strong>Recorda:</strong> 3 llengües = 6 combinacions (A↔B, A↔C, B↔C).
+          És una manera d’aprendre més flexible i de reduir bloquejos.
+        </div>
+      </section>
+
+      <section id="dual-embed-faq" aria-label="Preguntes freqüents">
+        <h2 class="section-title">FAQ</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>El pack CA↔EN inclou EN↔CA?</h3>
+            <p>Sí. Dual és bidireccional per disseny: pots escoltar primer la llengua que entens o la que aprens.</p>
+          </div>
+          <div class="card">
+            <h3>Per què accés temporal?</h3>
+            <p>Perquè Dual és pràctica continuada. L’objectiu és escoltar, repetir i progressar amb ritme realista.</p>
+          </div>
+          <div class="card">
+            <h3>Puc començar des de zero?</h3>
+            <p>Sí. Dual Start està pensat per A0/A1 amb textos curts i entonació clara.</p>
+          </div>
+          <div class="card">
+            <h3>Més llengües?</h3>
+            <p><strong>Més llengües aviat.</strong> Si vols informació o propostes: <a href="mailto:info@dual.cat">info@dual.cat</a>.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer">
+        <div>
+          <strong>dual</strong> — Aprèn llengües escoltant històries.
+          <div style="margin-top:6px;">🔜 <strong>Més llengües aviat.</strong></div>
+        </div>
+        <div class="mail">Demana informació a <a href="mailto:info@dual.cat">info@dual.cat</a></div>
+      </div>
+    </div>
+  </footer>
+</div>
