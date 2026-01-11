@@ -216,7 +216,7 @@ def player_view(request, machine_name):
     context = {
         'title': json_info,
         'transcript': detailed_data,
-        'audio_path_prefix': f"/static/AUDIOS/{level}/{machine_name}/{lang_code}/"
+        'audio_path_prefix': f"/static/AUDIOS/{level}/{machine_name}/"
     }
 
     return render(request, 'products/player.html', context)

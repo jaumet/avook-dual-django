@@ -102,18 +102,28 @@ class ProductAccessTest(TestCase):
 import os
 import json
 import shutil
+import tempfile
 from django.conf import settings
+from django.test import override_settings
 
+@override_settings(STATICFILES_DIRS=[tempfile.gettempdir()])
 class PlayerViewTest(TestCase):
     def setUp(self):
         self.test_title_machine_name = 'Test-1'
         self.non_existent_title = 'non-existent-title'
         Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
 
-        # Define paths for mock files and directories
-        self.audios_dir = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS')
+        # Create a temporary directory for static files
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp_dir.cleanup)
+
+        # Define paths for mock files and directories within the temporary directory
+        self.audios_dir = os.path.join(self.temp_dir.name, 'static', 'AUDIOS')
         self.level_dir = os.path.join(self.audios_dir, 'A0')
         os.makedirs(self.level_dir, exist_ok=True)
+
+        # Override the BASE_DIR setting to point to the temporary directory
+        settings.BASE_DIR = self.temp_dir.name
 
         # Create a mock audios.json
         self.audios_json_path = os.path.join(self.audios_dir, 'audios.json')
@@ -141,11 +151,6 @@ class PlayerViewTest(TestCase):
         self.transcript_path_ca = os.path.join(self.level_dir, 'Test-1-CA.json')
         with open(self.transcript_path_ca, 'w') as f:
             json.dump(mock_transcript_data, f)
-
-    def tearDown(self):
-        # Clean up by removing the 'static/AUDIOS' directory created for the test
-        if os.path.exists(self.audios_dir):
-            shutil.rmtree(self.audios_dir)
 
     def test_player_view_with_existing_title(self):
         """
@@ -183,3 +188,14 @@ class PlayerViewTest(TestCase):
         """
         response = self.client.get(reverse('products:player', kwargs={'machine_name': self.non_existent_title}))
         self.assertEqual(response.status_code, 404)
+
+    def test_player_view_audio_path_prefix(self):
+        """
+        Verify that the audio_path_prefix in the player view is correct and does not contain the language code.
+        """
+        with translation.override('en'):
+            response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('audio_path_prefix', response.context)
+            expected_prefix = f"/static/AUDIOS/A0/{self.test_title_machine_name}/"
+            self.assertEqual(response.context['audio_path_prefix'], expected_prefix)
