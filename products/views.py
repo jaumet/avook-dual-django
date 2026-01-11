@@ -145,7 +145,7 @@ class CatalogView(TitleContextMixin, ListView):
         context['titles_by_level'] = titles_by_level
 
         # Prepare data for the filters
-        json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
+        json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 audios_data = json.load(f).get('AUDIOS', [])
@@ -187,7 +187,6 @@ class CatalogView(TitleContextMixin, ListView):
 def player_view(request, machine_name):
     title = get_object_or_404(Title, machine_name=machine_name)
 
-    # Use the mixin to get the title info
     mixin = TitleContextMixin()
     mixin.request = request
     titles_with_status = mixin.get_titles_with_status([title])
@@ -195,9 +194,31 @@ def player_view(request, machine_name):
     if not titles_with_status:
         return render(request, 'products/player.html', {'error': 'Title not found'})
 
+    title_info = titles_with_status[0]
+    json_info = title_info.get('json_info', {})
+
+    level = json_info.get('levels')
+    json_file_name = json_info.get('json_file')
+
+    if not level or not json_file_name:
+        return render(request, 'products/player.html', {'error': 'Title configuration is missing.'})
+
+    detailed_json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', level, json_file_name)
+
+    try:
+        with open(detailed_json_path, 'r', encoding='utf-8') as f:
+            detailed_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return render(request, 'products/player.html', {'error': 'Could not load title data.'})
+
+    lang_code = request.LANGUAGE_CODE[:2].upper()
+
     context = {
-        'title': titles_with_status[0]['json_info']
+        'title': json_info,
+        'transcript': detailed_data,
+        'audio_path_prefix': f"/static/AUDIOS/{level}/{machine_name}/{lang_code}/"
     }
+
     return render(request, 'products/player.html', context)
 
 

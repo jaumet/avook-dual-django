@@ -9,7 +9,7 @@ class TitleContextMixin:
         user = self.request.user if self.request.user.is_authenticated else None
         lang_code = self.request.LANGUAGE_CODE[:2].upper()
 
-        json_path = os.path.join(settings.BASE_DIR, 'static', 'audios.json')
+        json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 audios_data = json.load(f).get('AUDIOS', [])
@@ -54,6 +54,7 @@ class TitleContextMixin:
                 'duration': title_info.get('duration', ''),
                 'human_title': title_info.get('human-title', machine_name),
                 'description': title_info.get('description', ''),
+                'json_file': title_info.get('json_file', ''),
                 'languages': [v.get('lang') for v in text_versions if 'lang' in v]
             }
 

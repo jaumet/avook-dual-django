@@ -99,12 +99,53 @@ class ProductAccessTest(TestCase):
         self.assertEqual(status, 'PREMIUM_OWNED')
 
 
+import os
+import json
+import shutil
+from django.conf import settings
+
 class PlayerViewTest(TestCase):
     def setUp(self):
         self.test_title_machine_name = 'Test-1'
         self.non_existent_title = 'non-existent-title'
-        # Create the Title object in the test database
         Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
+
+        # Define paths for mock files and directories
+        self.audios_dir = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS')
+        self.level_dir = os.path.join(self.audios_dir, 'A0')
+        os.makedirs(self.level_dir, exist_ok=True)
+
+        # Create a mock audios.json
+        self.audios_json_path = os.path.join(self.audios_dir, 'audios.json')
+        mock_audios_data = {
+            "AUDIOS": [{
+                "machine_name": "Test-1",
+                "levels": "A0",
+                "text_versions": [
+                    {"lang": "CA", "human-title": "Test CAT", "description": "Descripció CAT", "json_file": "Test-1-CA.json"},
+                    {"lang": "EN", "human-title": "Test ENG", "description": "Description ENG", "json_file": "Test-1-EN.json"},
+                    {"lang": "ES", "human-title": "Test ESP", "description": "Description ESP", "json_file": "Test-1-ES.json"},
+                    {"lang": "DE", "human-title": "Test DEU", "description": "Description DEU", "json_file": "Test-1-DE.json"}
+                ]
+            }]
+        }
+        with open(self.audios_json_path, 'w') as f:
+            json.dump(mock_audios_data, f)
+
+        # Create mock title-specific JSON files
+        mock_transcript_data = [{"file": "0001.mp3", "text": "This is a test."}]
+        self.transcript_path_en = os.path.join(self.level_dir, 'Test-1-EN.json')
+        with open(self.transcript_path_en, 'w') as f:
+            json.dump(mock_transcript_data, f)
+
+        self.transcript_path_ca = os.path.join(self.level_dir, 'Test-1-CA.json')
+        with open(self.transcript_path_ca, 'w') as f:
+            json.dump(mock_transcript_data, f)
+
+    def tearDown(self):
+        # Clean up by removing the 'static/AUDIOS' directory created for the test
+        if os.path.exists(self.audios_dir):
+            shutil.rmtree(self.audios_dir)
 
     def test_player_view_with_existing_title(self):
         """
@@ -115,14 +156,17 @@ class PlayerViewTest(TestCase):
             response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
             self.assertEqual(response.status_code, 200)
             self.assertIn('title', response.context)
+            self.assertIn('transcript', response.context)
+            self.assertIn('audio_path_prefix', response.context)
+
             title_context = response.context['title']
             self.assertEqual(title_context['machine_name'], 'Test-1')
             self.assertEqual(title_context['human_title'], 'Test ENG')
             self.assertEqual(title_context['description'], 'Description ENG')
             self.assertEqual(title_context['languages'], ['CA', 'EN', 'ES', 'DE'])
 
-            self.assertContains(response, '<h2 id="relatTitle">Test ENG</h2>', html=True)
-            self.assertContains(response, '<div id="relatDesc" style="margin:.1em 0 .3em 0;">Description ENG</div>', html=True)
+            self.assertContains(response, '<h2 id="relatTitle">Test ENG</h2>')
+            self.assertContains(response, '<div id="relatDesc" style="margin:.1em 0 .3em 0;">Description ENG</div>')
 
         # Test with Catalan language to check translation
         with translation.override('ca'):
@@ -131,7 +175,7 @@ class PlayerViewTest(TestCase):
             title_context = response.context['title']
             self.assertEqual(title_context['human_title'], 'Test CAT')
             self.assertEqual(title_context['description'], 'Descripció CAT')
-            self.assertContains(response, '<h2 id="relatTitle">Test CAT</h2>', html=True)
+            self.assertContains(response, '<h2 id="relatTitle">Test CAT</h2>')
 
     def test_player_view_with_non_existent_title(self):
         """
