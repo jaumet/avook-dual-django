@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const spd1 = parseFloat(qs('#speed1').value);
         const spd2 = parseFloat(qs('#speed2').value);
         const spd = item.lang === L1 ? spd1 : spd2;
-        const src = `/static/AUDIOS/{{ title.machine_name }}/${item.file.replace(/^\.?\/*/,'')}`;
+        const src = `{{ audio_path_prefix }}${item.file.replace(/^\.?\/*/,'')}`;
         audioEl.src = src;
         audioEl.playbackRate = spd;
         if (!manual) audioEl.play().catch(() => {});
@@ -184,22 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startMode(mode) {
         const langs = mode.includes('-') ? mode.split('-') : [mode];
+        const transcriptData = {{ transcript|safe }};
+
         for (const L of langs) {
             if (!langData[L]) {
-                const path = `/static/AUDIOS/{{ title.machine_name }}/${L}-{{ title.machine_name }}.json`;
-                try {
-                    const r = await fetch(path);
-                    if (r.ok) {
-                        langData[L] = await r.json();
-                    } else {
-                        langData[L] = [];
-                    }
-                } catch (error) {
-                    console.error('Error fetching JSON:', error);
-                    langData[L] = [];
-                }
+                langData[L] = transcriptData;
             }
         }
+
         sequence = [];
         if (mode.includes('-')) {
             const [A, B] = mode.split('-');
