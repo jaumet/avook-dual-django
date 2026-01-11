@@ -175,6 +175,10 @@ msgstr "Cantidad"
 msgid "La teva cistella està buida."
 msgstr "Tu cesta está vacía."
 
+#: templates/products/product_list.html:11
+msgid "Productes"
+msgstr "Productos"
+
 #: templates/products/detail.html:21
 msgid "Preu:"
 msgstr "Precio:"

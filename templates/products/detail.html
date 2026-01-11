@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load product_tags %}
 
-{% block title %}{{ product.get_translation.name }} — Audiovook Dual{% endblock %}
+{% get_product_translation product request.LANGUAGE_CODE as product_translation %}
+
+{% block title %}
+    {% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %} — Audiovook Dual
+{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
@@ -12,11 +17,11 @@
 <section class="product-detail">
     <div class="product-detail__header">
         <div class="product-detail__media">
-            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{{ product.get_translation.name }}" />
+            <img src="{% static 'imgs/mockup_portada.png' %}" alt="{% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %}" />
         </div>
         <div>
-            <h1>{{ product.get_translation.name }}</h1>
-            <p class="lead">{{ product.get_translation.description|default:_("No hi ha descripció per a aquest producte.") }}</p>
+            <h1>{% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %}</h1>
+            <p class="lead">{% if product_translation %}{{ product_translation.description }}{% else %}{% trans "La descripció no està disponible." %}{% endif %}</p>
             <div class="product-detail__meta">
                 <p class="price">{% trans "Preu:" %} {{ product.price }} €</p>
                 <p>{% trans "Durada:" %} {{ product.duration }} {% trans "mesos" %}</p>

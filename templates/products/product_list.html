@@ -27,7 +27,7 @@
             </div>
             <div class="product-body">
                 {% if product_translation %}
-                    <p>{{ product_translation.description }}</p>
+                    <p>{{ product_translation.description|safe }}</p>
                 {% else %}
                     <p>{% trans "La descripció no està disponible." %}</p>
                 {% endif %}
