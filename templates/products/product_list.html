@@ -14,24 +14,23 @@
 
     {% for product in products %}
         <div class="product-card mb-4">
-            {% with product_translation=product.get_translation %}
-                <div class="product-header">
-                    <h2>
-                        {% if product_translation %}
-                            {{ product_translation.name }}
-                        {% else %}
-                            {{ product.machine_name }}
-                        {% endif %}
-                        - {{ product.price }} {{ product.currency }}
-                    </h2>
-                </div>
-                <div class="product-body">
+            {% get_product_translation product request.LANGUAGE_CODE as product_translation %}
+            <div class="product-header">
+                <h2>
                     {% if product_translation %}
-                        <p>{{ product_translation.description }}</p>
+                        {{ product_translation.name }}
                     {% else %}
-                        <p>{% trans "La descripció no està disponible." %}</p>
+                        {{ product.machine_name }}
                     {% endif %}
-            {% endwith %}
+                    - {{ product.price }} {{ product.currency }}
+                </h2>
+            </div>
+            <div class="product-body">
+                {% if product_translation %}
+                    <p>{{ product_translation.description }}</p>
+                {% else %}
+                    <p>{% trans "La descripció no està disponible." %}</p>
+                {% endif %}
 
             {% for package in product.packages.all %}
                 <div class="package-section">
