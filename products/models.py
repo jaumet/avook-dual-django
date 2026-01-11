@@ -105,41 +105,49 @@ class Product(models.Model):
     category = models.CharField(max_length=50, blank=True, help_text="Categoria del producte")
 
     def __str__(self):
-        # Try to get the name in the current language, fallback to English, then to a placeholder
         translation = self.get_translation()
-        if translation and translation.name != "Not Available":
+        if translation:
             return translation.name
-        return f"Product {self.pk}"
+        return self.machine_name or f"Product {self.pk}"
 
     def get_translation(self, language_code=None):
         if not language_code:
             language_code = get_language()
 
-        # Use prefetched translations if available
         if hasattr(self, '_prefetched_objects_cache') and 'translations' in self._prefetched_objects_cache:
             translations = self._prefetched_objects_cache['translations']
         else:
             translations = self.translations.all()
 
-        # Create a dictionary for quick lookups
+        if not translations:
+            return None  # Return None if no translations exist at all
+
         trans_dict = {t.language_code: t for t in translations}
 
-        # Try to get the requested language
+        # 1. Try to get the requested language
         translation = trans_dict.get(language_code)
         if translation:
             return translation
 
-        # Fallback to the default language
+        # 2. Fallback to the primary language part (e.g., 'en' from 'en-us')
+        if '-' in language_code:
+            primary_language_code = language_code.split('-')[0]
+            translation = trans_dict.get(primary_language_code)
+            if translation:
+                return translation
+
+        # 3. Fallback to the default language from settings
         translation = trans_dict.get(settings.LANGUAGE_CODE)
         if translation:
             return translation
 
-        # If no suitable translation is found, return a dummy object
-        class DummyTranslation:
-            name = "Not Available"
-            description = "Translation not available for this product."
+        # 4. Fallback to English 'en' if it exists
+        translation = trans_dict.get('en')
+        if translation:
+            return translation
 
-        return DummyTranslation()
+        # 5. Fallback to the first available translation
+        return list(translations)[0]
 
 
     @property
@@ -183,15 +191,13 @@ class UserPurchase(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        product_name = "N/A"
+        product_name = f"Product {self.product.pk}"
         if self.product:
             translation = self.product.get_translation()
-            # Safely check for 'name' attribute before accessing it
-            if hasattr(translation, 'name') and translation.name != "Not Available":
+            if translation and hasattr(translation, 'name'):
                 product_name = translation.name
-            else:
-                # Fallback to product ID if no translation is available
-                product_name = f"Product {self.product.pk}"
+            elif self.product.machine_name:
+                product_name = self.product.machine_name
 
         return f"{self.user.username} - {product_name}"
 
