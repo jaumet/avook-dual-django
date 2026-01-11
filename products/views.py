@@ -189,6 +189,8 @@ def player_view(request, machine_name):
 
     mixin = TitleContextMixin()
     mixin.request = request
+
+    # Pass the entire title_info to the template
     titles_with_status = mixin.get_titles_with_status([title])
 
     if not titles_with_status:
@@ -197,25 +199,46 @@ def player_view(request, machine_name):
     title_info = titles_with_status[0]
     json_info = title_info.get('json_info', {})
 
-    level = json_info.get('levels')
-    json_file_name = json_info.get('json_file')
+    # Add all text_versions to json_info
+    json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            audios_data = json.load(f).get('AUDIOS', [])
+    except (FileNotFoundError, json.JSONDecodeError):
+        audios_data = []
 
-    if not level or not json_file_name:
+    audios_map = {item['machine_name']: item for item in audios_data}
+    title_data = audios_map.get(machine_name, {})
+    json_info['text_versions'] = title_data.get('text_versions', [])
+
+    level = json_info.get('levels')
+
+    if not level:
         return render(request, 'products/player.html', {'error': 'Title configuration is missing.'})
 
-    detailed_json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', level, json_file_name)
+    transcripts = {}
+    text_versions = json_info.get('text_versions', [])
 
-    try:
-        with open(detailed_json_path, 'r', encoding='utf-8') as f:
-            detailed_data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return render(request, 'products/player.html', {'error': 'Could not load title data.'})
+    for version in text_versions:
+        lang = version.get('lang')
+        json_file_name = version.get('json_file')
 
-    lang_code = request.LANGUAGE_CODE[:2].upper()
+        if lang and json_file_name:
+            detailed_json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', level, json_file_name)
+            try:
+                with open(detailed_json_path, 'r', encoding='utf-8') as f:
+                    detailed_data = json.load(f)
+                    transcripts[lang] = detailed_data
+            except (FileNotFoundError, json.JSONDecodeError):
+                # You might want to log this error
+                pass
+
+    if not transcripts:
+        return render(request, 'products/player.html', {'error': 'Could not load any title data.'})
 
     context = {
         'title': json_info,
-        'transcript': detailed_data,
+        'transcripts': transcripts,
         'audio_path_prefix': f"/static/AUDIOS/{level}/{machine_name}/"
     }
 

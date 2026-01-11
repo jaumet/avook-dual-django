@@ -15,7 +15,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Grüße und Emotionen",
+          "human-title": "Gr\u00fc\u00dfe und Emotionen",
           "description": "...",
           "json_file": "0-01-DE.json"
         },
@@ -33,7 +33,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Salutations et émotions",
+          "human-title": "Salutations et \u00e9motions",
           "description": "...",
           "json_file": "0-01-FR.json"
         },
@@ -45,7 +45,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Saudações e emoções",
+          "human-title": "Sauda\u00e7\u00f5es e emo\u00e7\u00f5es",
           "description": "...",
           "json_file": "0-01-PT.json"
         }
@@ -66,7 +66,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Herkunft und Identität",
+          "human-title": "Herkunft und Identit\u00e4t",
           "description": "...",
           "json_file": "0-02-DE.json"
         },
@@ -84,13 +84,13 @@
         },
         {
           "lang": "FR",
-          "human-title": "Origine et identité",
+          "human-title": "Origine et identit\u00e9",
           "description": "...",
           "json_file": "0-02-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "Origine e identità",
+          "human-title": "Origine e identit\u00e0",
           "description": "...",
           "json_file": "0-02-IT.json"
         },
@@ -111,13 +111,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Rutines diàries",
+          "human-title": "Rutines di\u00e0ries",
           "description": "...",
           "json_file": "0-03-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Tägliche Routinen",
+          "human-title": "T\u00e4gliche Routinen",
           "description": "...",
           "json_file": "0-03-DE.json"
         },
@@ -147,7 +147,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Rotinas diárias",
+          "human-title": "Rotinas di\u00e1rias",
           "description": "...",
           "json_file": "0-03-PT.json"
         }
@@ -162,7 +162,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Família i espai",
+          "human-title": "Fam\u00edlia i espai",
           "description": "...",
           "json_file": "0-04-CA.json"
         },
@@ -198,7 +198,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Família e espaço",
+          "human-title": "Fam\u00edlia e espa\u00e7o",
           "description": "...",
           "json_file": "0-04-PT.json"
         }
@@ -219,7 +219,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Beziehungen und Einführungen.**",
+          "human-title": "Beziehungen und Einf\u00fchrungen.**",
           "description": "...",
           "json_file": "0-05-DE.json"
         },
@@ -237,7 +237,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Relations et présentations",
+          "human-title": "Relations et pr\u00e9sentations",
           "description": "...",
           "json_file": "0-05-FR.json"
         },
@@ -249,7 +249,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Relações e apresentações",
+          "human-title": "Rela\u00e7\u00f5es e apresenta\u00e7\u00f5es",
           "description": "...",
           "json_file": "0-05-PT.json"
         }
@@ -270,7 +270,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Gegenstände und Essen.**",
+          "human-title": "Gegenst\u00e4nde und Essen.**",
           "description": "...",
           "json_file": "0-06-DE.json"
         },
@@ -315,7 +315,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "On és el meu llapis?",
+          "human-title": "On \u00e9s el meu llapis?",
           "description": "...",
           "json_file": "0-07-CA.json"
         },
@@ -333,25 +333,25 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Dónde está mi lápiz?",
+          "human-title": "\u00bfD\u00f3nde est\u00e1 mi l\u00e1piz?",
           "description": "...",
           "json_file": "0-07-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Où est mon crayon ?",
+          "human-title": "O\u00f9 est mon crayon ?",
           "description": "...",
           "json_file": "0-07-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "Dove è la mia matita?",
+          "human-title": "Dove \u00e8 la mia matita?",
           "description": "...",
           "json_file": "0-07-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "Onde está meu lápis?",
+          "human-title": "Onde est\u00e1 meu l\u00e1pis?",
           "description": "...",
           "json_file": "0-07-PT.json"
         }
@@ -417,13 +417,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El gat dorm al sofà",
+          "human-title": "El gat dorm al sof\u00e0",
           "description": "...",
           "json_file": "0-09-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Die Katze schläft auf dem Sofa",
+          "human-title": "Die Katze schl\u00e4ft auf dem Sofa",
           "description": "...",
           "json_file": "0-09-DE.json"
         },
@@ -435,13 +435,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El gato duerme en el sofá",
+          "human-title": "El gato duerme en el sof\u00e1",
           "description": "...",
           "json_file": "0-09-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Le chat dort sur le canapé",
+          "human-title": "Le chat dort sur le canap\u00e9",
           "description": "...",
           "json_file": "0-09-FR.json"
         },
@@ -453,7 +453,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O gato dorme no sofá",
+          "human-title": "O gato dorme no sof\u00e1",
           "description": "...",
           "json_file": "0-09-PT.json"
         }
@@ -474,7 +474,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Öffne das Fenster!",
+          "human-title": "\u00d6ffne das Fenster!",
           "description": "...",
           "json_file": "0-10-DE.json"
         },
@@ -486,13 +486,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "¡Abre la ventana!",
+          "human-title": "\u00a1Abre la ventana!",
           "description": "...",
           "json_file": "0-10-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Ouvre la fenêtre !",
+          "human-title": "Ouvre la fen\u00eatre !",
           "description": "...",
           "json_file": "0-10-FR.json"
         },
@@ -537,7 +537,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¡Nos levantamos!",
+          "human-title": "\u00a1Nos levantamos!",
           "description": "...",
           "json_file": "0-11-ES.json"
         },
@@ -633,7 +633,7 @@
         },
         {
           "lang": "EN",
-          "human-title": "It’s raining today",
+          "human-title": "It\u2019s raining today",
           "description": "...",
           "json_file": "0-13-EN.json"
         },
@@ -729,7 +729,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Ich schließe die Tür, ich öffne die Tür",
+          "human-title": "Ich schlie\u00dfe die T\u00fcr, ich \u00f6ffne die T\u00fcr",
           "description": "...",
           "json_file": "0-15-DE.json"
         },
@@ -810,7 +810,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Uma maçã vermelha",
+          "human-title": "Uma ma\u00e7\u00e3 vermelha",
           "description": "...",
           "json_file": "0-16-PT.json"
         }
@@ -843,7 +843,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¡Tengo hambre!",
+          "human-title": "\u00a1Tengo hambre!",
           "description": "...",
           "json_file": "0-17-ES.json"
         },
@@ -876,7 +876,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Quin color té això?",
+          "human-title": "Quin color t\u00e9 aix\u00f2?",
           "description": "...",
           "json_file": "0-18-CA.json"
         },
@@ -894,7 +894,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿De qué color es esto?",
+          "human-title": "\u00bfDe qu\u00e9 color es esto?",
           "description": "...",
           "json_file": "0-18-ES.json"
         },
@@ -906,13 +906,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "Di che colore è questo?",
+          "human-title": "Di che colore \u00e8 questo?",
           "description": "...",
           "json_file": "0-18-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "Que cor é esta?",
+          "human-title": "Que cor \u00e9 esta?",
           "description": "...",
           "json_file": "0-18-PT.json"
         }
@@ -945,13 +945,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "En el supermercado pequeño",
+          "human-title": "En el supermercado peque\u00f1o",
           "description": "...",
           "json_file": "0-19-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Au petit supermarché",
+          "human-title": "Au petit supermarch\u00e9",
           "description": "...",
           "json_file": "0-19-FR.json"
         },
@@ -1002,7 +1002,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Eau, s'il vous plaît",
+          "human-title": "Eau, s'il vous pla\u00eet",
           "description": "...",
           "json_file": "0-20-FR.json"
         },
@@ -1014,7 +1014,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Água, por favor",
+          "human-title": "\u00c1gua, por favor",
           "description": "...",
           "json_file": "0-20-PT.json"
         }
@@ -1035,7 +1035,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Heute bin ich glücklich",
+          "human-title": "Heute bin ich gl\u00fccklich",
           "description": "...",
           "json_file": "0-21-DE.json"
         },
@@ -1092,7 +1092,7 @@
         },
         {
           "lang": "EN",
-          "human-title": "I’m a little scared",
+          "human-title": "I\u2019m a little scared",
           "description": "...",
           "json_file": "0-22-EN.json"
         },
@@ -1104,7 +1104,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "J’ai un peu peur",
+          "human-title": "J\u2019ai un peu peur",
           "description": "...",
           "json_file": "0-22-FR.json"
         },
@@ -1137,7 +1137,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Ich bin müde",
+          "human-title": "Ich bin m\u00fcde",
           "description": "...",
           "json_file": "0-23-DE.json"
         },
@@ -1155,7 +1155,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Je suis fatigué",
+          "human-title": "Je suis fatigu\u00e9",
           "description": "...",
           "json_file": "0-23-FR.json"
         },
@@ -1182,7 +1182,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Què t’agrada?",
+          "human-title": "Qu\u00e8 t\u2019agrada?",
           "description": "...",
           "json_file": "0-24-CA.json"
         },
@@ -1200,7 +1200,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Qué te gusta?",
+          "human-title": "\u00bfQu\u00e9 te gusta?",
           "description": "...",
           "json_file": "0-24-ES.json"
         },
@@ -1218,7 +1218,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O que você gosta?",
+          "human-title": "O que voc\u00ea gosta?",
           "description": "...",
           "json_file": "0-24-PT.json"
         }
@@ -1239,7 +1239,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Lächeln!",
+          "human-title": "L\u00e4cheln!",
           "description": "...",
           "json_file": "0-25-DE.json"
         },
@@ -1251,7 +1251,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¡Sonríe!",
+          "human-title": "\u00a1Sonr\u00ede!",
           "description": "...",
           "json_file": "0-25-ES.json"
         },
@@ -1290,7 +1290,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Mein Hund läuft",
+          "human-title": "Mein Hund l\u00e4uft",
           "description": "...",
           "json_file": "0-26-DE.json"
         },
@@ -1335,7 +1335,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Un ocell al balcó",
+          "human-title": "Un ocell al balc\u00f3",
           "description": "...",
           "json_file": "0-27-CA.json"
         },
@@ -1353,7 +1353,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "Un pájaro en el balcón",
+          "human-title": "Un p\u00e1jaro en el balc\u00f3n",
           "description": "...",
           "json_file": "0-27-ES.json"
         },
@@ -1371,7 +1371,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Um pássaro no balcão",
+          "human-title": "Um p\u00e1ssaro no balc\u00e3o",
           "description": "...",
           "json_file": "0-27-PT.json"
         }
@@ -1392,7 +1392,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Steine, Blätter und Blumen",
+          "human-title": "Steine, Bl\u00e4tter und Blumen",
           "description": "...",
           "json_file": "0-28-DE.json"
         },
@@ -1437,13 +1437,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El núvol blanc",
+          "human-title": "El n\u00favol blanc",
           "description": "...",
           "json_file": "0-29-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Die weiße Wolke",
+          "human-title": "Die wei\u00dfe Wolke",
           "description": "...",
           "json_file": "0-29-DE.json"
         },
@@ -1506,13 +1506,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "Un río muy tranquilo",
+          "human-title": "Un r\u00edo muy tranquilo",
           "description": "...",
           "json_file": "0-30-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Une rivière très calme",
+          "human-title": "Une rivi\u00e8re tr\u00e8s calme",
           "description": "...",
           "json_file": "0-30-FR.json"
         },
@@ -1563,7 +1563,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le château sous le lac",
+          "human-title": "Le ch\u00e2teau sous le lac",
           "description": "...",
           "json_file": "1-01-FR.json"
         },
@@ -1590,13 +1590,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’arbre que xiuxiueja",
+          "human-title": "L\u2019arbre que xiuxiueja",
           "description": "...",
           "json_file": "1-02-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Der Flüsterbaum",
+          "human-title": "Der Fl\u00fcsterbaum",
           "description": "...",
           "json_file": "1-02-DE.json"
         },
@@ -1608,7 +1608,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "El árbol que susurra",
+          "human-title": "El \u00e1rbol que susurra",
           "description": "...",
           "json_file": "1-02-ES.json"
         },
@@ -1620,13 +1620,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "L’albero che sussurra",
+          "human-title": "L\u2019albero che sussurra",
           "description": "...",
           "json_file": "1-02-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "A árvore que sussurra",
+          "human-title": "A \u00e1rvore que sussurra",
           "description": "...",
           "json_file": "1-02-PT.json"
         }
@@ -1749,7 +1749,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Farbbrücke",
+          "human-title": "Die Farbbr\u00fccke",
           "description": "...",
           "json_file": "1-05-DE.json"
         },
@@ -1818,7 +1818,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Amis de la forêt",
+          "human-title": "Amis de la for\u00eat",
           "description": "...",
           "json_file": "1-07-FR.json"
         },
@@ -1845,7 +1845,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’ocell que no volia volar",
+          "human-title": "L\u2019ocell que no volia volar",
           "description": "...",
           "json_file": "1-08-CA.json"
         },
@@ -1857,19 +1857,19 @@
         },
         {
           "lang": "EN",
-          "human-title": "The bird that didn’t want to fly",
+          "human-title": "The bird that didn\u2019t want to fly",
           "description": "...",
           "json_file": "1-08-EN.json"
         },
         {
           "lang": "ES",
-          "human-title": "El pájaro que no quería volar",
+          "human-title": "El p\u00e1jaro que no quer\u00eda volar",
           "description": "...",
           "json_file": "1-08-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "L’oiseau qui ne voulait pas voler",
+          "human-title": "L\u2019oiseau qui ne voulait pas voler",
           "description": "...",
           "json_file": "1-08-FR.json"
         },
@@ -1881,7 +1881,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O passarinho que não queria voar",
+          "human-title": "O passarinho que n\u00e3o queria voar",
           "description": "...",
           "json_file": "1-08-PT.json"
         }
@@ -1896,7 +1896,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La capsa de música",
+          "human-title": "La capsa de m\u00fasica",
           "description": "...",
           "json_file": "1-09-CA.json"
         },
@@ -1914,13 +1914,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La caja de música",
+          "human-title": "La caja de m\u00fasica",
           "description": "...",
           "json_file": "1-09-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La boîte de musique",
+          "human-title": "La bo\u00eete de musique",
           "description": "...",
           "json_file": "1-09-FR.json"
         },
@@ -1932,7 +1932,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A caixa de música",
+          "human-title": "A caixa de m\u00fasica",
           "description": "...",
           "json_file": "1-09-PT.json"
         }
@@ -1947,13 +1947,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El drac tímid",
+          "human-title": "El drac t\u00edmid",
           "description": "...",
           "json_file": "1-10-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Der schüchterne Drache",
+          "human-title": "Der sch\u00fcchterne Drache",
           "description": "...",
           "json_file": "1-10-DE.json"
         },
@@ -1965,7 +1965,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "El dragón tímido",
+          "human-title": "El drag\u00f3n t\u00edmido",
           "description": "...",
           "json_file": "1-10-ES.json"
         },
@@ -1983,7 +1983,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O dragão tímido",
+          "human-title": "O drag\u00e3o t\u00edmido",
           "description": "...",
           "json_file": "1-10-PT.json"
         }
@@ -2067,7 +2067,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La luna pequeña",
+          "human-title": "La luna peque\u00f1a",
           "description": "...",
           "json_file": "1-12-ES.json"
         },
@@ -2100,7 +2100,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La finestra màgica",
+          "human-title": "La finestra m\u00e0gica",
           "description": "...",
           "json_file": "1-13-CA.json"
         },
@@ -2118,13 +2118,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La ventana mágica",
+          "human-title": "La ventana m\u00e1gica",
           "description": "...",
           "json_file": "1-13-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La fenêtre magique",
+          "human-title": "La fen\u00eatre magique",
           "description": "...",
           "json_file": "1-13-FR.json"
         },
@@ -2136,7 +2136,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A janela mágica",
+          "human-title": "A janela m\u00e1gica",
           "description": "...",
           "json_file": "1-13-PT.json"
         }
@@ -2271,13 +2271,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El reloj del sueño",
+          "human-title": "El reloj del sue\u00f1o",
           "description": "...",
           "json_file": "1-16-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La montre des rêves",
+          "human-title": "La montre des r\u00eaves",
           "description": "...",
           "json_file": "1-16-FR.json"
         },
@@ -2289,7 +2289,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O relógio dos sonhos",
+          "human-title": "O rel\u00f3gio dos sonhos",
           "description": "...",
           "json_file": "1-16-PT.json"
         }
@@ -2304,7 +2304,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El nen i el núvol",
+          "human-title": "El nen i el n\u00favol",
           "description": "...",
           "json_file": "1-17-CA.json"
         },
@@ -2322,13 +2322,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El niño y la nube",
+          "human-title": "El ni\u00f1o y la nube",
           "description": "...",
           "json_file": "1-17-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "L’enfant et le nuage",
+          "human-title": "L\u2019enfant et le nuage",
           "description": "...",
           "json_file": "1-17-FR.json"
         },
@@ -2373,13 +2373,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La biblioteca pequeña",
+          "human-title": "La biblioteca peque\u00f1a",
           "description": "...",
           "json_file": "1-18-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La petite bibliothèque",
+          "human-title": "La petite biblioth\u00e8que",
           "description": "...",
           "json_file": "1-18-FR.json"
         },
@@ -2406,7 +2406,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El camí de pedretes",
+          "human-title": "El cam\u00ed de pedretes",
           "description": "...",
           "json_file": "1-19-CA.json"
         },
@@ -2565,7 +2565,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Das Mädchen, das singt",
+          "human-title": "Das M\u00e4dchen, das singt",
           "description": "...",
           "json_file": "1-22-DE.json"
         },
@@ -2577,7 +2577,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La niña que canta",
+          "human-title": "La ni\u00f1a que canta",
           "description": "...",
           "json_file": "1-22-ES.json"
         },
@@ -2616,7 +2616,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Fliesenbrücke",
+          "human-title": "Die Fliesenbr\u00fccke",
           "description": "...",
           "json_file": "1-23-DE.json"
         },
@@ -2781,13 +2781,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El gigante risueño",
+          "human-title": "El gigante risue\u00f1o",
           "description": "...",
           "json_file": "1-26-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Le géant rieur",
+          "human-title": "Le g\u00e9ant rieur",
           "description": "...",
           "json_file": "1-26-FR.json"
         },
@@ -2850,7 +2850,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O robô do pátio",
+          "human-title": "O rob\u00f4 do p\u00e1tio",
           "description": "...",
           "json_file": "1-27-PT.json"
         }
@@ -2973,7 +2973,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die geheime Tür",
+          "human-title": "Die geheime T\u00fcr",
           "description": "...",
           "json_file": "1-30-DE.json"
         },
@@ -2991,7 +2991,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La porte secrète",
+          "human-title": "La porte secr\u00e8te",
           "description": "...",
           "json_file": "1-30-FR.json"
         },
@@ -3018,7 +3018,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La brúixola perduda",
+          "human-title": "La br\u00faixola perduda",
           "description": "...",
           "json_file": "2-01-CA.json"
         },
@@ -3036,7 +3036,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La brújula perdida",
+          "human-title": "La br\u00fajula perdida",
           "description": "...",
           "json_file": "2-01-ES.json"
         },
@@ -3054,7 +3054,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A bússola perdida",
+          "human-title": "A b\u00fassola perdida",
           "description": "...",
           "json_file": "2-01-PT.json"
         }
@@ -3087,13 +3087,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El misterio del sótano",
+          "human-title": "El misterio del s\u00f3tano",
           "description": "...",
           "json_file": "2-02-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Le mystère du sous-sol",
+          "human-title": "Le myst\u00e8re du sous-sol",
           "description": "...",
           "json_file": "2-02-FR.json"
         },
@@ -3105,7 +3105,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O mistério do porão",
+          "human-title": "O mist\u00e9rio do por\u00e3o",
           "description": "...",
           "json_file": "2-02-PT.json"
         }
@@ -3120,13 +3120,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El pont de bambú",
+          "human-title": "El pont de bamb\u00fa",
           "description": "...",
           "json_file": "2-03-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Die Bambusbrücke",
+          "human-title": "Die Bambusbr\u00fccke",
           "description": "...",
           "json_file": "2-03-DE.json"
         },
@@ -3138,7 +3138,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "El puente de bambú",
+          "human-title": "El puente de bamb\u00fa",
           "description": "...",
           "json_file": "2-03-ES.json"
         },
@@ -3150,7 +3150,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "Il ponte di bambù",
+          "human-title": "Il ponte di bamb\u00f9",
           "description": "...",
           "json_file": "2-03-IT.json"
         },
@@ -3177,7 +3177,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Das Mädchen aus der Wüste",
+          "human-title": "Das M\u00e4dchen aus der W\u00fcste",
           "description": "...",
           "json_file": "2-04-DE.json"
         },
@@ -3189,13 +3189,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La niña del desierto",
+          "human-title": "La ni\u00f1a del desierto",
           "description": "...",
           "json_file": "2-04-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La fille du désert",
+          "human-title": "La fille du d\u00e9sert",
           "description": "...",
           "json_file": "2-04-FR.json"
         },
@@ -3222,13 +3222,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’illa de les tortugues",
+          "human-title": "L\u2019illa de les tortugues",
           "description": "...",
           "json_file": "2-05-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Die Insel der Schildkröten",
+          "human-title": "Die Insel der Schildkr\u00f6ten",
           "description": "...",
           "json_file": "2-05-DE.json"
         },
@@ -3246,7 +3246,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "L’île des tortues",
+          "human-title": "L\u2019\u00eele des tortues",
           "description": "...",
           "json_file": "2-05-FR.json"
         },
@@ -3297,7 +3297,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La carte déchirée",
+          "human-title": "La carte d\u00e9chir\u00e9e",
           "description": "...",
           "json_file": "2-06-FR.json"
         },
@@ -3360,7 +3360,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O cachorro dos três bairros",
+          "human-title": "O cachorro dos tr\u00eas bairros",
           "description": "...",
           "json_file": "2-07-PT.json"
         }
@@ -3381,7 +3381,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Der Eisen Schlüssel",
+          "human-title": "Der Eisen Schl\u00fcssel",
           "description": "...",
           "json_file": "2-08-DE.json"
         },
@@ -3399,7 +3399,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La clé de fer",
+          "human-title": "La cl\u00e9 de fer",
           "description": "...",
           "json_file": "2-08-FR.json"
         },
@@ -3450,7 +3450,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La forêt des échos",
+          "human-title": "La for\u00eat des \u00e9chos",
           "description": "...",
           "json_file": "2-09-FR.json"
         },
@@ -3495,13 +3495,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El río secreto",
+          "human-title": "El r\u00edo secreto",
           "description": "...",
           "json_file": "2-10-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La rivière secrète",
+          "human-title": "La rivi\u00e8re secr\u00e8te",
           "description": "...",
           "json_file": "2-10-FR.json"
         },
@@ -3546,7 +3546,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La montaña roja",
+          "human-title": "La monta\u00f1a roja",
           "description": "...",
           "json_file": "2-11-ES.json"
         },
@@ -3630,7 +3630,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La veu del túnel",
+          "human-title": "La veu del t\u00fanel",
           "description": "...",
           "json_file": "2-13-CA.json"
         },
@@ -3648,7 +3648,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La voz del túnel",
+          "human-title": "La voz del t\u00fanel",
           "description": "...",
           "json_file": "2-13-ES.json"
         },
@@ -3666,7 +3666,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A voz do túnel",
+          "human-title": "A voz do t\u00fanel",
           "description": "...",
           "json_file": "2-13-PT.json"
         }
@@ -3705,7 +3705,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le train arrêté",
+          "human-title": "Le train arr\u00eat\u00e9",
           "description": "...",
           "json_file": "2-14-FR.json"
         },
@@ -3738,7 +3738,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Tür der Klänge",
+          "human-title": "Die T\u00fcr der Kl\u00e4nge",
           "description": "...",
           "json_file": "2-15-DE.json"
         },
@@ -3789,7 +3789,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Das Mädchen des Winds",
+          "human-title": "Das M\u00e4dchen des Winds",
           "description": "...",
           "json_file": "2-16-DE.json"
         },
@@ -3801,7 +3801,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La niña del viento",
+          "human-title": "La ni\u00f1a del viento",
           "description": "...",
           "json_file": "2-16-ES.json"
         },
@@ -3834,7 +3834,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’ombra del castell",
+          "human-title": "L\u2019ombra del castell",
           "description": "...",
           "json_file": "2-17-CA.json"
         },
@@ -3858,7 +3858,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "L’ombre du château",
+          "human-title": "L\u2019ombre du ch\u00e2teau",
           "description": "...",
           "json_file": "2-17-FR.json"
         },
@@ -3921,7 +3921,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O diário antigo",
+          "human-title": "O di\u00e1rio antigo",
           "description": "...",
           "json_file": "2-18-PT.json"
         }
@@ -3960,7 +3960,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le sac à dos mystérieux",
+          "human-title": "Le sac \u00e0 dos myst\u00e9rieux",
           "description": "...",
           "json_file": "2-19-FR.json"
         },
@@ -3987,7 +3987,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El robot d’estiu",
+          "human-title": "El robot d\u2019estiu",
           "description": "...",
           "json_file": "2-20-CA.json"
         },
@@ -4011,7 +4011,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le robot d’été",
+          "human-title": "Le robot d\u2019\u00e9t\u00e9",
           "description": "...",
           "json_file": "2-20-FR.json"
         },
@@ -4023,7 +4023,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O robô de verão",
+          "human-title": "O rob\u00f4 de ver\u00e3o",
           "description": "...",
           "json_file": "2-20-PT.json"
         }
@@ -4044,7 +4044,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Grüne Fackel",
+          "human-title": "Die Gr\u00fcne Fackel",
           "description": "...",
           "json_file": "2-21-DE.json"
         },
@@ -4164,7 +4164,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La tempête de sable",
+          "human-title": "La temp\u00eate de sable",
           "description": "...",
           "json_file": "2-23-FR.json"
         },
@@ -4227,7 +4227,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O relógio invisível",
+          "human-title": "O rel\u00f3gio invis\u00edvel",
           "description": "...",
           "json_file": "2-24-PT.json"
         }
@@ -4317,7 +4317,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La lumière sous le sable",
+          "human-title": "La lumi\u00e8re sous le sable",
           "description": "...",
           "json_file": "2-26-FR.json"
         },
@@ -4344,7 +4344,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’estació silent",
+          "human-title": "L\u2019estaci\u00f3 silent",
           "description": "...",
           "json_file": "2-27-CA.json"
         },
@@ -4362,7 +4362,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La estación silenciosa",
+          "human-title": "La estaci\u00f3n silenciosa",
           "description": "...",
           "json_file": "2-27-ES.json"
         },
@@ -4380,7 +4380,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A estação silenciosa",
+          "human-title": "A esta\u00e7\u00e3o silenciosa",
           "description": "...",
           "json_file": "2-27-PT.json"
         }
@@ -4395,7 +4395,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La decisió d’en Karim",
+          "human-title": "La decisi\u00f3 d\u2019en Karim",
           "description": "...",
           "json_file": "3-01-CA.json"
         },
@@ -4413,13 +4413,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La decisión de Karim",
+          "human-title": "La decisi\u00f3n de Karim",
           "description": "...",
           "json_file": "3-01-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La décision de Karim",
+          "human-title": "La d\u00e9cision de Karim",
           "description": "...",
           "json_file": "3-01-FR.json"
         },
@@ -4431,7 +4431,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A decisão de Karim",
+          "human-title": "A decis\u00e3o de Karim",
           "description": "...",
           "json_file": "3-01-PT.json"
         }
@@ -4497,7 +4497,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Camí de neu",
+          "human-title": "Cam\u00ed de neu",
           "description": "...",
           "json_file": "3-03-CA.json"
         },
@@ -4566,13 +4566,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El encuentro en el río",
+          "human-title": "El encuentro en el r\u00edo",
           "description": "...",
           "json_file": "3-04-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La rencontre au bord de la rivière",
+          "human-title": "La rencontre au bord de la rivi\u00e8re",
           "description": "...",
           "json_file": "3-04-FR.json"
         },
@@ -4599,7 +4599,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El secret de l’aula",
+          "human-title": "El secret de l\u2019aula",
           "description": "...",
           "json_file": "3-05-CA.json"
         },
@@ -4686,7 +4686,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Os três do telhado",
+          "human-title": "Os tr\u00eas do telhado",
           "description": "...",
           "json_file": "3-06-PT.json"
         }
@@ -4776,7 +4776,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le pont cassé",
+          "human-title": "Le pont cass\u00e9",
           "description": "...",
           "json_file": "3-08-FR.json"
         },
@@ -4803,7 +4803,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’hora del retorn",
+          "human-title": "L\u2019hora del retorn",
           "description": "...",
           "json_file": "3-09-CA.json"
         },
@@ -4827,7 +4827,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "L’heure du retour",
+          "human-title": "L\u2019heure du retour",
           "description": "...",
           "json_file": "3-09-FR.json"
         },
@@ -4905,7 +4905,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La història que faltava",
+          "human-title": "La hist\u00f2ria que faltava",
           "description": "...",
           "json_file": "3-11-CA.json"
         },
@@ -4941,7 +4941,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A história que faltava",
+          "human-title": "A hist\u00f3ria que faltava",
           "description": "...",
           "json_file": "3-11-PT.json"
         }
@@ -4992,7 +4992,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O silêncio do pátio",
+          "human-title": "O sil\u00eancio do p\u00e1tio",
           "description": "...",
           "json_file": "3-12-PT.json"
         }
@@ -5037,7 +5037,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "La città sotto la pioggia",
+          "human-title": "La citt\u00e0 sotto la pioggia",
           "description": "...",
           "json_file": "3-13-IT.json"
         },
@@ -5058,7 +5058,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El semàfor trencat",
+          "human-title": "El sem\u00e0for trencat",
           "description": "...",
           "json_file": "3-14-CA.json"
         },
@@ -5076,13 +5076,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El semáforo roto",
+          "human-title": "El sem\u00e1foro roto",
           "description": "...",
           "json_file": "3-14-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Le feu de signalisation cassé",
+          "human-title": "Le feu de signalisation cass\u00e9",
           "description": "...",
           "json_file": "3-14-FR.json"
         },
@@ -5094,7 +5094,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O semáforo quebrado",
+          "human-title": "O sem\u00e1foro quebrado",
           "description": "...",
           "json_file": "3-14-PT.json"
         }
@@ -5109,7 +5109,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’avió de paper",
+          "human-title": "L\u2019avi\u00f3 de paper",
           "description": "...",
           "json_file": "3-15-CA.json"
         },
@@ -5127,25 +5127,25 @@
         },
         {
           "lang": "ES",
-          "human-title": "El avión de papel",
+          "human-title": "El avi\u00f3n de papel",
           "description": "...",
           "json_file": "3-15-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "L’avion en papier",
+          "human-title": "L\u2019avion en papier",
           "description": "...",
           "json_file": "3-15-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "L’aeroplano di carta",
+          "human-title": "L\u2019aeroplano di carta",
           "description": "...",
           "json_file": "3-15-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "O avião de papel",
+          "human-title": "O avi\u00e3o de papel",
           "description": "...",
           "json_file": "3-15-PT.json"
         }
@@ -5160,7 +5160,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El murmuri de la plaça",
+          "human-title": "El murmuri de la pla\u00e7a",
           "description": "...",
           "json_file": "3-16-CA.json"
         },
@@ -5196,7 +5196,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O murmúrio da praça",
+          "human-title": "O murm\u00fario da pra\u00e7a",
           "description": "...",
           "json_file": "3-16-PT.json"
         }
@@ -5235,7 +5235,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le vélo de nuit",
+          "human-title": "Le v\u00e9lo de nuit",
           "description": "...",
           "json_file": "3-17-FR.json"
         },
@@ -5247,7 +5247,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A bike à noite",
+          "human-title": "A bike \u00e0 noite",
           "description": "...",
           "json_file": "3-17-PT.json"
         }
@@ -5331,7 +5331,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La calle vacía",
+          "human-title": "La calle vac\u00eda",
           "description": "...",
           "json_file": "3-19-ES.json"
         },
@@ -5415,7 +5415,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’última nota",
+          "human-title": "L\u2019\u00faltima nota",
           "description": "...",
           "json_file": "3-21-CA.json"
         },
@@ -5433,13 +5433,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La última nota",
+          "human-title": "La \u00faltima nota",
           "description": "...",
           "json_file": "3-21-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La dernière note",
+          "human-title": "La derni\u00e8re note",
           "description": "...",
           "json_file": "3-21-FR.json"
         },
@@ -5451,7 +5451,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A última nota",
+          "human-title": "A \u00faltima nota",
           "description": "...",
           "json_file": "3-21-PT.json"
         }
@@ -5517,7 +5517,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’amic desconegut",
+          "human-title": "L\u2019amic desconegut",
           "description": "...",
           "json_file": "3-23-CA.json"
         },
@@ -5568,13 +5568,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La capsa que no obre ningú",
+          "human-title": "La capsa que no obre ning\u00fa",
           "description": "...",
           "json_file": "3-24-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Die Kiste, die niemand öffnet",
+          "human-title": "Die Kiste, die niemand \u00f6ffnet",
           "description": "...",
           "json_file": "3-24-DE.json"
         },
@@ -5592,7 +5592,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La boîte que personne n’ouvre",
+          "human-title": "La bo\u00eete que personne n\u2019ouvre",
           "description": "...",
           "json_file": "3-24-FR.json"
         },
@@ -5604,7 +5604,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A caixa que ninguém abre",
+          "human-title": "A caixa que ningu\u00e9m abre",
           "description": "...",
           "json_file": "3-24-PT.json"
         }
@@ -5643,7 +5643,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "L'horloge du métro",
+          "human-title": "L'horloge du m\u00e9tro",
           "description": "...",
           "json_file": "3-25-FR.json"
         },
@@ -5655,7 +5655,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O relógio do metrô",
+          "human-title": "O rel\u00f3gio do metr\u00f4",
           "description": "...",
           "json_file": "3-25-PT.json"
         }
@@ -5676,7 +5676,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Brücke der Jugendlichen",
+          "human-title": "Die Br\u00fccke der Jugendlichen",
           "description": "...",
           "json_file": "3-26-DE.json"
         },
@@ -5688,7 +5688,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "El puente de los jóvenes",
+          "human-title": "El puente de los j\u00f3venes",
           "description": "...",
           "json_file": "3-26-ES.json"
         },
@@ -5721,7 +5721,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La plaça dels gats",
+          "human-title": "La pla\u00e7a dels gats",
           "description": "...",
           "json_file": "3-27-CA.json"
         },
@@ -5757,7 +5757,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A praça dos gatos",
+          "human-title": "A pra\u00e7a dos gatos",
           "description": "...",
           "json_file": "3-27-PT.json"
         }
@@ -5796,7 +5796,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La haute fenêtre",
+          "human-title": "La haute fen\u00eatre",
           "description": "...",
           "json_file": "3-28-FR.json"
         },
@@ -5823,13 +5823,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El camí dels auriculars",
+          "human-title": "El cam\u00ed dels auriculars",
           "description": "...",
           "json_file": "3-29-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Der Weg der Kopfhörer",
+          "human-title": "Der Weg der Kopfh\u00f6rer",
           "description": "...",
           "json_file": "3-29-DE.json"
         },
@@ -5847,7 +5847,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le chemin des écouteurs",
+          "human-title": "Le chemin des \u00e9couteurs",
           "description": "...",
           "json_file": "3-29-FR.json"
         },
@@ -5904,7 +5904,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "La città sotto il ghiaccio",
+          "human-title": "La citt\u00e0 sotto il ghiaccio",
           "description": "...",
           "json_file": "3-30-IT.json"
         },
@@ -5925,7 +5925,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’habitació de fusta",
+          "human-title": "L\u2019habitaci\u00f3 de fusta",
           "description": "...",
           "json_file": "4-01-CA.json"
         },
@@ -5943,7 +5943,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La habitación de madera",
+          "human-title": "La habitaci\u00f3n de madera",
           "description": "...",
           "json_file": "4-01-ES.json"
         },
@@ -6012,7 +6012,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Os pergaminhos do silêncio",
+          "human-title": "Os pergaminhos do sil\u00eancio",
           "description": "...",
           "json_file": "4-02-PT.json"
         }
@@ -6027,7 +6027,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Nit d’ombres",
+          "human-title": "Nit d\u2019ombres",
           "description": "...",
           "json_file": "4-03-CA.json"
         },
@@ -6051,7 +6051,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Nuit d’ombres",
+          "human-title": "Nuit d\u2019ombres",
           "description": "...",
           "json_file": "4-03-FR.json"
         },
@@ -6102,7 +6102,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Bienvenue à Lisbonne",
+          "human-title": "Bienvenue \u00e0 Lisbonne",
           "description": "...",
           "json_file": "4-04-FR.json"
         },
@@ -6135,7 +6135,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Rom zu Fuß",
+          "human-title": "Rom zu Fu\u00df",
           "description": "...",
           "json_file": "4-05-DE.json"
         },
@@ -6153,7 +6153,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Rome à pied",
+          "human-title": "Rome \u00e0 pied",
           "description": "...",
           "json_file": "4-05-FR.json"
         },
@@ -6165,7 +6165,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Roma a pé",
+          "human-title": "Roma a p\u00e9",
           "description": "...",
           "json_file": "4-05-PT.json"
         }
@@ -6180,7 +6180,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Tòquio a pas lent",
+          "human-title": "T\u00f2quio a pas lent",
           "description": "...",
           "json_file": "4-06-CA.json"
         },
@@ -6204,7 +6204,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Tokyo à pas lent",
+          "human-title": "Tokyo \u00e0 pas lent",
           "description": "...",
           "json_file": "4-06-FR.json"
         },
@@ -6216,7 +6216,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Tóquio a passo lento",
+          "human-title": "T\u00f3quio a passo lento",
           "description": "...",
           "json_file": "4-06-PT.json"
         }
@@ -6282,7 +6282,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’origen de les civilitzacions",
+          "human-title": "L\u2019origen de les civilitzacions",
           "description": "...",
           "json_file": "4-08-CA.json"
         },
@@ -6306,19 +6306,19 @@
         },
         {
           "lang": "FR",
-          "human-title": "L’origine des civilisations",
+          "human-title": "L\u2019origine des civilisations",
           "description": "...",
           "json_file": "4-08-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "L'origine delle civiltà",
+          "human-title": "L'origine delle civilt\u00e0",
           "description": "...",
           "json_file": "4-08-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "A origem das civilizações",
+          "human-title": "A origem das civiliza\u00e7\u00f5es",
           "description": "...",
           "json_file": "4-08-PT.json"
         }
@@ -6363,13 +6363,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "La città invisibile",
+          "human-title": "La citt\u00e0 invisibile",
           "description": "...",
           "json_file": "4-09-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "A cidade invisível",
+          "human-title": "A cidade invis\u00edvel",
           "description": "...",
           "json_file": "4-09-PT.json"
         }
@@ -6402,7 +6402,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Hacemos una tortilla?",
+          "human-title": "\u00bfHacemos una tortilla?",
           "description": "...",
           "json_file": "4-10-ES.json"
         },
@@ -6459,7 +6459,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Reportage au marché",
+          "human-title": "Reportage au march\u00e9",
           "description": "...",
           "json_file": "4-11-FR.json"
         },
@@ -6486,7 +6486,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Un cafè a la tarda",
+          "human-title": "Un caf\u00e8 a la tarda",
           "description": "...",
           "json_file": "4-12-CA.json"
         },
@@ -6504,25 +6504,25 @@
         },
         {
           "lang": "ES",
-          "human-title": "Un café por la tarde",
+          "human-title": "Un caf\u00e9 por la tarde",
           "description": "...",
           "json_file": "4-12-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Un café l'après-midi",
+          "human-title": "Un caf\u00e9 l'apr\u00e8s-midi",
           "description": "...",
           "json_file": "4-12-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "Un caffè nel pomeriggio",
+          "human-title": "Un caff\u00e8 nel pomeriggio",
           "description": "...",
           "json_file": "4-12-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "Um café à tarde",
+          "human-title": "Um caf\u00e9 \u00e0 tarde",
           "description": "...",
           "json_file": "4-12-PT.json"
         }
@@ -6537,7 +6537,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Atenció al pacient",
+          "human-title": "Atenci\u00f3 al pacient",
           "description": "...",
           "json_file": "4-13-CA.json"
         },
@@ -6555,7 +6555,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "Atención al paciente",
+          "human-title": "Atenci\u00f3n al paciente",
           "description": "...",
           "json_file": "4-13-ES.json"
         },
@@ -6573,7 +6573,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Atenção ao paciente",
+          "human-title": "Aten\u00e7\u00e3o ao paciente",
           "description": "...",
           "json_file": "4-13-PT.json"
         }
@@ -6588,13 +6588,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’entrevista de feina",
+          "human-title": "L\u2019entrevista de feina",
           "description": "...",
           "json_file": "4-14-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Das Vorstellungsgespräch",
+          "human-title": "Das Vorstellungsgespr\u00e4ch",
           "description": "...",
           "json_file": "4-14-DE.json"
         },
@@ -6639,7 +6639,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Turistes a l’aeroport",
+          "human-title": "Turistes a l\u2019aeroport",
           "description": "...",
           "json_file": "4-15-CA.json"
         },
@@ -6663,7 +6663,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Touristes à l’aéroport",
+          "human-title": "Touristes \u00e0 l\u2019a\u00e9roport",
           "description": "...",
           "json_file": "4-15-FR.json"
         },
@@ -6714,7 +6714,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Au supermarché",
+          "human-title": "Au supermarch\u00e9",
           "description": "...",
           "json_file": "4-16-FR.json"
         },
@@ -6777,7 +6777,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O táxi noturno",
+          "human-title": "O t\u00e1xi noturno",
           "description": "...",
           "json_file": "4-17-PT.json"
         }
@@ -6792,7 +6792,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Trobada a l’exposició",
+          "human-title": "Trobada a l\u2019exposici\u00f3",
           "description": "...",
           "json_file": "4-18-CA.json"
         },
@@ -6810,13 +6810,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "Encuentro en la exposición",
+          "human-title": "Encuentro en la exposici\u00f3n",
           "description": "...",
           "json_file": "4-18-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Rencontre à l'exposition",
+          "human-title": "Rencontre \u00e0 l'exposition",
           "description": "...",
           "json_file": "4-18-FR.json"
         },
@@ -6828,7 +6828,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Encontro na exposição",
+          "human-title": "Encontro na exposi\u00e7\u00e3o",
           "description": "...",
           "json_file": "4-18-PT.json"
         }
@@ -6867,7 +6867,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "La bibliothèque ancienne",
+          "human-title": "La biblioth\u00e8que ancienne",
           "description": "...",
           "json_file": "4-19-FR.json"
         },
@@ -6951,7 +6951,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die zentrale Brücke",
+          "human-title": "Die zentrale Br\u00fccke",
           "description": "...",
           "json_file": "4-21-DE.json"
         },
@@ -6996,7 +6996,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La plaça antiga",
+          "human-title": "La pla\u00e7a antiga",
           "description": "...",
           "json_file": "4-22-CA.json"
         },
@@ -7032,7 +7032,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A praça antiga",
+          "human-title": "A pra\u00e7a antiga",
           "description": "...",
           "json_file": "4-22-PT.json"
         }
@@ -7047,7 +7047,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La llum del matí",
+          "human-title": "La llum del mat\u00ed",
           "description": "...",
           "json_file": "4-23-CA.json"
         },
@@ -7065,13 +7065,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "La luz de la mañana",
+          "human-title": "La luz de la ma\u00f1ana",
           "description": "...",
           "json_file": "4-23-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "La lumière du matin",
+          "human-title": "La lumi\u00e8re du matin",
           "description": "...",
           "json_file": "4-23-FR.json"
         },
@@ -7083,7 +7083,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "A luz da manhã",
+          "human-title": "A luz da manh\u00e3",
           "description": "...",
           "json_file": "4-23-PT.json"
         }
@@ -7104,7 +7104,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Der Küstenzug",
+          "human-title": "Der K\u00fcstenzug",
           "description": "...",
           "json_file": "4-24-DE.json"
         },
@@ -7122,7 +7122,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le train de la côte",
+          "human-title": "Le train de la c\u00f4te",
           "description": "...",
           "json_file": "4-24-FR.json"
         },
@@ -7173,7 +7173,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Un après-midi comme un autre",
+          "human-title": "Un apr\u00e8s-midi comme un autre",
           "description": "...",
           "json_file": "4-25-FR.json"
         },
@@ -7206,7 +7206,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Gespräche in der Straßenbahn",
+          "human-title": "Gespr\u00e4che in der Stra\u00dfenbahn",
           "description": "...",
           "json_file": "4-26-DE.json"
         },
@@ -7218,7 +7218,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "Conversaciones en el tranvía",
+          "human-title": "Conversaciones en el tranv\u00eda",
           "description": "...",
           "json_file": "4-26-ES.json"
         },
@@ -7275,7 +7275,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Les couleurs du marché",
+          "human-title": "Les couleurs du march\u00e9",
           "description": "...",
           "json_file": "4-27-FR.json"
         },
@@ -7302,7 +7302,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Un matí al port",
+          "human-title": "Un mat\u00ed al port",
           "description": "...",
           "json_file": "4-28-CA.json"
         },
@@ -7320,7 +7320,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "Una mañana en el puerto",
+          "human-title": "Una ma\u00f1ana en el puerto",
           "description": "...",
           "json_file": "4-28-ES.json"
         },
@@ -7338,7 +7338,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Uma manhã no porto",
+          "human-title": "Uma manh\u00e3 no porto",
           "description": "...",
           "json_file": "4-28-PT.json"
         }
@@ -7383,7 +7383,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "La città aperta",
+          "human-title": "La citt\u00e0 aperta",
           "description": "...",
           "json_file": "4-29-IT.json"
         },
@@ -7491,7 +7491,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Quando o silêncio nos fala",
+          "human-title": "Quando o sil\u00eancio nos fala",
           "description": "...",
           "json_file": "5-01-PT.json"
         }
@@ -7530,7 +7530,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le poids de décider",
+          "human-title": "Le poids de d\u00e9cider",
           "description": "...",
           "json_file": "5-02-FR.json"
         },
@@ -7575,7 +7575,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "Cómo entender nuestro cerebro",
+          "human-title": "C\u00f3mo entender nuestro cerebro",
           "description": "...",
           "json_file": "5-03-ES.json"
         },
@@ -7593,7 +7593,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Como entender nosso cérebro",
+          "human-title": "Como entender nosso c\u00e9rebro",
           "description": "...",
           "json_file": "5-03-PT.json"
         }
@@ -7614,7 +7614,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Städte, die atmen",
+          "human-title": "St\u00e4dte, die atmen",
           "description": "...",
           "json_file": "5-04-DE.json"
         },
@@ -7638,7 +7638,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "Città che respirano",
+          "human-title": "Citt\u00e0 che respirano",
           "description": "...",
           "json_file": "5-04-IT.json"
         },
@@ -7659,13 +7659,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Per què ens costa canviar?",
+          "human-title": "Per qu\u00e8 ens costa canviar?",
           "description": "...",
           "json_file": "5-05-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Warum fällt es uns schwer zu ändern?",
+          "human-title": "Warum f\u00e4llt es uns schwer zu \u00e4ndern?",
           "description": "...",
           "json_file": "5-05-DE.json"
         },
@@ -7677,7 +7677,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Por qué nos cuesta cambiar?",
+          "human-title": "\u00bfPor qu\u00e9 nos cuesta cambiar?",
           "description": "...",
           "json_file": "5-05-ES.json"
         },
@@ -7689,7 +7689,7 @@
         },
         {
           "lang": "IT",
-          "human-title": "Perché ci costa cambiare?",
+          "human-title": "Perch\u00e9 ci costa cambiare?",
           "description": "...",
           "json_file": "5-05-IT.json"
         },
@@ -7710,7 +7710,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’era de la desinformació",
+          "human-title": "L\u2019era de la desinformaci\u00f3",
           "description": "...",
           "json_file": "5-06-CA.json"
         },
@@ -7728,25 +7728,25 @@
         },
         {
           "lang": "ES",
-          "human-title": "La era de la desinformación",
+          "human-title": "La era de la desinformaci\u00f3n",
           "description": "...",
           "json_file": "5-06-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "L'ère de la désinformation",
+          "human-title": "L'\u00e8re de la d\u00e9sinformation",
           "description": "...",
           "json_file": "5-06-FR.json"
         },
         {
           "lang": "IT",
-          "human-title": "L’era della disinformazione",
+          "human-title": "L\u2019era della disinformazione",
           "description": "...",
           "json_file": "5-06-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "A era da desinformação",
+          "human-title": "A era da desinforma\u00e7\u00e3o",
           "description": "...",
           "json_file": "5-06-PT.json"
         }
@@ -7761,7 +7761,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Què vol dir IA responsable?",
+          "human-title": "Qu\u00e8 vol dir IA responsable?",
           "description": "...",
           "json_file": "5-07-CA.json"
         },
@@ -7779,7 +7779,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Qué significa IA responsable?",
+          "human-title": "\u00bfQu\u00e9 significa IA responsable?",
           "description": "...",
           "json_file": "5-07-ES.json"
         },
@@ -7797,7 +7797,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O que significa IA responsável?",
+          "human-title": "O que significa IA respons\u00e1vel?",
           "description": "...",
           "json_file": "5-07-PT.json"
         }
@@ -7812,7 +7812,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El futur de l’energia neta",
+          "human-title": "El futur de l\u2019energia neta",
           "description": "...",
           "json_file": "5-08-CA.json"
         },
@@ -7830,13 +7830,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "El futuro de la energía limpia",
+          "human-title": "El futuro de la energ\u00eda limpia",
           "description": "...",
           "json_file": "5-08-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "L'avenir de l'énergie propre",
+          "human-title": "L'avenir de l'\u00e9nergie propre",
           "description": "...",
           "json_file": "5-08-FR.json"
         },
@@ -7887,7 +7887,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le cerveau numérique",
+          "human-title": "Le cerveau num\u00e9rique",
           "description": "...",
           "json_file": "5-09-FR.json"
         },
@@ -7899,7 +7899,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O cérebro digital",
+          "human-title": "O c\u00e9rebro digital",
           "description": "...",
           "json_file": "5-09-PT.json"
         }
@@ -7914,13 +7914,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Per què el clima està canviant?",
+          "human-title": "Per qu\u00e8 el clima est\u00e0 canviant?",
           "description": "...",
           "json_file": "5-10-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Warum verändert sich das Klima?",
+          "human-title": "Warum ver\u00e4ndert sich das Klima?",
           "description": "...",
           "json_file": "5-10-DE.json"
         },
@@ -7932,7 +7932,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Por qué está cambiando el clima?",
+          "human-title": "\u00bfPor qu\u00e9 est\u00e1 cambiando el clima?",
           "description": "...",
           "json_file": "5-10-ES.json"
         },
@@ -7944,13 +7944,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "Perché il clima sta cambiando?",
+          "human-title": "Perch\u00e9 il clima sta cambiando?",
           "description": "...",
           "json_file": "5-10-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "Por que o clima está mudando?",
+          "human-title": "Por que o clima est\u00e1 mudando?",
           "description": "...",
           "json_file": "5-10-PT.json"
         }
@@ -7965,13 +7965,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Com funciona la memòria humana",
+          "human-title": "Com funciona la mem\u00f2ria humana",
           "description": "...",
           "json_file": "5-11-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Wie funktioniert das menschliche Gedächtnis?",
+          "human-title": "Wie funktioniert das menschliche Ged\u00e4chtnis?",
           "description": "...",
           "json_file": "5-11-DE.json"
         },
@@ -7983,13 +7983,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "Cómo funciona la memoria humana",
+          "human-title": "C\u00f3mo funciona la memoria humana",
           "description": "...",
           "json_file": "5-11-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Comment fonctionne la mémoire humaine",
+          "human-title": "Comment fonctionne la m\u00e9moire humaine",
           "description": "...",
           "json_file": "5-11-FR.json"
         },
@@ -8001,7 +8001,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Como funciona a memória humana",
+          "human-title": "Como funciona a mem\u00f3ria humana",
           "description": "...",
           "json_file": "5-11-PT.json"
         }
@@ -8016,7 +8016,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Què és la globalització?",
+          "human-title": "Qu\u00e8 \u00e9s la globalitzaci\u00f3?",
           "description": "...",
           "json_file": "5-12-CA.json"
         },
@@ -8034,7 +8034,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "¿Qué es la globalización?",
+          "human-title": "\u00bfQu\u00e9 es la globalizaci\u00f3n?",
           "description": "...",
           "json_file": "5-12-ES.json"
         },
@@ -8046,13 +8046,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "Che cos'è la globalizzazione?",
+          "human-title": "Che cos'\u00e8 la globalizzazione?",
           "description": "...",
           "json_file": "5-12-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "O que é a globalização?",
+          "human-title": "O que \u00e9 a globaliza\u00e7\u00e3o?",
           "description": "...",
           "json_file": "5-12-PT.json"
         }
@@ -8067,7 +8067,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El repte de la democràcia digital",
+          "human-title": "El repte de la democr\u00e0cia digital",
           "description": "...",
           "json_file": "5-13-CA.json"
         },
@@ -8091,7 +8091,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le défi de la démocratie numérique",
+          "human-title": "Le d\u00e9fi de la d\u00e9mocratie num\u00e9rique",
           "description": "...",
           "json_file": "5-13-FR.json"
         },
@@ -8118,7 +8118,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Veus migrants al món global",
+          "human-title": "Veus migrants al m\u00f3n global",
           "description": "...",
           "json_file": "5-14-CA.json"
         },
@@ -8169,13 +8169,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Igualtat més enllà de les lleis",
+          "human-title": "Igualtat m\u00e9s enll\u00e0 de les lleis",
           "description": "...",
           "json_file": "5-15-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Gleichheit über die Gesetze hinaus",
+          "human-title": "Gleichheit \u00fcber die Gesetze hinaus",
           "description": "...",
           "json_file": "5-15-DE.json"
         },
@@ -8187,13 +8187,13 @@
         },
         {
           "lang": "ES",
-          "human-title": "Igualdad más allá de las leyes",
+          "human-title": "Igualdad m\u00e1s all\u00e1 de las leyes",
           "description": "...",
           "json_file": "5-15-ES.json"
         },
         {
           "lang": "FR",
-          "human-title": "Égalité au-delà des lois",
+          "human-title": "\u00c9galit\u00e9 au-del\u00e0 des lois",
           "description": "...",
           "json_file": "5-15-FR.json"
         },
@@ -8205,7 +8205,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Igualdade além das leis",
+          "human-title": "Igualdade al\u00e9m das leis",
           "description": "...",
           "json_file": "5-15-PT.json"
         }
@@ -8226,7 +8226,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Müde Köpfe",
+          "human-title": "M\u00fcde K\u00f6pfe",
           "description": "...",
           "json_file": "5-16-DE.json"
         },
@@ -8244,7 +8244,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Esprits fatigués",
+          "human-title": "Esprits fatigu\u00e9s",
           "description": "...",
           "json_file": "5-16-FR.json"
         },
@@ -8271,7 +8271,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "L’art de concentrar-se",
+          "human-title": "L\u2019art de concentrar-se",
           "description": "...",
           "json_file": "5-17-CA.json"
         },
@@ -8295,7 +8295,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "L’art de se concentrer",
+          "human-title": "L\u2019art de se concentrer",
           "description": "...",
           "json_file": "5-17-FR.json"
         },
@@ -8346,7 +8346,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Le temps fragmenté",
+          "human-title": "Le temps fragment\u00e9",
           "description": "...",
           "json_file": "5-18-FR.json"
         },
@@ -8373,13 +8373,13 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "Històries que expliquem",
+          "human-title": "Hist\u00f2ries que expliquem",
           "description": "...",
           "json_file": "5-19-CA.json"
         },
         {
           "lang": "DE",
-          "human-title": "Geschichten, die wir erzählen",
+          "human-title": "Geschichten, die wir erz\u00e4hlen",
           "description": "...",
           "json_file": "5-19-DE.json"
         },
@@ -8409,7 +8409,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "Histórias que contamos",
+          "human-title": "Hist\u00f3rias que contamos",
           "description": "...",
           "json_file": "5-19-PT.json"
         }
@@ -8424,7 +8424,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "El so del món",
+          "human-title": "El so del m\u00f3n",
           "description": "...",
           "json_file": "5-20-CA.json"
         },
@@ -8532,7 +8532,7 @@
         },
         {
           "lang": "DE",
-          "human-title": "Die Angst vor Veränderung",
+          "human-title": "Die Angst vor Ver\u00e4nderung",
           "description": "...",
           "json_file": "5-22-DE.json"
         },
@@ -8562,7 +8562,7 @@
         },
         {
           "lang": "PT",
-          "human-title": "O medo da mudança",
+          "human-title": "O medo da mudan\u00e7a",
           "description": "...",
           "json_file": "5-22-PT.json"
         }
@@ -8652,7 +8652,7 @@
         },
         {
           "lang": "FR",
-          "human-title": "Écrire à voix haute",
+          "human-title": "\u00c9crire \u00e0 voix haute",
           "description": "...",
           "json_file": "5-24-FR.json"
         },
@@ -8679,7 +8679,7 @@
       "text_versions": [
         {
           "lang": "CA",
-          "human-title": "La ciutat del demà",
+          "human-title": "La ciutat del dem\u00e0",
           "description": "...",
           "json_file": "5-25-CA.json"
         },
@@ -8697,7 +8697,7 @@
         },
         {
           "lang": "ES",
-          "human-title": "La ciudad del mañana",
+          "human-title": "La ciudad del ma\u00f1ana",
           "description": "...",
           "json_file": "5-25-ES.json"
         },
@@ -8709,13 +8709,13 @@
         },
         {
           "lang": "IT",
-          "human-title": "La città del domani",
+          "human-title": "La citt\u00e0 del domani",
           "description": "...",
           "json_file": "5-25-IT.json"
         },
         {
           "lang": "PT",
-          "human-title": "A cidade do amanhã",
+          "human-title": "A cidade do amanh\u00e3",
           "description": "...",
           "json_file": "5-25-PT.json"
         }

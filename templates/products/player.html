@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qsa = s => [...document.querySelectorAll(s)];
     const iso2to3 = c => ({ CA: 'cat', EN: 'eng', PT: 'por', FR: 'fra', IT: 'ita', ES: 'spa' })[c] || c.toLowerCase();
 
-    const availableLangs = [{% for lang in title.languages %}"{{ lang }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    const availableLangs = [{% for lang in transcripts.keys %}"{{ lang }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
     let langData = {};
     let sequence = [];
     let seqIndex = 0;
@@ -184,17 +184,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startMode(mode) {
         const langs = mode.includes('-') ? mode.split('-') : [mode];
-        const transcriptData = {{ transcript|safe }};
-
-        for (const L of langs) {
-            if (!langData[L]) {
-                langData[L] = transcriptData;
-            }
-        }
+        const transcripts = {{ transcripts|safe }};
+        langData = transcripts;
 
         sequence = [];
         if (mode.includes('-')) {
             const [A, B] = mode.split('-');
+            if (!langData[A] || !langData[B]) {
+                console.error('Language data not found for mode:', mode);
+                return;
+            }
             const len = Math.max(langData[A].length, langData[B].length);
             for (let i = 0; i < len; i++) {
                 if (langData[A][i]) sequence.push({ ...langData[A][i],
