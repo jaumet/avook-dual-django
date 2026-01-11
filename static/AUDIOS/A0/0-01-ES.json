@@ -1,0 +1,191 @@
+[
+    {
+        "n": 1,
+        "text": "Título: Saludaciones y emociones.",
+        "file": "ES\/0001.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:02+00:00"
+    },
+    {
+        "n": 2,
+        "text": " ",
+        "file": "ES\/0002.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:02+00:00"
+    },
+    {
+        "n": 3,
+        "text": "Hola.",
+        "file": "ES\/0003.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:03+00:00"
+    },
+    {
+        "n": 4,
+        "text": " ",
+        "file": "ES\/0004.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:03+00:00"
+    },
+    {
+        "n": 5,
+        "text": "¿Cómo estás?",
+        "file": "ES\/0005.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:04+00:00"
+    },
+    {
+        "n": 6,
+        "text": " ",
+        "file": "ES\/0006.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:04+00:00"
+    },
+    {
+        "n": 7,
+        "text": "Yo estoy bien.",
+        "file": "ES\/0007.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:05+00:00"
+    },
+    {
+        "n": 8,
+        "text": "¿Y tú?",
+        "file": "ES\/0008.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:05+00:00"
+    },
+    {
+        "n": 9,
+        "text": " ",
+        "file": "ES\/0009.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:06+00:00"
+    },
+    {
+        "n": 10,
+        "text": "¡Buenos días!",
+        "file": "ES\/0010.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:06+00:00"
+    },
+    {
+        "n": 11,
+        "text": " ",
+        "file": "ES\/0011.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:07+00:00"
+    },
+    {
+        "n": 12,
+        "text": "Sonríe, por favor.",
+        "file": "ES\/0012.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:07+00:00"
+    },
+    {
+        "n": 13,
+        "text": " ",
+        "file": "ES\/0013.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:08+00:00"
+    },
+    {
+        "n": 14,
+        "text": "Hoy es un día nuevo.",
+        "file": "ES\/0014.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:08+00:00"
+    },
+    {
+        "n": 15,
+        "text": " ",
+        "file": "ES\/0015.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:09+00:00"
+    },
+    {
+        "n": 16,
+        "text": "Tengo sueño.",
+        "file": "ES\/0016.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:09+00:00"
+    },
+    {
+        "n": 17,
+        "text": "Tengo hambre.",
+        "file": "ES\/0017.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:10+00:00"
+    },
+    {
+        "n": 18,
+        "text": "Estoy contento.",
+        "file": "ES\/0018.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:10+00:00"
+    },
+    {
+        "n": 19,
+        "text": "Estoy tranquilo.",
+        "file": "ES\/0019.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:11+00:00"
+    },
+    {
+        "n": 20,
+        "text": " ",
+        "file": "ES\/0020.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:11+00:00"
+    },
+    {
+        "n": 21,
+        "text": "Cuando alguien dice “hola”,",
+        "file": "ES\/0021.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:12+00:00"
+    },
+    {
+        "n": 22,
+        "text": "respondes: “¡hola!”",
+        "file": "ES\/0022.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:12+00:00"
+    },
+    {
+        "n": 23,
+        "text": " ",
+        "file": "ES\/0023.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:13+00:00"
+    },
+    {
+        "n": 24,
+        "text": "Cuando alguien dice “¿cómo estás?”,",
+        "file": "ES\/0024.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:13+00:00"
+    },
+    {
+        "n": 25,
+        "text": "respondes: “bien, gracias”.",
+        "file": "ES\/0025.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:14+00:00"
+    },
+    {
+        "n": 26,
+        "text": " ",
+        "file": "ES\/0026.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:14+00:00"
+    },
+    {
+        "n": 27,
+        "text": "¡Hasta pronto!",
+        "file": "ES\/0027.mp3",
+        "lang": "ES",
+        "datetime": "2025-12-12T22:50:15+00:00"
+    }
+]
