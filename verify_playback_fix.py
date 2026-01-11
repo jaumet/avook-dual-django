@@ -22,7 +22,7 @@ async def main():
         page.on('console', lambda msg: print(f"Browser console: {msg.text}"))
 
         # Navigate to the player page
-        await page.goto('http://127.0.0.1:8000/products/player/Test-1/')
+        await page.goto('http://127.0.0.1:8000/products/player/0-01/')
 
         # Wait for the radio buttons to be rendered
         await page.wait_for_selector('#radiosL1 input[type="radio"]')
@@ -38,15 +38,15 @@ async def main():
         await page.click('#modeButtons button[data-mode="CA-EN"]')
 
         # Wait for the audio source to be set
-        await page.wait_for_function("document.querySelector('#audio').src.includes('/static/AUDIOS/Test-1/CA/0001.mp3')")
+        await page.wait_for_function("document.querySelector('#audio').src.includes('/static/AUDIOS/A0/0-01/CA/0-01-CA-001.mp3')")
 
         # Get the audio source
         audio_src = await page.get_attribute('#audio', 'src')
 
-        if '/static/AUDIOS/Test-1/CA/0001.mp3' in audio_src:
+        if '/static/AUDIOS/A0/0-01/CA/0-01-CA-001.mp3' in audio_src:
             print("Test passed: The correct audio file is being played.")
         else:
-            print(f"Test failed: The audio source is incorrect. Expected to find '/static/AUDIOS/Test-1/CA/0001.mp3' but got '{audio_src}' instead.")
+            print(f"Test failed: The audio source is incorrect. Expected to find '/static/AUDIOS/A0/0-01/CA/0-01-CA-001.mp3' but got '{audio_src}' instead.")
 
         # Create the verification directory if it doesn't exist
         verification_dir = Path('/home/jules/verification')
