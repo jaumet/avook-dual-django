@@ -7,7 +7,11 @@ class TitleContextMixin:
     def get_titles_with_status(self, titles):
         titles_with_status = []
         user = self.request.user if self.request.user.is_authenticated else None
-        lang_code = self.request.LANGUAGE_CODE[:2].upper()
+
+        # Language codes for DB (lowercase) and JSON (uppercase)
+        request_lang = self.request.LANGUAGE_CODE.lower() # e.g., 'en-us'
+        primary_lang = request_lang.split('-')[0] # e.g., 'en'
+        json_lang_code = primary_lang.upper() # e.g., 'EN'
 
         json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
         try:
@@ -16,51 +20,54 @@ class TitleContextMixin:
         except (FileNotFoundError, json.JSONDecodeError):
             audios_data = []
 
-        # Create a dictionary for quick lookup
         audios_map = {item['machine_name']: item for item in audios_data}
 
         for title in titles:
-            translation = title.translations.filter(language_code=lang_code[:2]).first()
+            # 1. Get DB translation with proper fallback
+            translation = title.translations.filter(language_code=request_lang).first()
+            if not translation:
+                translation = title.translations.filter(language_code=primary_lang).first()
             if not translation:
                 translation = title.translations.filter(language_code='en').first()
             if not translation:
                 translation = title.translations.first()
 
             machine_name = title.machine_name
-            title_data = audios_map.get(machine_name, {})
-            text_versions = title_data.get('text_versions', [])
-            title_info = None
+            title_data_from_json = audios_map.get(machine_name, {})
+            text_versions = title_data_from_json.get('text_versions', [])
 
-            # Find the correct language version
+            # 2. Get JSON metadata with proper fallback
+            lang_version_from_json = None
+            # Find the correct language version from JSON
             for version in text_versions:
-                if version.get('lang', '').upper() == lang_code:
-                    title_info = version
+                if version.get('lang', '').upper() == json_lang_code:
+                    lang_version_from_json = version
                     break
 
-            # Fallback to English
-            if not title_info:
+            # Fallback to English in JSON
+            if not lang_version_from_json:
                 for version in text_versions:
                     if version.get('lang', '').upper() == 'EN':
-                        title_info = version
+                        lang_version_from_json = version
                         break
 
-            # Fallback to the first available language
-            if not title_info and text_versions:
-                title_info = text_versions[0]
+            # Fallback to the first available language in JSON
+            if not lang_version_from_json and text_versions:
+                lang_version_from_json = text_versions[0]
 
-            if not title_info:
-                title_info = {'human-title': machine_name, 'description': ''}
+            if not lang_version_from_json:
+                lang_version_from_json = {}
 
-            # Create a clean context dictionary
+            # 3. Combine data, prioritizing DB for translatable text
             context_data = {
                 'machine_name': machine_name,
-                'levels': title_data.get('levels', ''),
-                'ages': title_info.get('ages', ''),
-                'colection': title_info.get('colection', ''),
-                'duration': title_info.get('duration', ''),
+                'levels': title_data_from_json.get('levels', ''),
+                'ages': lang_version_from_json.get('ages', ''),
+                'colection': lang_version_from_json.get('colection', ''),
+                'duration': lang_version_from_json.get('duration', ''),
                 'human_title': translation.human_name if translation else machine_name,
                 'description': translation.description if translation else '',
-                'json_file': title_info.get('json_file', ''),
+                'json_file': lang_version_from_json.get('json_file', ''),
                 'languages': [v.get('lang') for v in text_versions if 'lang' in v]
             }
 
