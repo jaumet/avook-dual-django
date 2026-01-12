@@ -20,6 +20,12 @@ class TitleContextMixin:
         audios_map = {item['machine_name']: item for item in audios_data}
 
         for title in titles:
+            translation = title.translations.filter(language_code=lang_code[:2]).first()
+            if not translation:
+                translation = title.translations.filter(language_code='en').first()
+            if not translation:
+                translation = title.translations.first()
+
             machine_name = title.machine_name
             title_data = audios_map.get(machine_name, {})
             text_versions = title_data.get('text_versions', [])
@@ -52,8 +58,8 @@ class TitleContextMixin:
                 'ages': title_info.get('ages', ''),
                 'colection': title_info.get('colection', ''),
                 'duration': title_info.get('duration', ''),
-                'human_title': title_info.get('human-title', machine_name),
-                'description': title_info.get('description', ''),
+                'human_title': translation.human_name if translation else machine_name,
+                'description': translation.description if translation else '',
                 'json_file': title_info.get('json_file', ''),
                 'languages': [v.get('lang') for v in text_versions if 'lang' in v]
             }

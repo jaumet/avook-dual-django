@@ -1,18 +1,20 @@
 {% load i18n %}
 {% load product_tags %}
 
-<div class="custom-title-card" data-level="{{ item.json_info.levels }}" data-collection="{{ item.json_info.colection }}" data-duration="{{ item.json_info.duration }}" data-ages="{{ item.json_info.ages }}" data-languages="{{ item.json_info.languages|join:',' }}">
+<div class="custom-title-card tooltip" data-level="{{ item.json_info.levels }}" data-collection="{{ item.json_info.colection }}" data-duration="{{ item.json_info.duration }}" data-ages="{{ item.json_info.ages }}" data-languages="{{ item.json_info.languages|join:',' }}">
     <img src="{{ item.image_url }}" alt="Cover for {{ item.json_info.human_title }}" class="title-image">
     <div class="title-info">
         <h5 title="{{ item.json_info.human_title }}">{{ item.json_info.human_title }}</h5>
-        <p>{{ item.json_info.description }}</p>
-        <div class="title-meta">
-            <p><strong>{% trans "Languages" %}:</strong> {{ item.json_info.languages|join:', ' }}</p>
-            <p><strong>{% trans "Level" %}:</strong> {% trans item.json_info.levels %}</p>
-            <p><strong>{% trans "Ages" %}:</strong> {% trans item.json_info.ages %}</p>
-            <p><strong>{% trans "Collection" %}:</strong> {% trans item.json_info.colection %}</p>
-            <p><strong>{% trans "Duration" %}:</strong> {% trans item.json_info.duration %}</p>
-        </div>
+        <span class="tooltiptext">
+            <p>{{ item.json_info.description }}</p>
+            <div class="title-meta">
+                <p><strong>{% trans "Languages" %}:</strong> {{ item.json_info.languages|join:', ' }}</p>
+                <p><strong>{% trans "Level" %}:</strong> {% trans item.json_info.levels %}</p>
+                <p><strong>{% trans "Ages" %}:</strong> {% trans item.json_info.ages %}</p>
+                <p><strong>{% trans "Collection" %}:</strong> {% trans item.json_info.colection %}</p>
+                <p><strong>{% trans "Duration" %}:</strong> {% trans item.json_info.duration %}</p>
+            </div>
+        </span>
     </div>
      <div class="card-actions">
         {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
