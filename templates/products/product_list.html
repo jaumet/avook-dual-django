@@ -14,11 +14,10 @@
 
     {% for product in products %}
         <div class="product-card mb-4">
-            {% get_product_translation product request.LANGUAGE_CODE as product_translation %}
             <div class="product-header">
                 <h2>
-                    {% if product_translation %}
-                        {{ product_translation.name }}
+                    {% if product.translation %}
+                        {{ product.translation.name }}
                     {% else %}
                         {{ product.machine_name }}
                     {% endif %}
@@ -26,8 +25,8 @@
                 </h2>
             </div>
             <div class="product-body">
-                {% if product_translation %}
-                    <p>{{ product_translation.description }}</p>
+                {% if product.translation %}
+                    <p>{{ product.translation.description }}</p>
                 {% else %}
                     <p>{% trans "La descripció no està disponible." %}</p>
                 {% endif %}

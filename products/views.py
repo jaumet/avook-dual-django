@@ -28,15 +28,29 @@ class ProductListView(TitleContextMixin, ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related(
-            'packages__titles', 'translations'
+        # Prefetch translations and related packages
+        return Product.objects.prefetch_related(
+            'translations',
+            'packages__titles'
         ).order_by('price')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for product in context['products']:
+        products = context['products']
+        language_code = self.request.LANGUAGE_CODE
+
+        for product in products:
+            # Get the specific translation for the current language
+            product.translation = product.translations.filter(language_code=language_code).first()
+            # Fallback to the first available translation if none match
+            if not product.translation:
+                product.translation = product.translations.first()
+
+            # Get titles with status for each package
             for package in product.packages.all():
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
+
+        context['products'] = products
         return context
 
 

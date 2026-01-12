@@ -19,6 +19,8 @@
      <div class="card-actions">
         {% if item.status == 'FREE' or item.status == 'PREMIUM_OWNED' %}
             <a href="{% url 'products:player' item.title.machine_name %}" class="action-btn play-btn" title="Play">▶️</a>
+        {% else %}
+            <a href="#" class="action-btn buy-btn">{% trans "Buy" %}</a>
         {% endif %}
     </div>
 </div>

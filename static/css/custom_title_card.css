@@ -15,7 +15,7 @@
     color: var(--text-color);
     text-align: center;
     height: 100%;
-    margin: 0.5rem;
+    margin: 1rem;
 }
 
 .custom-title-card .title-image {
@@ -35,11 +35,9 @@
 
 .custom-title-card .title-info h5 {
     margin: 0 0 0.25rem;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
+    font-size: 0.9rem;
+    font-weight: normal;
+    word-break: break-word;
 }
 
 .custom-title-card .title-info p,
