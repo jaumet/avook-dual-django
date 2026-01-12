@@ -67,7 +67,7 @@
     {% for level, items in titles_by_level.items %}
       <div class="level-container">
         <h2>{{ level }}</h2>
-        <div class="title-cards-container">
+        <div class="title-grid">
           {% for item in items %}
             {% include 'products/_title_card.html' with item=item %}
           {% endfor %}

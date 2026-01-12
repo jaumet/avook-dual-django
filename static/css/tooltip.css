@@ -7,8 +7,8 @@
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 200px;
-  background-color: #555;
-  color: #fff;
+  background-color: var(--panel-bg);
+  color: var(--panel-fg);
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
@@ -19,6 +19,7 @@
   margin-left: -100px;
   opacity: 0;
   transition: opacity 0.3s;
+  border: 1px solid var(--accent);
 }
 
 .tooltip:hover .tooltiptext {
