@@ -37,14 +37,26 @@ class ProductListView(TitleContextMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         products = context['products']
-        language_code = self.request.LANGUAGE_CODE
+        language_code = self.request.LANGUAGE_CODE.lower()
+        primary_language_code = language_code.split('-')[0]
 
         for product in products:
-            # Get the specific translation for the current language
-            product.translation = product.translations.filter(language_code=language_code).first()
-            # Fallback to the first available translation if none match
-            if not product.translation:
-                product.translation = product.translations.first()
+            # Try to get the specific translation (e.g., 'en-us')
+            translation = product.translations.filter(language_code=language_code).first()
+
+            # Fallback to the primary language (e.g., 'en')
+            if not translation:
+                translation = product.translations.filter(language_code=primary_language_code).first()
+
+            # Fallback to English if no other translation is found
+            if not translation:
+                translation = product.translations.filter(language_code='en').first()
+
+            # Final fallback to the first available translation
+            if not translation:
+                translation = product.translations.first()
+
+            product.translation = translation
 
             # Get titles with status for each package
             for package in product.packages.all():

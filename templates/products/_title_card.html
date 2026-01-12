@@ -9,10 +9,10 @@
             <p>{{ item.json_info.description }}</p>
             <div class="title-meta">
                 <p><strong>{% trans "Languages" %}:</strong> {{ item.json_info.languages|join:', ' }}</p>
-                <p><strong>{% trans "Level" %}:</strong> {% trans item.json_info.levels %}</p>
-                <p><strong>{% trans "Ages" %}:</strong> {% trans item.json_info.ages %}</p>
-                <p><strong>{% trans "Collection" %}:</strong> {% trans item.json_info.colection %}</p>
-                <p><strong>{% trans "Duration" %}:</strong> {% trans item.json_info.duration %}</p>
+                <p><strong>{% trans "Level" %}:</strong> {{ item.json_info.levels }}</p>
+                <p><strong>{% trans "Ages" %}:</strong> {{ item.json_info.ages }}</p>
+                <p><strong>{% trans "Collection" %}:</strong> {{ item.json_info.colection }}</p>
+                <p><strong>{% trans "Duration" %}:</strong> {{ item.json_info.duration }}</p>
             </div>
         </span>
     </div>

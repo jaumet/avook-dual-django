@@ -62,9 +62,9 @@ class TitleContextMixin:
             context_data = {
                 'machine_name': machine_name,
                 'levels': title_data_from_json.get('levels', ''),
-                'ages': lang_version_from_json.get('ages', ''),
-                'colection': lang_version_from_json.get('colection', ''),
-                'duration': lang_version_from_json.get('duration', ''),
+                'ages': title_data_from_json.get('ages', ''),
+                'colection': title_data_from_json.get('colection', ''),
+                'duration': title_data_from_json.get('duration', ''),
                 'human_title': translation.human_name if translation else machine_name,
                 'description': translation.description if translation else '',
                 'json_file': lang_version_from_json.get('json_file', ''),
