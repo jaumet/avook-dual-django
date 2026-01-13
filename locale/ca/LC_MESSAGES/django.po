@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-06 01:48+0000\n"
+"POT-Creation-Date: 2026-01-13 08:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,10 +99,11 @@ msgstr "Confirmació de la contrasenya"
 msgid "Contingut no trobat per a la clau: '{key}'"
 msgstr "Contingut no trobat per a la clau: '{key}'"
 
-#: products/views.py:96
+#: products/views.py:111
 msgid ""
 "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
-msgstr "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+msgstr ""
+"Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 
 #: samples/product_default.html:5
 msgid "Product Page"
@@ -121,7 +122,7 @@ msgid "Included titles in the package:"
 msgstr "Títols inclosos en el paquet:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
-#: templates/products/_title_card.html:11
+#: templates/products/_title_card.html:12
 msgid "Level"
 msgstr "Nivell"
 
@@ -165,33 +166,25 @@ msgstr "Selecciona nivell:"
 msgid "Cerca avançada"
 msgstr "Cerca avançada"
 
-#: templates/products/_title_card.html:10
+#: templates/products/_title_card.html:11
 msgid "Languages"
 msgstr "Llengües"
 
-#: templates/products/_title_card.html:12
+#: templates/products/_title_card.html:13
 msgid "Ages"
 msgstr "Edats"
 
-#: templates/products/_title_card.html:13
+#: templates/products/_title_card.html:14
 msgid "Collection"
 msgstr "Col·lecció"
 
-#: templates/products/_title_card.html:14
+#: templates/products/_title_card.html:15
 msgid "Duration"
 msgstr "Durada"
 
-#: templates/products/_title_card.html:14
-msgid "Test"
-msgstr "Prova"
-
-#: templates/products/_title_card.html:14
-msgid "0-99"
-msgstr "0-99"
-
-#: templates/products/_title_card.html:14
-msgid "00:00:40"
-msgstr "00:00:40"
+#: templates/products/_title_card.html:23
+msgid "Buy"
+msgstr ""
 
 #: templates/products/cart.html:4
 msgid "Carretó"
@@ -237,47 +230,47 @@ msgstr "Procedir al pagament"
 msgid "El teu carretó està buit."
 msgstr "El teu carretó està buit."
 
-#: templates/products/detail.html:19
-msgid "No hi ha descripció per a aquest producte."
-msgstr "No hi ha descripció per a aquest producte."
+#: templates/products/detail.html:24
+msgid "La descripció no està disponible."
+msgstr ""
 
-#: templates/products/detail.html:21
+#: templates/products/detail.html:26
 msgid "Preu:"
 msgstr "Preu:"
 
-#: templates/products/detail.html:22
+#: templates/products/detail.html:27
 msgid "Durada:"
 msgstr "Durada:"
 
-#: templates/products/detail.html:22
+#: templates/products/detail.html:27
 msgid "mesos"
 msgstr "mesos"
 
-#: templates/products/detail.html:25
+#: templates/products/detail.html:30
 msgid "Editar producte"
 msgstr "Editar producte"
 
-#: templates/products/detail.html:32
+#: templates/products/detail.html:37
 msgid "Condicions de venda"
 msgstr "Condicions de venda"
 
-#: templates/products/detail.html:42
+#: templates/products/detail.html:47
 msgid "Accepto les condicions de venda"
 msgstr "Accepto les condicions de venda"
 
-#: templates/products/detail.html:44
+#: templates/products/detail.html:49
 msgid "Comprar ara"
 msgstr "Comprar ara"
 
-#: templates/products/detail.html:49
+#: templates/products/detail.html:54
 msgid "Títols inclosos en el paquet:"
 msgstr "Títols inclosos en el paquet:"
 
-#: templates/products/detail.html:55
+#: templates/products/detail.html:60
 msgid "Nivell"
 msgstr "Nivell"
 
-#: templates/products/detail.html:62
+#: templates/products/detail.html:67
 msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "Encara no hi ha títols assignats a aquest paquet."
 
@@ -285,13 +278,41 @@ msgstr "Encara no hi ha títols assignats a aquest paquet."
 msgid "Productes"
 msgstr "Productes"
 
-#: templates/products/product_list.html:43
-msgid "Compra'l"
-msgstr "Compra'l"
+#: templates/products/product_list.html:19
+msgid "Dual Start"
+msgstr "Dual Start"
+
+#: templates/products/product_list.html:20
+msgid "A0 + A1 · Accés 3 mesos"
+msgstr "A0 + A1 · Accés 3 mesos"
+
+#: templates/products/product_list.html:26
+msgid "Dual Progress"
+msgstr "Dual Progress"
+
+#: templates/products/product_list.html:27
+msgid "A2 + B1 · Accés 3 mesos"
+msgstr "A2 + B1 · Accés 3 mesos"
+
+#: templates/products/product_list.html:33
+msgid "Dual Advanced"
+msgstr "Dual Advanced"
+
+#: templates/products/product_list.html:34
+msgid "B2 + C1 · Accés 3 mesos"
+msgstr "B2 + C1 · Accés 3 mesos"
+
+#: templates/products/product_list.html:40
+msgid "Dual Full Access"
+msgstr "Dual Full Access"
+
+#: templates/products/product_list.html:41
+msgid "A0 → C1 · Accés 6 mesos"
+msgstr "A0 → C1 · Accés 6 mesos"
 
 #: templates/products/product_list.html:48
-msgid "No hi ha productes disponibles."
-msgstr "No hi ha productes disponibles."
+msgid "Navega pel catàleg"
+msgstr "Navega pel catàleg"
 
 #: templates/registration/login.html:4 templates/registration/login.html:8
 #: templates/registration/login.html:21
@@ -310,7 +331,9 @@ msgstr "Contrasenya canviada"
 msgid ""
 "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
 "la nova contrasenya."
-msgstr "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb la nova contrasenya."
+msgstr ""
+"La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
+"la nova contrasenya."
 
 #: templates/registration/password_reset_complete.html:14
 msgid "Inicia la sessió"
@@ -329,7 +352,10 @@ msgid ""
 "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
 "ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
 "contrasenya."
-msgstr "L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de contrasenya."
+msgstr ""
+"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
+"ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
+"contrasenya."
 
 #: templates/registration/password_reset_done.html:10
 msgid "Instruccions enviades"
@@ -339,7 +365,9 @@ msgstr "Instruccions enviades"
 msgid ""
 "Hem enviat un correu electrònic amb instruccions per restablir la teva "
 "contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
-msgstr "Hem enviat un correu electrònic amb instruccions per restablir la teva contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
+msgstr ""
+"Hem enviat un correu electrònic amb instruccions per restablir la teva "
+"contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
 
 #: templates/registration/password_reset_email.html:2
 msgid "Hola,"
@@ -349,7 +377,9 @@ msgstr "Hola,"
 msgid ""
 "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç "
 "següent per establir una nova contrasenya:"
-msgstr "Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç següent per establir una nova contrasenya:"
+msgstr ""
+"Has sol·licitat restablir la teva contrasenya a Dual. Fes clic a l'enllaç "
+"següent per establir una nova contrasenya:"
 
 #: templates/registration/password_reset_email.html:6
 #: templates/registration/password_reset_form.html:10
@@ -359,7 +389,8 @@ msgstr "Restablir la contrasenya"
 #: templates/registration/password_reset_email.html:8
 msgid ""
 "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
-msgstr "Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
+msgstr ""
+"Si no has sol·licitat aquest canvi, pots ignorar aquest correu electrònic."
 
 #: templates/registration/password_reset_email.html:10
 msgid "Gràcies,"
@@ -373,7 +404,9 @@ msgstr "L'equip de Dual"
 msgid ""
 "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
 "restablir la teva contrasenya."
-msgstr "Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per restablir la teva contrasenya."
+msgstr ""
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
+"restablir la teva contrasenya."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
@@ -390,3 +423,21 @@ msgstr "Crea un compte"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrar-me"
+
+#~ msgid "Test"
+#~ msgstr "Prova"
+
+#~ msgid "0-99"
+#~ msgstr "0-99"
+
+#~ msgid "00:00:40"
+#~ msgstr "00:00:40"
+
+#~ msgid "No hi ha descripció per a aquest producte."
+#~ msgstr "No hi ha descripció per a aquest producte."
+
+#~ msgid "Compra'l"
+#~ msgstr "Compra'l"
+
+#~ msgid "No hi ha productes disponibles."
+#~ msgstr "No hi ha productes disponibles."

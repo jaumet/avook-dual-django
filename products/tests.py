@@ -182,25 +182,6 @@ class PlayerViewTest(TestCase):
             self.assertEqual(title_context['description'], 'Descripció CAT')
             self.assertContains(response, '<h2 id="relatTitle">Test CAT</h2>')
 
-    def test_product_translation_in_product_list(self):
-        """
-        Verify that the product list view shows the correct translation for the product.
-        """
-        product = Product.objects.create(machine_name='test-product', price='10.00')
-        ProductTranslation.objects.create(product=product, language_code='en', name='English Name', description='English Description')
-        ProductTranslation.objects.create(product=product, language_code='es', name='Nombre en Español', description='Descripción en Español')
-
-        # Test with English language
-        with translation.override('en'):
-            response = self.client.get(reverse('products:product_list'))
-            self.assertContains(response, 'English Name')
-            self.assertNotContains(response, 'Nombre en Español')
-
-        # Test with Spanish language
-        with translation.override('es'):
-            response = self.client.get(reverse('products:product_list'))
-            self.assertContains(response, 'Nombre en Español')
-            self.assertNotContains(response, 'English Name')
 
     def test_player_view_with_non_existent_title(self):
         """
