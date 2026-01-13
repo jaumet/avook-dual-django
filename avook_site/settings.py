@@ -2,8 +2,13 @@ import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
+import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'insecure-secret-key-change-me')
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
@@ -113,17 +118,7 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
-## Preparing the API_KEY varriable
-from pathlib import Path
-import os
-from dotenv import load_dotenv
-BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
-
 EMAIL_BACKEND = "avook_site.email_backend.ResendEmailBackend"
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 PAYPAL_CLIENT_ID_LIVE = os.environ.get("PAYPAL_CLIENT_ID_LIVE")
-
-if not PAYPAL_CLIENT_ID_LIVE:
-    raise ImproperlyConfigured("PAYPAL_CLIENT_ID_LIVE environment variable not set. Please set it in your .env file.")
 DEFAULT_FROM_EMAIL = "info@dual.cat"
