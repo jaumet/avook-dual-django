@@ -13,35 +13,13 @@
     <hr>
 
     <div class="dual-payments">
-
-      <!-- Dual Start -->
-      <div class="dual-product">
-        <h3>Dual Start</h3>
-        <p>A0 + A1 · Accés 3 mesos</p>
-        <div id="paypal-dual-start"></div>
-      </div>
-
-      <!-- Dual Progress -->
-      <div class="dual-product">
-        <h3>Dual Progress</h3>
-        <p>A2 + B1 · Accés 3 mesos</p>
-        <div id="paypal-dual-progress"></div>
-      </div>
-
-      <!-- Dual Advanced -->
-      <div class="dual-product">
-        <h3>Dual Advanced</h3>
-        <p>B2 + C1 · Accés 3 mesos</p>
-        <div id="paypal-dual-advanced"></div>
-      </div>
-
-      <!-- Dual Full Access -->
-      <div class="dual-product">
-        <h3>Dual Full Access</h3>
-        <p>A0 → C1 · Accés 6 mesos</p>
-        <div id="paypal-dual-full"></div>
-      </div>
-
+      {% for product in products %}
+        <div class="dual-product">
+          <h3>{{ product.translation.name }}</h3>
+          <p>{{ product.translation.description|safe }}</p>
+          <div id="paypal-{{ product.machine_name }}"></div>
+        </div>
+      {% endfor %}
     </div>
 
     <!-- Notes generals -->
@@ -69,10 +47,15 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const successUrl = "{% url 'products:success' %}";
-    renderButton("#paypal-dual-start", "Dual Start – 3 mesos", "19.00", "dual-start", successUrl);
-    renderButton("#paypal-dual-progress", "Dual Progress – 3 mesos", "29.00", "dual-progress", successUrl);
-    renderButton("#paypal-dual-advanced", "Dual Advanced – 3 mesos", "36.00", "dual-advanced", successUrl);
-    renderButton("#paypal-dual-full", "Dual Full Access – 6 mesos", "49.00", "dual-full", successUrl);
+    {% for product in products %}
+    renderButton(
+        "#paypal-{{ product.machine_name }}",
+        "{{ product.translation.name }}",
+        "{{ product.price }}",
+        "{{ product.machine_name }}",
+        successUrl
+    );
+    {% endfor %}
 });
 </script>
 {% endblock %}
