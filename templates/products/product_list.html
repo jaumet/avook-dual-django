@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% load product_tags %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/custom_title_card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dual-products.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,35 +13,26 @@
     <hr>
 
     <div class="dual-payments">
+        {% for product in products %}
+            <div class="dual-product">
+                <h3>{{ product.translation.name }}</h3>
+                {{ product.translation.description|safe }}
+                <div class="paypal-button-container">
+                    <div id="paypal-{{ product.machine_name }}"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-      <!-- Dual Start -->
-      <div class="dual-product">
-        <h3>{% trans "Dual Start" %}</h3>
-        <p>{% trans "A0 + A1 · Accés 3 mesos" %}</p>
-        <div id="paypal-dual-start"></div>
-      </div>
-
-      <!-- Dual Progress -->
-      <div class="dual-product">
-        <h3>{% trans "Dual Progress" %}</h3>
-        <p>{% trans "A2 + B1 · Accés 3 mesos" %}</p>
-        <div id="paypal-dual-progress"></div>
-      </div>
-
-      <!-- Dual Advanced -->
-      <div class="dual-product">
-        <h3>{% trans "Dual Advanced" %}</h3>
-        <p>{% trans "B2 + C1 · Accés 3 mesos" %}</p>
-        <div id="paypal-dual-advanced"></div>
-      </div>
-
-      <!-- Dual Full Access -->
-      <div class="dual-product">
-        <h3>{% trans "Dual Full Access" %}</h3>
-        <p>{% trans "A0 → C1 · Accés 6 mesos" %}</p>
-        <div id="paypal-dual-full"></div>
-      </div>
-
+    <!-- Notes generals -->
+    <div class="dual-notes">
+      <p>
+        <strong>{% trans "Notes importants:" %}</strong><br>
+        • {% trans "Tots els packs són" %} <strong>{% trans "bidireccionals" %}</strong> (L1↔L2).<br>
+        • {% trans "Inclouen" %} <strong>{% trans "totes les llengües disponibles" %}</strong>.<br>
+        • {% trans "L’accés és" %} <strong>{% trans "temporal" %}</strong> {% trans "i" %} <strong>{% trans "no es renova automàticament" %}</strong>.<br>
+        • {% trans "Un cop finalitzat el període, cal adquirir un nou pack per continuar." %}
+      </p>
     </div>
 
     <div class="mt-5 text-center">
