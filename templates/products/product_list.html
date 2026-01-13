@@ -13,15 +13,35 @@
     <hr>
 
     <div class="dual-payments">
-        {% for product in products %}
-            <div class="dual-product">
-                <h3>{{ product.translation.name }}</h3>
-                {{ product.translation.description|safe }}
-                <div class="paypal-button-container">
-                    <div id="paypal-{{ product.machine_name }}"></div>
-                </div>
-            </div>
-        {% endfor %}
+
+      <!-- Dual Start -->
+      <div class="dual-product">
+        <h3>Dual Start</h3>
+        <p>A0 + A1 · Accés 3 mesos</p>
+        <div id="paypal-dual-start"></div>
+      </div>
+
+      <!-- Dual Progress -->
+      <div class="dual-product">
+        <h3>Dual Progress</h3>
+        <p>A2 + B1 · Accés 3 mesos</p>
+        <div id="paypal-dual-progress"></div>
+      </div>
+
+      <!-- Dual Advanced -->
+      <div class="dual-product">
+        <h3>Dual Advanced</h3>
+        <p>B2 + C1 · Accés 3 mesos</p>
+        <div id="paypal-dual-advanced"></div>
+      </div>
+
+      <!-- Dual Full Access -->
+      <div class="dual-product">
+        <h3>Dual Full Access</h3>
+        <p>A0 → C1 · Accés 6 mesos</p>
+        <div id="paypal-dual-full"></div>
+      </div>
+
     </div>
 
     <!-- Notes generals -->
@@ -30,7 +50,7 @@
         <strong>{% trans "Notes importants:" %}</strong><br>
         • {% trans "Tots els packs són" %} <strong>{% trans "bidireccionals" %}</strong> (L1↔L2).<br>
         • {% trans "Inclouen" %} <strong>{% trans "totes les llengües disponibles" %}</strong>.<br>
-        • {% trans "L’accés és" %} <strong>{% trans "temporal" %}</strong> {% trans "i" %} <strong>{% trans "no es renova automàticament" %}</strong>.<br>
+        • {% trans "L’accés és" %} <strong>{% trans "temporal" %}</strong> {% trans "i" %} <strong>{% trans "no es renova automàticamente" %}</strong>.<br>
         • {% trans "Un cop finalitzat el període, cal adquirir un nou pack per continuar." %}
       </p>
     </div>
@@ -44,6 +64,15 @@
 {% block extra_js %}
 {{ block.super }}
 <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID_LIVE }}&currency=EUR"></script>
-<script src="{% static 'js/paypal_buttons.js' %}" defer></script>
-<script src="{% static 'js/accordion.js' %}"></script>
+<script src="{% static 'js/paypal_buttons.js' %}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const successUrl = "{% url 'products:success' %}";
+    renderButton("#paypal-dual-start", "Dual Start – 3 mesos", "19.00", "dual-start", successUrl);
+    renderButton("#paypal-dual-progress", "Dual Progress – 3 mesos", "29.00", "dual-progress", successUrl);
+    renderButton("#paypal-dual-advanced", "Dual Advanced – 3 mesos", "36.00", "dual-advanced", successUrl);
+    renderButton("#paypal-dual-full", "Dual Full Access – 6 mesos", "49.00", "dual-full", successUrl);
+});
+</script>
 {% endblock %}
