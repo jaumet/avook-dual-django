@@ -114,6 +114,9 @@ class Product(models.Model):
         if not language_code:
             language_code = get_language()
 
+        # Ensure language_code is not None and is lowercased for case-insensitive matching.
+        language_code = (language_code or '').lower()
+
         if hasattr(self, '_prefetched_objects_cache') and 'translations' in self._prefetched_objects_cache:
             translations = self._prefetched_objects_cache['translations']
         else:
@@ -122,7 +125,8 @@ class Product(models.Model):
         if not translations:
             return None  # Return None if no translations exist at all
 
-        trans_dict = {t.language_code: t for t in translations}
+        # Create a dictionary with lowercased language codes for case-insensitive lookup.
+        trans_dict = {t.language_code.lower(): t for t in translations}
 
         # 1. Try to get the requested language
         translation = trans_dict.get(language_code)
@@ -136,8 +140,8 @@ class Product(models.Model):
             if translation:
                 return translation
 
-        # 3. Fallback to the default language from settings
-        translation = trans_dict.get(settings.LANGUAGE_CODE)
+        # 3. Fallback to the default language from settings (lowercased)
+        translation = trans_dict.get(settings.LANGUAGE_CODE.lower())
         if translation:
             return translation
 
