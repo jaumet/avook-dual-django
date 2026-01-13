@@ -1,9 +1,30 @@
 from django.contrib import admin
+from django import forms
 from .models import Product, Title, Package, UserPurchase, TranslatableContent, ProductTranslation
+
+# Define the language choices for the dropdown
+LANGUAGE_CHOICES = [
+    ('ca', 'Català'),
+    ('en', 'English'),
+    ('es', 'Español'),
+    ('fr', 'Français'),
+    ('de', 'Deutsch'),
+    ('it', 'Italiano'),
+    ('pt', 'Português'),
+]
+
+
+class ProductTranslationForm(forms.ModelForm):
+    language_code = forms.ChoiceField(choices=LANGUAGE_CHOICES)
+
+    class Meta:
+        model = ProductTranslation
+        fields = ('language_code', 'name', 'description')
 
 
 class ProductTranslationInline(admin.TabularInline):
     model = ProductTranslation
+    form = ProductTranslationForm
     extra = 1
 
 

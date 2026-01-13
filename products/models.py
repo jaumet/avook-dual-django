@@ -172,7 +172,7 @@ class ProductTranslation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='translations')
     language_code = models.CharField(max_length=10)
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+    description = CKEditor5Field('Description', blank=True)
 
     class Meta:
         unique_together = ('product', 'language_code')
