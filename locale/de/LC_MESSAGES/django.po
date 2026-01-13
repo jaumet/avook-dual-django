@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-09 21:49+0000\n"
+"POT-Creation-Date: 2026-01-13 08:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,7 +99,7 @@ msgstr "Passwortbestätigung"
 msgid "Contingut no trobat per a la clau: '{key}'"
 msgstr "Inhalt für Schlüssel '{key}' nicht gefunden"
 
-#: products/views.py:96
+#: products/views.py:111
 msgid ""
 "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr ""
@@ -123,7 +123,7 @@ msgid "Included titles in the package:"
 msgstr "Im Paket enthaltene Titel:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
-#: templates/products/_title_card.html:11
+#: templates/products/_title_card.html:12
 msgid "Level"
 msgstr "Niveau"
 
@@ -167,21 +167,25 @@ msgstr "Niveau auswählen:"
 msgid "Cerca avançada"
 msgstr "Erweiterte Suche"
 
-#: templates/products/_title_card.html:10
+#: templates/products/_title_card.html:11
 msgid "Languages"
 msgstr "Sprachen"
 
-#: templates/products/_title_card.html:12
+#: templates/products/_title_card.html:13
 msgid "Ages"
 msgstr "Alter"
 
-#: templates/products/_title_card.html:13
+#: templates/products/_title_card.html:14
 msgid "Collection"
 msgstr "Sammlung"
 
-#: templates/products/_title_card.html:14
+#: templates/products/_title_card.html:15
 msgid "Duration"
 msgstr "Dauer"
+
+#: templates/products/_title_card.html:23
+msgid "Buy"
+msgstr ""
 
 #: templates/products/cart.html:4
 msgid "Carretó"
@@ -227,47 +231,47 @@ msgstr "Zur Kasse gehen"
 msgid "El teu carretó està buit."
 msgstr "Ihr Warenkorb ist leer."
 
-#: templates/products/detail.html:19
-msgid "No hi ha descripció per a aquest producte."
-msgstr "Für dieses Produkt ist keine Beschreibung verfügbar."
+#: templates/products/detail.html:24
+msgid "La descripció no està disponible."
+msgstr ""
 
-#: templates/products/detail.html:21
+#: templates/products/detail.html:26
 msgid "Preu:"
 msgstr "Preis:"
 
-#: templates/products/detail.html:22
+#: templates/products/detail.html:27
 msgid "Durada:"
 msgstr "Dauer:"
 
-#: templates/products/detail.html:22
+#: templates/products/detail.html:27
 msgid "mesos"
 msgstr "Monate"
 
-#: templates/products/detail.html:25
+#: templates/products/detail.html:30
 msgid "Editar producte"
 msgstr "Produkt bearbeiten"
 
-#: templates/products/detail.html:32
+#: templates/products/detail.html:37
 msgid "Condicions de venda"
 msgstr "Verkaufsbedingungen"
 
-#: templates/products/detail.html:42
+#: templates/products/detail.html:47
 msgid "Accepto les condicions de venda"
 msgstr "Ich akzeptiere die Verkaufsbedingungen"
 
-#: templates/products/detail.html:44
+#: templates/products/detail.html:49
 msgid "Comprar ara"
 msgstr "Jetzt kaufen"
 
-#: templates/products/detail.html:49
+#: templates/products/detail.html:54
 msgid "Títols inclosos en el paquet:"
 msgstr "Im Paket enthaltene Titel:"
 
-#: templates/products/detail.html:55
+#: templates/products/detail.html:60
 msgid "Nivell"
 msgstr "Niveau"
 
-#: templates/products/detail.html:62
+#: templates/products/detail.html:67
 msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "Diesem Paket sind noch keine Titel zugeordnet."
 
@@ -275,13 +279,41 @@ msgstr "Diesem Paket sind noch keine Titel zugeordnet."
 msgid "Productes"
 msgstr "Produkte"
 
-#: templates/products/product_list.html:43
-msgid "Compra'l"
-msgstr "Kaufen"
+#: templates/products/product_list.html:19
+msgid "Dual Start"
+msgstr "Dual Start"
+
+#: templates/products/product_list.html:20
+msgid "A0 + A1 · Accés 3 mesos"
+msgstr "A0 + A1 · 3 Monate Zugang"
+
+#: templates/products/product_list.html:26
+msgid "Dual Progress"
+msgstr "Dual Progress"
+
+#: templates/products/product_list.html:27
+msgid "A2 + B1 · Accés 3 mesos"
+msgstr "A2 + B1 · 3 Monate Zugang"
+
+#: templates/products/product_list.html:33
+msgid "Dual Advanced"
+msgstr "Dual Advanced"
+
+#: templates/products/product_list.html:34
+msgid "B2 + C1 · Accés 3 mesos"
+msgstr "B2 + C1 · 3 Monate Zugang"
+
+#: templates/products/product_list.html:40
+msgid "Dual Full Access"
+msgstr "Dual Full Access"
+
+#: templates/products/product_list.html:41
+msgid "A0 → C1 · Accés 6 mesos"
+msgstr "A0 → C1 · 6 Monate Zugang"
 
 #: templates/products/product_list.html:48
-msgid "No hi ha productes disponibles."
-msgstr "Keine Produkte verfügbar."
+msgid "Navega pel catàleg"
+msgstr "Katalog durchsuchen"
 
 #: templates/registration/login.html:4 templates/registration/login.html:8
 #: templates/registration/login.html:21
@@ -392,3 +424,12 @@ msgstr "Konto erstellen"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrieren"
+
+#~ msgid "No hi ha descripció per a aquest producte."
+#~ msgstr "Für dieses Produkt ist keine Beschreibung verfügbar."
+
+#~ msgid "Compra'l"
+#~ msgstr "Kaufen"
+
+#~ msgid "No hi ha productes disponibles."
+#~ msgstr "Keine Produkte verfügbar."

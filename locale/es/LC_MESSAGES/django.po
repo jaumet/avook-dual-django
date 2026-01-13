@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 17:26+0000\n"
+"POT-Creation-Date: 2026-01-13 08:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,15 +37,15 @@ msgstr "Permisos"
 msgid "Important dates"
 msgstr "Fechas importantes"
 
-#: accounts/forms.py:17 products/forms.py:42
+#: accounts/forms.py:17 products/forms.py:31
 msgid "First name"
 msgstr "Nombre"
 
-#: accounts/forms.py:18 products/forms.py:43
+#: accounts/forms.py:18 products/forms.py:32
 msgid "Last name"
 msgstr "Apellidos"
 
-#: accounts/forms.py:19 products/forms.py:44
+#: accounts/forms.py:19 products/forms.py:33
 msgid "Email"
 msgstr "Correo electrónico"
 
@@ -57,43 +57,48 @@ msgstr "Tu cuenta ha sido activada correctamente. Ahora puedes iniciar sesión."
 msgid "El token d'activació és invàlid o ha expirat."
 msgstr "El token de activación es inválido o ha expirado."
 
-#: avook_site/settings.py:70
+#: avook_site/settings.py:71
 msgid "Catalan"
 msgstr "Catalán"
 
-#: avook_site/settings.py:71
+#: avook_site/settings.py:72
 msgid "English"
 msgstr "Inglés"
 
-#: avook_site/settings.py:72
+#: avook_site/settings.py:73
 msgid "Spanish"
 msgstr "Español"
 
-#: avook_site/settings.py:73
+#: avook_site/settings.py:74
 msgid "French"
 msgstr "Francés"
 
-#: avook_site/settings.py:74
+#: avook_site/settings.py:75
 msgid "German"
 msgstr "Alemán"
 
-#: avook_site/settings.py:75
+#: avook_site/settings.py:76
 msgid "Italian"
 msgstr "Italiano"
 
-#: avook_site/settings.py:76
+#: avook_site/settings.py:77
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: products/forms.py:50
+#: products/forms.py:39
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: products/forms.py:55
+#: products/forms.py:44
 msgid "Password confirmation"
 msgstr "Confirmación de contraseña"
 
-#: products/views.py:148
+#: products/templatetags/content_tags.py:19
+#, python-brace-format
+msgid "Contingut no trobat per a la clau: '{key}'"
+msgstr ""
+
+#: products/views.py:111
 msgid ""
 "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr ""
@@ -116,6 +121,7 @@ msgid "Included titles in the package:"
 msgstr "Títulos incluidos en el paquete:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
+#: templates/products/_title_card.html:12
 msgid "Level"
 msgstr "Nivel"
 
@@ -151,77 +157,167 @@ msgstr "Esta es una breve descripción para el segundo título de ejemplo."
 msgid "French, German"
 msgstr "Francés, Alemán"
 
+#: templates/catalog.html:19
+msgid "Selecciona nivell:"
+msgstr ""
+
+#: templates/catalog.html:28
+msgid "Cerca avançada"
+msgstr ""
+
+#: templates/products/_title_card.html:11
+#, fuzzy
+#| msgid "Languages:"
+msgid "Languages"
+msgstr "Idiomas:"
+
+#: templates/products/_title_card.html:13
+msgid "Ages"
+msgstr ""
+
+#: templates/products/_title_card.html:14
+msgid "Collection"
+msgstr ""
+
+#: templates/products/_title_card.html:15
+#, fuzzy
+#| msgid "Duration:"
+msgid "Duration"
+msgstr "Duración:"
+
+#: templates/products/_title_card.html:23
+msgid "Buy"
+msgstr ""
+
 #: templates/products/cart.html:4
-msgid "Cistella"
-msgstr "Cesta"
+msgid "Carretó"
+msgstr ""
 
 #: templates/products/cart.html:8
-msgid "La teva cistella"
-msgstr "Tu cesta"
+msgid "El teu carretó"
+msgstr ""
 
 #: templates/products/cart.html:13
 msgid "Producte"
 msgstr "Producto"
 
 #: templates/products/cart.html:14
-msgid "Preu"
-msgstr "Precio"
-
-#: templates/products/cart.html:15
 msgid "Quantitat"
 msgstr "Cantidad"
 
-#: templates/products/cart.html:32
-msgid "La teva cistella està buida."
+#: templates/products/cart.html:15
+msgid "Preu"
+msgstr "Precio"
+
+#: templates/products/cart.html:16
+msgid "Total"
+msgstr ""
+
+#: templates/products/cart.html:28
+msgid "Actualitzar"
+msgstr ""
+
+#: templates/products/cart.html:34
+msgid "Eliminar"
+msgstr ""
+
+#: templates/products/cart.html:41
+msgid "Total:"
+msgstr ""
+
+#: templates/products/cart.html:42
+msgid "Procedir al pagament"
+msgstr ""
+
+#: templates/products/cart.html:45
+#, fuzzy
+#| msgid "La teva cistella està buida."
+msgid "El teu carretó està buit."
 msgstr "Tu cesta está vacía."
 
-#: templates/products/product_list.html:11
-msgid "Productes"
-msgstr "Productos"
+#: templates/products/detail.html:24
+msgid "La descripció no està disponible."
+msgstr ""
 
-#: templates/products/detail.html:21
+#: templates/products/detail.html:26
 msgid "Preu:"
 msgstr "Precio:"
 
-#: templates/products/detail.html:22 templates/products/detail.html:65
+#: templates/products/detail.html:27
 msgid "Durada:"
 msgstr "Duración:"
 
-#: templates/products/detail.html:22
+#: templates/products/detail.html:27
 msgid "mesos"
 msgstr "meses"
 
-#: templates/products/detail.html:25
+#: templates/products/detail.html:30
 msgid "Editar producte"
 msgstr "Editar producto"
 
-#: templates/products/detail.html:32
+#: templates/products/detail.html:37
 msgid "Condicions de venda"
 msgstr "Condiciones de venta"
 
-#: templates/products/detail.html:42
+#: templates/products/detail.html:47
 msgid "Accepto les condicions de venda"
 msgstr "Acepto las condiciones de venta"
 
-#: templates/products/detail.html:44
+#: templates/products/detail.html:49
 msgid "Comprar ara"
 msgstr "Comprar ahora"
 
-#: templates/products/detail.html:49
+#: templates/products/detail.html:54
 msgid "Títols inclosos en el paquet:"
 msgstr "Títulos incluidos en el paquete:"
 
-#: templates/products/detail.html:55
+#: templates/products/detail.html:60
 msgid "Nivell"
 msgstr "Nivel"
 
-#: templates/products/detail.html:60
-msgid "Idiomes:"
-msgstr "Idiomas:"
-
-#: templates/products/detail.html:71
+#: templates/products/detail.html:67
 msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "Todavía no hay títulos asignados a este paquete."
+
+#: templates/products/product_list.html:12
+msgid "Productes"
+msgstr "Productos"
+
+#: templates/products/product_list.html:19
+msgid "Dual Start"
+msgstr "Dual Start"
+
+#: templates/products/product_list.html:20
+msgid "A0 + A1 · Accés 3 mesos"
+msgstr "A0 + A1 · Acceso 3 meses"
+
+#: templates/products/product_list.html:26
+msgid "Dual Progress"
+msgstr "Dual Progress"
+
+#: templates/products/product_list.html:27
+msgid "A2 + B1 · Accés 3 mesos"
+msgstr "A2 + B1 · Acceso 3 meses"
+
+#: templates/products/product_list.html:33
+msgid "Dual Advanced"
+msgstr "Dual Advanced"
+
+#: templates/products/product_list.html:34
+msgid "B2 + C1 · Accés 3 mesos"
+msgstr "B2 + C1 · Acceso 3 meses"
+
+#: templates/products/product_list.html:40
+msgid "Dual Full Access"
+msgstr "Dual Full Access"
+
+#: templates/products/product_list.html:41
+msgid "A0 → C1 · Accés 6 mesos"
+msgstr "A0 → C1 · Acceso 6 meses"
+
+#: templates/products/product_list.html:48
+msgid "Navega pel catàleg"
+msgstr "Navega por el catálogo"
 
 #: templates/registration/login.html:4 templates/registration/login.html:8
 #: templates/registration/login.html:21
@@ -332,3 +428,12 @@ msgstr "Crear una cuenta"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrarme"
+
+#~ msgid "Cistella"
+#~ msgstr "Cesta"
+
+#~ msgid "La teva cistella"
+#~ msgstr "Tu cesta"
+
+#~ msgid "Idiomes:"
+#~ msgstr "Idiomas:"
