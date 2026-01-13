@@ -121,4 +121,5 @@ load_dotenv(BASE_DIR / ".env")
 
 EMAIL_BACKEND = "avook_site.email_backend.ResendEmailBackend"
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+PAYPAL_CLIENT_ID_LIVE = os.environ.get("PAYPAL_CLIENT_ID_LIVE")
 DEFAULT_FROM_EMAIL = "info@dual.cat"
