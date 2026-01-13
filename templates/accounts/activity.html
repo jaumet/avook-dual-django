@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
+<style>
+    .chart-container {
+        position: relative;
+        height: 40vh;
+        width: 80vw;
+        margin: auto;
+        margin-bottom: 2rem;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+    #wordCloudContainer {
+        height: 400px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="container mt-4">
+    <h1 class="mb-4">{% trans "User Activity Log" %}</h1>
+    <a href="{% url 'accounts:activity_pdf' %}" class="btn btn-primary mb-3" target="_blank">{% trans "Export as PDF" %}</a>
+
+    <div class="table-responsive">
+        <table id="activityTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "Level" %}</th>
+                    <th>{% trans "Language Pair" %}</th>
+                    <th>{% trans "Listen Count" %}</th>
+                    <th>{% trans "Listening Time (minutes)" %}</th>
+                    <th>{% trans "Completion" %}</th>
+                    <th>{% trans "Last Listened" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.title.human_name }}</td>
+                    <td>{{ activity.title.level }}</td>
+                    <td>{{ activity.language_pair }}</td>
+                    <td>{{ activity.listen_count }}</td>
+                    <td>{{ activity.listening_time_minutes|floatformat:0 }}</td>
+                    <td>{{ activity.completion_percentage|floatformat:2 }}%</td>
+                    <td>{{ activity.last_listened_date|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="mt-5 mb-4">{% trans "Visual Report" %}</h2>
+    <div class="grid-container">
+        <div class="chart-container">
+            <canvas id="langPairChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="bubbleChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-container" style="margin-top: 2rem;">
+        <canvas id="timelineChart"></canvas>
+    </div>
+    <div id="wordCloudContainer" class="mt-5"></div>
+    <div class="chart-container" style="margin-top: 2rem;">
+        <canvas id="treemapChart"></canvas>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@2.3.0/dist/chartjs-chart-treemap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jqcloud2@2.0.3/dist/jqcloud.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const datatable = new simpleDatatables.DataTable("#activityTable");
+        const chartData = JSON.parse('{{ chart_data|escapejs }}');
+
+        new Chart(document.getElementById('langPairChart'), {
+            type: 'bar',
+            data: {
+                labels: chartData.langPairChart.labels,
+                datasets: [{
+                    label: '{% trans "Listening Time (minutes)" %}',
+                    data: chartData.langPairChart.data,
+                    backgroundColor: 'rgba(247, 131, 106, 0.5)',
+                    borderColor: 'rgba(247, 131, 106, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{% trans "Listening Time by Language Pair" %}'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('bubbleChart'), {
+            type: 'bubble',
+            data: {
+                datasets: chartData.bubbleChart.datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{% trans "Titles Listened by Level (Bubble Chart)" %}'
+                    },
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('timelineChart'), {
+            type: 'line',
+            data: {
+                labels: chartData.timelineChart.labels,
+                datasets: [{
+                    label: '{% trans "Daily Listening (minutes)" %}',
+                    data: chartData.timelineChart.data,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '{% trans "Listening Activity Timeline" %}'
+                    }
+                }
+            }
+        });
+
+        if (chartData.wordCloud.length > 0) {
+            $('#wordCloudContainer').jQCloud(chartData.wordCloud, {
+                autoResize: true
+            });
+        }
+
+        const treemapData = chartData.treemapData.map(item => ({
+            label: `${item.level} - ${item.lang_pair}`,
+            value: item.time,
+        }));
+
+        new Chart(document.getElementById('treemapChart').getContext('2d'), {
+            type: 'treemap',
+            data: {
+                datasets: [{
+                    label: 'Treemap',
+                    tree: treemapData,
+                    key: 'value',
+                    groups: ['label'],
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                }],
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Listening Time by Level and Language Pair'
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

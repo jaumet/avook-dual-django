@@ -106,6 +106,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioEl = qs('#audio');
     let translations = {};
 
+    let activityInterval;
+    let secondsListened = 0;
+    let currentMode = null;
+
+    function logActivity() {
+        if (!{{ request.user.is_authenticated|yesno:"true,false" }} || !currentMode) return;
+
+        const total = sequence.length || 0;
+        const percent = total ? Math.round(((seqIndex + 1) / total) * 100) : 0;
+
+        fetch(window.location.pathname, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                language_pair: currentMode,
+                listening_time: secondsListened,
+                completion_percentage: percent
+            })
+        }).then(() => {
+            secondsListened = 0; // Reset after successful logging
+        });
+    }
+
+    let listeningTimer;
+    audioEl.addEventListener('play', () => {
+        clearInterval(listeningTimer);
+        listeningTimer = setInterval(() => {
+            secondsListened++;
+        }, 1000);
+    });
+
+    audioEl.addEventListener('pause', () => {
+        clearInterval(listeningTimer);
+    });
+
+    audioEl.addEventListener('ended', () => {
+        clearInterval(listeningTimer);
+    });
+
     async function loadTranslations() {
         try {
             const response = await fetch('/static/js/translations.json');
@@ -183,6 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function startMode(mode) {
+        currentMode = mode;
+        if (activityInterval) clearInterval(activityInterval);
+        activityInterval = setInterval(logActivity, 15000); // Log every 15 seconds
+
         const langs = mode.includes('-') ? mode.split('-') : [mode];
         const transcripts = {{ transcripts|safe }};
         langData = transcripts;

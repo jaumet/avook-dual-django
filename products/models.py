@@ -2,6 +2,7 @@ import os
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.db import models
+import datetime
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import get_language
@@ -244,3 +245,23 @@ class HomePageContent(models.Model):
     class Meta:
         verbose_name = "Homepage Content"
         verbose_name_plural = "Homepage Content"
+
+
+class UserActivity(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='activities')
+    title = models.ForeignKey(Title, on_delete=models.CASCADE, related_name='activities')
+    language_pair = models.CharField(max_length=10, help_text="e.g., 'en-es'")
+    listening_time = models.DurationField(default=datetime.timedelta(0))
+    completion_percentage = models.FloatField(default=0.0)
+    listen_count = models.PositiveIntegerField(default=0)
+    last_listened_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.title.machine_name} ({self.language_pair})"
+
+    class Meta:
+        verbose_name = "User Activity"
+        verbose_name_plural = "User Activities"
+        unique_together = ('user', 'title', 'language_pair')

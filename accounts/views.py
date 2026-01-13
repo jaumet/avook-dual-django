@@ -1,15 +1,24 @@
+import json
+
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
-from django.urls import reverse_lazy
-from django.views.generic import UpdateView, ListView
-from products.models import Package
-from products.mixins import TitleContextMixin
-from .forms import ProfileUpdateForm
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDate
+from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.contrib import messages
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import ListView, UpdateView, View
+from weasyprint import HTML
+
 from post_office.utils import send_templated_email
+from products.mixins import TitleContextMixin
+from products.models import Package, TitleTranslation, UserActivity
+
+from .forms import ProfileUpdateForm
 
 User = get_user_model()
 
@@ -64,3 +73,138 @@ class CustomPasswordResetView(PasswordResetView):
             from_email,
             language=self.request.LANGUAGE_CODE
         )
+
+
+class UserActivityMixin:
+    def get_annotated_activities(self):
+        user = self.request.user
+        language_code = self.request.LANGUAGE_CODE
+
+        activities = UserActivity.objects.filter(user=user).select_related(
+            'title'
+        ).order_by('-last_listened_date')
+
+        title_ids = {act.title_id for act in activities}
+        if not title_ids:
+            return activities
+
+        translations_qs = TitleTranslation.objects.filter(
+            title_id__in=title_ids,
+            language_code=language_code
+        )
+        translations = {t.title_id: t for t in translations_qs}
+
+        for activity in activities:
+            translation = translations.get(activity.title_id)
+            activity.title.human_name = translation.human_name if translation else activity.title.machine_name
+            activity.listening_time_minutes = activity.listening_time.total_seconds() / 60
+
+        return activities
+
+
+class UserActivityView(LoginRequiredMixin, UserActivityMixin, ListView):
+    model = UserActivity
+    template_name = 'accounts/activity.html'
+    context_object_name = 'activities'
+
+    def get_queryset(self):
+        return self.get_annotated_activities()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        activities = self.object_list
+        language_code = self.request.LANGUAGE_CODE
+
+        lang_pair_data = activities.values('language_pair').annotate(
+            total_seconds=Sum('listening_time')
+        ).order_by('-total_seconds')
+
+        lang_pair_labels = [item['language_pair'] for item in lang_pair_data]
+        lang_pair_values = [item['total_seconds'].total_seconds() / 60 for item in lang_pair_data]
+
+        level_data = activities.values('title__level').annotate(
+            count=Count('title', distinct=True)
+        ).order_by('title__level')
+
+        bubble_chart_datasets = []
+        background_colors = [
+            'rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'
+        ]
+
+        for i, item in enumerate(level_data):
+            color = background_colors[i % len(background_colors)]
+            bubble_chart_datasets.append({
+                'label': item['title__level'] or 'N/A',
+                'data': [{
+                    'x': (i * 10) + 5,
+                    'y': 5,
+                    'r': item['count'] * 5
+                }],
+                'backgroundColor': color
+            })
+
+        timeline_data = activities.annotate(
+            date=TruncDate('last_listened_date')
+        ).values('date').annotate(
+            daily_seconds=Sum('listening_time')
+        ).order_by('date')
+
+        timeline_labels = [item['date'].strftime('%Y-%m-%d') for item in timeline_data]
+        timeline_values = [item['daily_seconds'].total_seconds() / 60 for item in timeline_data]
+
+        wordcloud_data = activities.values(
+            'title_id', 'title__machine_name'
+        ).annotate(
+            total_time=Sum('listening_time')
+        ).order_by('-total_time')
+
+        wc_title_ids = {item['title_id'] for item in wordcloud_data}
+        wc_translations = {}
+        if wc_title_ids:
+            wc_translations_qs = TitleTranslation.objects.filter(
+                title_id__in=wc_title_ids,
+                language_code=language_code
+            )
+            wc_translations = {t.title_id: t for t in wc_translations_qs}
+
+        wordcloud_words = [
+            {'text': (wc_translations.get(item['title_id']).human_name if wc_translations.get(item['title_id']) else item['title__machine_name']),
+             'weight': item['total_time'].total_seconds()}
+            for item in wordcloud_data
+        ]
+
+        treemap_data = activities.values(
+            'title__level', 'language_pair'
+        ).annotate(
+            total_time=Sum('listening_time')
+        ).order_by('title__level', 'language_pair')
+
+        context['chart_data'] = json.dumps({
+            'langPairChart': {'labels': lang_pair_labels, 'data': lang_pair_values},
+            'bubbleChart': {'datasets': bubble_chart_datasets},
+            'timelineChart': {'labels': timeline_labels, 'data': timeline_values},
+            'wordCloud': wordcloud_words,
+            'treemapData': [
+                {
+                    'level': item['title__level'],
+                    'lang_pair': item['language_pair'],
+                    'time': item['total_time'].total_seconds()
+                } for item in treemap_data
+            ]
+        })
+
+        return context
+
+
+class UserActivityPDFView(LoginRequiredMixin, UserActivityMixin, View):
+    def get(self, request, *args, **kwargs):
+        activities = self.get_annotated_activities()
+        html_string = render_to_string('accounts/activity_pdf.html', {'activities': activities})
+        html = HTML(string=html_string)
+        result = html.write_pdf()
+
+        response = HttpResponse(result, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="activity_report.pdf"'
+        return response
