@@ -40,11 +40,8 @@ class ProductListView(TitleContextMixin, ListView):
         language_code = self.request.LANGUAGE_CODE
 
         for product in products:
-            # Get the specific translation for the current language
-            product.translation = product.translations.filter(language_code=language_code).first()
-            # Fallback to the first available translation if none match
-            if not product.translation:
-                product.translation = product.translations.first()
+            # Get the specific translation for the current language using the model's method
+            product.translation = product.get_translation(language_code)
 
             # Get titles with status for each package
             for package in product.packages.all():
