@@ -5,21 +5,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, TemplateView
-from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
 import json
+import os
+from datetime import timedelta
+
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic import (CreateView, DetailView, ListView,
+                                  TemplateView, UpdateView)
 
-from django.urls import reverse
 from post_office.utils import send_templated_email
-from .forms import ProductForm, SignUpForm, TitleForm
-from .models import Product, Title, TitleTranslation
-from django.db import models
+
+from .forms import ProductForm, SignUpForm
 from .mixins import TitleContextMixin
+from .models import Product, Title, UserActivity, HomePageContent
 
 
 class ProductListView(TitleContextMixin, ListView):
@@ -197,6 +204,41 @@ class CatalogView(TitleContextMixin, ListView):
 
 
 def player_view(request, machine_name):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'status': 'error', 'message': 'User not authenticated'}, status=401)
+
+        try:
+            data = json.loads(request.body)
+            title = get_object_or_404(Title, machine_name=machine_name)
+            language_pair = data.get('language_pair')
+            listening_time_seconds = data.get('listening_time', 0)
+            completion_percentage = data.get('completion_percentage', 0)
+
+            if not language_pair:
+                return JsonResponse({'status': 'error', 'message': 'Language pair is required'}, status=400)
+
+            activity, created = UserActivity.objects.get_or_create(
+                user=request.user,
+                title=title,
+                language_pair=language_pair
+            )
+
+            if created:
+                activity.listen_count = 1
+            else:
+                activity.listen_count += 1
+
+            activity.listening_time += timedelta(seconds=listening_time_seconds)
+            activity.completion_percentage = max(activity.completion_percentage, completion_percentage)
+            activity.save()
+
+            return JsonResponse({'status': 'success', 'message': 'Activity logged'})
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
     title = get_object_or_404(Title, machine_name=machine_name)
 
     mixin = TitleContextMixin()

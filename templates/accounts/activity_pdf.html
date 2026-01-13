@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Activity Report</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>User Activity Report</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Level</th>
+                <th>Language Pair</th>
+                <th>Listen Count</th>
+                <th>Listening Time (minutes)</th>
+                <th>Completion</th>
+                <th>Last Listened</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in activities %}
+            <tr>
+                <td>{{ activity.title.human_name }}</td>
+                <td>{{ activity.title.level }}</td>
+                <td>{{ activity.language_pair }}</td>
+                <td>{{ activity.listen_count }}</td>
+                <td>{{ activity.listening_time_minutes|floatformat:0 }}</td>
+                <td>{{ activity.completion_percentage|floatformat:2 }}%</td>
+                <td>{{ activity.last_listened_date|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
