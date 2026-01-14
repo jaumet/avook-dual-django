@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Purchase History" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{% trans "Purchase History" %}</h2>
+    <p>{% trans "Here you can see the status of your products, including expiration dates and renewal options." %}</p>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">{% trans "Product Name" %}</th>
+                    <th scope="col">{% trans "Purchase Date" %}</th>
+                    <th scope="col">{% trans "Expiry Date" %}</th>
+                    <th scope="col">{% trans "Days Remaining" %}</th>
+                    <th scope="col">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.product.translation.name|default:purchase.product.machine_name }}</td>
+                    <td>{{ purchase.purchase_date|date:"Y-m-d" }}</td>
+                    <td>{{ purchase.expiry_date|date:"Y-m-d"|default:"N/A" }}</td>
+                    <td>
+                        {% if purchase.days_remaining is not None %}
+                            {% if purchase.days_remaining > 0 %}
+                                {{ purchase.days_remaining }} {% trans "days" %}
+                            {% else %}
+                                <span class="badge bg-danger">{% trans "Expired" %}</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="badge bg-success">{% trans "Lifetime" %}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'products:product_detail' purchase.product.machine_name %}" class="btn btn-primary btn-sm">{% trans "Renew" %}</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">{% trans "You have not made any purchases yet." %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
