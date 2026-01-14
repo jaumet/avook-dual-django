@@ -4,21 +4,22 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count, Sum
 from django.db.models.functions import TruncDate
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import ListView, UpdateView, View
+from django.views.generic import CreateView, ListView, UpdateView, View
 from weasyprint import HTML
 
 from post_office.utils import send_templated_email
 from products.models import TitleTranslation, UserActivity, UserPurchase
 
-from .forms import ProfileUpdateForm
+from .forms import ProfileUpdateForm, SignUpForm
 
 User = get_user_model()
 
@@ -43,20 +44,12 @@ class PurchaseHistoryView(LoginRequiredMixin, ListView):
         purchases = UserPurchase.objects.filter(user=user).order_by('-purchase_date').select_related('product')
 
         for p in purchases:
-            # Attach translation
             p.product.translation = p.product.get_translation(self.request.LANGUAGE_CODE)
-
-            # Calculate days remaining
             if p.expiry_date:
                 now = timezone.now()
-                if p.expiry_date > now:
-                    delta = p.expiry_date - now
-                    p.days_remaining = delta.days
-                else:
-                    p.days_remaining = 0
+                p.days_remaining = (p.expiry_date - now).days if p.expiry_date > now else 0
             else:
                 p.days_remaining = None
-
         return purchases
 
 
@@ -67,48 +60,49 @@ def activate_account(request, token):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        messages.success(request, _('El teu compte ha estat activat correctament. Ara pots iniciar sessió.'))
+        messages.success(request, _('Your account has been activated successfully. You can now log in.'))
         return redirect('accounts:login')
     except User.DoesNotExist:
-        messages.error(request, _('El token d\'activació és invàlid o ha expirat.'))
+        messages.error(request, _('The activation token is invalid or has expired.'))
         return redirect('home')
 
 
 class CustomPasswordResetView(PasswordResetView):
     def send_mail(self, subject_template_name, email_template_name, context, from_email, to_email, html_email_template_name=None):
-        send_templated_email(
-            'password_reset',
-            context,
-            to_email,
-            from_email,
-            language=self.request.LANGUAGE_CODE
-        )
+        send_templated_email('password_reset', context, to_email, from_email, language=self.request.LANGUAGE_CODE)
+
+
+class SignUpView(SuccessMessageMixin, CreateView):
+    form_class = SignUpForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('home')
+    success_message = _("Thank you for signing up! We've sent you an email to activate your account.")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        user = self.object
+        activation_path = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
+        domain = self.request.get_host()
+        protocol = 'https' if self.request.is_secure() else 'http'
+        token_url = f"{protocol}://{domain}{activation_path}"
+        context = {'user': user, 'token_url': token_url}
+        send_templated_email('account_confirmation', context, user.email, language=self.request.LANGUAGE_CODE)
+        return response
 
 
 class UserActivityMixin:
     def get_annotated_activities(self):
         user = self.request.user
         language_code = self.request.LANGUAGE_CODE
-
-        activities = UserActivity.objects.filter(user=user).select_related(
-            'title'
-        ).order_by('-last_listened_date')
-
+        activities = UserActivity.objects.filter(user=user).select_related('title').order_by('-last_listened_date')
         title_ids = {act.title_id for act in activities}
         if not title_ids:
             return activities
-
-        translations_qs = TitleTranslation.objects.filter(
-            title_id__in=title_ids,
-            language_code=language_code
-        )
-        translations = {t.title_id: t for t in translations_qs}
-
+        translations = {t.title_id: t for t in TitleTranslation.objects.filter(title_id__in=title_ids, language_code=language_code)}
         for activity in activities:
             translation = translations.get(activity.title_id)
             activity.title.human_name = translation.human_name if translation else activity.title.machine_name
             activity.listening_time_minutes = round(activity.listening_time.total_seconds() / 60, 1)
-
         return activities
 
 
@@ -213,8 +207,6 @@ class UserActivityPDFView(LoginRequiredMixin, UserActivityMixin, View):
         activities = self.get_annotated_activities()
         html_string = render_to_string('accounts/activity_pdf.html', {'activities': activities})
         html = HTML(string=html_string)
-        result = html.write_pdf()
-
-        response = HttpResponse(result, content_type='application/pdf')
+        response = HttpResponse(html.write_pdf(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline; filename="activity_report.pdf"'
         return response
