@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-13 08:16+0000\n"
+"POT-Creation-Date: 2026-01-14 11:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,39 +50,39 @@ msgstr "Cognom"
 msgid "Email"
 msgstr "Correu electrònic"
 
-#: accounts/views.py:51
+#: accounts/views.py:70
 msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 msgstr "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 
-#: accounts/views.py:54
+#: accounts/views.py:73
 msgid "El token d'activació és invàlid o ha expirat."
 msgstr "El token d'activació és invàlid o ha expirat."
 
-#: avook_site/settings.py:71
+#: avook_site/settings.py:72
 msgid "Catalan"
 msgstr "Català"
 
-#: avook_site/settings.py:72
+#: avook_site/settings.py:73
 msgid "English"
 msgstr "Anglès"
 
-#: avook_site/settings.py:73
+#: avook_site/settings.py:74
 msgid "Spanish"
 msgstr "Espanyol"
 
-#: avook_site/settings.py:74
+#: avook_site/settings.py:75
 msgid "French"
 msgstr "Francès"
 
-#: avook_site/settings.py:75
+#: avook_site/settings.py:76
 msgid "German"
 msgstr "Alemany"
 
-#: avook_site/settings.py:76
+#: avook_site/settings.py:77
 msgid "Italian"
 msgstr "Italià"
 
-#: avook_site/settings.py:77
+#: avook_site/settings.py:78
 msgid "Portuguese"
 msgstr "Portuguès"
 
@@ -99,7 +99,7 @@ msgstr "Confirmació de la contrasenya"
 msgid "Contingut no trobat per a la clau: '{key}'"
 msgstr "Contingut no trobat per a la clau: '{key}'"
 
-#: products/views.py:111
+#: products/views.py:115
 msgid ""
 "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 msgstr ""
@@ -122,7 +122,7 @@ msgid "Included titles in the package:"
 msgstr "Títols inclosos en el paquet:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
-#: templates/products/_title_card.html:12
+#: templates/accounts/activity.html:36 templates/products/_title_card.html:12
 msgid "Level"
 msgstr "Nivell"
 
@@ -157,6 +157,117 @@ msgstr "Aquesta és una breu descripció per al segon títol d'exemple."
 #: samples/product_default.html:40
 msgid "French, German"
 msgstr "Francès, Alemany"
+
+#: templates/accounts/activity.html:28
+msgid "User Activity Log"
+msgstr ""
+
+#: templates/accounts/activity.html:29
+msgid "Export as PDF"
+msgstr ""
+
+#: templates/accounts/activity.html:35
+msgid "Title"
+msgstr ""
+
+#: templates/accounts/activity.html:37
+#, fuzzy
+#| msgid "Languages"
+msgid "Language Pair"
+msgstr "Llengües"
+
+#: templates/accounts/activity.html:38
+msgid "Listen Count"
+msgstr ""
+
+#: templates/accounts/activity.html:39 templates/accounts/activity.html:96
+msgid "Listening Time (minutes)"
+msgstr ""
+
+#: templates/accounts/activity.html:40
+#, fuzzy
+#| msgid "Collection"
+msgid "Completion"
+msgstr "Col·lecció"
+
+#: templates/accounts/activity.html:41
+#, fuzzy
+#| msgid "Last name"
+msgid "Last Listened"
+msgstr "Cognom"
+
+#: templates/accounts/activity.html:60
+msgid "Visual Report"
+msgstr ""
+
+#: templates/accounts/activity.html:109
+msgid "Listening Time by Language Pair"
+msgstr ""
+
+#: templates/accounts/activity.html:126
+msgid "Titles Listened by Level (Bubble Chart)"
+msgstr ""
+
+#: templates/accounts/activity.html:148
+msgid "Daily Listening (minutes)"
+msgstr ""
+
+#: templates/accounts/activity.html:161
+msgid "Listening Activity Timeline"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:4
+#: templates/accounts/purchase_history.html:8
+msgid "Purchase History"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:9
+msgid ""
+"Here you can see the status of your products, including expiration dates and "
+"renewal options."
+msgstr ""
+
+#: templates/accounts/purchase_history.html:15
+#, fuzzy
+#| msgid "Product Page"
+msgid "Product Name"
+msgstr "Pàgina de producte"
+
+#: templates/accounts/purchase_history.html:16
+msgid "Purchase Date"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:17
+msgid "Expiry Date"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:18
+msgid "Days Remaining"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:19
+msgid "Actions"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:31
+msgid "days"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:33
+msgid "Expired"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:36
+msgid "Lifetime"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:40
+msgid "Renew"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:45
+msgid "You have not made any purchases yet."
+msgstr ""
 
 #: templates/catalog.html:19
 msgid "Selecciona nivell:"
@@ -278,41 +389,69 @@ msgstr "Encara no hi ha títols assignats a aquest paquet."
 msgid "Productes"
 msgstr "Productes"
 
-#: templates/products/product_list.html:19
-msgid "Dual Start"
-msgstr "Dual Start"
+#: templates/products/product_list.html:28
+msgid "Notes importants:"
+msgstr ""
 
-#: templates/products/product_list.html:20
-msgid "A0 + A1 · Accés 3 mesos"
-msgstr "A0 + A1 · Accés 3 mesos"
+#: templates/products/product_list.html:29
+msgid "Tots els packs són"
+msgstr ""
 
-#: templates/products/product_list.html:26
-msgid "Dual Progress"
-msgstr "Dual Progress"
+#: templates/products/product_list.html:29
+msgid "bidireccionals"
+msgstr ""
 
-#: templates/products/product_list.html:27
-msgid "A2 + B1 · Accés 3 mesos"
-msgstr "A2 + B1 · Accés 3 mesos"
+#: templates/products/product_list.html:30
+msgid "Inclouen"
+msgstr ""
 
-#: templates/products/product_list.html:33
-msgid "Dual Advanced"
-msgstr "Dual Advanced"
+#: templates/products/product_list.html:30
+msgid "totes les llengües disponibles"
+msgstr ""
 
-#: templates/products/product_list.html:34
-msgid "B2 + C1 · Accés 3 mesos"
-msgstr "B2 + C1 · Accés 3 mesos"
+#: templates/products/product_list.html:31
+msgid "L’accés és"
+msgstr ""
 
-#: templates/products/product_list.html:40
-msgid "Dual Full Access"
-msgstr "Dual Full Access"
+#: templates/products/product_list.html:31
+msgid "temporal"
+msgstr ""
 
-#: templates/products/product_list.html:41
-msgid "A0 → C1 · Accés 6 mesos"
-msgstr "A0 → C1 · Accés 6 mesos"
+#: templates/products/product_list.html:31
+msgid "i"
+msgstr ""
 
-#: templates/products/product_list.html:48
+#: templates/products/product_list.html:31
+msgid "no es renova automàticamente"
+msgstr ""
+
+#: templates/products/product_list.html:32
+msgid "Un cop finalitzat el període, cal adquirir un nou pack per continuar."
+msgstr ""
+
+#: templates/products/product_list.html:37
 msgid "Navega pel catàleg"
 msgstr "Navega pel catàleg"
+
+#: templates/products/success.html:6
+msgid "Pagament correcte ✅"
+msgstr ""
+
+#: templates/products/success.html:8
+msgid "Gràcies per confiar en Dual."
+msgstr ""
+
+#: templates/products/success.html:11
+msgid "Hem rebut el teu pagament."
+msgstr ""
+
+#: templates/products/success.html:12
+msgid "En breu rebràs l'accés al teu contingut."
+msgstr ""
+
+#: templates/products/success.html:16
+msgid "Si tens qualsevol dubte:"
+msgstr ""
 
 #: templates/registration/login.html:4 templates/registration/login.html:8
 #: templates/registration/login.html:21
@@ -423,6 +562,30 @@ msgstr "Crea un compte"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrar-me"
+
+#~ msgid "Dual Start"
+#~ msgstr "Dual Start"
+
+#~ msgid "A0 + A1 · Accés 3 mesos"
+#~ msgstr "A0 + A1 · Accés 3 mesos"
+
+#~ msgid "Dual Progress"
+#~ msgstr "Dual Progress"
+
+#~ msgid "A2 + B1 · Accés 3 mesos"
+#~ msgstr "A2 + B1 · Accés 3 mesos"
+
+#~ msgid "Dual Advanced"
+#~ msgstr "Dual Advanced"
+
+#~ msgid "B2 + C1 · Accés 3 mesos"
+#~ msgstr "B2 + C1 · Accés 3 mesos"
+
+#~ msgid "Dual Full Access"
+#~ msgstr "Dual Full Access"
+
+#~ msgid "A0 → C1 · Accés 6 mesos"
+#~ msgstr "A0 → C1 · Accés 6 mesos"
 
 #~ msgid "Test"
 #~ msgstr "Prova"
