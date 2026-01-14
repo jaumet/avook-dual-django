@@ -40,8 +40,8 @@ class LibraryView(LoginRequiredMixin, TitleContextMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        # Get free packages and packages owned by the user, remove duplicates
-        return (Package.objects.filter(is_free=True) | user.packages.all()).distinct().prefetch_related('titles')
+        # Get packages owned by the user, remove duplicates
+        return user.packages.all().distinct().prefetch_related('titles')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
