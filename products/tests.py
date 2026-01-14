@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import translation
 import datetime
 from django.utils import timezone
-from products.models import Product, Title, Package, UserPurchase, ProductTranslation
+from products.models import Product, Title, Package, UserPurchase, ProductTranslation, TitleTranslation
 
 
 User = get_user_model()
@@ -111,7 +111,10 @@ class PlayerViewTest(TestCase):
     def setUp(self):
         self.test_title_machine_name = 'Test-1'
         self.non_existent_title = 'non-existent-title'
-        Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
+        title = Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
+
+        TitleTranslation.objects.create(title=title, language_code='en', human_name='Test ENG', description='Description ENG')
+        TitleTranslation.objects.create(title=title, language_code='ca', human_name='Test CAT', description='Descripció CAT')
 
         # Create a temporary directory for static files
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -161,7 +164,7 @@ class PlayerViewTest(TestCase):
             response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
             self.assertEqual(response.status_code, 200)
             self.assertIn('title', response.context)
-            self.assertIn('transcript', response.context)
+            self.assertIn('transcripts', response.context)
             self.assertIn('audio_path_prefix', response.context)
 
             title_context = response.context['title']

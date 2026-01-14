@@ -15,6 +15,15 @@
     <div class="dual-payments">
       {% for product in products %}
         <div class="dual-product">
+          {% if product.machine_name == 'dual-start' %}
+            <div class="ribbon ribbon-start">{{ product.translation.name }}</div>
+          {% elif product.machine_name == 'dual-progress' %}
+            <div class="ribbon ribbon-progress">{{ product.translation.name }}</div>
+          {% elif product.machine_name == 'dual-advanced' %}
+            <div class="ribbon ribbon-advanced">{{ product.translation.name }}</div>
+          {% elif product.machine_name == 'dual-full' %}
+            <div class="ribbon ribbon-full">{{ product.translation.name }}</div>
+          {% endif %}
           <h3>{{ product.translation.name }}</h3>
           <p>{{ product.translation.description|safe }}</p>
           <div id="paypal-{{ product.machine_name }}"></div>
