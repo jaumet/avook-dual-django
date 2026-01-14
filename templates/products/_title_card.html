@@ -2,7 +2,16 @@
 {% load product_tags %}
 
 <div class="custom-title-card tooltip" data-level="{{ item.json_info.levels }}" data-collection="{{ item.json_info.colection }}" data-duration="{{ item.json_info.duration }}" data-ages="{{ item.json_info.ages }}" data-languages="{{ item.json_info.languages|join:',' }}">
-    <img src="{{ item.image_url }}" alt="Cover for {{ item.json_info.human_title }}" class="title-image">
+    <div class="dual-product">
+        <img src="{{ item.image_url }}" alt="Cover for {{ item.json_info.human_title }}" class="title-image">
+        {% if item.json_info.levels == 'A0' or item.json_info.levels == 'A1' %}
+            <div class="ribbon ribbon-start">{{ item.json_info.levels }}</div>
+        {% elif item.json_info.levels == 'A2' or item.json_info.levels == 'B1' %}
+            <div class="ribbon ribbon-progress">{{ item.json_info.levels }}</div>
+        {% elif item.json_info.levels == 'B2' or item.json_info.levels == 'C1' %}
+            <div class="ribbon ribbon-advanced">{{ item.json_info.levels }}</div>
+        {% endif %}
+    </div>
     <div class="title-info">
         <h5 title="{{ item.json_info.human_title }}">{{ item.json_info.human_title }}</h5>
         <span class="tooltiptext">

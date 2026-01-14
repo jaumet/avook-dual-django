@@ -1,0 +1,47 @@
+.dual-product{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Base ribbon */
+.ribbon{
+  position: absolute;
+  top: 18px;
+  right: -42px;
+  width: 180px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #fff;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+
+/* START */
+.ribbon-start{
+  background: #f7836a; /* coral */
+}
+
+/* PROGRESS */
+.ribbon-progress{
+  background: #5c617a; /* blau gris */
+}
+
+/* ADVANCED */
+.ribbon-advanced{
+  background: #0d0e37; /* navy */
+}
+
+/* FULL ACCESS – especial */
+.ribbon-full{
+  background: linear-gradient(
+    135deg,
+    #f5c77a,
+    #e7a93c
+  );
+  color: #101228;
+  box-shadow: 0 6px 18px rgba(231,169,60,.45);
+}
