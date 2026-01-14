@@ -219,55 +219,59 @@ msgstr ""
 #: templates/accounts/purchase_history.html:4
 #: templates/accounts/purchase_history.html:8
 msgid "Purchase History"
-msgstr ""
+msgstr "Historial de Compres"
 
 #: templates/accounts/purchase_history.html:9
 msgid ""
 "Here you can see the status of your products, including expiration dates and "
 "renewal options."
-msgstr ""
+msgstr "Aquí pots veure l'estat dels teus productes, incloent-hi les dates de caducitat i les opcions de renovació."
 
 #: templates/accounts/purchase_history.html:15
 #, fuzzy
 #| msgid "Product Page"
 msgid "Product Name"
-msgstr "Pàgina de producte"
+msgstr "Nom del Producte"
 
 #: templates/accounts/purchase_history.html:16
 msgid "Purchase Date"
-msgstr ""
+msgstr "Data de Compra"
 
 #: templates/accounts/purchase_history.html:17
 msgid "Expiry Date"
-msgstr ""
+msgstr "Data de Caducitat"
 
 #: templates/accounts/purchase_history.html:18
 msgid "Days Remaining"
-msgstr ""
+msgstr "Dies Restants"
 
 #: templates/accounts/purchase_history.html:19
 msgid "Actions"
-msgstr ""
+msgstr "Accions"
 
 #: templates/accounts/purchase_history.html:31
 msgid "days"
-msgstr ""
+msgstr "dies"
 
 #: templates/accounts/purchase_history.html:33
 msgid "Expired"
-msgstr ""
+msgstr "Caducat"
 
 #: templates/accounts/purchase_history.html:36
 msgid "Lifetime"
-msgstr ""
+msgstr "Per Sempre"
 
 #: templates/accounts/purchase_history.html:40
 msgid "Renew"
-msgstr ""
+msgstr "Renovar"
 
 #: templates/accounts/purchase_history.html:45
 msgid "You have not made any purchases yet."
-msgstr ""
+msgstr "Encara no has fet cap compra."
+
+#: templates/base.html:61
+msgid "My products"
+msgstr "Els meus productes"
 
 #: templates/catalog.html:19
 msgid "Selecciona nivell:"

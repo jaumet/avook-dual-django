@@ -220,53 +220,57 @@ msgstr ""
 #: templates/accounts/purchase_history.html:4
 #: templates/accounts/purchase_history.html:8
 msgid "Purchase History"
-msgstr ""
+msgstr "Cronologia Acquisti"
 
 #: templates/accounts/purchase_history.html:9
 msgid ""
 "Here you can see the status of your products, including expiration dates and "
 "renewal options."
-msgstr ""
+msgstr "Qui puoi vedere lo stato dei tuoi prodotti, incluse le date di scadenza e le opzioni di rinnovo."
 
 #: templates/accounts/purchase_history.html:15
 msgid "Product Name"
-msgstr ""
+msgstr "Nome del Prodotto"
 
 #: templates/accounts/purchase_history.html:16
 msgid "Purchase Date"
-msgstr ""
+msgstr "Data di Acquisto"
 
 #: templates/accounts/purchase_history.html:17
 msgid "Expiry Date"
-msgstr ""
+msgstr "Data di Scadenza"
 
 #: templates/accounts/purchase_history.html:18
 msgid "Days Remaining"
-msgstr ""
+msgstr "Giorni Rimanenti"
 
 #: templates/accounts/purchase_history.html:19
 msgid "Actions"
-msgstr ""
+msgstr "Azioni"
 
 #: templates/accounts/purchase_history.html:31
 msgid "days"
-msgstr ""
+msgstr "giorni"
 
 #: templates/accounts/purchase_history.html:33
 msgid "Expired"
-msgstr ""
+msgstr "Scaduto"
 
 #: templates/accounts/purchase_history.html:36
 msgid "Lifetime"
-msgstr ""
+msgstr "A Vita"
 
 #: templates/accounts/purchase_history.html:40
 msgid "Renew"
-msgstr ""
+msgstr "Rinnova"
 
 #: templates/accounts/purchase_history.html:45
 msgid "You have not made any purchases yet."
-msgstr ""
+msgstr "Non hai ancora effettuato acquisti."
+
+#: templates/base.html:61
+msgid "My products"
+msgstr "I miei prodotti"
 
 #: templates/catalog.html:19
 msgid "Selecciona nivell:"
@@ -494,7 +498,7 @@ msgstr "Cambia la mia password"
 #| "ja ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
 #| "contrasenya."
 msgid ""
-"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perquè ja "
+"L'enllaç de restabliment de contrasenya no és vàlid, possiblement perchè ja "
 "ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
 "contrasenya."
 msgstr ""
