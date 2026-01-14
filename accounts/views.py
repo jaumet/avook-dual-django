@@ -97,7 +97,7 @@ class UserActivityMixin:
         for activity in activities:
             translation = translations.get(activity.title_id)
             activity.title.human_name = translation.human_name if translation else activity.title.machine_name
-            activity.listening_time_minutes = activity.listening_time.total_seconds() / 60
+            activity.listening_time_minutes = round(activity.listening_time.total_seconds() / 60, 1)
 
         return activities
 

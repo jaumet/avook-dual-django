@@ -110,11 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let secondsListened = 0;
     let currentMode = null;
 
-    function logActivity() {
+    function logActivity(is_new_session = false) {
         if (!{{ request.user.is_authenticated|yesno:"true,false" }} || !currentMode) return;
 
         const total = sequence.length || 0;
-        const percent = total ? Math.round(((seqIndex + 1) / total) * 100) : 0;
+        const percent = total ? Math.round((seqIndex / total) * 100) : 0;
 
         fetch(window.location.pathname, {
             method: 'POST',
@@ -125,7 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({
                 language_pair: currentMode,
                 listening_time: secondsListened,
-                completion_percentage: percent
+                completion_percentage: percent,
+                is_new_session: is_new_session
             })
         }).then(() => {
             secondsListened = 0; // Reset after successful logging
@@ -178,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateProgress() {
         const total = sequence.length || 0;
-        const current = Math.min(seqIndex + 1, total);
+        const current = seqIndex;
         const percent = total ? Math.round((current / total) * 100) : 0;
         qs('#progressInfo').textContent = `${current} / ${total} — ${percent}%`;
         qs('#progressBar').style.width = percent + '%';
@@ -205,9 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!manual) audioEl.play().catch(() => {});
         audioEl.onended = () => {
             seqIndex++;
+            updateProgress();
             playNext();
         };
-        updateProgress();
     }
 
     function playPrev() {
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function startMode(mode) {
         currentMode = mode;
         if (activityInterval) clearInterval(activityInterval);
+        logActivity(true);
         activityInterval = setInterval(logActivity, 15000); // Log every 15 seconds
 
         const langs = mode.includes('-') ? mode.split('-') : [mode];
@@ -302,6 +304,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     qs('#prevBtn').onclick = () => playPrev();
     qs('#nextBtn').onclick = () => playNextManual();
+
+    window.addEventListener('beforeunload', () => {
+        logActivity();
+    });
 });
 </script>
 {% endblock %}
