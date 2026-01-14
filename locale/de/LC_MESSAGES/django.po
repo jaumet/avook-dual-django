@@ -220,55 +220,59 @@ msgstr ""
 #: templates/accounts/purchase_history.html:4
 #: templates/accounts/purchase_history.html:8
 msgid "Purchase History"
-msgstr ""
+msgstr "Kaufhistorie"
 
 #: templates/accounts/purchase_history.html:9
 msgid ""
 "Here you can see the status of your products, including expiration dates and "
 "renewal options."
-msgstr ""
+msgstr "Hier können Sie den Status Ihrer Produkte einsehen, einschließlich Ablaufdaten und Verlängerungsoptionen."
 
 #: templates/accounts/purchase_history.html:15
 #, fuzzy
 #| msgid "Product Page"
 msgid "Product Name"
-msgstr "Produktseite"
+msgstr "Produktname"
 
 #: templates/accounts/purchase_history.html:16
 msgid "Purchase Date"
-msgstr ""
+msgstr "Kaufdatum"
 
 #: templates/accounts/purchase_history.html:17
 msgid "Expiry Date"
-msgstr ""
+msgstr "Ablaufdatum"
 
 #: templates/accounts/purchase_history.html:18
 msgid "Days Remaining"
-msgstr ""
+msgstr "Verbleibende Tage"
 
 #: templates/accounts/purchase_history.html:19
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: templates/accounts/purchase_history.html:31
 msgid "days"
-msgstr ""
+msgstr "Tage"
 
 #: templates/accounts/purchase_history.html:33
 msgid "Expired"
-msgstr ""
+msgstr "Abgelaufen"
 
 #: templates/accounts/purchase_history.html:36
 msgid "Lifetime"
-msgstr ""
+msgstr "Lebenslang"
 
 #: templates/accounts/purchase_history.html:40
 msgid "Renew"
-msgstr ""
+msgstr "Erneuern"
 
 #: templates/accounts/purchase_history.html:45
 msgid "You have not made any purchases yet."
-msgstr ""
+msgstr "Sie haben noch keine Käufe getätigt."
+
+#: templates/base.html:61
+msgid "My products"
+msgstr "Meine Produkte"
 
 #: templates/catalog.html:19
 msgid "Selecciona nivell:"
