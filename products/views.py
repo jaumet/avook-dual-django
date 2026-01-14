@@ -214,6 +214,7 @@ def player_view(request, machine_name):
             language_pair = data.get('language_pair')
             listening_time_seconds = data.get('listening_time', 0)
             completion_percentage = data.get('completion_percentage', 0)
+            is_new_session = data.get('is_new_session', False)
 
             if not language_pair:
                 return JsonResponse({'status': 'error', 'message': 'Language pair is required'}, status=400)
@@ -224,9 +225,7 @@ def player_view(request, machine_name):
                 language_pair=language_pair
             )
 
-            if created:
-                activity.listen_count = 1
-            else:
+            if created or is_new_session:
                 activity.listen_count += 1
 
             activity.listening_time += timedelta(seconds=listening_time_seconds)

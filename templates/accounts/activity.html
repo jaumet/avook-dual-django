@@ -48,7 +48,7 @@
                     <td>{{ activity.title.level }}</td>
                     <td>{{ activity.language_pair }}</td>
                     <td>{{ activity.listen_count }}</td>
-                    <td>{{ activity.listening_time_minutes|floatformat:0 }}</td>
+                    <td>{{ activity.listening_time_minutes|floatformat:1 }}</td>
                     <td>{{ activity.completion_percentage|floatformat:2 }}%</td>
                     <td>{{ activity.last_listened_date|date:"Y-m-d H:i" }}</td>
                 </tr>
