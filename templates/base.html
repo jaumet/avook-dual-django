@@ -58,7 +58,7 @@
                 <a href="#" class="user-menu-trigger">{% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %}</a>
                 <div class="user-menu-dropdown">
                     <a href="{% url 'accounts:profile' %}" data-translate-key="header.profile">Perfil</a>
-                    <a href="{% url 'accounts:library' %}" data-translate-key="header.my_library">La meva llibreria</a>
+                    <a href="{% url 'accounts:purchase_history' %}" data-translate-key="header.my_library">La meva llibreria</a>
                     <a href="{% url 'accounts:activity' %}" data-translate-key="header.activity_log">Activity Log</a>
                     {% if user.is_staff %}
                         <a href="{% url 'products:product_create' %}" data-translate-key="header.add_product">Afegir producte</a>

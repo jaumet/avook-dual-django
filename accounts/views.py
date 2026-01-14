@@ -10,13 +10,13 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, UpdateView, View
 from weasyprint import HTML
 
 from post_office.utils import send_templated_email
-from products.mixins import TitleContextMixin
-from products.models import Package, TitleTranslation, UserActivity
+from products.models import TitleTranslation, UserActivity, UserPurchase
 
 from .forms import ProfileUpdateForm
 
@@ -33,21 +33,31 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class LibraryView(LoginRequiredMixin, TitleContextMixin, ListView):
-    model = Package
-    template_name = 'accounts/library.html'
-    context_object_name = 'packages'
+class PurchaseHistoryView(LoginRequiredMixin, ListView):
+    model = UserPurchase
+    template_name = 'accounts/purchase_history.html'
+    context_object_name = 'purchases'
 
     def get_queryset(self):
         user = self.request.user
-        # Get packages owned by the user, remove duplicates
-        return user.packages.all().distinct().prefetch_related('titles')
+        purchases = UserPurchase.objects.filter(user=user).order_by('-purchase_date').select_related('product')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for package in context['packages']:
-            package.titles_with_status = self.get_titles_with_status(package.titles.all())
-        return context
+        for p in purchases:
+            # Attach translation
+            p.product.translation = p.product.get_translation(self.request.LANGUAGE_CODE)
+
+            # Calculate days remaining
+            if p.expiry_date:
+                now = timezone.now()
+                if p.expiry_date > now:
+                    delta = p.expiry_date - now
+                    p.days_remaining = delta.days
+                else:
+                    p.days_remaining = 0
+            else:
+                p.days_remaining = None
+
+        return purchases
 
 
 def activate_account(request, token):
