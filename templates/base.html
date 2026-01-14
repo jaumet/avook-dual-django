@@ -73,7 +73,7 @@
             </div>
         {% else %}
             <a href="{% url 'accounts:login' %}" data-translate-key="header.login">Inicia sessió</a>
-            <a href="{% url 'signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
+            <a href="{% url 'accounts:signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
         {% endif %}
         <div class="rightBtns">
             <button id="themeBtn">☀️ <span data-translate-key="header.theme.light">Clar</span></button>

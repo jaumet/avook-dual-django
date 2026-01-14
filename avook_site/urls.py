@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
-from products.views import HomeView, SignUpView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
+from products.views import HomeView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
 
 # Keep non-translated URLs separate
 urlpatterns = [
@@ -18,7 +18,6 @@ urlpatterns = [
 # Add translated URLs using i18n_patterns
 urlpatterns += i18n_patterns(
     path('', HomeView.as_view(), name='home'),
-    path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
     path('legal/cookies/', CookiesView.as_view(), name='cookies'),

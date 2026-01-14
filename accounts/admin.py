@@ -1,17 +1,20 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
     model = CustomUser
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
         (_("Idiomes"), {"fields": ("known_languages", "learning_languages")}),
-        (_("Paquets"), {"fields": ("packages",)}),
         (
             _("Permissions"),
             {
@@ -38,3 +41,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.unregister(Group)

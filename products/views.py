@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
-from django.contrib.auth import login
+import os
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,7 +12,6 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
@@ -24,7 +24,7 @@ from django.views.generic import (CreateView, DetailView, ListView,
 
 from post_office.utils import send_templated_email
 
-from .forms import ProductForm, SignUpForm
+from .forms import ProductForm
 from .mixins import TitleContextMixin
 from .models import Product, Title, UserActivity, HomePageContent
 
@@ -104,41 +104,6 @@ class ProductUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'products/form.html'
     success_message = 'Producte actualitzat'
     success_url = reverse_lazy('home')
-
-
-
-
-class SignUpView(SuccessMessageMixin, CreateView):
-    form_class = SignUpForm
-    template_name = 'registration/signup.html'
-    success_url = reverse_lazy('home')
-    success_message = _("Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte.")
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-
-        user = self.object
-
-        # Send confirmation email
-        activation_path = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
-        domain = self.request.get_host()
-        protocol = 'https' if self.request.is_secure() else 'http'
-        token_url = f"{protocol}://{domain}{activation_path}"
-
-        context = {
-            'user': user,
-            'token_url': token_url,
-        }
-
-        send_templated_email(
-            'account_confirmation',
-            context,
-            user.email,
-            language=self.request.LANGUAGE_CODE
-        )
-
-        login(self.request, user)
-        return response
 
 
 class CatalogView(TitleContextMixin, ListView):
