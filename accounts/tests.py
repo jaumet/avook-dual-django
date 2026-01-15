@@ -1,3 +1,4 @@
+import uuid
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -68,3 +69,32 @@ class SignUpEmailTest(TestCase):
         mock_send_email.assert_called_once()
         _, kwargs = mock_send_email.call_args
         self.assertEqual(kwargs['to'], ['emailtest@example.com'])
+
+    def test_activation_link_works(self):
+        """
+        Verify that a user can activate their account using the confirmation token.
+        """
+        form_data = {
+            'username': 'activationtestuser',
+            'first_name': 'Activation',
+            'last_name': 'Test',
+            'email': 'activationtest@example.com',
+            'password': 'testpassword',
+        }
+        user = User.objects.create_user(**form_data)
+        user.is_active = False
+        user.confirmation_token = str(uuid.uuid4())
+        user.save()
+
+        self.assertFalse(user.is_active)
+        self.assertIsNotNone(user.confirmation_token)
+
+        activation_url = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
+        response = self.client.get(activation_url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('accounts:login'))
+
+        activated_user = User.objects.get(username='activationtestuser')
+        self.assertTrue(activated_user.is_active)
+        self.assertIsNone(activated_user.confirmation_token)

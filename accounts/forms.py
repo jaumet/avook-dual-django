@@ -47,7 +47,7 @@ class SignUpForm(UserCreationForm):
         user.is_active = False
         user.is_staff = False
         user.is_superuser = False
-        user.confirmation_token = uuid.uuid4()
+        user.confirmation_token = str(uuid.uuid4())
         if commit:
             user.save()
         return user
