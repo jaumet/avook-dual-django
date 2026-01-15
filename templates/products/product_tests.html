@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
+    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="product-header">
+        <h1>{% trans "Tests for" %} {{ product.translation.name }}</h1>
+        <p>{{ product.translation.description|safe }}</p>
+    </div>
+
+    <!-- Level filters -->
+    <div class="level-filters">
+        <span>{% trans "Filter by level:" %}</span>
+        {% for level in levels %}
+            <label class="level-filter">
+                <input type="checkbox" name="level" value="{{ level }}" checked> {{ level }}
+            </label>
+        {% endfor %}
+    </div>
+
+    <section id="catalog">
+        {% for level, items in titles_by_level.items %}
+            <div class="level-container" data-level="{{ level }}">
+                <h2>{{ level }}</h2>
+                <div class="title-cards-container">
+                    {% for item in items %}
+                        {% include 'products/_title_card.html' with item=item %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>{% trans "No tests available for this product." %}</p>
+        {% endfor %}
+    </section>
+    <p id="noResultsMessage" style="display: none;">{% trans "No results found for your search." %}</p>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const levelFilters = document.querySelectorAll('.level-filter input[type="checkbox"]');
+    const levelContainers = document.querySelectorAll('.level-container');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    function filterLevels() {
+        const checkedLevels = Array.from(levelFilters)
+            .filter(input => input.checked)
+            .map(input => input.value);
+
+        let visibleContainers = 0;
+        levelContainers.forEach(container => {
+            if (checkedLevels.includes(container.dataset.level)) {
+                container.style.display = 'block';
+                visibleContainers++;
+            } else {
+                container.style.display = 'none';
+            }
+        });
+
+        if (visibleContainers === 0) {
+            noResultsMessage.style.display = 'block';
+        } else {
+            noResultsMessage.style.display = 'none';
+        }
+    }
+
+    levelFilters.forEach(input => {
+        input.addEventListener('change', filterLevels);
+    });
+
+    // Initial filter on page load
+    filterLevels();
+});
+</script>
+{% endblock %}
