@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load product_tags %}
 
-<div class="custom-title-card tooltip level-container {{ item.json_info.levels }}" data-level="{{ item.json_info.levels }}" data-collection="{{ item.json_info.colection }}" data-duration="{{ item.json_info.duration }}" data-ages="{{ item.json_info.ages }}" data-languages="{{ item.json_info.languages|join:',' }}">
+<div class="custom-title-card tooltip" data-level="{{ item.json_info.levels }}" data-collection="{{ item.json_info.colection }}" data-duration="{{ item.json_info.duration }}" data-ages="{{ item.json_info.ages }}" data-languages="{{ item.json_info.languages|join:',' }}">
     <div class="dual-product">
         <img src="{{ item.image_url }}" alt="Cover for {{ item.json_info.human_title }}" class="title-image">
         {% if item.json_info.levels == 'A0' or item.json_info.levels == 'A1' %}

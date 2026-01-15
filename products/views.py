@@ -20,7 +20,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (CreateView, DetailView, ListView,
-                                  TemplateView, UpdateView)
+                                  TemplateView, UpdateView, View)
+from collections import defaultdict
 
 from post_office.utils import send_templated_email
 
@@ -263,42 +264,6 @@ def player_view(request, machine_name):
     return render(request, 'products/player.html', context)
 
 
-class ProductTestsView(TitleContextMixin, ListView):
-    model = Title
-    template_name = 'products/product_tests.html'
-
-    def get_queryset(self):
-        product_machine_name = self.kwargs['machine_name']
-        self.product = get_object_or_404(
-            Product,
-            machine_name=product_machine_name
-        )
-        return Title.objects.filter(
-            packages__products=self.product
-        ).distinct().order_by('level', 'machine_name')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        titles_with_status = self.get_titles_with_status(context['object_list'])
-
-        titles_by_level = {}
-        levels = set()
-        for item in titles_with_status:
-            level = item['title'].level if item['title'].level else 'N/A'
-            if level not in titles_by_level:
-                titles_by_level[level] = []
-            titles_by_level[level].append(item)
-            levels.add(level)
-
-        product_obj = self.product
-        product_obj.translation = product_obj.get_translation(self.request.LANGUAGE_CODE)
-        context['product'] = product_obj
-        context['titles_by_level'] = titles_by_level
-        context['levels'] = sorted(list(levels))
-
-        return context
-
-
 def root_redirect(request):
     return redirect('/ca/')
 
@@ -317,3 +282,38 @@ class PrivacyView(TemplateView):
 
 class RightsView(TemplateView):
     template_name = 'legal/rights.html'
+
+
+class ProductTestsView(TitleContextMixin, View):
+    template_name = 'products/product_tests.html'
+
+    def get(self, request, machine_name):
+        product = get_object_or_404(Product.objects.prefetch_related('packages__titles__translations'), machine_name=machine_name)
+        product.translation = product.get_translation(request.LANGUAGE_CODE)
+
+        all_titles = []
+        for package in product.packages.all():
+            all_titles.extend(package.titles.all())
+
+        titles_with_status = self.get_titles_with_status(all_titles)
+
+        titles_by_level = defaultdict(list)
+        for item in titles_with_status:
+            level = item['json_info']['levels']
+            titles_by_level[level].append(item)
+
+        # Sort by level, then by machine_name within each level
+        sorted_titles_by_level = sorted(titles_by_level.items())
+
+        final_titles_by_level = {}
+        for level, items in sorted_titles_by_level:
+            final_titles_by_level[level] = sorted(items, key=lambda x: x['title'].machine_name)
+
+        levels = sorted(final_titles_by_level.keys())
+
+        context = {
+            'product': product,
+            'titles_by_level': final_titles_by_level,
+            'levels': levels,
+        }
+        return render(request, self.template_name, context)
