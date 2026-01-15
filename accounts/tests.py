@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from unittest.mock import patch
 from .forms import SignUpForm
+from post_office.models import EmailTemplate, EmailTemplateTranslation
 
 User = get_user_model()
 
@@ -44,3 +46,33 @@ class AccountsURLTest(TestCase):
             url = reverse(f'accounts:{url_name}')
             response = self.client.get(url)
             self.assertNotEqual(response.status_code, 404)
+
+
+class SignUpEmailTest(TestCase):
+    def setUp(self):
+        self.template = EmailTemplate.objects.create(name='account_confirmation')
+        EmailTemplateTranslation.objects.create(
+            template=self.template,
+            language='en',
+            subject='Activate your account',
+            body='Click here to activate: {{ token_url }}'
+        )
+
+    @patch('post_office.utils.send_mail')
+    def test_signup_sends_activation_email(self, mock_send_mail):
+        """
+        Verify that signing up a new user sends an activation email.
+        """
+        form_data = {
+            'username': 'emailtestuser',
+            'first_name': 'Email',
+            'last_name': 'Test',
+            'email': 'emailtest@example.com',
+            'password1': 'testpassword',
+            'password2': 'testpassword',
+        }
+        response = self.client.post(reverse('accounts:signup'), form_data)
+        self.assertEqual(response.status_code, 302) # Should redirect on success
+
+        self.assertEqual(mock_send_mail.call_count, 1)
+        self.assertEqual(mock_send_mail.call_args[0][3], ['emailtest@example.com'])
