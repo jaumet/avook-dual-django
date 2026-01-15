@@ -48,6 +48,14 @@
     margin-top: 0.5rem;
 }
 
+.custom-title-card .action-btn.play-btn,
+a.button[title="Play"] {
+    font-size: 2rem; /* Bigger font size */
+    padding: 0.5rem 1rem;
+    min-width: 60px;
+    text-align: center;
+}
+
 .accordion-header {
     cursor: pointer;
     display: flex;

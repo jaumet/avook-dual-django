@@ -26,7 +26,6 @@
           {% endif %}
           <h3>{{ product.translation.name }}</h3>
           <p>{{ product.translation.description|safe }}</p>
-            <a href="{% url 'products:product_tests' product.machine_name %}" class="btn btn-info mt-2">{% trans "See the texts included" %}</a>
           {% if product.price == 0 %}
             <div class="my-3">
               <a href="{% url 'products:catalog' %}" class="btn btn-success">{% trans "Try for free" %}</a>

@@ -4,7 +4,7 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/catalog_filters.css' %}">
-    <link rel="stylesheet" href="{% static 'css/title_card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom_title_card.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -24,12 +24,16 @@
         {% endfor %}
     </div>
 
-    <section id="catalog" class="title-cards-container">
+    <section id="catalog">
         {% for level, items in titles_by_level.items %}
-            <h2 class="level-heading" data-level="{{ level }}">{{ level }}</h2>
-            {% for item in items %}
-                {% include 'products/_title_card.html' with item=item %}
-            {% endfor %}
+            <div class="level-container">
+                <h2 class="level-heading" data-level="{{ level }}">{{ level }}</h2>
+                <div class="title-grid">
+                    {% for item in items %}
+                        {% include 'products/_title_card.html' with item=item %}
+                    {% endfor %}
+                </div>
+            </div>
         {% empty %}
             <p>{% trans "No tests available for this product." %}</p>
         {% endfor %}
@@ -43,40 +47,40 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const levelFilters = document.querySelectorAll('.level-filter input[type="checkbox"]');
-    const levelContainers = document.querySelectorAll('.level-container');
+    const titleCards = document.querySelectorAll('.custom-title-card');
     const levelHeadings = document.querySelectorAll('.level-heading');
     const noResultsMessage = document.getElementById('noResultsMessage');
 
-    function filterLevels() {
+    function filterContent() {
         const checkedLevels = Array.from(levelFilters)
             .filter(input => input.checked)
             .map(input => input.value);
 
-        let totalVisibleContainers = 0;
-
-        levelHeadings.forEach(heading => {
-            const level = heading.dataset.level;
-            const containersForLevel = document.querySelectorAll(`.level-container[data-level="${level}"]`);
-            let visibleInLevel = 0;
-
-            containersForLevel.forEach(container => {
-                if (checkedLevels.includes(level)) {
-                    container.style.display = 'block';
-                    visibleInLevel++;
-                } else {
-                    container.style.display = 'none';
-                }
-            });
-
-            if (visibleInLevel > 0) {
-                heading.style.display = 'block';
-                totalVisibleContainers += visibleInLevel;
+        titleCards.forEach(card => {
+            const cardLevel = card.getAttribute('data-level');
+            if (checkedLevels.includes(cardLevel)) {
+                card.style.display = 'flex';
             } else {
-                heading.style.display = 'none';
+                card.style.display = 'none';
             }
         });
 
-        if (totalVisibleContainers === 0) {
+        levelHeadings.forEach(heading => {
+            const headingLevel = heading.getAttribute('data-level');
+            const correspondingCards = document.querySelectorAll(`.custom-title-card[data-level="${headingLevel}"]`);
+            const anyVisible = Array.from(correspondingCards).some(card => card.style.display !== 'none');
+
+            if (anyVisible) {
+                heading.style.display = 'block';
+                heading.parentElement.style.display = 'block';
+            } else {
+                heading.style.display = 'none';
+                heading.parentElement.style.display = 'none';
+            }
+        });
+
+        const anyCardVisible = Array.from(titleCards).some(card => card.style.display !== 'none');
+        if (!anyCardVisible) {
             noResultsMessage.style.display = 'block';
         } else {
             noResultsMessage.style.display = 'none';
@@ -84,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     levelFilters.forEach(input => {
-        input.addEventListener('change', filterLevels);
+        input.addEventListener('change', filterContent);
     });
 
     // Initial filter on page load
-    filterLevels();
+    filterContent();
 });
 </script>
 {% endblock %}
