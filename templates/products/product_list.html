@@ -28,7 +28,7 @@
           <p>{{ product.translation.description|safe }}</p>
           {% if product.price == 0 %}
             <div class="my-3">
-              <a href="{% url 'products:catalog' %}" class="btn btn-success">{% trans "Try for free" %}</a>
+              <a href="{% url 'products:product_tests' product.machine_name %}" class="btn btn-success">{% trans "Try for free" %}</a>
             </div>
           {% else %}
             {% if user.is_authenticated %}
