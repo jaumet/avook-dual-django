@@ -26,13 +26,19 @@
           {% endif %}
           <h3>{{ product.translation.name }}</h3>
           <p>{{ product.translation.description|safe }}</p>
-          {% if user.is_authenticated %}
-            <div id="paypal-{{ product.machine_name }}"></div>
-          {% else %}
+          {% if product.price == 0 %}
             <div class="my-3">
-              <a href="{% url 'accounts:login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
-              <p class="mt-2"><small>{% trans "To buy products, you need to log in or register to Dual.cat" %}</small></p>
+              <a href="{% url 'products:catalog' %}" class="btn btn-success">{% trans "Try for free" %}</a>
             </div>
+          {% else %}
+            {% if user.is_authenticated %}
+              <div id="paypal-{{ product.machine_name }}"></div>
+            {% else %}
+              <div class="my-3">
+                <a href="{% url 'accounts:login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
+                <p class="mt-2"><small>{% trans "To buy products, you need to log in or register to Dual.cat" %}</small></p>
+              </div>
+            {% endif %}
           {% endif %}
         </div>
       {% endfor %}
@@ -65,13 +71,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const successUrl = "{% url 'products:success' %}";
     {% if user.is_authenticated %}
     {% for product in products %}
-    renderButton(
-        "#paypal-{{ product.machine_name }}",
-        "{{ product.translation.name }}",
-        "{{ product.price }}",
-        "{{ product.machine_name }}",
-        successUrl
-    );
+      {% if product.price > 0 %}
+        renderButton(
+            "#paypal-{{ product.machine_name }}",
+            "{{ product.translation.name }}",
+            "{{ product.price }}",
+            "{{ product.machine_name }}",
+            successUrl
+        );
+      {% endif %}
     {% endfor %}
     {% endif %}
 });

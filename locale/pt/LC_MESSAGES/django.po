@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-14 11:52+0000\n"
+"POT-Creation-Date: 2026-01-15 16:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,45 +18,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/admin.py:12
+#: accounts/admin.py:16
 msgid "Personal info"
 msgstr "Informações pessoais"
 
-#: accounts/admin.py:13
+#: accounts/admin.py:17
 msgid "Idiomes"
 msgstr "Idiomas"
 
-#: accounts/admin.py:14
-msgid "Paquets"
-msgstr "Pacotes"
-
-#: accounts/admin.py:16
+#: accounts/admin.py:19
 msgid "Permissions"
 msgstr "Permissões"
 
-#: accounts/admin.py:27
+#: accounts/admin.py:30
 msgid "Important dates"
 msgstr "Datas importantes"
 
-#: accounts/forms.py:17 products/forms.py:31
+#: accounts/forms.py:30 accounts/forms.py:65
 msgid "First name"
 msgstr "Nome"
 
-#: accounts/forms.py:18 products/forms.py:32
+#: accounts/forms.py:31 accounts/forms.py:66
 msgid "Last name"
 msgstr "Apelido"
 
-#: accounts/forms.py:19 products/forms.py:33
+#: accounts/forms.py:32 accounts/forms.py:67
 msgid "Email"
 msgstr "Email"
 
-#: accounts/views.py:70
-msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
-msgstr "A sua conta foi ativada com sucesso. Agora pode iniciar sessão."
+#: accounts/forms.py:38
+msgid "Username"
+msgstr "Nome de usuário"
 
-#: accounts/views.py:73
-msgid "El token d'activació és invàlid o ha expirat."
+#: accounts/forms.py:43
+msgid "Password confirmation"
+msgstr "Confirmação de senha"
+
+#: accounts/models.py:13
+#, fuzzy
+#| msgid "First name"
+msgid "first name"
+msgstr "Nome"
+
+#: accounts/models.py:14
+#, fuzzy
+#| msgid "Last name"
+msgid "last name"
+msgstr "Apelido"
+
+#: accounts/models.py:16
+#, fuzzy
+#| msgid "Username"
+msgid "username"
+msgstr "Nome de usuário"
+
+#: accounts/models.py:19
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: accounts/models.py:22
+msgid "A user with that username already exists."
+msgstr ""
+
+#: accounts/models.py:25
+msgid "email address"
+msgstr ""
+
+#: accounts/models.py:27
+msgid "known languages"
+msgstr ""
+
+#: accounts/models.py:30
+msgid "A list of languages the user knows and their level."
+msgstr ""
+
+#: accounts/models.py:33
+msgid "learning languages"
+msgstr ""
+
+#: accounts/models.py:36
+msgid "A list of languages the user wants to learn and their level."
+msgstr ""
+
+#: accounts/models.py:43
+msgid "user"
+msgstr ""
+
+#: accounts/models.py:44
+msgid "users"
+msgstr ""
+
+#: accounts/views.py:63
+msgid "Your account has been activated successfully. You can now log in."
+msgstr ""
+
+#: accounts/views.py:66
+#, fuzzy
+#| msgid "El token d'activació és invàlid o ha expirat."
+msgid "The activation token is invalid or has expired."
 msgstr "O token de ativação é inválido ou expirou."
+
+#: accounts/views.py:79
+msgid ""
+"Thank you for signing up! We've sent you an email to activate your account."
+msgstr ""
 
 #: avook_site/settings.py:72
 msgid "Catalan"
@@ -86,24 +151,10 @@ msgstr "Italiano"
 msgid "Portuguese"
 msgstr "Português"
 
-#: products/forms.py:39
-msgid "Username"
-msgstr "Nome de usuário"
-
-#: products/forms.py:44
-msgid "Password confirmation"
-msgstr "Confirmação de senha"
-
 #: products/templatetags/content_tags.py:19
 #, python-brace-format
 msgid "Contingut no trobat per a la clau: '{key}'"
 msgstr ""
-
-#: products/views.py:115
-msgid ""
-"Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
-msgstr ""
-"Obrigado por se registar! Enviámos-lhe um e-mail para ativar a sua conta."
 
 #: samples/product_default.html:5
 msgid "Product Page"
@@ -122,7 +173,7 @@ msgid "Included titles in the package:"
 msgstr ""
 
 #: samples/product_default.html:28 samples/product_default.html:37
-#: templates/accounts/activity.html:36 templates/products/_title_card.html:12
+#: templates/accounts/activity.html:36 templates/products/_title_card.html:21
 msgid "Level"
 msgstr ""
 
@@ -225,7 +276,9 @@ msgstr "Histórico de Compras"
 msgid ""
 "Here you can see the status of your products, including expiration dates and "
 "renewal options."
-msgstr "Aqui você pode ver o status de seus produtos, incluindo datas de validade e opções de renovação."
+msgstr ""
+"Aqui você pode ver o status de seus produtos, incluindo datas de validade e "
+"opções de renovação."
 
 #: templates/accounts/purchase_history.html:15
 msgid "Product Name"
@@ -267,7 +320,7 @@ msgstr "Renovar"
 msgid "You have not made any purchases yet."
 msgstr "Você ainda não fez nenhuma compra."
 
-#: templates/base.html:61
+#: templates/base.html:63
 msgid "My products"
 msgstr "Meus produtos"
 
@@ -279,23 +332,23 @@ msgstr ""
 msgid "Cerca avançada"
 msgstr ""
 
-#: templates/products/_title_card.html:11
+#: templates/products/_title_card.html:20
 msgid "Languages"
 msgstr ""
 
-#: templates/products/_title_card.html:13
+#: templates/products/_title_card.html:22
 msgid "Ages"
 msgstr ""
 
-#: templates/products/_title_card.html:14
+#: templates/products/_title_card.html:23
 msgid "Collection"
 msgstr ""
 
-#: templates/products/_title_card.html:15
+#: templates/products/_title_card.html:24
 msgid "Duration"
 msgstr ""
 
-#: templates/products/_title_card.html:23
+#: templates/products/_title_card.html:32
 msgid "Buy"
 msgstr ""
 
@@ -391,47 +444,59 @@ msgstr ""
 msgid "Productes"
 msgstr ""
 
-#: templates/products/product_list.html:28
+#: templates/products/product_list.html:31
+msgid "Try for free"
+msgstr "Experimente de graça"
+
+#: templates/products/product_list.html:38
+msgid "Login / Register"
+msgstr ""
+
+#: templates/products/product_list.html:39
+msgid "To buy products, you need to log in or register to Dual.cat"
+msgstr ""
+
+#: templates/products/product_list.html:50
 msgid "Notes importants:"
 msgstr ""
 
-#: templates/products/product_list.html:29
+#: templates/products/product_list.html:51
 msgid "Tots els packs són"
 msgstr ""
 
-#: templates/products/product_list.html:29
+#: templates/products/product_list.html:51
 msgid "bidireccionals"
 msgstr ""
 
-#: templates/products/product_list.html:30
+#: templates/products/product_list.html:52
 msgid "Inclouen"
 msgstr ""
 
-#: templates/products/product_list.html:30
+#: templates/products/product_list.html:52
 msgid "totes les llengües disponibles"
 msgstr ""
 
-#: templates/products/product_list.html:31
+#: templates/products/product_list.html:53
 msgid "L’accés és"
 msgstr ""
 
-#: templates/products/product_list.html:31
+#: templates/products/product_list.html:53
 msgid "temporal"
 msgstr ""
 
-#: templates/products/product_list.html:31
+#: templates/products/product_list.html:53
 msgid "i"
 msgstr ""
 
-#: templates/products/product_list.html:31
+#: templates/products/product_list.html:53
 msgid "no es renova automàticamente"
 msgstr ""
 
-#: templates/products/product_list.html:32
+#: templates/products/product_list.html:54
 msgid "Un cop finalitzat el període, cal adquirir un nou pack per continuar."
 msgstr ""
 
-#: templates/products/product_list.html:37
+#: templates/products/product_list.html:59
 msgid "Navega pel catàleg"
 msgstr "Navegue pelo catálogo"
 
@@ -566,6 +631,19 @@ msgstr "Criar conta"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registar-me"
+
+#~ msgid "Paquets"
+#~ msgstr "Pacotes"
+
+#~ msgid ""
+#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgstr "A sua conta foi ativada com sucesso. Agora pode iniciar sessão."
+
+#~ msgid ""
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
+#~ "compte."
+#~ msgstr ""
+#~ "Obrigado por se registar! Enviámos-lhe um e-mail para ativar a sua conta."
 
 #~ msgid "Dual Start"
 #~ msgstr "Dual Start"
