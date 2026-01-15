@@ -49,17 +49,8 @@ class AccountsURLTest(TestCase):
 
 
 class SignUpEmailTest(TestCase):
-    def setUp(self):
-        self.template = EmailTemplate.objects.create(name='account_confirmation')
-        EmailTemplateTranslation.objects.create(
-            template=self.template,
-            language='en',
-            subject='Activate your account',
-            body='Click here to activate: {{ token_url }}'
-        )
-
-    @patch('post_office.utils.send_mail')
-    def test_signup_sends_activation_email(self, mock_send_mail):
+    @patch('post_office.utils.send_email')
+    def test_signup_sends_activation_email(self, mock_send_email):
         """
         Verify that signing up a new user sends an activation email.
         """
@@ -74,5 +65,6 @@ class SignUpEmailTest(TestCase):
         response = self.client.post(reverse('accounts:signup'), form_data)
         self.assertEqual(response.status_code, 302) # Should redirect on success
 
-        self.assertEqual(mock_send_mail.call_count, 1)
-        self.assertEqual(mock_send_mail.call_args[0][3], ['emailtest@example.com'])
+        mock_send_email.assert_called_once()
+        _, kwargs = mock_send_email.call_args
+        self.assertEqual(kwargs['to'], ['emailtest@example.com'])
