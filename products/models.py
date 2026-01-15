@@ -32,6 +32,10 @@ class Title(models.Model):
         Determina l'estat del títol per a un usuari específic.
         Retorna 'PREMIUM_OWNED', o 'PREMIUM_NOT_OWNED'.
         """
+        # Grant access if the title is part of any free product.
+        if Product.objects.filter(price=0, packages__titles=self).exists():
+            return 'PREMIUM_OWNED'
+
         if user and user.is_authenticated:
             # Grant access to staff/admin users immediately
             if user.is_staff:
