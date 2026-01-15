@@ -23,7 +23,14 @@ def run(playwright):
 
         # 1. Verify page content and take screenshot
         expect(page.get_by_text("Tests for Dual Free Test")).to_be_visible()
-        page.screenshot(path="verification/product_tests_layout.png")
+
+        # Explicitly check for a title that SHOULD be on the page
+        expect(page.get_by_text("Un petit test")).to_be_visible()
+
+        # Explicitly check for a title that SHOULD NOT be on the page
+        expect(page.get_by_text("Some Other Title")).not_to_be_visible()
+
+        page.screenshot(path="verification/correct_titles.png")
 
     finally:
         browser.close()
