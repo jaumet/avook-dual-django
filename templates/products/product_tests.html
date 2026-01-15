@@ -24,16 +24,12 @@
         {% endfor %}
     </div>
 
-    <section id="catalog">
+    <section id="catalog" class="title-cards-container">
         {% for level, items in titles_by_level.items %}
-            <div class="level-container" data-level="{{ level }}">
-                <h2>{{ level }}</h2>
-                <div class="title-cards-container">
-                    {% for item in items %}
-                        {% include 'products/_title_card.html' with item=item %}
-                    {% endfor %}
-                </div>
-            </div>
+            <h2 class="level-heading" data-level="{{ level }}">{{ level }}</h2>
+            {% for item in items %}
+                {% include 'products/_title_card.html' with item=item %}
+            {% endfor %}
         {% empty %}
             <p>{% trans "No tests available for this product." %}</p>
         {% endfor %}
@@ -48,6 +44,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const levelFilters = document.querySelectorAll('.level-filter input[type="checkbox"]');
     const levelContainers = document.querySelectorAll('.level-container');
+    const levelHeadings = document.querySelectorAll('.level-heading');
     const noResultsMessage = document.getElementById('noResultsMessage');
 
     function filterLevels() {
@@ -55,17 +52,31 @@ document.addEventListener('DOMContentLoaded', function() {
             .filter(input => input.checked)
             .map(input => input.value);
 
-        let visibleContainers = 0;
-        levelContainers.forEach(container => {
-            if (checkedLevels.includes(container.dataset.level)) {
-                container.style.display = 'block';
-                visibleContainers++;
+        let totalVisibleContainers = 0;
+
+        levelHeadings.forEach(heading => {
+            const level = heading.dataset.level;
+            const containersForLevel = document.querySelectorAll(`.level-container[data-level="${level}"]`);
+            let visibleInLevel = 0;
+
+            containersForLevel.forEach(container => {
+                if (checkedLevels.includes(level)) {
+                    container.style.display = 'block';
+                    visibleInLevel++;
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+
+            if (visibleInLevel > 0) {
+                heading.style.display = 'block';
+                totalVisibleContainers += visibleInLevel;
             } else {
-                container.style.display = 'none';
+                heading.style.display = 'none';
             }
         });
 
-        if (visibleContainers === 0) {
+        if (totalVisibleContainers === 0) {
             noResultsMessage.style.display = 'block';
         } else {
             noResultsMessage.style.display = 'none';
