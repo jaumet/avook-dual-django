@@ -263,6 +263,42 @@ def player_view(request, machine_name):
     return render(request, 'products/player.html', context)
 
 
+class ProductTestsView(TitleContextMixin, ListView):
+    model = Title
+    template_name = 'products/product_tests.html'
+
+    def get_queryset(self):
+        product_machine_name = self.kwargs['machine_name']
+        self.product = get_object_or_404(
+            Product,
+            machine_name=product_machine_name
+        )
+        return Title.objects.filter(
+            packages__products=self.product
+        ).distinct().order_by('level', 'machine_name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        titles_with_status = self.get_titles_with_status(context['object_list'])
+
+        titles_by_level = {}
+        levels = set()
+        for item in titles_with_status:
+            level = item['title'].level if item['title'].level else 'N/A'
+            if level not in titles_by_level:
+                titles_by_level[level] = []
+            titles_by_level[level].append(item)
+            levels.add(level)
+
+        product_obj = self.product
+        product_obj.translation = product_obj.get_translation(self.request.LANGUAGE_CODE)
+        context['product'] = product_obj
+        context['titles_by_level'] = titles_by_level
+        context['levels'] = sorted(list(levels))
+
+        return context
+
+
 def root_redirect(request):
     return redirect('/ca/')
 

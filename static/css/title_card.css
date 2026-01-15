@@ -90,9 +90,22 @@
     text-decoration: none;
     padding: 0.5rem;
     border-radius: 50%;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .action-btn:hover {
     background-color: var(--accent-color-trans);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.play-btn {
+    font-size: 2rem;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.play-btn:hover {
+    background-color: var(--primary-dark-color);
+    color: white;
 }
