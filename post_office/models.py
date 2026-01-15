@@ -13,6 +13,7 @@ class EmailTemplateTranslation(models.Model):
     language = models.CharField(max_length=10, choices=settings.LANGUAGES)
     subject = models.CharField(max_length=255)
     body = CKEditor5Field()
+    plain_body = models.TextField(help_text="Plain text version of the email body.", null=True, blank=True, default='')
 
     class Meta:
         unique_together = ('template', 'language')
