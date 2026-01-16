@@ -61,7 +61,7 @@ class TitleContextMixin:
             # 3. Combine data, prioritizing DB for translatable text
             context_data = {
                 'machine_name': machine_name,
-                'levels': title_data_from_json.get('levels', ''),
+                'levels': title.level,
                 'ages': lang_version_from_json.get('ages', ''),
                 'colection': lang_version_from_json.get('colection', ''),
                 'duration': lang_version_from_json.get('duration', ''),

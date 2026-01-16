@@ -19,13 +19,19 @@ class Title(models.Model):
         return self.machine_name
 
     def get_image_url(self):
-        image_path = f"AUDIOS/{self.machine_name}/{self.machine_name}.png"
+        image_path = f"AUDIOS/{self.level}/{self.machine_name}/{self.machine_name}.png"
         image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
 
         if os.path.exists(image_fullpath):
             return static(image_path)
-        else:
-            return static("imgs/anonymous-cover.png")
+
+        default_image_path = f"imgs/{self.level}-anonymous-cover.png"
+        default_image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], default_image_path)
+
+        if os.path.exists(default_image_fullpath):
+            return static(default_image_path)
+
+        return static("imgs/anonymous-cover.png")
 
     def get_user_status(self, user):
         """
