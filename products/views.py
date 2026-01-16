@@ -120,10 +120,10 @@ class CatalogView(TitleContextMixin, ListView):
         titles = context['object_list']
         titles_with_status = self.get_titles_with_status(titles)
 
-        # Group titles by level using data from audios.json
+        # Group titles by level using data from the Title model
         titles_by_level = {}
         for item in titles_with_status:
-            level = item['json_info']['levels']
+            level = item['title'].level
             if level not in titles_by_level:
                 titles_by_level[level] = []
             titles_by_level[level].append(item)
