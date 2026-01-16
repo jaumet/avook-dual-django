@@ -15,7 +15,7 @@
     color: var(--text-color);
     text-align: center;
     height: 100%;
-    margin: 1rem;
+    margin: 0; /*1rem;*/
 }
 
 .custom-title-card .title-image {
