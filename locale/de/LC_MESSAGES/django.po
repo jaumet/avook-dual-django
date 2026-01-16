@@ -504,6 +504,18 @@ msgstr ""
 msgid "Navega pel catàleg"
 msgstr "Katalog durchsuchen"
 
+#: templates/products/product_tests.html:13
+msgid "Texts in"
+msgstr "Texte in"
+
+#: templates/products/product_tests.html:19
+msgid "Filter by level:"
+msgstr "Nach Stufe filtern:"
+
+#: templates/products/product_tests.html:38
+msgid "No texts available for this product."
+msgstr "Für dieses Produkt sind keine Texte verfügbar."
+
 #: templates/products/success.html:6
 msgid "Pagament correcte ✅"
 msgstr ""

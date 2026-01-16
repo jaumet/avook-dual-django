@@ -326,4 +326,19 @@ def run():
     for lang, data in translations_full.items():
         ProductTranslation.objects.create(product=product_full, language_code=lang, name=data['name'], description=data['description'])
 
+    # Product 5: Dual Free Test
+    product_free = Product.objects.create(machine_name='dual-free-test', price=0, duration=0, category='free')
+    product_free.packages.add(packages['A0'])
+    translations_free = {
+        'ca': {'name': 'Dual Free Test', 'description': 'Producte de prova gratuït'},
+        'en': {'name': 'Dual Free Test', 'description': 'Free test product'},
+        'es': {'name': 'Dual Free Test', 'description': 'Producto de prueba gratuito'},
+        'fr': {'name': 'Dual Free Test', 'description': 'Produit de test gratuit'},
+        'de': {'name': 'Dual Free Test', 'description': 'Kostenloses Testprodukt'},
+        'it': {'name': 'Dual Free Test', 'description': 'Prodotto di prova gratuito'},
+        'pt': {'name': 'Dual Free Test', 'description': 'Produto de teste gratuito'}
+    }
+    for lang, data in translations_free.items():
+        ProductTranslation.objects.create(product=product_free, language_code=lang, name=data['name'], description=data['description'])
+
     print("Database seeded successfully with new products and packages.")

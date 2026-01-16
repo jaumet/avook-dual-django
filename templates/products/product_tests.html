@@ -10,7 +10,7 @@
 {% block content %}
 <main class="container">
     <div class="product-header">
-        <h1>{% trans "Tests for" %} {{ product.translation.name }}</h1>
+        <h1>{% trans "Texts in" %} {{ product.translation.name }}</h1>
         <p>{{ product.translation.description|safe }}</p>
     </div>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
         {% empty %}
-            <p>{% trans "No tests available for this product." %}</p>
+            <p>{% trans "No texts available for this product." %}</p>
         {% endfor %}
     </section>
     <p id="noResultsMessage" style="display: none;">{% trans "No results found for your search." %}</p>
