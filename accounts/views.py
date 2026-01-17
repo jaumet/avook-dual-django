@@ -37,20 +37,32 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 class PurchaseHistoryView(LoginRequiredMixin, ListView):
     model = UserPurchase
     template_name = 'accounts/purchase_history.html'
-    context_object_name = 'purchases'
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         user = self.request.user
         purchases = UserPurchase.objects.filter(user=user).order_by('-purchase_date').select_related('product')
+
+        active_purchases = []
+        expired_purchases = []
+        now = timezone.now()
 
         for p in purchases:
             p.product.translation = p.product.get_translation(self.request.LANGUAGE_CODE)
             if p.expiry_date:
-                now = timezone.now()
-                p.days_remaining = (p.expiry_date - now).days if p.expiry_date > now else 0
+                if p.expiry_date > now:
+                    p.days_remaining = (p.expiry_date - now).days
+                    active_purchases.append(p)
+                else:
+                    p.days_remaining = 0
+                    expired_purchases.append(p)
             else:
                 p.days_remaining = None
-        return purchases
+                active_purchases.append(p)
+
+        context['active_purchases'] = active_purchases
+        context['expired_purchases'] = expired_purchases
+        return context
 
 
 def activate_account(request, token):
