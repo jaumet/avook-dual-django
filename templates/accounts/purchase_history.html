@@ -37,7 +37,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'products:product_detail' purchase.product.machine_name %}" class="btn btn-primary btn-sm">{% trans "Renew" %}</a>
+                        <a href="{% url 'products:product_tests' purchase.product.machine_name %}" class="btn btn-primary btn-sm">{% trans "Go to product" %}</a>
                     </td>
                 </tr>
                 {% empty %}
