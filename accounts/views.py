@@ -19,7 +19,7 @@ from weasyprint import HTML
 from post_office.utils import send_templated_email
 from products.models import TitleTranslation, UserActivity, UserPurchase
 
-from .forms import ProfileUpdateForm, SignUpForm
+from .forms import CustomPasswordResetForm, ProfileUpdateForm, SignUpForm
 
 User = get_user_model()
 
@@ -68,8 +68,7 @@ def activate_account(request, token):
 
 
 class CustomPasswordResetView(PasswordResetView):
-    def send_mail(self, subject_template_name, email_template_name, context, from_email, to_email, html_email_template_name=None):
-        send_templated_email('password_reset', context, to_email, from_email, language=self.request.LANGUAGE_CODE)
+    form_class = CustomPasswordResetForm
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
