@@ -3,8 +3,15 @@ import uuid
 
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import (
+    PasswordResetForm,
+    UserChangeForm,
+    UserCreationForm,
+)
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+from post_office.utils import send_templated_email
 
 from .models import CustomUser
 
@@ -84,3 +91,28 @@ class ProfileUpdateForm(forms.ModelForm):
             except json.JSONDecodeError:
                 raise forms.ValidationError("Invalid JSON format for learning languages.")
         return []
+
+# Form for public user PASSWORD RESET
+class CustomPasswordResetForm(PasswordResetForm):
+    def send_mail(
+        self,
+        subject_template_name,
+        email_template_name,
+        context,
+        from_email,
+        to_email,
+        html_email_template_name=None,
+    ):
+        path = reverse(
+            "accounts:password_reset_confirm",
+            kwargs={"uidb64": context["uid"], "token": context["token"]},
+        )
+
+        custom_context = context.copy()
+        custom_context['path'] = path
+
+        send_templated_email(
+            template_name="password_reset",
+            context=custom_context,
+            to_email=to_email,
+        )
