@@ -223,10 +223,8 @@ msgid "Title"
 msgstr "Título"
 
 #: templates/accounts/activity.html:37
-#, fuzzy
-#| msgid "Languages:"
 msgid "Language Pair"
-msgstr "Idiomas:"
+msgstr "Par de idiomas"
 
 #: templates/accounts/activity.html:38
 msgid "Listen Count"
@@ -241,8 +239,6 @@ msgid "Completion"
 msgstr "Completado"
 
 #: templates/accounts/activity.html:41
-#, fuzzy
-#| msgid "Last name"
 msgid "Last Listened"
 msgstr "Última Escucha"
 
@@ -678,6 +674,22 @@ msgstr "Crear una cuenta"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrarme"
+
+#: templates/accounts/activity.html:92
+msgid "Search..."
+msgstr "Buscar..."
+
+#: templates/accounts/activity.html:93
+msgid "{select} entries per page"
+msgstr "{select} entradas por página"
+
+#: templates/accounts/activity.html:94
+msgid "No entries found"
+msgstr "No se encontraron entradas"
+
+#: templates/accounts/activity.html:95
+msgid "Showing {start} to {end} of {rows} entries"
+msgstr "Mostrando de {start} a {end} de {rows} entradas"
 
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compras"
