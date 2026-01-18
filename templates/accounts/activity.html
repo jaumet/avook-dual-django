@@ -78,7 +78,6 @@
 
 {% block extra_js %}
 {{ block.super }}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@2.3.0/dist/chartjs-chart-treemap.min.js"></script>
@@ -86,15 +85,22 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const datatable = new simpleDatatables.DataTable("#activityTable");
-        const chartData = JSON.parse('{{ chart_data|escapejs }}');
+        const datatable = new simpleDatatables.DataTable("#activityTable", {
+            labels: {
+                placeholder: "{% trans 'Search...' %}",
+                perPage: "{% trans '{select} entries per page' %}",
+                noRows: "{% trans 'No entries found' %}",
+                info: "{% trans 'Showing {start} to {end} of {rows} entries' %}",
+            }
+        });
+        const chartData = JSON.parse("{{ chart_data|escapejs }}");
 
         new Chart(document.getElementById('langPairChart'), {
             type: 'bar',
             data: {
                 labels: chartData.langPairChart.labels,
                 datasets: [{
-                    label: '{% trans "Listening Time (minutes)" %}',
+                    label: "{% trans 'Listening Time (minutes)' %}",
                     data: chartData.langPairChart.data,
                     backgroundColor: 'rgba(247, 131, 106, 0.5)',
                     borderColor: 'rgba(247, 131, 106, 1)',
@@ -107,7 +113,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: '{% trans "Listening Time by Language Pair" %}'
+                        text: "{% trans 'Listening Time by Language Pair' %}"
                     }
                 }
             }
@@ -124,7 +130,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: '{% trans "Titles Listened by Level (Bubble Chart)" %}'
+                        text: "{% trans 'Titles Listened by Level (Bubble Chart)' %}"
                     },
                     legend: {
                         position: 'top',
@@ -146,7 +152,7 @@
             data: {
                 labels: chartData.timelineChart.labels,
                 datasets: [{
-                    label: '{% trans "Daily Listening (minutes)" %}',
+                    label: "{% trans 'Daily Listening (minutes)' %}",
                     data: chartData.timelineChart.data,
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
@@ -159,7 +165,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: '{% trans "Listening Activity Timeline" %}'
+                        text: "{% trans 'Listening Activity Timeline' %}"
                     }
                 }
             }
@@ -192,7 +198,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: '{% trans "Listening Time by Level and Language Pair" %}'
+                        text: "{% trans 'Listening Time by Level and Language Pair' %}"
                     }
                 }
             }

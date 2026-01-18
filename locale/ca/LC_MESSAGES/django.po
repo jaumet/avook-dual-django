@@ -224,10 +224,8 @@ msgid "Title"
 msgstr "Títol"
 
 #: templates/accounts/activity.html:37
-#, fuzzy
-#| msgid "Languages"
 msgid "Language Pair"
-msgstr "Llengües"
+msgstr "Parella d'idiomes"
 
 #: templates/accounts/activity.html:38
 msgid "Listen Count"
@@ -238,14 +236,10 @@ msgid "Listening Time (minutes)"
 msgstr "Temps d'Escolta (minuts)"
 
 #: templates/accounts/activity.html:40
-#, fuzzy
-#| msgid "Collection"
 msgid "Completion"
-msgstr "Col·lecció"
+msgstr "Completat"
 
 #: templates/accounts/activity.html:41
-#, fuzzy
-#| msgid "Last name"
 msgid "Last Listened"
 msgstr "Darrera Escolta"
 
@@ -675,6 +669,22 @@ msgstr "Crea un compte"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrar-me"
+
+#: templates/accounts/activity.html:92
+msgid "Search..."
+msgstr "Cerca..."
+
+#: templates/accounts/activity.html:93
+msgid "{select} entries per page"
+msgstr "{select} entrades per pàgina"
+
+#: templates/accounts/activity.html:94
+msgid "No entries found"
+msgstr "No s'han trobat entrades"
+
+#: templates/accounts/activity.html:95
+msgid "Showing {start} to {end} of {rows} entries"
+msgstr "Mostrant de {start} a {end} de {rows} entrades"
 
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compres"
