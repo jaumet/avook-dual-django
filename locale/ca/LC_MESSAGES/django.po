@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 16:11+0000\n"
+"POT-Creation-Date: 2026-01-18 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,23 +34,23 @@ msgstr "Permisos"
 msgid "Important dates"
 msgstr "Dates importants"
 
-#: accounts/forms.py:30 accounts/forms.py:65
+#: accounts/forms.py:37 accounts/forms.py:72
 msgid "First name"
 msgstr "Nom"
 
-#: accounts/forms.py:31 accounts/forms.py:66
+#: accounts/forms.py:38 accounts/forms.py:73
 msgid "Last name"
 msgstr "Cognom"
 
-#: accounts/forms.py:32 accounts/forms.py:67
+#: accounts/forms.py:39 accounts/forms.py:74
 msgid "Email"
 msgstr "Correu electrònic"
 
-#: accounts/forms.py:38
+#: accounts/forms.py:45
 msgid "Username"
 msgstr "Nom d'usuari"
 
-#: accounts/forms.py:43
+#: accounts/forms.py:50
 msgid "Password confirmation"
 msgstr "Confirmació de la contrasenya"
 
@@ -110,17 +110,17 @@ msgstr ""
 msgid "users"
 msgstr ""
 
-#: accounts/views.py:63
+#: accounts/views.py:75
 msgid "Your account has been activated successfully. You can now log in."
 msgstr ""
 
-#: accounts/views.py:66
+#: accounts/views.py:78
 #, fuzzy
 #| msgid "El token d'activació és invàlid o ha expirat."
 msgid "The activation token is invalid or has expired."
 msgstr "El token d'activació és invàlid o ha expirat."
 
-#: accounts/views.py:79
+#: accounts/views.py:90
 msgid ""
 "Thank you for signing up! We've sent you an email to activate your account."
 msgstr ""
@@ -213,15 +213,15 @@ msgstr "Francès, Alemany"
 
 #: templates/accounts/activity.html:28
 msgid "User Activity Log"
-msgstr ""
+msgstr "Registre d'Activitat de l'Usuari"
 
 #: templates/accounts/activity.html:29
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exporta a PDF"
 
 #: templates/accounts/activity.html:35
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: templates/accounts/activity.html:37
 #, fuzzy
@@ -231,11 +231,11 @@ msgstr "Llengües"
 
 #: templates/accounts/activity.html:38
 msgid "Listen Count"
-msgstr ""
+msgstr "Recomptes d'Escolta"
 
 #: templates/accounts/activity.html:39 templates/accounts/activity.html:96
 msgid "Listening Time (minutes)"
-msgstr ""
+msgstr "Temps d'Escolta (minuts)"
 
 #: templates/accounts/activity.html:40
 #, fuzzy
@@ -247,34 +247,38 @@ msgstr "Col·lecció"
 #, fuzzy
 #| msgid "Last name"
 msgid "Last Listened"
-msgstr "Cognom"
+msgstr "Darrera Escolta"
 
 #: templates/accounts/activity.html:60
 msgid "Visual Report"
-msgstr ""
+msgstr "Informe Visual"
 
 #: templates/accounts/activity.html:109
 msgid "Listening Time by Language Pair"
-msgstr ""
+msgstr "Temps d'Escolta per Parell de Llengües"
 
 #: templates/accounts/activity.html:126
 msgid "Titles Listened by Level (Bubble Chart)"
-msgstr ""
+msgstr "Títols Escoltats per Nivell (Gràfic de Bombolles)"
 
 #: templates/accounts/activity.html:148
 msgid "Daily Listening (minutes)"
-msgstr ""
+msgstr "Escolta Diària (minuts)"
 
 #: templates/accounts/activity.html:161
 msgid "Listening Activity Timeline"
-msgstr ""
+msgstr "Línia de Temps d'Activitat d'Escolta"
+
+#: templates/accounts/activity.html:194
+msgid "Listening Time by Level and Language Pair"
+msgstr "Temps d'Escolta per Nivell i Parell de Llengües"
 
 #: templates/accounts/purchase_history.html:4
-#: templates/accounts/purchase_history.html:8
-msgid "Purchase History"
-msgstr "Historial de Compres"
+#: templates/accounts/purchase_history.html:40 templates/base.html:63
+msgid "My products"
+msgstr "Els meus productes"
 
-#: templates/accounts/purchase_history.html:9
+#: templates/accounts/purchase_history.html:41
 msgid ""
 "Here you can see the status of your products, including expiration dates and "
 "renewal options."
@@ -282,51 +286,73 @@ msgstr ""
 "Aquí pots veure l'estat dels teus productes, incloent-hi les dates de "
 "caducitat i les opcions de renovació."
 
-#: templates/accounts/purchase_history.html:15
+#: templates/accounts/purchase_history.html:44
+#, fuzzy
+#| msgid "Productes"
+msgid "Active Products"
+msgstr "Productes"
+
+#: templates/accounts/purchase_history.html:49
+#: templates/accounts/purchase_history.html:85
 #, fuzzy
 #| msgid "Product Page"
 msgid "Product Name"
 msgstr "Nom del Producte"
 
-#: templates/accounts/purchase_history.html:16
+#: templates/accounts/purchase_history.html:50
+#: templates/accounts/purchase_history.html:86
 msgid "Purchase Date"
 msgstr "Data de Compra"
 
-#: templates/accounts/purchase_history.html:17
+#: templates/accounts/purchase_history.html:51
+#: templates/accounts/purchase_history.html:87
 msgid "Expiry Date"
 msgstr "Data de Caducitat"
 
-#: templates/accounts/purchase_history.html:18
+#: templates/accounts/purchase_history.html:52
 msgid "Days Remaining"
 msgstr "Dies Restants"
 
-#: templates/accounts/purchase_history.html:19
+#: templates/accounts/purchase_history.html:53
+#: templates/accounts/purchase_history.html:89
 msgid "Actions"
 msgstr "Accions"
 
-#: templates/accounts/purchase_history.html:31
+#: templates/accounts/purchase_history.html:64
 msgid "days"
 msgstr "dies"
 
-#: templates/accounts/purchase_history.html:33
-msgid "Expired"
-msgstr "Caducat"
-
-#: templates/accounts/purchase_history.html:36
+#: templates/accounts/purchase_history.html:66
 msgid "Lifetime"
 msgstr "Per Sempre"
 
-#: templates/accounts/purchase_history.html:40
+#: templates/accounts/purchase_history.html:70
+#, fuzzy
+#| msgid "Edit product"
+msgid "Go to product"
+msgstr "Edita el producte"
+
+#: templates/accounts/purchase_history.html:80
+#, fuzzy
+#| msgid "Editar producte"
+msgid "Expired Products"
+msgstr "Editar producte"
+
+#: templates/accounts/purchase_history.html:88
+msgid "Status"
+msgstr ""
+
+#: templates/accounts/purchase_history.html:98
+msgid "Expired"
+msgstr "Caducat"
+
+#: templates/accounts/purchase_history.html:100
 msgid "Renew"
 msgstr "Renovar"
 
-#: templates/accounts/purchase_history.html:45
+#: templates/accounts/purchase_history.html:111
 msgid "You have not made any purchases yet."
 msgstr "Encara no has fet cap compra."
-
-#: templates/base.html:63
-msgid "My products"
-msgstr "Els meus productes"
 
 #: templates/catalog.html:19
 msgid "Selecciona nivell:"
@@ -504,6 +530,22 @@ msgstr ""
 msgid "Navega pel catàleg"
 msgstr "Navega pel catàleg"
 
+#: templates/products/product_tests.html:13
+msgid "Texts in"
+msgstr ""
+
+#: templates/products/product_tests.html:19
+msgid "Filter by level:"
+msgstr ""
+
+#: templates/products/product_tests.html:38
+msgid "No texts available for this product."
+msgstr ""
+
+#: templates/products/product_tests.html:41
+msgid "No results found for your search."
+msgstr ""
+
 #: templates/products/success.html:6
 msgid "Pagament correcte ✅"
 msgstr ""
@@ -633,6 +675,9 @@ msgstr "Crea un compte"
 #: templates/registration/signup.html:21
 msgid "Registrar-me"
 msgstr "Registrar-me"
+
+#~ msgid "Purchase History"
+#~ msgstr "Historial de Compres"
 
 #~ msgid "Paquets"
 #~ msgstr "Paquets"
