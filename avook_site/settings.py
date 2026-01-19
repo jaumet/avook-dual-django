@@ -167,7 +167,8 @@ SECURE_CONTENT_SECURITY_POLICY = {
         "https://objects.paypal.cn",
         "https://www.google.com",
         "https://www.gstatic.com",
-    "'unsafe-inline'",
+    "'sha256-aKAwvWwisgzRhW5auVEe5FrNQ3wlLsxZvLvimiQ3+os='",
+    "'sha256-yei5Fza+Eyx4G0smvN0xBqEesIKumz6RSyGsU3FJowI='",
     "nonce-placeholder"
     ],
     "style-src": [
