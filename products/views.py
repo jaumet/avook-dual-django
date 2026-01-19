@@ -27,7 +27,7 @@ from post_office.utils import send_templated_email
 
 from .forms import ProductForm
 from .mixins import TitleContextMixin
-from .models import Product, Title, UserActivity, HomePageContent
+from .models import Product, Title, UserActivity, HomePageContent, UserPurchase
 
 
 class ProductListView(TitleContextMixin, ListView):
@@ -56,7 +56,7 @@ class ProductListView(TitleContextMixin, ListView):
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
 
         context['products'] = products
-        context['PAYPAL_CLIENT_ID_LIVE'] = settings.PAYPAL_CLIENT_ID
+        context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
         return context
 
 
@@ -89,6 +89,11 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related('translations')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -317,3 +322,31 @@ class ProductTestsView(TitleContextMixin, View):
             'levels': levels,
         }
         return render(request, self.template_name, context)
+
+class PurchaseSuccessView(LoginRequiredMixin, TemplateView):
+    template_name = 'products/success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product_code = self.request.GET.get('product')
+        order_id = self.request.GET.get('order')
+
+        if product_code and order_id:
+            try:
+                product = Product.objects.get(machine_name=product_code)
+                if not UserPurchase.objects.filter(paypal_order_id=order_id).exists():
+                    UserPurchase.objects.create(
+                        user=self.request.user,
+                        product=product,
+                        paypal_order_id=order_id
+                    )
+                    messages.success(self.request, _("Compra realitzada amb èxit!"))
+                else:
+                    messages.info(self.request, _("Aquesta compra ja ha estat registrada."))
+                context['product'] = product
+            except Product.DoesNotExist:
+                messages.error(self.request, _("El producte no s'ha trobat."))
+        else:
+            messages.error(self.request, _("Falta informació de la comanda."))
+
+        return context
