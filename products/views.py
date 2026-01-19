@@ -22,12 +22,14 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import (CreateView, DetailView, ListView,
                                   TemplateView, UpdateView, View)
 from collections import defaultdict
+from django.utils.decorators import method_decorator
 
 from post_office.utils import send_templated_email
 
 from .forms import ProductForm
 from .mixins import TitleContextMixin
 from .models import Product, Title, UserActivity, HomePageContent
+from .decorators import paypal_csp_decorator
 
 
 class ProductListView(TitleContextMixin, ListView):
@@ -82,6 +84,7 @@ class HomeView(ListView):
         return context
 
 
+@method_decorator(paypal_csp_decorator, name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'products/detail.html'
