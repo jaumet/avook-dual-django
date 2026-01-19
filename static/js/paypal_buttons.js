@@ -1,4 +1,5 @@
 function renderButton(target, name, price, productCode, successUrl) {
+  const formattedPrice = price.replace(',', '.');
   paypal.Buttons({
     style: {
       layout: 'vertical',
@@ -12,7 +13,7 @@ function renderButton(target, name, price, productCode, successUrl) {
         purchase_units: [{
           description: name,
           amount: {
-            value: price
+            value: formattedPrice
           }
         }]
       });
