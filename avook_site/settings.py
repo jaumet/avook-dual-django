@@ -33,6 +33,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'avook_site.middleware.CspNonceMiddleware',
 ]
 
 ROOT_URLCONF = 'avook_site.urls'
@@ -158,11 +159,45 @@ SECURE_HSTS_PRELOAD = True
 # Content Security Policy
 SECURE_CONTENT_SECURITY_POLICY = {
     "default-src": ["'self'"],
-    "script-src": ["'self'", "https://www.paypal.com", "https://www.paypalobjects.com", "https://www.google.com", "https://www.gstatic.com", "'unsafe-inline'"],
-    "style-src": ["'self'", "https://www.paypalobjects.com", "'unsafe-inline'"],
-    "img-src": ["'self'", "https://*.googleusercontent.com/", "https://*.paypal.com", "https://*.paypalobjects.com", "https://googleads.g.doubleclick.net", "https://www.google-analytics.com", "https://www.facebook.com", "data:", "blob:"],
-    "connect-src": ["'self'", "https://*.paypal.com", "https://192.55.233.1", "https://www.google.com", "https://browser-intake-us5-datadoghq.com"],
-    "frame-src": ["'self'", "https://www.sandbox.paypal.com"],
+    "script-src": [
+        "'self'",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://*.paypalobjects.com",
+        "https://objects.paypal.cn",
+        "https://www.google.com",
+        "https://www.gstatic.com",
+    "'unsafe-inline'",
+    "nonce-placeholder"
+    ],
+    "style-src": [
+        "'self'",
+        "https://*.paypalobjects.com",
+        "https://*.paypal.com",
+        "'unsafe-inline'"
+    ],
+    "img-src": [
+        "'self'",
+        "https://*.googleusercontent.com/",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://*.paypalobjects.com",
+        "https://objects.paypal.cn",
+        "https://googleads.g.doubleclick.net",
+        "https://www.google-analytics.com",
+        "https://www.facebook.com",
+        "data:", "blob:"
+    ],
+    "connect-src": [
+        "'self'",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://postcollector.paypal.com",
+        "https://192.55.233.1",
+        "https://www.google.com",
+        "https://browser-intake-us5-datadoghq.com"
+    ],
+    "frame-src": ["'self'", "https://*.sandbox.paypal.com", "https://*.paypal.com"],
     "object-src": ["'none'"],
 }
 
