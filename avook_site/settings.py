@@ -149,3 +149,19 @@ if not all([PAYPAL_API_URL, PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID])
         "Assegura't que totes les variables PAYPAL_* estiguin definides al fitxer .env."
     )
 # --- End of PayPal Configuration ---
+
+# Security Settings for CSP
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Content Security Policy
+SECURE_CONTENT_SECURITY_POLICY = {
+    "default-src": ["'self'"],
+    "script-src": ["'self'", "https://www.paypal.com", "https://www.paypalobjects.com", "https://www.google.com", "https://www.gstatic.com", "'unsafe-inline'"],
+    "style-src": ["'self'", "https://www.paypalobjects.com", "'unsafe-inline'"],
+    "img-src": ["'self'", "https://*.googleusercontent.com/", "https://*.paypal.com", "https://*.paypalobjects.com", "https://googleads.g.doubleclick.net", "https://www.google-analytics.com", "https://www.facebook.com", "data:"],
+    "connect-src": ["'self'", "https://*.paypal.com", "https://192.55.233.1", "https://www.google.com", "https://browser-intake-us5-datadoghq.com"],
+    "frame-src": ["'self'", "https://www.sandbox.paypal.com"],
+    "object-src": ["'none'"],
+}
