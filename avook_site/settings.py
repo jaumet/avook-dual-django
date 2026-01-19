@@ -160,8 +160,13 @@ SECURE_CONTENT_SECURITY_POLICY = {
     "default-src": ["'self'"],
     "script-src": ["'self'", "https://www.paypal.com", "https://www.paypalobjects.com", "https://www.google.com", "https://www.gstatic.com", "'unsafe-inline'"],
     "style-src": ["'self'", "https://www.paypalobjects.com", "'unsafe-inline'"],
-    "img-src": ["'self'", "https://*.googleusercontent.com/", "https://*.paypal.com", "https://*.paypalobjects.com", "https://googleads.g.doubleclick.net", "https://www.google-analytics.com", "https://www.facebook.com", "data:"],
+    "img-src": ["'self'", "https://*.googleusercontent.com/", "https://*.paypal.com", "https://*.paypalobjects.com", "https://googleads.g.doubleclick.net", "https://www.google-analytics.com", "https://www.facebook.com", "data:", "blob:"],
     "connect-src": ["'self'", "https://*.paypal.com", "https://192.55.233.1", "https://www.google.com", "https://browser-intake-us5-datadoghq.com"],
     "frame-src": ["'self'", "https://www.sandbox.paypal.com"],
     "object-src": ["'none'"],
+}
+
+# Permissions Policy
+SECURE_PERMISSIONS_POLICY = {
+    "payment": ["'self'", "https://www.sandbox.paypal.com"],
 }
