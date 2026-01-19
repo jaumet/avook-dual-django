@@ -56,7 +56,7 @@ class ProductListView(TitleContextMixin, ListView):
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
 
         context['products'] = products
-        context['PAYPAL_CLIENT_ID_LIVE'] = settings.PAYPAL_CLIENT_ID_LIVE
+        context['PAYPAL_CLIENT_ID_LIVE'] = settings.PAYPAL_CLIENT_ID
         return context
 
 
