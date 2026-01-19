@@ -3,42 +3,59 @@ from django.conf import settings
 
 def paypal_csp_decorator(view_func):
     """
-    Modifies the Content Security Policy (CSP) for a specific view to make it
-    compatible with the PayPal JS SDK.
+    Applies a specific, more permissive Content Security Policy (CSP) required
+    for the PayPal JS SDK to function correctly on the checkout page.
 
-    This decorator relaxes the 'script-src' directive by removing the
-    'nonce-placeholder' and adding "'unsafe-inline'". This is necessary because
-    the PayPal SDK dynamically loads scripts and does not support the nonce-based
-    CSP approach implemented in CspNonceMiddleware.
-
-    This decorator is tightly coupled to the existing CSP setup and relies on:
-    - `settings.SECURE_CONTENT_SECURITY_POLICY` being a dictionary.
-    - `avook_site.middleware.CspNonceMiddleware` using 'nonce-placeholder'.
+    This decorator *replaces* the default site-wide CSP with one tailored for
+    PayPal, including 'unsafe-inline' for scripts and specific PayPal domains
+    for scripts, images, iframes, and connections.
     """
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         response = view_func(request, *args, **kwargs)
 
-        # Start with the default CSP from settings
-        csp = settings.SECURE_CONTENT_SECURITY_POLICY.copy()
+        # Define a specific CSP for the PayPal checkout view
+        paypal_csp = {
+            "default-src": ["'self'"],
+            "script-src": [
+                "'self'",
+                "https://www.paypal.com",
+                "https://www.sandbox.paypal.com",
+                "https://www.paypalobjects.com",
+                "'unsafe-inline'"  # Required by PayPal SDK
+            ],
+            "style-src": [
+                "'self'",
+                "https://*.paypalobjects.com",
+                "https://*.paypal.com",
+                "'unsafe-inline'"
+            ],
+            "img-src": [
+                "'self'",
+                "https://*.paypal.com",
+                "https://*.paypalobjects.com",
+                "data:",
+                "blob:"  # Required for certain PayPal elements
+            ],
+            "connect-src": [
+                "'self'",
+                "https://www.sandbox.paypal.com",
+                "https://c.sandbox.paypal.com",
+                "https://www.paypal.com",
+                "https://c.paypal.com"
+            ],
+            "frame-src": [
+                "'self'",
+                "https://www.paypal.com",
+                "https://www.sandbox.paypal.com"
+            ],
+            "object-src": ["'none'"],
+        }
 
-        # Modify script-src for PayPal
-        script_src = csp.get("script-src", [])
+        # Format the CSP dictionary into a header string
+        csp_string = "; ".join([f"{key} {' '.join(value)}" for key, value in paypal_csp.items()])
 
-        # Remove nonce-placeholder if it exists
-        if "nonce-placeholder" in script_src:
-            script_src.remove("nonce-placeholder")
-
-        # Add 'unsafe-inline' to allow PayPal's inline scripts
-        if "'unsafe-inline'" not in script_src:
-            script_src.append("'unsafe-inline'")
-
-        csp["script-src"] = script_src
-
-        # Format the CSP dictionary into a string
-        csp_string = "; ".join([f"{key} {' '.join(value)}" for key, value in csp.items()])
-
-        # Set the header
+        # Set the specific CSP header for this view's response
         response['Content-Security-Policy'] = csp_string
 
         return response
