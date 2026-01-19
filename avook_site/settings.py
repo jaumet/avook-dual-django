@@ -124,12 +124,28 @@ load_dotenv(BASE_DIR / ".env")
 RESEND_API_KEY = os.environ["RESEND_API_KEY"]
 DEFAULT_FROM_EMAIL = "Dual <no-reply@dual.cat>"
 
-PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID")
-PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET")
-PAYPAL_WEBHOOK_ID = os.environ.get("PAYPAL_WEBHOOK_ID")
+# --- PayPal Configuration Selector ---
+PAYPAL_MODE = os.environ.get('PAYPAL_MODE')
 
-if not all([PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID]):
+if PAYPAL_MODE == 'sandbox':
+    PAYPAL_API_URL = os.environ.get('PAYPAL_API_URL_SANDBOX')
+    PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID_SANDBOX')
+    PAYPAL_SECRET = os.environ.get('PAYPAL_SECRET_SANDBOX')
+    PAYPAL_WEBHOOK_ID = os.environ.get('PAYPAL_WEBHOOK_ID_SANDBOX')
+elif PAYPAL_MODE == 'live':
+    PAYPAL_API_URL = os.environ.get('PAYPAL_API_URL_LIVE')
+    PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID_LIVE')
+    PAYPAL_SECRET = os.environ.get('PAYPAL_SECRET_LIVE')
+    PAYPAL_WEBHOOK_ID = os.environ.get('PAYPAL_WEBHOOK_ID_LIVE')
+else:
     raise ImproperlyConfigured(
-        "PayPal environment variables not set. "
-        "Please set PAYPAL_CLIENT_ID, PAYPAL_SECRET, and PAYPAL_WEBHOOK_ID in your .env file."
+        f"PAYPAL_MODE té un valor invàlid: '{PAYPAL_MODE}'. Ha de ser 'sandbox' o 'live'."
     )
+
+# Validació de les credencials carregades
+if not all([PAYPAL_API_URL, PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID]):
+    raise ImproperlyConfigured(
+        f"Falten credencials de PayPal per al mode '{PAYPAL_MODE}'. "
+        "Assegura't que totes les variables PAYPAL_* estiguin definides al fitxer .env."
+    )
+# --- End of PayPal Configuration ---
