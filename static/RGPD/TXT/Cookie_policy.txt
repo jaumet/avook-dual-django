@@ -1,6 +1,13 @@
-COOKIE POLICY
+Cookie Policy
 
-The website dual.cat uses only technical cookies that are strictly necessary for the correct operation of the platform.
+This website uses only technical cookies that are strictly necessary for:
 
-No analytics, advertising, or tracking cookies are used.
+User authentication
 
+Session management
+
+Security and platform functionality
+
+No analytics, tracking, advertising, or profiling cookies are used.
+
+These cookies cannot be disabled, as they are essential for the correct operation of the service.

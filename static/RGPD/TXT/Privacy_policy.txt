@@ -1,15 +1,68 @@
-PRIVACY POLICY
+Privacy Policy
 
-This policy describes how the Dual project processes users’ personal data.
+This Privacy Policy explains how personal data is collected, used, and protected when you use the services provided by dual.cat pilot project.
+Data Controller
 
-DATA CONTROLLER
-The data controller responsible for processing personal data is the Dual project.
+The data controller is:
 
+dual.cat pilot project
 Contact: privacy@dual.cat
+Personal Data Processed
 
-PURPOSE
-Personal data is processed exclusively for service management and compliance with legal obligations.
+Only strictly necessary personal data is processed, including:
 
-USER RIGHTS
-Users may exercise their rights of access, rectification, deletion, and other rights recognized under the GDPR by contacting the provided email address.
+    Email address
 
+    User account credentials
+
+    Technical data required for service operation and security
+
+No sensitive data is processed.
+Purpose of Processing
+
+Personal data is processed exclusively for:
+
+    User account management
+
+    Access control to digital content
+
+    Technical operation and security of the platform
+
+    Legal compliance
+
+Legal Basis
+
+Processing is based on:
+
+    Performance of a contract (access to digital services)
+
+    Legitimate interest in operating and securing the platform
+
+Data Retention
+
+Personal data is retained only for as long as necessary to provide the service or to comply with legal obligations.
+Data Sharing
+
+No personal data is sold, shared, or transferred to third parties, except:
+
+    Payment providers strictly necessary to complete transactions
+
+    Legal obligations imposed by law
+
+No international data transfers are performed outside the EU.
+User Rights (GDPR)
+
+Users have the right to:
+
+    Access their personal data
+
+    Request rectification or deletion
+
+    Object to or restrict processing
+
+    Request data portability
+
+To exercise these rights, contact: privacy@dual.cat
+Supervisory Authority
+
+If you believe your data protection rights have been violated, you may lodge a complaint with the competent data protection authority in your country of residence within the European Union.
