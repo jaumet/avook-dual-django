@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'products',
     'accounts',
     'post_office',
+    'paypal',
     'django_extensions',
 ]
 
@@ -123,7 +124,12 @@ load_dotenv(BASE_DIR / ".env")
 RESEND_API_KEY = os.environ["RESEND_API_KEY"]
 DEFAULT_FROM_EMAIL = "Dual <no-reply@dual.cat>"
 
-PAYPAL_CLIENT_ID_LIVE = os.environ.get("PAYPAL_CLIENT_ID_LIVE")
+PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID")
+PAYPAL_SECRET = os.environ.get("PAYPAL_SECRET")
+PAYPAL_WEBHOOK_ID = os.environ.get("PAYPAL_WEBHOOK_ID")
 
-if not PAYPAL_CLIENT_ID_LIVE:
-    raise ImproperlyConfigured("PAYPAL_CLIENT_ID_LIVE environment variable not set. Please set it in your .env file.")
+if not all([PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID]):
+    raise ImproperlyConfigured(
+        "PayPal environment variables not set. "
+        "Please set PAYPAL_CLIENT_ID, PAYPAL_SECRET, and PAYPAL_WEBHOOK_ID in your .env file."
+    )

@@ -1,0 +1,39 @@
+# Flux de Compra amb PayPal Webhook
+
+Aquest document descriu el flux de dades i accions des que un usuari completa un pagament a PayPal fins que se li concedeix accés al producte a l'aplicació Django.
+
+## Visió General
+
+El procés es basa en un webhook de PayPal que notifica al nostre backend de Django quan un pagament s'ha completat amb èxit. El backend verifica l'autenticitat de la notificació i, si és vàlida, crea un registre `UserPurchase` per a l'usuari i el producte corresponent.
+
+## Passos del Flux
+
+1.  **Pagament a PayPal**:
+    *   L'usuari selecciona un producte a la nostra aplicació i és redirigit a PayPal per completar el pagament.
+    *   En la configuració del pagament des del frontend, és **crucial** incloure dos camps personalitzats:
+        *   `custom_id`: Ha de contenir l'identificador únic de l'usuari de Django (ex: `user.id`).
+        *   `sku` (dins de `items`): Ha de contenir el `machine_name` del producte de Django (ex: `product.machine_name`).
+
+2.  **Notificació de PayPal (Webhook)**:
+    *   Un cop el pagament es completa (`PAYMENT.CAPTURE.COMPLETED`), PayPal envia una notificació (un esdeveniment HTTP POST) a l'endpoint que hem configurat: `https://dual.cat/paypal/webhook/`.
+    *   Aquesta notificació conté un payload JSON amb tota la informació de la transacció, incloent-hi el `custom_id` i el `sku` que vam enviar.
+
+3.  **Recepció i Verificació al Backend Django**:
+    *   La nostra vista `paypal_webhook` rep la petició POST.
+    *   **Verificació de la Signatura**: Aquest és el pas més crític. La vista utilitza les capçaleres de la petició (`Paypal-Auth-Algo`, `Paypal-Cert-Url`, etc.) i el cos de la petició per fer una crida a l'API de PayPal (`v1/notifications/verify-webhook-signature`).
+    *   Això garanteix que la petició prové realment de PayPal i no ha estat falsificada. Si la verificació falla, el procés s'atura immediatament.
+
+4.  **Processament del Payload i Lògica de Negoci**:
+    *   Si la signatura és vàlida, la vista analitza el payload JSON.
+    *   Extreu el `custom_id` (ID de l'usuari) i el `sku` (el `machine_name` del producte).
+    *   Busca l'usuari (`User`) i el producte (`Product`) corresponents a la base de dades.
+    *   **Evita Duplicats**: Comprova si ja existeix un registre `UserPurchase` per a aquest usuari i producte. Si ja existeix, no fa res més per evitar compres duplicades.
+    *   Si no existeix, crea una nova entrada: `UserPurchase.objects.create(user=user, product=product)`.
+
+5.  **Accés al Contingut**:
+    *   En crear-se el `UserPurchase`, el model calcula automàticament la `expiry_date` basant-se en la durada del producte.
+    *   A partir d'aquest moment, la lògica de l'aplicació (ex: a `Title.get_user_status()`) reconeixerà que l'usuari té una compra activa per a aquest producte i li concedirà accés als títols associats.
+
+## Resum del Flux de Dades
+
+`Frontend (botó de PayPal amb custom_id i sku)` → `PayPal (Pagament completat)` → `Backend Django (/paypal/webhook/)` → `Verificació amb API de PayPal` → `Creació de UserPurchase` → `Accés de l'usuari als continguts`
