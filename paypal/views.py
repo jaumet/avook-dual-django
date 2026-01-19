@@ -40,15 +40,11 @@ def verify_paypal_signature(request):
             "webhook_event": json.loads(event_body),
         }
 
-        # Determinar l'URL de l'API de PayPal (Sandbox o Live)
-        # Aquí assumim que l'entorn es pot determinar a partir de DJANGO_DEBUG
-        if settings.DEBUG:
-            paypal_api_url = "https://api-m.sandbox.paypal.com/v1/notifications/verify-webhook-signature"
-        else:
-            paypal_api_url = "https://api-m.paypal.com/v1/notifications/verify-webhook-signature"
+        # Utilitzar la URL de l'API de PayPal definida a la configuració
+        paypal_api_url = f"{settings.PAYPAL_API_URL}/v1/notifications/verify-webhook-signature"
 
         # Obtenir un token d'accés de PayPal
-        token_url = paypal_api_url.replace("/v1/notifications/verify-webhook-signature", "/v1/oauth2/token")
+        token_url = f"{settings.PAYPAL_API_URL}/v1/oauth2/token"
         auth_response = requests.post(
             token_url,
             auth=(settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET),
