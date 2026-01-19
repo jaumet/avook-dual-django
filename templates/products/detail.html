@@ -73,9 +73,9 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR" nonce="{{ request.csp_nonce }}"></script>
-    <script src="{% static 'js/paypal_buttons.js' %}" nonce="{{ request.csp_nonce }}"></script>
-    <script nonce="{{ request.csp_nonce }}">
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
+    <script src="{% static 'js/paypal_buttons.js' %}"></script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         const acceptConditions = document.getElementById('accept-conditions');
         const buyButton = document.getElementById('buy-button');
