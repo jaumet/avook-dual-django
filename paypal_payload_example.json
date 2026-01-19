@@ -1,0 +1,83 @@
+{
+  "id": "EVT-XXXXXXXXXXXX",
+  "event_version": "1.0",
+  "create_time": "2024-01-01T00:00:00.000Z",
+  "resource_type": "capture",
+  "event_type": "PAYMENT.CAPTURE.COMPLETED",
+  "summary": "Payment captured for checkout order.",
+  "resource": {
+    "id": "XXXXXXXXXXXX",
+    "status": "COMPLETED",
+    "amount": {
+      "currency_code": "EUR",
+      "value": "19.99"
+    },
+    "final_capture": true,
+    "seller_protection": {
+      "status": "ELIGIBLE"
+    },
+    "custom_id": "123",
+    "purchase_units": [
+      {
+        "reference_id": "default",
+        "shipping": {},
+        "payments": {
+          "captures": [
+            {
+              "id": "XXXXXXXXXXXX",
+              "status": "COMPLETED",
+              "amount": {
+                "currency_code": "EUR",
+                "value": "19.99"
+              },
+              "create_time": "2024-01-01T00:00:00.000Z",
+              "update_time": "2024-01-01T00:00:00.000Z"
+            }
+          ]
+        },
+        "items": [
+          {
+            "name": "Product Name",
+            "sku": "product-machine-name",
+            "quantity": "1",
+            "price": {
+              "currency_code": "EUR",
+              "value": "19.99"
+            }
+          }
+        ]
+      }
+    ],
+    "payer": {
+      "name": {
+        "given_name": "John",
+        "surname": "Doe"
+      },
+      "email_address": "customer@example.com"
+    },
+    "links": [
+      {
+        "href": "https://api.paypal.com/v2/payments/captures/XXXXXXXXXXXX",
+        "rel": "self",
+        "method": "GET"
+      },
+      {
+        "href": "https://api.paypal.com/v2/checkout/orders/XXXXXXXXXXXX",
+        "rel": "up",
+        "method": "GET"
+      }
+    ]
+  },
+  "links": [
+    {
+      "href": "https://api.paypal.com/v1/notifications/webhooks-events/EVT-XXXXXXXXXXXX",
+      "rel": "self",
+      "method": "GET"
+    },
+    {
+      "href": "https://api.paypal.com/v1/notifications/webhooks-events/EVT-XXXXXXXXXXXX/resend",
+      "rel": "resend",
+      "method": "POST"
+    }
+  ]
+}
