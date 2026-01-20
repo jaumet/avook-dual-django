@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'post_office',
     'paypal',
     'django_extensions',
-    'chatbot',
 ]
 
 MIDDLEWARE = [
