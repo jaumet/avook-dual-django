@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load l10n %}
 {% load product_tags %}
 
 {% get_product_translation product request.LANGUAGE_CODE as product_translation %}
@@ -48,8 +47,7 @@
             <label for="accept-conditions" class="form-check-label">{% trans "Accepto les condicions de venda" %}</label>
         </div>
         <button id="buy-button" class="button button--primary">{% trans "Comprar ara" %}</button>
-
-        <div id="paypal-button-container" style="display: none; margin-top: 1em;"></div>
+        <div id="buy-button-container"></div>
     </div>
 
     {% for package in product.packages.all %}
@@ -75,42 +73,31 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
+    <script src="{% static 'js/paypal_buttons.js' %}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const acceptConditions = document.getElementById('accept-conditions');
+        const buyButton = document.getElementById('buy-button');
+        const buyButtonContainer = document.getElementById('buy-button-container');
 
-<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
-<script src="{% static 'js/paypal_buttons.js' %}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const acceptConditions = document.getElementById('accept-conditions');
-    const buyButton = document.getElementById('buy-button');
-    const paypalContainer = document.getElementById('paypal-button-container');
-
-    // Initially hide the buy button
-    buyButton.style.display = 'none';
-
-    acceptConditions.addEventListener('change', function() {
-        if (this.checked) {
-            buyButton.style.display = 'block';
-        } else {
-            buyButton.style.display = 'none';
-            // Also hide PayPal container if user un-accepts
-            paypalContainer.style.display = 'none';
-        }
+        acceptConditions.addEventListener('change', function() {
+            if (this.checked) {
+                buyButton.style.display = 'none';
+                buyButtonContainer.style.display = 'block';
+                renderButton(
+                    '#buy-button-container',
+                    '{% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %}',
+                    '{{ product.price }}',
+                    '{{ product.machine_name }}',
+                    '{% url "products:purchase_success" %}'
+                );
+            } else {
+                buyButton.style.display = 'block';
+                buyButtonContainer.style.display = 'none';
+                buyButtonContainer.innerHTML = '';
+            }
+        });
     });
-
-    buyButton.addEventListener('click', function() {
-        // When buy button is clicked, hide it and show PayPal button
-        paypalContainer.style.display = 'block';
-        this.style.display = 'none';
-        {% localize off %}
-        renderButton(
-            '#paypal-button-container',
-            '{% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %}',
-            '{{ product.price }}',
-            '{{ product.machine_name }}',
-            '{% url "products:purchase_success" %}'
-        );
-        {% endlocalize %}
-    });
-});
-</script>
+    </script>
 {% endblock %}

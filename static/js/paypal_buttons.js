@@ -13,9 +13,8 @@ function renderButton(target, name, price, productCode, successUrl) {
         purchase_units: [{
           description: name,
           amount: {
-
-            value: price,
-            currency_code: 'EUR'
+            currency_code: 'EUR',
+            value: formattedPrice
           }
         }]
       });
