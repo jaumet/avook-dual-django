@@ -8,7 +8,6 @@ from .views import (
     ProductUpdateView,
     player_view,
     ProductTestsView,
-    PurchaseSuccessView
 )
 
 app_name = 'products'
@@ -16,7 +15,7 @@ app_name = 'products'
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list'),
     path('catalog/', CatalogView.as_view(), name='catalog'),
-    path('purchase/success/', PurchaseSuccessView.as_view(), name='purchase_success'),
+    path('success/', TemplateView.as_view(template_name="products/success.html"), name='success'),
     path('player/<slug:machine_name>/', player_view, name='player'),
     path('product/nou/', ProductCreateView.as_view(), name='product_create'),
     path('product/<pk>/', ProductDetailView.as_view(), name='product_detail'),
