@@ -81,6 +81,7 @@
             <a href="{% url 'accounts:signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
         {% endif %}
         <div class="rightBtns">
+            <button id="installBtn" style="display: none;" data-translate-key="header.install">Instal·la dual.cat</button>
             <button id="themeBtn">☀️ <span data-translate-key="header.theme.light">Clar</span></button>
             <button id="infoBtn">❓ <span data-translate-key="header.help">Ajuda</span></button>
         </div>
@@ -126,9 +127,17 @@ if ('serviceWorker' in navigator) {
 }
 
 let deferredPrompt = null;
+const installBtn = document.getElementById('installBtn');
+
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandalone = window.navigator.standalone === true;
+
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  if (installBtn) installBtn.style.display = 'inline-block';
+
+  // Also keep the automatic prompt after 2s as requested before
   setTimeout(() => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
@@ -139,34 +148,56 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }, 2000);
 });
 
-(function () {
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isInStandalone = window.navigator.standalone === true;
-  if (isIOS && !isInStandalone && !localStorage.getItem('dual_ios_hint')) {
-    const banner = document.createElement('div');
-    banner.innerHTML = `
-      <div style="
-        position:fixed;
-        bottom:0;
-        left:0;
-        right:0;
-        background:#0d0e37;
-        color:#fff;
-        padding:12px;
-        font-size:14px;
-        z-index:9999;
-        text-align:center;">
-        Afegeix Dual.cat a la pantalla d’inici:<br>
-        <strong>Compartir ⬆️ → Afegir a pantalla d’inici</strong>
-        <br><button style="margin-top:8px; background:#fff; color:#0d0e37; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;" id="dual-ios-close">D’acord</button>
-      </div>`;
-    document.body.appendChild(banner);
-    document.getElementById('dual-ios-close').onclick = () => {
-      localStorage.setItem('dual_ios_hint', '1');
-      banner.remove();
-    };
-  }
-})();
+if (isIOS && !isInStandalone && installBtn) {
+  installBtn.style.display = 'inline-block';
+}
+
+function showIOSInstallBanner() {
+  if (document.getElementById('dual-ios-banner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'dual-ios-banner';
+  banner.innerHTML = `
+    <div style="
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:#0d0e37;
+      color:#fff;
+      padding:12px;
+      font-size:14px;
+      z-index:9999;
+      text-align:center;
+      border-top: 1px solid #f7836a;">
+      Afegeix Dual.cat a la pantalla d’inici:<br>
+      <strong>Compartir ⬆️ → Afegir a pantalla d’inici</strong>
+      <br><button style="margin-top:8px; background:#fff; color:#0d0e37; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;" id="dual-ios-close">D’acord</button>
+    </div>`;
+  document.body.appendChild(banner);
+  document.getElementById('dual-ios-close').onclick = () => {
+    localStorage.setItem('dual_ios_hint', '1');
+    banner.remove();
+  };
+}
+
+if (installBtn) {
+  installBtn.addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.finally(() => {
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
+    } else if (isIOS) {
+      showIOSInstallBanner();
+    }
+  });
+}
+
+// Initial banner for iOS if hint not set
+if (isIOS && !isInStandalone && !localStorage.getItem('dual_ios_hint')) {
+  showIOSInstallBanner();
+}
 </script>
 </body>
 </html>
