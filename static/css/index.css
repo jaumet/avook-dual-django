@@ -66,13 +66,13 @@ body {
 .menu-toggle {
     display: none;
     flex-direction: column;
-    justify-content: space-between;
-    width: 25px;
-    height: 18px;
+    justify-content: space-around;
+    width: 44px;
+    height: 44px;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 10px;
     z-index: 1001;
 }
 
@@ -412,7 +412,7 @@ footer nav a:hover {
     }
 
     .header-right.active {
-        display: flex;
+        display: flex !important;
     }
 
     .header-right a {
@@ -468,4 +468,9 @@ footer nav a:hover {
 #pwaInstallBtn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+/* Hide redundant headers from hero content */
+#dual-embed header {
+    display: none !important;
 }

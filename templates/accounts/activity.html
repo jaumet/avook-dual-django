@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="container mt-4">
+<div class="container mt-4">
     <h1 class="mb-4">{% trans "User Activity Log" %}</h1>
     <a href="{% url 'accounts:activity_pdf' %}" class="btn btn-primary mb-3" target="_blank">{% trans "Export as PDF" %}</a>
 
@@ -73,7 +73,7 @@
     <div class="chart-container" style="margin-top: 2rem;">
         <canvas id="treemapChart"></canvas>
     </div>
-</main>
+</div>
 {% endblock %}
 
 {% block extra_js %}

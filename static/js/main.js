@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Hamburger menu toggle
     const menuToggle = document.getElementById('menuToggle');
-    const headerRight = document.querySelector('.header-right');
+    const headerRight = document.querySelector('.main-header .header-right');
     if (menuToggle && headerRight) {
-        menuToggle.addEventListener('click', () => {
+        const toggleMenu = (e) => {
+            e.preventDefault();
             headerRight.classList.toggle('active');
-        });
+            // Toggle hamburger animation or state if needed
+        };
+        menuToggle.addEventListener('click', toggleMenu);
+        // Add touchstart for faster response on some mobile devices
+        menuToggle.addEventListener('touchstart', toggleMenu, { passive: false });
     }
 
     // Theme toggle logic
