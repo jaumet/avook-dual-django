@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<main class="container">
+<div class="container">
     <div class="product-header">
         <h1>{% trans "Texts in" %} {{ product.translation.name }}</h1>
         <p>{{ product.translation.description|safe }}</p>
@@ -39,7 +39,7 @@
         {% endfor %}
     </section>
     <p id="noResultsMessage" style="display: none;">{% trans "No results found for your search." %}</p>
-</main>
+</div>
 {% endblock %}
 
 {% block extra_js %}
