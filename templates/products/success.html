@@ -1,20 +1,16 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}{% trans "Compra realitzada" %}{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-    <h1>{% trans "Pagament correcte ✅" %}</h1>
-
-    <p>{% trans "Gràcies per confiar en Dual." %}</p>
-
-    <p>
-        {% trans "Hem rebut el teu pagament." %}<br>
-        {% trans "En breu rebràs l'accés al teu contingut." %}
-    </p>
-
-    <p>
-        {% trans "Si tens qualsevol dubte:" %}<br>
-        <a href="mailto:info@dual.cat">info@dual.cat</a>
-    </p>
-</div>
+<section class="container">
+    <h1>{% trans "Gràcies per la teva compra!" %}</h1>
+    {% if product %}
+        <p>{% blocktrans %}Has comprat el producte: <strong>{{ product.get_translation_name }}</strong>.{% endblocktrans %}</p>
+        <p><a href="{% url 'accounts:purchase_history' %}" class="button">{% trans "Veure els meus productes" %}</a></p>
+    {% else %}
+        <p>{% trans "No s'ha pogut verificar la teva compra." %}</p>
+    {% endif %}
+</section>
 {% endblock %}
