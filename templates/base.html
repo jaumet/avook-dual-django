@@ -47,74 +47,6 @@
     </script>
     {% block extra_js %}
         <script src="{% static 'js/theme_switcher.js' %}"></script>
-        <script>
-            // PWA Installation Logic
-            let deferredPrompt;
-
-            const showInstallButton = () => {
-                const btn = document.getElementById('pwaInstallBtn');
-                if (btn) btn.style.display = 'inline-block';
-            };
-
-            window.addEventListener('beforeinstallprompt', (e) => {
-                // Prevent Chrome 67 and earlier from automatically showing the prompt
-                e.preventDefault();
-                // Stash the event so it can be triggered later.
-                deferredPrompt = e;
-                // Update UI notify the user they can install the PWA
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', showInstallButton);
-                } else {
-                    showInstallButton();
-                }
-            });
-
-            const isIos = () => {
-                const userAgent = window.navigator.userAgent.toLowerCase();
-                // Check for iPhone, iPad, iPod or modern iPadOS which reports as Macintosh but has touch points
-                return /iphone|ipad|ipod/.test(userAgent) ||
-                       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            };
-            const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
-
-            document.addEventListener('DOMContentLoaded', () => {
-                const pwaInstallBtn = document.getElementById('pwaInstallBtn');
-                if (!pwaInstallBtn) return;
-
-                // Show install button for iOS if not already installed
-                if (isIos() && !isInStandaloneMode()) {
-                    pwaInstallBtn.style.display = 'inline-block';
-                }
-
-                pwaInstallBtn.addEventListener('click', (e) => {
-                    if (deferredPrompt) {
-                        // Show the prompt
-                        deferredPrompt.prompt();
-                        // Wait for the user to respond to the prompt
-                        deferredPrompt.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted the A2HS prompt');
-                            }
-                            deferredPrompt = null;
-                            pwaInstallBtn.style.display = 'none';
-                        });
-                    } else if (isIos()) {
-                        alert("{% trans 'Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de compartir i després \"Afegeix a la pantalla d\'inici\"' %}");
-                    }
-                });
-            });
-
-            // Register service worker
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js').then(registration => {
-                        console.log('SW registered');
-                    }).catch(error => {
-                        console.log('SW registration failed:', error);
-                    });
-                });
-            }
-        </script>
     {% endblock %}
 <header class="main-header">
     <div class="header-left" style="display: flex; align-items: center; gap: 1em;">
@@ -153,7 +85,7 @@
             <a href="{% url 'accounts:signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
         {% endif %}
         <div class="rightBtns">
-            <button id="pwaInstallBtn" style="display: none;">📲 <span data-translate-key="header.install">Instal·la</span></button>
+            <button id="pwaInstallBtn">📲 <span data-translate-key="header.install">Instal·la</span></button>
             <button id="themeBtn">☀️ <span data-translate-key="header.theme.light">Clar</span></button>
             <button id="infoBtn">❓ <span data-translate-key="header.help">Ajuda</span></button>
         </div>
@@ -192,5 +124,73 @@
     <button id="closeModal" data-translate-key="help_modal.close">Tanca</button>
   </div>
 </div>
+
+<script>
+    // PWA Installation Logic - Always included, not overridable by blocks
+    (function() {
+        let deferredPrompt;
+
+        const showInstallButton = () => {
+            const btn = document.getElementById('pwaInstallBtn');
+            if (btn) btn.style.display = 'inline-block';
+        };
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', showInstallButton);
+            } else {
+                showInstallButton();
+            }
+        });
+
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test(userAgent) ||
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        };
+
+        const isInStandaloneMode = () =>
+            (('standalone' in window.navigator) && (window.navigator.standalone)) ||
+            (window.matchMedia('(display-mode: standalone)').matches);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+            if (!pwaInstallBtn) return;
+
+            // Always try to show the button if not already in standalone mode
+            if (!isInStandaloneMode()) {
+                showInstallButton();
+            }
+
+            pwaInstallBtn.addEventListener('click', (e) => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            pwaInstallBtn.style.display = 'none';
+                        }
+                        deferredPrompt = null;
+                    });
+                } else if (isIos()) {
+                    alert(`{% trans "Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de compartir i després 'Afegeix a la pantalla d'inici'" %}`);
+                } else {
+                    alert(`{% trans "Per instal·lar aquesta aplicació: busca l'opció 'Instal·la' o 'Afegeix a la pantalla d'inici' al menú del teu navegador." %}`);
+                }
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(reg => {
+                    console.log('SW registered');
+                }).catch(err => {
+                    console.log('SW registration failed:', err);
+                });
+            });
+        }
+    })();
+</script>
 </body>
 </html>

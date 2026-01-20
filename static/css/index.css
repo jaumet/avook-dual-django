@@ -339,7 +339,14 @@ h2,h3 {color:var(--accent);}
 }
 
 #pwaInstallBtn {
-  background: var(--accent);
-  color: #fff;
-  display: none; /* Controlled by JS, but good to have as default */
+  background: var(--accent) !important;
+  color: #fff !important;
+  display: none; /* Hidden by default, shown by JS if not in standalone mode */
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+#pwaInstallBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255,255,255,0.5);
 }
