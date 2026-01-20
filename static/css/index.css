@@ -16,13 +16,18 @@ body.light {
   --header-bg:#0d0e37;
 }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
   font-family:"DejaVu Sans",system-ui,sans-serif;
   background:var(--bg);
   color:var(--fg);
   margin:0;
-  padding-top: 80px; /* Add padding to the body */
+  padding-top: 70px; /* Reduced padding */
   transition:background .3s,color .3s;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* === Header === */
@@ -32,15 +37,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .8em 1em;
+  padding: 0.5em 1em;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 65px; /* Fixed height for consistency */
   z-index: 1000;
   border-bottom: 1px solid var(--accent);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .header-left a, .main-header a {
@@ -66,21 +71,23 @@ body {
 .menu-toggle {
     display: none;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 6px;
     width: 44px;
     height: 44px;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 10px;
-    z-index: 1001;
+    padding: 8px;
+    z-index: 2000;
 }
 
 .menu-toggle span {
+    display: block;
     width: 100%;
     height: 3px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 3px;
     transition: all 0.3s ease;
 }
 
@@ -387,8 +394,16 @@ footer nav a:hover {
 
 
 @media (max-width: 768px) {
+    body {
+        padding-top: 65px;
+    }
+
     .logo-subtitle {
         display: none;
+    }
+
+    .main-header img.logo {
+        height: 32px;
     }
 
     .menu-toggle {
@@ -404,11 +419,11 @@ footer nav a:hover {
         width: 100%;
         height: calc(100vh - 65px);
         background: var(--header-bg);
-        padding: 2rem;
-        gap: 1.5rem;
-        z-index: 999;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        z-index: 1500;
         overflow-y: auto;
-        align-items: flex-start;
+        align-items: stretch; /* Full width items */
     }
 
     .header-right.active {
