@@ -3,13 +3,11 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import RedirectView
 from products.views import HomeView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
 
 # Keep non-translated URLs separate
 urlpatterns = [
-    path('manifest.json', TemplateView.as_view(template_name='manifest.json', content_type='application/json')),
-    path('service-worker.js', TemplateView.as_view(template_name='service-worker.js', content_type='application/javascript')),
     path('favicon.ico', RedirectView.as_view(url='/static/imgs/favicon.ico')),
     path('admin/', admin.site.urls),
     path('paypal/', include('paypal.urls')),
