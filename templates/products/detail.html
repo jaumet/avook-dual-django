@@ -48,6 +48,7 @@
             <label for="accept-conditions" class="form-check-label">{% trans "Accepto les condicions de venda" %}</label>
         </div>
         <button id="buy-button" class="button button--primary">{% trans "Comprar ara" %}</button>
+
         <div id="paypal-button-container" style="display: none; margin-top: 1em;"></div>
     </div>
 
@@ -74,6 +75,7 @@
 {% endblock %}
 
 {% block extra_js %}
+
 <script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
 <script src="{% static 'js/paypal_buttons.js' %}"></script>
 <script>

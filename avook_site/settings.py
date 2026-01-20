@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'post_office',
     'paypal',
     'django_extensions',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -33,6 +34,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'avook_site.middleware.CspNonceMiddleware',
 ]
 
 ROOT_URLCONF = 'avook_site.urls'
@@ -149,3 +151,59 @@ if not all([PAYPAL_API_URL, PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID])
         "Assegura't que totes les variables PAYPAL_* estiguin definides al fitxer .env."
     )
 # --- End of PayPal Configuration ---
+
+# Security Settings for CSP
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Content Security Policy
+SECURE_CONTENT_SECURITY_POLICY = {
+    "default-src": ["'self'"],
+    "script-src": [
+        "'self'",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://*.paypalobjects.com",
+        "https://objects.paypal.cn",
+        "https://www.google.com",
+        "https://www.gstatic.com",
+    "'sha256-aKAwvWwisgzRhW5auVEe5FrNQ3wlLsxZvLvimiQ3+os='",
+    "'sha256-yei5Fza+Eyx4G0smvN0xBqEesIKumz6RSyGsU3FJowI='",
+    "nonce-placeholder"
+    ],
+    "style-src": [
+        "'self'",
+        "https://*.paypalobjects.com",
+        "https://*.paypal.com",
+        "'unsafe-inline'"
+    ],
+    "img-src": [
+        "'self'",
+        "https://*.googleusercontent.com/",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://*.paypalobjects.com",
+        "https://objects.paypal.cn",
+        "https://googleads.g.doubleclick.net",
+        "https://www.google-analytics.com",
+        "https://www.facebook.com",
+        "data:", "blob:"
+    ],
+    "connect-src": [
+        "'self'",
+        "https://*.paypal.com",
+        "https://*.paypal.cn",
+        "https://postcollector.paypal.com",
+        "https://192.55.233.1",
+        "https://www.google.com",
+        "https://browser-intake-us5-datadoghq.com"
+    ],
+    "frame-src": ["'self'", "https://*.sandbox.paypal.com", "https://*.paypal.com"],
+    "object-src": ["'none'"],
+}
+
+# Permissions Policy
+SECURE_PERMISSIONS_POLICY = {
+    "payment": ["'self'", "https://www.sandbox.paypal.com"],
+}

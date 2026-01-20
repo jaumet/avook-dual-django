@@ -1,7 +1,7 @@
+<!DOCTYPE html>
 {% load static %}
 {% load i18n %}
 {% load content_tags %}
-<!DOCTYPE html>
 <html lang="ca">
 <head>
     <meta charset="UTF-8" />
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     <link rel="stylesheet" href="{% static 'css/tooltip.css' %}">
     <link rel="stylesheet" href="{% static 'css/ribbons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -114,5 +115,27 @@
     <button id="closeModal" data-translate-key="help_modal.close">Tanca</button>
   </div>
 </div>
+
+{% if user.is_authenticated %}
+<!-- Chatbot Widget -->
+<button id="chat-toggle">💬</button>
+<div id="chat-widget">
+    <div class="chat-header">
+        <span>Chat Assistant</span>
+        <button id="chat-close-btn">&times;</button>
+    </div>
+    <div class="chat-messages">
+        <!-- Messages will be appended here -->
+        <div class="chat-message assistant-message">
+            {% trans "Hello! How can I help you today?" %}
+        </div>
+    </div>
+    <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="{% trans 'Type a message...' %}" autocomplete="off">
+        <button type="submit" id="chat-send-btn">→</button>
+    </form>
+</div>
+<script src="{% static 'js/chatbot.js' %}"></script>
+{% endif %}
 </body>
 </html>
