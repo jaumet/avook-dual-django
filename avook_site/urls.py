@@ -11,6 +11,7 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url='/static/imgs/favicon.ico')),
     path('admin/', admin.site.urls),
     path('paypal/', include('paypal.urls')),
+    path('chatbot/', include('chatbot.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
     path('i18n/', include('django.conf.urls.i18n')),
     path('', root_redirect, name='root_redirect'),
