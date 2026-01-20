@@ -15,6 +15,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="dual.cat">
+    <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="{% static 'imgs/logo-dual-fons-blau.png' %}">
     {% block extra_css %}{% endblock %}
 </head>
@@ -50,14 +51,22 @@
             // PWA Installation Logic
             let deferredPrompt;
 
+            const showInstallButton = () => {
+                const btn = document.getElementById('pwaInstallBtn');
+                if (btn) btn.style.display = 'inline-block';
+            };
+
             window.addEventListener('beforeinstallprompt', (e) => {
                 // Prevent Chrome 67 and earlier from automatically showing the prompt
                 e.preventDefault();
                 // Stash the event so it can be triggered later.
                 deferredPrompt = e;
                 // Update UI notify the user they can install the PWA
-                const btn = document.getElementById('pwaInstallBtn');
-                if (btn) btn.style.display = 'inline-block';
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', showInstallButton);
+                } else {
+                    showInstallButton();
+                }
             });
 
             const isIos = () => {
@@ -79,20 +88,20 @@
 
                 pwaInstallBtn.addEventListener('click', (e) => {
                     if (deferredPrompt) {
-                    // Show the prompt
-                    deferredPrompt.prompt();
-                    // Wait for the user to respond to the prompt
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('User accepted the A2HS prompt');
-                        }
-                        deferredPrompt = null;
-                        pwaInstallBtn.style.display = 'none';
-                    });
-                } else if (isIos()) {
-                    alert("{% trans 'Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de compartir i després \"Afegeix a la pantalla d\'inici\"' %}");
-                }
-            });
+                        // Show the prompt
+                        deferredPrompt.prompt();
+                        // Wait for the user to respond to the prompt
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the A2HS prompt');
+                            }
+                            deferredPrompt = null;
+                            pwaInstallBtn.style.display = 'none';
+                        });
+                    } else if (isIos()) {
+                        alert("{% trans 'Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de compartir i després \"Afegeix a la pantalla d\'inici\"' %}");
+                    }
+                });
             });
 
             // Register service worker
