@@ -1,0 +1,20 @@
+{
+  "name": "Dual.cat",
+  "short_name": "Dual",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0e37",
+  "theme_color": "#0d0e37",
+  "icons": [
+    {
+      "src": "/static/img/dual-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/dual-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
