@@ -337,3 +337,9 @@ h2,h3 {color:var(--accent);}
         gap: 0.5em; /* Reduce gap on small screens */
     }
 }
+
+#pwaInstallBtn {
+  background: var(--accent);
+  color: #fff;
+  display: none; /* Controlled by JS, but good to have as default */
+}
