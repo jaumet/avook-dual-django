@@ -43,7 +43,10 @@
         <script src="{% static 'js/theme_switcher.js' %}"></script>
     {% endblock %}
 <header class="main-header">
-    <div class="header-left">
+    <div class="header-left" style="display: flex; align-items: center; gap: 1em;">
+        <a href="https://dual.cat">
+            <img src="{% static 'img/dual-logo.svg' %}" alt="Dual.cat" style="height: 40px; width: auto;" />
+        </a>
         <a href="{% url 'home' %}" class="logo-link">
             <img src="{% static 'imgs/logo-dual-fons-blau.png' %}" alt="dual.cat" class="logo" />
             <div class="logo-text-container">
