@@ -4,11 +4,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from django.views.static import serve
+import os
 from products.views import HomeView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
 
 # Keep non-translated URLs separate
 urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url='/static/imgs/favicon.ico')),
+    path('manifest.json', serve, {'document_root': settings.STATICFILES_DIRS[0], 'path': 'manifest.json'}),
+    path('sw.js', serve, {'document_root': os.path.join(settings.STATICFILES_DIRS[0], 'js'), 'path': 'sw.js'}),
     path('admin/', admin.site.urls),
     path('paypal/', include('paypal.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
