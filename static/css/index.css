@@ -63,6 +63,27 @@ body {
     color: #ccc;
 }
 
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
 .header-right {
   display: flex;
   align-items: center;
@@ -195,10 +216,46 @@ main {
 /* Other general styles */
 h2,h3 {color:var(--accent);}
 
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 2.5em 1.2em;
+  border-top: 1px solid var(--accent);
+  margin-top: 2.5em;
+  background: var(--bg);
+}
+
+footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  flex-wrap: wrap;
+}
+
+footer nav a {
+  text-decoration: none;
+  color: var(--fg);
+  font-size: 0.9em;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+footer nav a:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* === Tables === */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 /* === Targetes === */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 1rem;
 }
 
@@ -329,12 +386,74 @@ h2,h3 {color:var(--accent);}
 }
 
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .logo-subtitle {
         display: none;
     }
+
+    .menu-toggle {
+        display: flex;
+    }
+
     .header-right {
-        gap: 0.5em; /* Reduce gap on small screens */
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 65px);
+        background: var(--header-bg);
+        padding: 2rem;
+        gap: 1.5rem;
+        z-index: 999;
+        overflow-y: auto;
+        align-items: flex-start;
+    }
+
+    .header-right.active {
+        display: flex;
+    }
+
+    .header-right a {
+        font-size: 1.2rem;
+        width: 100%;
+    }
+
+    .header-right .rightBtns {
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-right button {
+        width: 100%;
+        padding: .8em;
+    }
+
+    .header-right .language-switcher {
+        width: 100%;
+    }
+
+    .header-right .language-switcher select {
+        width: 100%;
+        padding: .8em;
+    }
+
+    .user-menu-dropdown {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        background: rgba(255,255,255,0.05);
+        display: block;
+    }
+
+    .user-menu-trigger {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        display: block;
     }
 }
 

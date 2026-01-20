@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const headerRight = document.querySelector('.header-right');
+    if (menuToggle && headerRight) {
+        menuToggle.addEventListener('click', () => {
+            headerRight.classList.toggle('active');
+        });
+    }
+
     // Theme toggle logic
     const themeBtn = document.getElementById('themeBtn');
     if (themeBtn) {

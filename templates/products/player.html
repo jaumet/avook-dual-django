@@ -313,7 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
 {% endblock %}
 
 {% block content %}
-<main>
   <section id="topInfo" class="topCard">
     <img id="relatImg" src="{% static 'imgs/book-icon.png' %}" alt="Imatge relat"/>
     <div>
@@ -362,5 +361,4 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <a id="backBtn" href="{% url 'products:catalog' %}" class="button">⬅️ <span data-translate-key="player.back_to_catalog">Torna al catàleg</span></a>
   </section>
-</main>
 {% endblock %}
