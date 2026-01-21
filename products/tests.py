@@ -76,10 +76,10 @@ import os
 import json
 import shutil
 import tempfile
+from pathlib import Path
 from django.conf import settings
 from django.test import override_settings
 
-@override_settings(STATICFILES_DIRS=[tempfile.gettempdir()])
 class PlayerViewTest(TestCase):
     def setUp(self):
         self.test_title_machine_name = 'Test-1'
@@ -94,12 +94,18 @@ class PlayerViewTest(TestCase):
         self.addCleanup(self.temp_dir.cleanup)
 
         # Define paths for mock files and directories within the temporary directory
-        self.audios_dir = os.path.join(self.temp_dir.name, 'static', 'AUDIOS')
+        static_dir = os.path.join(self.temp_dir.name, 'static')
+        self.audios_dir = os.path.join(static_dir, 'AUDIOS')
         self.level_dir = os.path.join(self.audios_dir, 'A0')
         os.makedirs(self.level_dir, exist_ok=True)
 
-        # Override the BASE_DIR setting to point to the temporary directory
-        settings.BASE_DIR = self.temp_dir.name
+        # Override settings
+        self.override_settings = override_settings(
+            STATICFILES_DIRS=[static_dir],
+            BASE_DIR=Path(self.temp_dir.name)
+        )
+        self.override_settings.enable()
+        self.addCleanup(self.override_settings.disable)
 
         # Create a mock audios.json
         self.audios_json_path = os.path.join(self.audios_dir, 'audios.json')
@@ -174,5 +180,5 @@ class PlayerViewTest(TestCase):
             response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
             self.assertEqual(response.status_code, 200)
             self.assertIn('audio_path_prefix', response.context)
-            expected_prefix = f"/static/AUDIOS/A0/{self.test_title_machine_name}/"
+            expected_prefix = f"{settings.STATIC_URL}AUDIOS/A0/{self.test_title_machine_name}/"
             self.assertEqual(response.context['audio_path_prefix'], expected_prefix)
