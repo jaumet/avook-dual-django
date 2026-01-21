@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('themeBtn');
+    if (!themeBtn) return;
+
     const body = document.body;
 
     const applyTheme = (theme) => {
@@ -24,5 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    // We don't necessarily need to updateBody here because the inline script
+    // in base.html already did it, but it doesn't hurt.
     applyTheme(savedTheme);
 });

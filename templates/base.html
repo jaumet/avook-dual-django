@@ -20,6 +20,14 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.body.classList.add('light');
+            }
+        })();
+    </script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/translator.js' %}"></script>
     <script>
@@ -45,9 +53,8 @@
             });
         });
     </script>
-    {% block extra_js %}
-        <script src="{% static 'js/theme_switcher.js' %}"></script>
-    {% endblock %}
+    <script src="{% static 'js/theme_switcher.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 <header class="main-header">
     <div class="header-left">
         <a href="{% url 'home' %}" class="logo-link">
