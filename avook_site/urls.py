@@ -6,7 +6,7 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django.views.static import serve
 import os
-from products.views import HomeView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView
+from products.views import HomeView, root_redirect, CookiesView, NoticeView, PrivacyView, RightsView, TermsView
 
 # Keep non-translated URLs separate
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns += i18n_patterns(
     path('legal/notice/', NoticeView.as_view(), name='notice'),
     path('legal/privacy/', PrivacyView.as_view(), name='privacy'),
     path('legal/rights/', RightsView.as_view(), name='rights'),
+    path('legal/terms/', TermsView.as_view(), name='terms'),
+    path('legal/term/', TermsView.as_view()), # Redirect or same view for common typo
 )
 
 if settings.DEBUG:
