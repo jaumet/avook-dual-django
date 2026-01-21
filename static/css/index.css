@@ -425,7 +425,7 @@ footer nav a:hover {
     }
 
     .header-right {
-        display: none;
+        display: flex; /* Always flex in mobile to allow transitions */
         flex-direction: column;
         position: fixed;
         top: 65px;
@@ -439,16 +439,16 @@ footer nav a:hover {
         overflow-y: auto;
         align-items: flex-start;
         box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+
+        /* Slide animation using transform and visibility */
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.3s ease-out, visibility 0.3s;
     }
 
     .header-right.active {
-        display: flex !important;
-        animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
+        transform: translateX(0);
+        visibility: visible;
     }
 
     .header-right a {
