@@ -287,6 +287,10 @@ class RightsView(TemplateView):
     template_name = 'legal/rights.html'
 
 
+class TermsView(TemplateView):
+    template_name = 'legal/terms.html'
+
+
 class ProductTestsView(TitleContextMixin, View):
     template_name = 'products/product_tests.html'
 
