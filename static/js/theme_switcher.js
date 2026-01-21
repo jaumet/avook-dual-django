@@ -4,16 +4,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const applyTheme = (theme) => {
         if (theme === 'light') {
-            body.classList.add('light-theme');
+            body.classList.add('light');
             themeBtn.innerHTML = '🌙 <span data-translate-key="header.theme.dark">Fosc</span>';
         } else {
-            body.classList.remove('light-theme');
+            body.classList.remove('light');
             themeBtn.innerHTML = '☀️ <span data-translate-key="header.theme.light">Clar</span>';
+        }
+        // If translator exists, re-translate to handle the new span
+        if (window.translatePage) {
+            window.translatePage();
         }
     };
 
     themeBtn.addEventListener('click', () => {
-        const isLightTheme = body.classList.contains('light-theme');
+        const isLightTheme = body.classList.contains('light');
         const newTheme = isLightTheme ? 'dark' : 'light';
         localStorage.setItem('theme', newTheme);
         applyTheme(newTheme);
