@@ -5,28 +5,38 @@ document.addEventListener('DOMContentLoaded', function() {
     if (menuToggle && headerRight) {
         const toggleMenu = (e) => {
             e.preventDefault();
+            e.stopPropagation();
             headerRight.classList.toggle('active');
-            // Toggle hamburger animation or state if needed
-        };
-        menuToggle.addEventListener('click', toggleMenu);
-        // Add touchstart for faster response on some mobile devices
-        menuToggle.addEventListener('touchstart', toggleMenu, { passive: false });
-    }
+            menuToggle.classList.toggle('active');
 
-    // Theme toggle logic
-    const themeBtn = document.getElementById('themeBtn');
-    if (themeBtn) {
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light');
-
-            const isLight = document.body.classList.contains('light');
-            if (isLight) {
-                themeBtn.textContent = '🌙 Fosc';
+            // Prevent scrolling when menu is open
+            if (headerRight.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
             } else {
-                themeBtn.textContent = '☀️ Clar';
+                document.body.style.overflow = '';
             }
-            // Optional: Save theme preference to localStorage
-            // localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        };
+
+        menuToggle.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (headerRight.classList.contains('active') &&
+                !headerRight.contains(e.target) &&
+                !menuToggle.contains(e.target)) {
+                headerRight.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking on a link (for mobile UX)
+        headerRight.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                headerRight.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            });
         });
     }
 
@@ -55,10 +65,4 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Optional: Check for saved theme preference
-    // const savedTheme = localStorage.getItem('theme');
-    // if (savedTheme === 'light') {
-    //     document.body.classList.add('light');
-    //     if(themeBtn) themeBtn.textContent = '🌙 Fosc';
-    // }
 });

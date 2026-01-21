@@ -82,13 +82,27 @@ body {
     z-index: 2000;
 }
 
-.menu-toggle span {
+.menu-toggle .hamburger-line {
     display: block;
     width: 100%;
     height: 3px;
     background-color: #fff;
     border-radius: 3px;
     transition: all 0.3s ease;
+    pointer-events: none; /* Avoid interfering with click */
+}
+
+/* Hamburger Animation */
+.menu-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
 }
 
 .header-right {
@@ -419,41 +433,61 @@ footer nav a:hover {
         width: 100%;
         height: calc(100vh - 65px);
         background: var(--header-bg);
-        padding: 1.5rem;
-        gap: 1.2rem;
+        padding: 2rem 1.5rem;
+        gap: 1.5rem;
         z-index: 1500;
         overflow-y: auto;
-        align-items: stretch; /* Full width items */
+        align-items: flex-start;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
     }
 
     .header-right.active {
         display: flex !important;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
     }
 
     .header-right a {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         width: 100%;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .header-right .rightBtns {
         flex-direction: column;
         width: 100%;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 1rem;
+        margin-top: 1rem;
     }
 
     .header-right button {
         width: 100%;
-        padding: .8em;
+        padding: 1em;
+        font-size: 1rem;
     }
 
     .header-right .language-switcher {
         width: 100%;
+        margin-top: 1rem;
     }
 
     .header-right .language-switcher select {
         width: 100%;
-        padding: .8em;
+        padding: 1em;
+        font-size: 1rem;
+        background: var(--panel-bg);
+        color: #fff;
+        border: 1px solid var(--accent);
+    }
+
+    .user-menu {
+        width: 100%;
     }
 
     .user-menu-dropdown {
@@ -462,13 +496,21 @@ footer nav a:hover {
         box-shadow: none;
         background: rgba(255,255,255,0.05);
         display: block;
+        padding-left: 1rem;
+        margin-top: 0.5rem;
+        border-left: 2px solid var(--accent);
+    }
+
+    .user-menu-dropdown a {
+        font-size: 1.1rem;
+        border-bottom: none;
     }
 
     .user-menu-trigger {
         font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
         display: block;
+        color: var(--accent);
     }
 }
 

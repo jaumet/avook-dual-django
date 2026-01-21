@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function translatePage() {
+    window.translatePage = function translatePage() {
         const lang = getCurrentLanguage();
         if (!translations[lang]) {
             console.warn(`No translations found for language: ${lang}`);
