@@ -3,9 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menuToggle');
     const headerRight = document.querySelector('.main-header .header-right');
     if (menuToggle && headerRight) {
+        let isTransitioning = false;
+
         const toggleMenu = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            if (isTransitioning) return;
+            isTransitioning = true;
+            setTimeout(() => { isTransitioning = false; }, 300);
+
+            if (e) {
+                e.stopPropagation();
+            }
+
             headerRight.classList.toggle('active');
             menuToggle.classList.toggle('active');
 
@@ -18,15 +26,22 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         menuToggle.addEventListener('click', toggleMenu);
+        menuToggle.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            toggleMenu(e);
+        }, { passive: false });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (headerRight.classList.contains('active') &&
-                !headerRight.contains(e.target) &&
-                !menuToggle.contains(e.target)) {
-                headerRight.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.style.overflow = '';
+            if (headerRight.classList.contains('active')) {
+                const isClickInsideMenu = headerRight.contains(e.target);
+                const isClickOnToggle = menuToggle.contains(e.target);
+
+                if (!isClickInsideMenu && !isClickOnToggle) {
+                    headerRight.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             }
         });
 
