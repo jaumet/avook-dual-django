@@ -133,7 +133,7 @@ class CatalogView(TitleContextMixin, ListView):
         context['titles_by_level'] = titles_by_level
 
         # Prepare data for the filters
-        json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
+        json_path = os.path.join(settings.STATICFILES_DIRS[0], 'AUDIOS', 'audios.json')
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 audios_data = json.load(f).get('AUDIOS', [])
@@ -222,7 +222,7 @@ def player_view(request, machine_name):
     json_info = title_info.get('json_info', {})
 
     # Add all text_versions to json_info
-    json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', 'audios.json')
+    json_path = os.path.join(settings.STATICFILES_DIRS[0], 'AUDIOS', 'audios.json')
     try:
         with open(json_path, 'r', encoding='utf-8') as f:
             audios_data = json.load(f).get('AUDIOS', [])
@@ -246,7 +246,7 @@ def player_view(request, machine_name):
         json_file_name = version.get('json_file')
 
         if lang and json_file_name:
-            detailed_json_path = os.path.join(settings.BASE_DIR, 'static', 'AUDIOS', level, json_file_name)
+            detailed_json_path = os.path.join(settings.STATICFILES_DIRS[0], 'AUDIOS', level, json_file_name)
             try:
                 with open(detailed_json_path, 'r', encoding='utf-8') as f:
                     detailed_data = json.load(f)
@@ -261,7 +261,7 @@ def player_view(request, machine_name):
     context = {
         'title': json_info,
         'transcripts': transcripts,
-        'audio_path_prefix': f"/static/AUDIOS/{level}/{machine_name}/"
+        'audio_path_prefix': f"{settings.STATIC_URL}AUDIOS/{level}/{machine_name}/"
     }
 
     return render(request, 'products/player.html', context)
