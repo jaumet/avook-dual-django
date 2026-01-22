@@ -102,6 +102,8 @@ class PlayerViewTest(TestCase):
         # Override settings
         self.override_settings = override_settings(
             STATICFILES_DIRS=[static_dir],
+            AUDIOS_ROOT=self.audios_dir,
+            AUDIOS_URL=f"{settings.STATIC_URL}AUDIOS/",
             BASE_DIR=Path(self.temp_dir.name)
         )
         self.override_settings.enable()
@@ -180,5 +182,5 @@ class PlayerViewTest(TestCase):
             response = self.client.get(reverse('products:player', kwargs={'machine_name': self.test_title_machine_name}))
             self.assertEqual(response.status_code, 200)
             self.assertIn('audio_path_prefix', response.context)
-            expected_prefix = f"{settings.STATIC_URL}AUDIOS/A0/{self.test_title_machine_name}/"
+            expected_prefix = f"{settings.AUDIOS_URL}A0/{self.test_title_machine_name}/"
             self.assertEqual(response.context['audio_path_prefix'], expected_prefix)

@@ -7,7 +7,7 @@ def run():
     """
     Seeds the database with titles from the new audios.json format.
     """
-    json_path = Path(settings.STATICFILES_DIRS[0]) / "AUDIOS" / "audios.json"
+    json_path = Path(settings.AUDIOS_ROOT) / "audios.json"
     if not json_path.exists():
         print(f"audios.json not found at {json_path}")
         return

@@ -97,6 +97,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Configurable paths for Audio files (player)
+AUDIOS_ROOT = Path(os.environ.get('AUDIOS_ROOT', BASE_DIR / 'static' / 'AUDIOS'))
+AUDIOS_URL = os.environ.get('AUDIOS_URL', f'{STATIC_URL}AUDIOS/')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
