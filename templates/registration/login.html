@@ -6,6 +6,7 @@
 {% block content %}
 <section class="form-section">
     <h1>{% trans "Inicia sessió" %}</h1>
+    <p><a href="{% url 'accounts:signup' %}">{% trans "Registra't si encara no tens usuari" %}</a></p>
     <form method="post" class="form">
         {% csrf_token %}
         {{ form.non_field_errors }}

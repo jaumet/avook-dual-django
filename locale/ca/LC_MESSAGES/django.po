@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-18 17:24+0000\n"
+"POT-Creation-Date: 2026-01-22 18:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,31 +125,31 @@ msgid ""
 "Thank you for signing up! We've sent you an email to activate your account."
 msgstr ""
 
-#: avook_site/settings.py:72
+#: avook_site/settings.py:74
 msgid "Catalan"
 msgstr "Català"
 
-#: avook_site/settings.py:73
+#: avook_site/settings.py:75
 msgid "English"
 msgstr "Anglès"
 
-#: avook_site/settings.py:74
+#: avook_site/settings.py:76
 msgid "Spanish"
 msgstr "Espanyol"
 
-#: avook_site/settings.py:75
+#: avook_site/settings.py:77
 msgid "French"
 msgstr "Francès"
 
-#: avook_site/settings.py:76
+#: avook_site/settings.py:78
 msgid "German"
 msgstr "Alemany"
 
-#: avook_site/settings.py:77
+#: avook_site/settings.py:79
 msgid "Italian"
 msgstr "Italià"
 
-#: avook_site/settings.py:78
+#: avook_site/settings.py:80
 msgid "Portuguese"
 msgstr "Portuguès"
 
@@ -175,7 +175,7 @@ msgid "Included titles in the package:"
 msgstr "Títols inclosos en el paquet:"
 
 #: samples/product_default.html:28 samples/product_default.html:37
-#: templates/accounts/activity.html:36 templates/products/_title_card.html:21
+#: templates/accounts/activity.html:35 templates/products/_title_card.html:21
 msgid "Level"
 msgstr "Nivell"
 
@@ -211,71 +211,89 @@ msgstr "Aquesta és una breu descripció per al segon títol d'exemple."
 msgid "French, German"
 msgstr "Francès, Alemany"
 
-#: templates/accounts/activity.html:28
+#: templates/accounts/activity.html:27
 msgid "User Activity Log"
 msgstr "Registre d'Activitat de l'Usuari"
 
-#: templates/accounts/activity.html:29
+#: templates/accounts/activity.html:28
 msgid "Export as PDF"
 msgstr "Exporta a PDF"
 
-#: templates/accounts/activity.html:35
+#: templates/accounts/activity.html:34
 msgid "Title"
 msgstr "Títol"
 
-#: templates/accounts/activity.html:37
+#: templates/accounts/activity.html:36
 msgid "Language Pair"
 msgstr "Parella d'idiomes"
 
-#: templates/accounts/activity.html:38
+#: templates/accounts/activity.html:37
 msgid "Listen Count"
 msgstr "Recomptes d'Escolta"
 
-#: templates/accounts/activity.html:39 templates/accounts/activity.html:96
+#: templates/accounts/activity.html:38 templates/accounts/activity.html:101
 msgid "Listening Time (minutes)"
 msgstr "Temps d'Escolta (minuts)"
 
-#: templates/accounts/activity.html:40
+#: templates/accounts/activity.html:39
 msgid "Completion"
 msgstr "Completat"
 
-#: templates/accounts/activity.html:41
+#: templates/accounts/activity.html:40
 msgid "Last Listened"
 msgstr "Darrera Escolta"
 
-#: templates/accounts/activity.html:60
+#: templates/accounts/activity.html:59
 msgid "Visual Report"
 msgstr "Informe Visual"
 
-#: templates/accounts/activity.html:109
+#: templates/accounts/activity.html:88
+msgid "Search..."
+msgstr "Cerca..."
+
+#: templates/accounts/activity.html:89
+#, python-brace-format
+msgid "{select} entries per page"
+msgstr "{select} entrades per pàgina"
+
+#: templates/accounts/activity.html:90
+msgid "No entries found"
+msgstr "No s'han trobat entrades"
+
+#: templates/accounts/activity.html:91
+#, python-brace-format
+msgid "Showing {start} to {end} of {rows} entries"
+msgstr "Mostrant de {start} a {end} de {rows} entrades"
+
+#: templates/accounts/activity.html:114
 msgid "Listening Time by Language Pair"
 msgstr "Temps d'Escolta per Parell de Llengües"
 
-#: templates/accounts/activity.html:126
+#: templates/accounts/activity.html:131
 msgid "Titles Listened by Level (Bubble Chart)"
 msgstr "Títols Escoltats per Nivell (Gràfic de Bombolles)"
 
-#: templates/accounts/activity.html:148
+#: templates/accounts/activity.html:153
 msgid "Daily Listening (minutes)"
 msgstr "Escolta Diària (minuts)"
 
-#: templates/accounts/activity.html:161
+#: templates/accounts/activity.html:166
 msgid "Listening Activity Timeline"
 msgstr "Línia de Temps d'Activitat d'Escolta"
 
-#: templates/accounts/activity.html:194
+#: templates/accounts/activity.html:199
 msgid "Listening Time by Level and Language Pair"
 msgstr "Temps d'Escolta per Nivell i Parell de Llengües"
 
 #: templates/accounts/purchase_history.html:4
-#: templates/accounts/purchase_history.html:40 templates/base.html:63
+#: templates/accounts/purchase_history.html:40 templates/base.html:81
 msgid "My products"
 msgstr "Els meus productes"
 
 #: templates/accounts/purchase_history.html:41
 msgid ""
-"Here you can see the status of your products, including expiration dates and "
-"renewal options."
+"Here you can see the status of your products, including expiration dates and"
+" renewal options."
 msgstr ""
 "Aquí pots veure l'estat dels teus productes, incloent-hi les dates de "
 "caducitat i les opcions de renovació."
@@ -348,11 +366,23 @@ msgstr "Renovar"
 msgid "You have not made any purchases yet."
 msgstr "Encara no has fet cap compra."
 
-#: templates/catalog.html:19
+#: templates/base.html:186
+msgid ""
+"Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de "
+"compartir i després 'Afegeix a la pantalla d'inici'"
+msgstr ""
+
+#: templates/base.html:188
+msgid ""
+"Per instal·lar aquesta aplicació: busca l'opció 'Instal·la' o 'Afegeix a la "
+"pantalla d'inici' al menú del teu navegador."
+msgstr ""
+
+#: templates/catalog.html:18
 msgid "Selecciona nivell:"
 msgstr "Selecciona nivell:"
 
-#: templates/catalog.html:28
+#: templates/catalog.html:27
 msgid "Cerca avançada"
 msgstr "Cerca avançada"
 
@@ -452,15 +482,15 @@ msgstr "Accepto les condicions de venda"
 msgid "Comprar ara"
 msgstr "Comprar ara"
 
-#: templates/products/detail.html:54
+#: templates/products/detail.html:55
 msgid "Títols inclosos en el paquet:"
 msgstr "Títols inclosos en el paquet:"
 
-#: templates/products/detail.html:60
+#: templates/products/detail.html:61
 msgid "Nivell"
 msgstr "Nivell"
 
-#: templates/products/detail.html:67
+#: templates/products/detail.html:68
 msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "Encara no hi ha títols assignats a aquest paquet."
 
@@ -561,11 +591,15 @@ msgid "Si tens qualsevol dubte:"
 msgstr ""
 
 #: templates/registration/login.html:4 templates/registration/login.html:8
-#: templates/registration/login.html:21
+#: templates/registration/login.html:22
 msgid "Inicia sessió"
 msgstr "Inicia sessió"
 
-#: templates/registration/login.html:23
+#: templates/registration/login.html:9
+msgid "Registra't si encara no tens usuari"
+msgstr "Registra't si encara no tens usuari"
+
+#: templates/registration/login.html:24
 msgid "Has oblidat la contrasenya?"
 msgstr "Has oblidat la contrasenya?"
 
@@ -648,11 +682,11 @@ msgstr "L'equip de Dual"
 
 #: templates/registration/password_reset_form.html:13
 msgid ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
-"restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
+" restablir la teva contrasenya."
 msgstr ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
-"restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
+" restablir la teva contrasenya."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
@@ -666,25 +700,13 @@ msgstr "Crear compte"
 msgid "Crea un compte"
 msgstr "Crea un compte"
 
-#: templates/registration/signup.html:21
+#: templates/registration/signup.html:9
+msgid "Iniciar sessió si ja tens usuari"
+msgstr "Iniciar sessió si ja tens usuari"
+
+#: templates/registration/signup.html:22
 msgid "Registrar-me"
 msgstr "Registrar-me"
-
-#: templates/accounts/activity.html:92
-msgid "Search..."
-msgstr "Cerca..."
-
-#: templates/accounts/activity.html:93
-msgid "{select} entries per page"
-msgstr "{select} entrades per pàgina"
-
-#: templates/accounts/activity.html:94
-msgid "No entries found"
-msgstr "No s'han trobat entrades"
-
-#: templates/accounts/activity.html:95
-msgid "Showing {start} to {end} of {rows} entries"
-msgstr "Mostrant de {start} a {end} de {rows} entrades"
 
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compres"
@@ -692,17 +714,13 @@ msgstr "Mostrant de {start} a {end} de {rows} entrades"
 #~ msgid "Paquets"
 #~ msgstr "Paquets"
 
-#~ msgid ""
-#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
-#~ msgstr ""
-#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgstr "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 
 #~ msgid ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
-#~ "compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 #~ msgstr ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
-#~ "compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 
 #~ msgid "Dual Start"
 #~ msgstr "Dual Start"
