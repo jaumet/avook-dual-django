@@ -811,5 +811,37 @@ body.light-theme {
     color: rgba(16,18,40,.78);
   }
 
+/* home ribbon: link to tst it now */
+#dual-embed-content{
+  position: relative;
+  overflow: visible;
+}
 
-  </style>
+.dual-ribbon{
+  position:absolute;
+  top:14px;
+  right:-38px;
+  transform:rotate(35deg);
+
+  background:#f7836a;
+  color:#0d0e37;
+
+  padding:6px 46px;
+  font-size:0.75rem;
+  font-weight:800;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+
+  text-decoration:none !important;
+  pointer-events:auto;
+  cursor:pointer;
+
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  z-index:10;
+}
+
+.dual-ribbon:hover{
+  filter:brightness(1.05);
+}
+
+</style>
