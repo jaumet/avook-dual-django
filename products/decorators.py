@@ -21,8 +21,7 @@ def paypal_csp_decorator(view_func):
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
-                "'unsafe-inline'",  # Required by PayPal SDK
-                "nonce-placeholder"
+                "'unsafe-inline'"  # Required by PayPal SDK
             ],
             "style-src": [
                 "'self'",

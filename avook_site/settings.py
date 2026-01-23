@@ -172,8 +172,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
         "https://www.google.com",
         "https://www.gstatic.com",
     "'sha256-aKAwvWwisgzRhW5auVEe5FrNQ3wlLsxZvLvimiQ3+os='",
-    "'sha256-yei5Fza+Eyx4G0smvN0xBqEesIKumz6RSyGsU3FJowI='",
-    "nonce-placeholder"
+    "'sha256-yei5Fza+Eyx4G0smvN0xBqEesIKumz6RSyGsU3FJowI='"
     ],
     "style-src": [
         "'self'",
