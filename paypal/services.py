@@ -24,7 +24,7 @@ def get_paypal_access_token():
         logger.error(f"Error obtaining PayPal access token: {e}")
         return None
 
-def create_payment_resource(product_name, price, machine_name, user_id, return_url):
+def create_payment_resource(product_name, price, machine_name, user_id, return_url, description=""):
     """
     Creates a payment resource (link) using the PayPal Payment Links and Buttons API.
     Endpoint: POST /v1/checkout/payment-resources
@@ -37,8 +37,14 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
         api_url = f"{settings.PAYPAL_API_URL}/v1/checkout/payment-resources"
 
         # Encode product info and user ID into product_id (SKU)
-        # Format: machine_name:user_id
-        sku = f"{machine_name}:{user_id}"
+        # Format: machine_name--user_id
+        sku = f"{machine_name}--{user_id}"
+
+        # Ensure price has 2 decimal places
+        formatted_price = "{:.2f}".format(float(price))
+
+        # PayPal description limit is usually 127 chars
+        clean_description = (description or product_name)[:127]
 
         payload = {
             "type": "BUY_NOW",
@@ -49,9 +55,10 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
                 {
                     "name": product_name,
                     "product_id": sku,
+                    "description": clean_description,
                     "unit_amount": {
                         "currency_code": "EUR",
-                        "value": str(price)
+                        "value": formatted_price
                     }
                 }
             ]
