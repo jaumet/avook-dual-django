@@ -19,12 +19,16 @@ class Title(models.Model):
         return self.machine_name
 
     def get_image_url(self):
-        image_path = f"AUDIOS/{self.level}/{self.machine_name}/{self.machine_name}.png"
-        image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], image_path)
+        image_filename = f"{self.machine_name}.png"
+        image_relative_path = f"{self.level}/{self.machine_name}/{image_filename}"
+
+        # Check if it exists in AUDIOS_ROOT
+        image_fullpath = os.path.join(settings.AUDIOS_ROOT, image_relative_path)
 
         if os.path.exists(image_fullpath):
-            return static(image_path)
+            return f"{settings.AUDIOS_URL}{image_relative_path}"
 
+        # Fallback to default images in STATIC
         default_image_path = f"imgs/{self.level}-anonymous-cover.png"
         default_image_fullpath = os.path.join(settings.STATICFILES_DIRS[0], default_image_path)
 

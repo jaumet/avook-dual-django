@@ -13,7 +13,7 @@ class TitleContextMixin:
         primary_lang = request_lang.split('-')[0] # e.g., 'en'
         json_lang_code = primary_lang.upper() # e.g., 'EN'
 
-        json_path = os.path.join(settings.STATICFILES_DIRS[0], 'AUDIOS', 'audios.json')
+        json_path = os.path.join(settings.AUDIOS_ROOT, 'audios.json')
         try:
             with open(json_path, 'r', encoding='utf-8') as f:
                 audios_data = json.load(f).get('AUDIOS', [])
