@@ -196,6 +196,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
     "connect-src": [
         "'self'",
         "https://*.paypal.com",
+        "https://*.paypalobjects.com",
         "https://*.paypal.cn",
         "https://postcollector.paypal.com",
         "https://192.55.233.1",
