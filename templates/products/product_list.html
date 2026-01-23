@@ -21,7 +21,7 @@
             <div class="ribbon ribbon-progress">{{ product.translation.name }}</div>
           {% elif product.machine_name == 'dual-advanced' %}
             <div class="ribbon ribbon-advanced">{{ product.translation.name }}</div>
-          {% elif product.machine_name == 'dual-full' %}
+          {% elif product.machine_name == 'dual-full' or product.machine_name == 'dual-full-access' %}
             <div class="ribbon ribbon-full">{{ product.translation.name }}</div>
           {% endif %}
           <h3>{{ product.translation.name }}</h3>
@@ -72,14 +72,16 @@ document.addEventListener("DOMContentLoaded", function() {
     {% if user.is_authenticated %}
     {% for product in products %}
       {% if product.price > 0 %}
-        renderButton(
-            "#paypal-{{ product.id }}",
-            "{{ product.translation.name }}",
-            "{{ product.price }}",
-            "{{ product.machine_name }}",
-            successUrl,
-            "{{ user.id }}"
-        );
+        if (typeof renderButton === 'function') {
+            renderButton(
+                "#paypal-{{ product.machine_name|escapejs }}",
+                "{{ product.translation.name|escapejs }}",
+                "{{ product.price|escapejs }}",
+                "{{ product.machine_name|escapejs }}",
+                successUrl,
+                "{{ user.id|escapejs }}"
+            );
+        }
       {% endif %}
     {% endfor %}
     {% endif %}

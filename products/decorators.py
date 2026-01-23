@@ -22,15 +22,18 @@ def paypal_csp_decorator(view_func):
                 "https://www.paypal.com",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
-                "https://*.paypal.cn",
-                "'unsafe-inline'",
-                "'unsafe-eval'"  # Sometimes required by dynamic SDKs
+                "'unsafe-inline'"  # Required by PayPal SDK
             ],
             "style-src": [
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
+                "https://fonts.googleapis.com",
                 "'unsafe-inline'"
+            ],
+            "font-src": [
+                "'self'",
+                "https://fonts.gstatic.com"
             ],
             "img-src": [
                 "'self'",
@@ -50,6 +53,7 @@ def paypal_csp_decorator(view_func):
             "frame-src": [
                 "'self'",
                 "https://*.paypal.com",
+                "https://*.paypalobjects.com",
                 "https://*.sandbox.paypal.com"
             ],
             "object-src": ["'none'"],
