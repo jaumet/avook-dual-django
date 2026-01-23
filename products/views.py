@@ -133,34 +133,21 @@ class CatalogView(TitleContextMixin, ListView):
         context['titles_by_level'] = titles_by_level
 
         # Prepare data for the filters
-        json_path = os.path.join(settings.AUDIOS_ROOT, 'audios.json')
-        try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                audios_data = json.load(f).get('AUDIOS', [])
-        except (FileNotFoundError, json.JSONDecodeError):
-            audios_data = []
-
-        lang_code = self.request.LANGUAGE_CODE[:2].upper()
         collections = set()
         durations = set()
         languages = set()
         ages_list = set()
 
-        for audio in audios_data:
-            # Add all available languages for the language filter
-            for version in audio.get('text_versions', []):
-                if version.get('lang'):
-                    languages.add(version['lang'])
-
-            # Add other filters based on the current language
-            for version in audio.get('text_versions', []):
-                if version.get('lang', '').upper() == lang_code:
-                    if version.get('colection'):
-                        collections.add(_(version['colection']))
-                    if version.get('duration'):
-                        durations.add(_(version['duration']))
-                    if version.get('ages'):
-                        ages_list.add(_(version['ages']))
+        for item in titles_with_status:
+            info = item['json_info']
+            if info.get('colection'):
+                collections.add(_(info['colection']))
+            if info.get('duration'):
+                durations.add(_(info['duration']))
+            if info.get('ages'):
+                ages_list.add(_(info['ages']))
+            for lang in info.get('languages', []):
+                languages.add(lang)
 
         context['collections'] = sorted(list(collections))
         context['durations'] = sorted(list(durations))
