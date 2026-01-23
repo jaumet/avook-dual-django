@@ -1,6 +1,6 @@
 function renderButton(target, name, price, productCode, successUrl, userId) {
   if (typeof paypal === 'undefined') {
-    console.error("PayPal SDK not loaded!");
+    console.error("PayPal SDK not loaded! Type of 'paypal' is:", typeof paypal);
     return;
   }
   const formattedPrice = price.toString().replace(',', '.');

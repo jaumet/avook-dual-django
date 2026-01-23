@@ -32,7 +32,7 @@
             </div>
           {% else %}
             {% if user.is_authenticated %}
-              <div id="paypal-{{ product.machine_name }}"></div>
+              <div id="paypal-{{ product.id }}"></div>
             {% else %}
               <div class="my-3">
                 <a href="{% url 'accounts:login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
     {% for product in products %}
       {% if product.price > 0 %}
         renderButton(
-            "#paypal-{{ product.machine_name }}",
+            "#paypal-{{ product.id }}",
             "{{ product.translation.name }}",
             "{{ product.price }}",
             "{{ product.machine_name }}",
