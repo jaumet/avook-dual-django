@@ -32,6 +32,7 @@ from .models import Product, Title, UserActivity, HomePageContent
 from .decorators import paypal_csp_decorator
 
 
+@method_decorator(paypal_csp_decorator, name='dispatch')
 class ProductListView(TitleContextMixin, ListView):
     model = Product
     template_name = 'products/product_list.html'
@@ -58,7 +59,7 @@ class ProductListView(TitleContextMixin, ListView):
                 package.titles_with_status = self.get_titles_with_status(package.titles.all())
 
         context['products'] = products
-        context['PAYPAL_CLIENT_ID_LIVE'] = settings.PAYPAL_CLIENT_ID
+        context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
         return context
 
 
@@ -92,6 +93,11 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset().prefetch_related('translations')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

@@ -1,5 +1,5 @@
-function renderButton(target, name, price, productCode, successUrl) {
-  const formattedPrice = price.replace(',', '.');
+function renderButton(target, name, price, productCode, successUrl, userId) {
+  const formattedPrice = price.toString().replace(',', '.');
   paypal.Buttons({
     style: {
       layout: 'vertical',
@@ -12,10 +12,26 @@ function renderButton(target, name, price, productCode, successUrl) {
       return actions.order.create({
         purchase_units: [{
           description: name,
+          custom_id: userId.toString(),
           amount: {
             currency_code: 'EUR',
-            value: formattedPrice
-          }
+            value: formattedPrice,
+            breakdown: {
+              item_total: {
+                currency_code: 'EUR',
+                value: formattedPrice
+              }
+            }
+          },
+          items: [{
+            name: name,
+            sku: productCode,
+            unit_amount: {
+              currency_code: 'EUR',
+              value: formattedPrice
+            },
+            quantity: "1"
+          }]
         }]
       });
     },
