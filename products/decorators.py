@@ -19,15 +19,15 @@ def paypal_csp_decorator(view_func):
             "default-src": ["'self'"],
             "script-src": [
                 "'self'",
-                "https://www.paypal.com",
-                "https://www.sandbox.paypal.com",
-                "https://www.paypalobjects.com",
-                "'unsafe-inline'"  # Required by PayPal SDK
+                "https://*.paypal.com",
+                "https://*.paypalobjects.com",
+                "'unsafe-inline'",  # Required by PayPal SDK
+                "nonce-placeholder"
             ],
             "style-src": [
                 "'self'",
-                "https://*.paypalobjects.com",
                 "https://*.paypal.com",
+                "https://*.paypalobjects.com",
                 "'unsafe-inline'"
             ],
             "img-src": [
@@ -39,15 +39,14 @@ def paypal_csp_decorator(view_func):
             ],
             "connect-src": [
                 "'self'",
-                "https://www.sandbox.paypal.com",
-                "https://c.sandbox.paypal.com",
-                "https://www.paypal.com",
-                "https://c.paypal.com"
+                "https://*.paypal.com",
+                "https://*.paypalobjects.com",
+                "https://*.paypal.cn"
             ],
             "frame-src": [
                 "'self'",
-                "https://www.paypal.com",
-                "https://www.sandbox.paypal.com"
+                "https://*.paypal.com",
+                "https://*.sandbox.paypal.com"
             ],
             "object-src": ["'none'"],
         }

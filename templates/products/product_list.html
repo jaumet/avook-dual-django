@@ -63,7 +63,7 @@
 
 {% block extra_js %}
 {{ block.super }}
-<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID_LIVE }}&currency=EUR"></script>
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
 <script src="{% static 'js/paypal_buttons.js' %}"></script>
 
 <script>
@@ -77,7 +77,8 @@ document.addEventListener("DOMContentLoaded", function() {
             "{{ product.translation.name }}",
             "{{ product.price }}",
             "{{ product.machine_name }}",
-            successUrl
+            successUrl,
+            "{{ user.id }}"
         );
       {% endif %}
     {% endfor %}
