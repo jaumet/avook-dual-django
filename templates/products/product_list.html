@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
       {% if product.price > 0 %}
         if (typeof renderLinkButton === 'function') {
             renderLinkButton(
-                "#paypal-{{ product.machine_name|escapejs }}",
+                "#paypal-{{ product.id|escapejs }}",
                 "{{ product.translation.name|escapejs }}",
                 "{{ product.price|unlocalize|escapejs }}",
                 "{{ product.machine_name|escapejs }}",

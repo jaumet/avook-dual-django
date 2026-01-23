@@ -9,24 +9,44 @@
  * @param {string|number} productId - The database ID of the product.
  */
 async function renderLinkButton(target, name, price, machineName, successUrl, userId, productId) {
+    console.log(`Initializing PayPal button for product ID: ${productId}, target: ${target}`);
+
     const targetElement = document.querySelector(target);
     if (!targetElement) {
-        console.warn(`PayPal target element not found: ${target}`);
+        console.error(`PayPal target element not found: ${target}`);
+        // Attempt fallback if target is an ID
+        if (target.startsWith('#')) {
+            const fallbackId = target.substring(1);
+            const fallbackElement = document.getElementById(fallbackId);
+            if (fallbackElement) {
+                console.log(`Found element via getElementById fallback: ${fallbackId}`);
+                return renderLinkButton(fallbackElement, name, price, machineName, successUrl, userId, productId);
+            }
+        }
         return;
     }
 
+    // If target is an element object, we can use it directly
+    const container = (typeof target === 'string') ? targetElement : target;
+
     // Show a loading state
-    targetElement.innerHTML = '<div class="paypal-loading">Loading PayPal...</div>';
+    container.innerHTML = '<div class="paypal-loading">Loading PayPal...</div>';
 
     try {
+        console.log(`Fetching payment link for product ${productId}...`);
         // Fetch the payment link from our backend
-        // Note: we use productId here to call the backend view
         const response = await fetch(`/paypal/create-link/${productId}/`);
+
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
 
         if (data.payment_link) {
+            console.log(`Payment link received for product ${productId}. Rendering button.`);
             // Render a styled link that looks like a PayPal button
-            targetElement.innerHTML = `
+            container.innerHTML = `
                 <a href="${data.payment_link}" class="paypal-link-button" title="Pay with PayPal">
                     <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-medium.png" alt="Check out with PayPal" />
                 </a>
@@ -41,6 +61,7 @@ async function renderLinkButton(target, name, price, machineName, successUrl, us
                         display: inline-block;
                         max-width: 100%;
                         transition: opacity 0.2s;
+                        margin: 10px 0;
                     }
                     .paypal-link-button:hover {
                         opacity: 0.9;
@@ -53,24 +74,22 @@ async function renderLinkButton(target, name, price, machineName, successUrl, us
                         font-size: 0.9rem;
                         color: #666;
                         font-style: italic;
+                        margin: 10px 0;
                     }
                 `;
                 document.head.appendChild(style);
             }
         } else {
-            targetElement.innerHTML = '<p class="text-danger">Error loading payment link.</p>';
-            console.error('Error fetching payment link:', data.error);
+            container.innerHTML = '<p class="text-danger">Error loading payment link.</p>';
+            console.error(`Error fetching payment link for product ${productId}:`, data.error);
         }
     } catch (error) {
-        targetElement.innerHTML = '<p class="text-danger">Error connecting to payment service.</p>';
-        console.error('Fetch error:', error);
+        container.innerHTML = '<p class="text-danger">Error connecting to payment service.</p>';
+        console.error(`Fetch error for product ${productId}:`, error);
     }
 }
 
 // Compatibility wrapper for old renderButton calls if any remain
 function renderButton(target, name, price, productCode, successUrl, userId) {
     console.warn("renderButton is deprecated. Use renderLinkButton instead.");
-    // We try to find the product ID from the container if we can,
-    // but in the templates we will update the calls to pass the ID.
-    // For now, this is just a placeholder.
 }
