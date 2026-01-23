@@ -94,14 +94,16 @@
                     if (this.checked) {
                         buyButton.style.display = 'none';
                         buyButtonContainer.style.display = 'block';
-                        renderButton(
-                            '#buy-button-container',
-                            '{% if product_translation %}{{ product_translation.name }}{% else %}{{ product.machine_name }}{% endif %}',
-                            '{{ product.price }}',
-                            '{{ product.machine_name }}',
-                            '{% url "products:success" %}',
-                            '{{ user.id }}'
-                        );
+                        if (typeof renderButton === 'function') {
+                            renderButton(
+                                '#buy-button-container',
+                                '{% if product_translation %}{{ product_translation.name|escapejs }}{% else %}{{ product.machine_name|escapejs }}{% endif %}',
+                                '{{ product.price|escapejs }}',
+                                '{{ product.machine_name|escapejs }}',
+                                '{% url "products:success" %}',
+                                '{{ user.id|escapejs }}'
+                            );
+                        }
                     } else {
                         buyButton.style.display = 'block';
                         buyButtonContainer.style.display = 'none';
