@@ -21,12 +21,15 @@ def paypal_csp_decorator(view_func):
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
+                "https://*.paypal.cn",
+                "https://*.sandbox.paypal.com",
                 "'unsafe-inline'"  # Required by PayPal SDK
             ],
             "style-src": [
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
+                "https://*.sandbox.paypal.com",
                 "https://fonts.googleapis.com",
                 "'unsafe-inline'"
             ],
@@ -38,6 +41,8 @@ def paypal_csp_decorator(view_func):
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
+                "https://*.paypal.cn",
+                "https://*.sandbox.paypal.com",
                 "data:",
                 "blob:"  # Required for certain PayPal elements
             ],
@@ -45,12 +50,14 @@ def paypal_csp_decorator(view_func):
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
-                "https://*.paypal.cn"
+                "https://*.paypal.cn",
+                "https://*.sandbox.paypal.com"
             ],
             "frame-src": [
                 "'self'",
                 "https://*.paypal.com",
                 "https://*.paypalobjects.com",
+                "https://*.paypal.cn",
                 "https://*.sandbox.paypal.com"
             ],
             "object-src": ["'none'"],

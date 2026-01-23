@@ -1,9 +1,29 @@
+/**
+ * Renders a PayPal button for a specific product.
+ * @param {string} target - The CSS selector for the button container.
+ * @param {string} name - The product name.
+ * @param {string|number} price - The product price.
+ * @param {string} productCode - The product machine name/SKU.
+ * @param {string} successUrl - The URL to redirect to on success.
+ * @param {string|number} userId - The ID of the authenticated user.
+ */
 function renderButton(target, name, price, productCode, successUrl, userId) {
-    if (typeof paypal === 'undefined' || !paypal.Buttons) {
-        console.error('PayPal SDK not loaded or Buttons component missing. Check your CSP, client ID, or if the SDK script is correct.');
-        return;
-    }
+  // Ensure we have a valid target element
+  const targetElement = document.querySelector(target);
+  if (!targetElement) {
+    console.warn(`PayPal target element not found: ${target}`);
+    return;
+  }
+
+  // Ensure price is formatted correctly for PayPal (dot as decimal separator)
   const formattedPrice = price.toString().replace(',', '.');
+
+  // Check if PayPal SDK is loaded
+  if (typeof paypal === 'undefined') {
+    console.error('PayPal SDK not loaded.');
+    return;
+  }
+
   paypal.Buttons({
     style: {
       layout: 'vertical',
@@ -49,8 +69,8 @@ function renderButton(target, name, price, productCode, successUrl, userId) {
     },
 
     onError: function(err) {
-      alert("Error en el pagament. Torna-ho a intentar.");
-      console.error(err);
+      // Log to console instead of alerting the user to avoid disruptive UX on page load failures
+      console.error('PayPal Error for product ' + productCode + ':', err);
     }
 
   }).render(target);
