@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load l10n %}
 {% load product_tags %}
 
 {% get_product_translation product request.LANGUAGE_CODE as product_translation %}
@@ -98,7 +99,7 @@
                             renderButton(
                                 '#buy-button-container',
                                 '{% if product_translation %}{{ product_translation.name|escapejs }}{% else %}{{ product.machine_name|escapejs }}{% endif %}',
-                                '{{ product.price|escapejs }}',
+                                '{{ product.price|unlocalize|escapejs }}',
                                 '{{ product.machine_name|escapejs }}',
                                 '{% url "products:success" %}',
                                 '{{ user.id|escapejs }}'
