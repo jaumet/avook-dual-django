@@ -48,6 +48,42 @@ class PayPalWebhookTest(TestCase):
         self.assertTrue(UserPurchase.objects.filter(user=self.user, product=self.product).exists())
 
     @patch('paypal.views.verify_paypal_signature')
+    def test_webhook_encoded_sku(self, mock_verify):
+        mock_verify.return_value = True
+
+        # User ID 456, Product 'test-product'
+        user = User.objects.create_user(username='testuser2', pk=456)
+
+        payload = {
+            "event_type": "PAYMENT.CAPTURE.COMPLETED",
+            "resource": {
+                "purchase_units": [
+                    {
+                        "items": [
+                            {
+                                "sku": "test-product:456"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+
+        response = self.client.post(
+            self.webhook_url,
+            data=json.dumps(payload),
+            content_type='application/json',
+            HTTP_PAYPAL_AUTH_ALGO='algo',
+            HTTP_PAYPAL_CERT_URL='url',
+            HTTP_PAYPAL_TRANSMISSION_ID='id',
+            HTTP_PAYPAL_TRANSMISSION_SIG='sig',
+            HTTP_PAYPAL_TRANSMISSION_TIME='time'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(UserPurchase.objects.filter(user=user, product=self.product).exists())
+
+    @patch('paypal.views.verify_paypal_signature')
     def test_webhook_invalid_signature(self, mock_verify):
         mock_verify.return_value = False
         response = self.client.post(self.webhook_url, data='{}', content_type='application/json')

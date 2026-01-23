@@ -3,10 +3,14 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from products.models import Product, UserPurchase
+from .services import create_payment_resource
 
 # Configuració del logging
 logger = logging.getLogger(__name__)
@@ -109,11 +113,25 @@ def paypal_webhook(request):
         resource = payload.get('resource', {})
         custom_id = resource.get('custom_id')  # ID de l'usuari Django
         purchase_units = resource.get('purchase_units', [])
-        if not purchase_units:
-            raise ValueError("No s'han trobat 'purchase_units' al payload.")
 
-        # Assumim que la SKU conté el product.machine_name
-        product_sku = purchase_units[0].get('items', [{}])[0].get('sku')
+        # Support for Payment Links and Buttons API where info might be in the SKU
+        product_sku = None
+        if purchase_units:
+            product_sku = purchase_units[0].get('items', [{}])[0].get('sku')
+
+        # Fallback for SKU location in some webhook versions/types
+        if not product_sku:
+            # Check if it's in resource/amount/details or somewhere else if needed
+            # For Payment Links, it usually ends up in purchase_units[0].items[0].sku
+            pass
+
+        if product_sku and ':' in product_sku:
+            sku_parts = product_sku.split(':')
+            product_sku = sku_parts[0]
+            if not custom_id and len(sku_parts) > 1:
+                custom_id = sku_parts[1]
+                logger.info(f"Extret custom_id de la SKU: {custom_id}")
+
         if not product_sku:
             raise ValueError("No s'ha trobat la SKU del producte al payload.")
 
@@ -150,3 +168,31 @@ def paypal_webhook(request):
         return HttpResponse("Error intern del servidor.", status=500)
 
     return HttpResponse(status=200)
+
+@login_required
+def get_payment_link_view(request, product_id):
+    """
+    View that generates a PayPal payment link for a specific product.
+    """
+    product = get_object_or_404(Product, pk=product_id)
+
+    # Use the product translation if available
+    lang = request.LANGUAGE_CODE
+    product_translation = product.get_translation(lang)
+    product_name = product_translation.name if product_translation else product.machine_name
+
+    # Ensure success URL is absolute
+    success_url = request.build_absolute_uri(reverse('products:success'))
+
+    payment_link = create_payment_resource(
+        product_name=product_name,
+        price=product.price,
+        machine_name=product.machine_name,
+        user_id=request.user.id,
+        return_url=success_url
+    )
+
+    if payment_link:
+        return JsonResponse({'payment_link': payment_link})
+    else:
+        return JsonResponse({'error': 'Could not create payment link'}, status=500)

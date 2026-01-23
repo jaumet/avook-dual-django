@@ -64,7 +64,6 @@
 
 {% block extra_js %}
 {{ block.super }}
-<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
 <script src="{% static 'js/paypal_buttons.js' %}"></script>
 
 <script>
@@ -73,14 +72,15 @@ document.addEventListener("DOMContentLoaded", function() {
     {% if user.is_authenticated %}
     {% for product in products %}
       {% if product.price > 0 %}
-        if (typeof renderButton === 'function') {
-            renderButton(
+        if (typeof renderLinkButton === 'function') {
+            renderLinkButton(
                 "#paypal-{{ product.machine_name|escapejs }}",
                 "{{ product.translation.name|escapejs }}",
                 "{{ product.price|unlocalize|escapejs }}",
                 "{{ product.machine_name|escapejs }}",
                 successUrl,
-                "{{ user.id|escapejs }}"
+                "{{ user.id|escapejs }}",
+                "{{ product.id|escapejs }}"
             );
         }
       {% endif %}
