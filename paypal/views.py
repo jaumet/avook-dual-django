@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils.html import strip_tags
 from products.models import Product, UserPurchase
 from .services import create_payment_resource
 
@@ -125,8 +126,8 @@ def paypal_webhook(request):
             # For Payment Links, it usually ends up in purchase_units[0].items[0].sku
             pass
 
-        if product_sku and ':' in product_sku:
-            sku_parts = product_sku.split(':')
+        if product_sku and '--' in product_sku:
+            sku_parts = product_sku.split('--')
             product_sku = sku_parts[0]
             if not custom_id and len(sku_parts) > 1:
                 custom_id = sku_parts[1]
@@ -179,7 +180,12 @@ def get_payment_link_view(request, product_id):
     # Use the product translation if available
     lang = request.LANGUAGE_CODE
     product_translation = product.get_translation(lang)
-    product_name = product_translation.name if product_translation else product.machine_name
+    product_name = product.machine_name
+    product_description = ""
+
+    if product_translation:
+        product_name = product_translation.name
+        product_description = strip_tags(product_translation.description)
 
     # Ensure success URL is absolute
     success_url = request.build_absolute_uri(reverse('products:success'))
@@ -189,7 +195,8 @@ def get_payment_link_view(request, product_id):
         price=product.price,
         machine_name=product.machine_name,
         user_id=request.user.id,
-        return_url=success_url
+        return_url=success_url,
+        description=product_description
     )
 
     if payment_link:

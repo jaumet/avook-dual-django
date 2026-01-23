@@ -61,7 +61,7 @@ class PayPalWebhookTest(TestCase):
                     {
                         "items": [
                             {
-                                "sku": "test-product:456"
+                                "sku": "test-product--456"
                             }
                         ]
                     }
