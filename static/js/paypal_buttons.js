@@ -1,4 +1,8 @@
 function renderButton(target, name, price, productCode, successUrl, userId) {
+    if (typeof paypal === 'undefined' || !paypal.Buttons) {
+        console.error('PayPal SDK not loaded or Buttons component missing. Check your CSP, client ID, or if the SDK script is correct.');
+        return;
+    }
   const formattedPrice = price.toString().replace(',', '.');
   paypal.Buttons({
     style: {
