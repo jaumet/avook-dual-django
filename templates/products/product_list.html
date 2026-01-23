@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load l10n %}
 {% load static %}
 
 {% block extra_css %}
@@ -76,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
             renderButton(
                 "#paypal-{{ product.machine_name|escapejs }}",
                 "{{ product.translation.name|escapejs }}",
-                "{{ product.price|escapejs }}",
+                "{{ product.price|unlocalize|escapejs }}",
                 "{{ product.machine_name|escapejs }}",
                 successUrl,
                 "{{ user.id|escapejs }}"
