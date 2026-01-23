@@ -49,7 +49,7 @@
                 <label for="accept-conditions" class="form-check-label">{% trans "Accepto les condicions de venda" %}</label>
             </div>
             <button id="buy-button" class="button button--primary">{% trans "Comprar ara" %}</button>
-            <div id="buy-button-container"></div>
+            <div id="paypal-{{ product.id }}"></div>
         {% else %}
             <div class="my-3">
                 <a href="{% url 'accounts:login' %}" class="button button--primary">{% trans "Inicia sessió per comprar" %}</a>
@@ -91,12 +91,13 @@
 
             if (acceptConditions) {
                 acceptConditions.addEventListener('change', function() {
+                    const buyButtonContainer = document.getElementById('paypal-{{ product.id }}');
                     if (this.checked) {
                         buyButton.style.display = 'none';
-                        buyButtonContainer.style.display = 'block';
+                        if (buyButtonContainer) buyButtonContainer.style.display = 'block';
                         if (typeof renderLinkButton === 'function') {
                             renderLinkButton(
-                                '#buy-button-container',
+                                '#paypal-{{ product.id|escapejs }}',
                                 '{% if product_translation %}{{ product_translation.name|escapejs }}{% else %}{{ product.machine_name|escapejs }}{% endif %}',
                                 '{{ product.price|unlocalize|escapejs }}',
                                 '{{ product.machine_name|escapejs }}',
@@ -107,8 +108,10 @@
                         }
                     } else {
                         buyButton.style.display = 'block';
-                        buyButtonContainer.style.display = 'none';
-                        buyButtonContainer.innerHTML = '';
+                        if (buyButtonContainer) {
+                            buyButtonContainer.style.display = 'none';
+                            buyButtonContainer.innerHTML = '';
+                        }
                     }
                 });
             }
