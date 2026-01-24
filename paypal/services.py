@@ -37,15 +37,19 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
         api_url = f"{settings.PAYPAL_API_URL}/v1/checkout/payment-resources"
 
         # Encode product info and user ID into product_id (SKU)
-        # Format: machine_name--user_id
-        sku = f"{machine_name}--{user_id}"
+        # Using __ as separator for the webhook logic
+        sku = f"{machine_name}__{user_id}"
 
-        # Ensure price has 2 decimal places
+        # Ensure price has 2 decimal places and is a string
         formatted_price = "{:.2f}".format(float(price))
 
-        # PayPal description limit is usually 127 chars
-        clean_description = (description or product_name)[:127]
+        # Sanitize strings to avoid issues with PayPal's schema
+        def sanitize(text, length=127):
+            if not text: return ""
+            # Remove newlines and non-ascii if necessary, but at least truncate
+            return str(text).replace("\n", " ").replace("\r", "")[:length].strip()
 
+        # Robust payload strictly following the manual's structure
         payload = {
             "type": "BUY_NOW",
             "integration_mode": "LINK",
@@ -53,9 +57,9 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
             "return_url": return_url,
             "line_items": [
                 {
-                    "name": product_name,
-                    "product_id": sku,
-                    "description": clean_description,
+                    "name": sanitize(product_name),
+                    "product_id": sanitize(sku),
+                    "description": sanitize(description or product_name),
                     "unit_amount": {
                         "currency_code": "EUR",
                         "value": formatted_price
@@ -64,6 +68,8 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
             ]
         }
 
+        logger.info(f"Creating PayPal payment resource with payload: {json.dumps(payload)}")
+
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json",
@@ -71,12 +77,19 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
         }
 
         response = requests.post(api_url, headers=headers, json=payload, timeout=10)
-        response.raise_for_status()
+
+        if response.status_code != 201:
+            logger.error(f"PayPal API error: {response.status_code} - {response.text}")
+            return None
 
         data = response.json()
-        return data.get('payment_link')
+        payment_link = data.get('payment_link')
+
+        if not payment_link:
+            logger.error(f"PayPal response missing payment_link: {data}")
+            return None
+
+        return payment_link
     except Exception as e:
         logger.error(f"Error creating PayPal payment resource: {e}")
-        if hasattr(e, 'response') and e.response is not None:
-             logger.error(f"PayPal Response: {e.response.text}")
         return None
