@@ -36,7 +36,12 @@ class CustomUserChangeForm(UserChangeForm):
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, label=_('First name'))
     last_name = forms.CharField(max_length=30, required=True, label=_('Last name'))
-    email = forms.EmailField(max_length=254, required=True, label=_('Email'))
+    email = forms.EmailField(
+        max_length=254,
+        required=True,
+        label=_('Email'),
+        help_text=_('Unique email address.')
+    )
 
     class Meta:
         model = get_user_model()
@@ -44,6 +49,24 @@ class SignUpForm(UserCreationForm):
         labels = {
             'username': _('Username'),
         }
+        help_texts = {
+            'username': _('Minimum 5 characters. Only letters and numbers.'),
+            'email': _('Unique email address.'),
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username:
+            if User.objects.filter(username__iexact=username).exists():
+                raise forms.ValidationError(_("A user with that username already exists."))
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            if User.objects.filter(email__iexact=email).exists():
+                raise forms.ValidationError(_("A user with that email already exists."))
+        return email
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
