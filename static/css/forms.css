@@ -63,6 +63,20 @@ form button:hover,
     margin-top: 0.25rem;
 }
 
+.form__help {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.85em;
+    opacity: 0.8;
+}
+
+.form__error {
+    color: #dc3545;
+    font-size: 0.85em;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
 ul.errorlist {
     list-style: none;
     padding: 0;
