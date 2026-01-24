@@ -1,7 +1,8 @@
 import json
+import unittest
 from django.test import TestCase, Client
 from django.urls import reverse
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from products.models import Product, UserPurchase
 from django.contrib.auth import get_user_model
 
@@ -61,7 +62,7 @@ class PayPalWebhookTest(TestCase):
                     {
                         "items": [
                             {
-                                "sku": "test-product:456"
+                                "sku": "test-product__456"
                             }
                         ]
                     }
@@ -88,3 +89,60 @@ class PayPalWebhookTest(TestCase):
         mock_verify.return_value = False
         response = self.client.post(self.webhook_url, data='{}', content_type='application/json')
         self.assertEqual(response.status_code, 403)
+
+class PayPalServiceTest(TestCase):
+    def setUp(self):
+        if not User.objects.filter(pk=789).exists():
+            self.user = User.objects.create_user(username='testuser_service', pk=789)
+        else:
+            self.user = User.objects.get(pk=789)
+        self.product = Product.objects.create(machine_name='service-product', price=20.00)
+
+    @patch('paypal.services.get_paypal_access_token')
+    @patch('requests.post')
+    def test_create_payment_resource_success(self, mock_post, mock_get_token):
+        mock_get_token.return_value = 'fake_token'
+
+        mock_response = Mock()
+        mock_response.status_code = 201
+        mock_response.json.return_value = {
+            'payment_link': 'https://www.paypal.com/ncp/payment/PLB-XYZ'
+        }
+        mock_post.return_value = mock_response
+
+        from paypal.services import create_payment_resource
+        link = create_payment_resource(
+            product_name="Service Product",
+            price=20.00,
+            machine_name="service-product",
+            user_id=789,
+            return_url="http://localhost:8000/success"
+        )
+
+        self.assertEqual(link, 'https://www.paypal.com/ncp/payment/PLB-XYZ')
+
+        # Verify payload
+        args, kwargs = mock_post.call_args
+        payload = kwargs['json']
+        self.assertEqual(payload['type'], 'BUY_NOW')
+        self.assertEqual(payload['line_items'][0]['product_id'], 'service-product__789')
+
+class PayPalViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        if not User.objects.filter(username='testuser_view').exists():
+            self.user = User.objects.create_user(username='testuser_view', password='password', pk=101)
+        else:
+            self.user = User.objects.get(username='testuser_view')
+        self.product = Product.objects.create(machine_name='view-product', price=30.00)
+        self.client.login(username='testuser_view', password='password')
+
+    @patch('paypal.views.create_payment_resource')
+    def test_get_payment_link_view(self, mock_create):
+        mock_create.return_value = 'https://paypal.com/link'
+
+        url = reverse('paypal:create_payment_link', kwargs={'product_id': self.product.id})
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['payment_link'], 'https://paypal.com/link')
