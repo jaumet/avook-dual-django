@@ -23,73 +23,87 @@ def get_paypal_access_token():
     except Exception as e:
         logger.error(f"Error obtaining PayPal access token: {e}")
         return None
+import os
+import requests
+import logging
+from decimal import Decimal
+
+logger = logging.getLogger(__name__)
 
 def create_payment_resource(product_name, price, machine_name, user_id, return_url, description=""):
-    """
-    Creates a payment resource (link) using the PayPal Payment Links and Buttons API.
-    Endpoint: POST /v1/checkout/payment-resources
-    """
-    access_token = get_paypal_access_token()
-    if not access_token:
+    # VALIDACIÓ
+    if price is None:
+        logger.error("PayPal: price is None")
         return None
 
-    try:
-        api_url = f"{settings.PAYPAL_API_URL}/v1/checkout/payment-resources"
+    price_str = f"{Decimal(price):.2f}"
 
-        # Encode product info and user ID into product_id (SKU)
-        # Using __ as separator for the webhook logic
-        sku = f"{machine_name}__{user_id}"
+    # MODE
+    mode = os.getenv("PAYPAL_MODE")
 
-        # Ensure price has 2 decimal places and is a string
-        formatted_price = "{:.2f}".format(float(price))
+    if mode == "sandbox":
+        base_url = os.getenv("PAYPAL_API_URL_SANDBOX")
+        client_id = os.getenv("PAYPAL_CLIENT_ID_SANDBOX")
+        secret = os.getenv("PAYPAL_SECRET_SANDBOX")
+    elif mode == "live":
+        base_url = os.getenv("PAYPAL_API_URL_LIVE")
+        client_id = os.getenv("PAYPAL_CLIENT_ID_LIVE")
+        secret = os.getenv("PAYPAL_SECRET_LIVE")
+    else:
+        logger.error("Invalid PAYPAL_MODE")
+        return None
 
-        # Sanitize strings to avoid issues with PayPal's schema
-        def sanitize(text, length=127):
-            if not text: return ""
-            # Remove newlines and non-ascii if necessary, but at least truncate
-            return str(text).replace("\n", " ").replace("\r", "")[:length].strip()
+    # TOKEN
+    token_resp = requests.post(
+        f"{base_url}/v1/oauth2/token",
+        auth=(client_id, secret),
+        data={"grant_type": "client_credentials"},
+    )
 
-        # Robust payload strictly following the manual's structure
-        payload = {
-            "type": "BUY_NOW",
-            "integration_mode": "LINK",
-            "reusable": "MULTIPLE",
-            "return_url": return_url,
-            "line_items": [
-                {
-                    "name": sanitize(product_name),
-                    "product_id": sanitize(sku),
-                    "description": sanitize(description or product_name),
-                    "unit_amount": {
-                        "currency_code": "EUR",
-                        "value": formatted_price
-                    }
+    if token_resp.status_code != 200:
+        logger.error("PayPal token error: %s", token_resp.text)
+        return None
+
+    access_token = token_resp.json()["access_token"]
+
+    # 🔑 PAYLOAD CORRECTE
+    payload = {
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+                "custom_id": str(user_id),
+                "description": description or product_name,
+                "amount": {
+                    "currency_code": "EUR",
+                    "value": price_str
                 }
-            ]
+            }
+        ],
+        "application_context": {
+            "return_url": return_url,
+            "cancel_url": return_url
         }
+    }
 
-        logger.info(f"Creating PayPal payment resource with payload: {json.dumps(payload)}")
-
-        headers = {
+    # CREATE ORDER
+    order_resp = requests.post(
+        f"{base_url}/v2/checkout/orders",
+        headers={
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json",
-            "Accept": "application/json"
-        }
+        },
+        json=payload,
+    )
 
-        response = requests.post(api_url, headers=headers, json=payload, timeout=10)
-
-        if response.status_code != 201:
-            logger.error(f"PayPal API error: {response.status_code} - {response.text}")
-            return None
-
-        data = response.json()
-        payment_link = data.get('payment_link')
-
-        if not payment_link:
-            logger.error(f"PayPal response missing payment_link: {data}")
-            return None
-
-        return payment_link
-    except Exception as e:
-        logger.error(f"Error creating PayPal payment resource: {e}")
+    if order_resp.status_code != 201:
+        logger.error("PayPal order error: %s", order_resp.text)
         return None
+
+    data = order_resp.json()
+
+    for link in data.get("links", []):
+        if link.get("rel") == "approve":
+            return link.get("href")
+
+    logger.error("No approval link found")
+    return None
