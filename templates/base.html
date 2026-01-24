@@ -18,6 +18,105 @@
     <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="{% static 'imgs/dual-cats.gif' %}">
     {% block extra_css %}{% endblock %}
+
+<!-------------------->
+
+<style>
+  /* COLORS CORPORATIUS */
+  :root {
+    --dual-blue: #0d0e37;
+    --dual-orange: #f7836a;
+  }
+
+  #dual-gate {
+    position: fixed;
+    inset: 0;
+    background: var(--dual-blue);
+    color: var(--dual-orange);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    font-family: sans-serif;
+    text-align: center;
+  }
+
+  #dual-gate img {
+    max-width: 220px;
+    margin-bottom: 40px;
+  }
+
+  #dual-gate h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+
+  #dual-gate h1 span {
+    color: var(--dual-orange);
+    font-weight: 800;
+  }
+
+  #dual-gate button {
+    background: var(--dual-orange);
+    color: var(--dual-blue);
+    border: none;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  #dual-gate button:hover {
+    opacity: 0.9;
+  }
+</style>
+
+<div id="dual-gate">
+  <img src="/static/imgs/dual-cats.gif" alt="Dual logo">
+  <h1>dual.cat</h1>
+  <h2>
+    Properament <br>
+    Coming soon <br>
+    Próximamente <br>
+    Bald verfügbar <br>
+    Prochainement <br>
+    Prossimamente <br>
+    Em breve 
+  </h2>
+
+  <button id="dual-login-btn">Log in</button>
+</div>
+
+<script>
+(function () {
+  const PASSWORD = "g0t0dem0";
+  const KEY = "dual_demo_ok";
+
+  // Si ja estem dins la sessió, amaguem el gate
+  if (sessionStorage.getItem(KEY) === "1") {
+    const gate = document.getElementById("dual-gate");
+    if (gate) gate.remove();
+    return;
+  }
+
+  document.getElementById("dual-login-btn").onclick = function () {
+    const entered = prompt("Contrasenya:");
+
+    if (entered === PASSWORD) {
+      sessionStorage.setItem(KEY, "1");
+      document.getElementById("dual-gate").remove();
+    } else {
+      alert("Contrasenya incorrecta");
+    }
+  };
+})();
+</script>
+
+
+<!---------------------->
+
 </head>
 <body>
     <script>
