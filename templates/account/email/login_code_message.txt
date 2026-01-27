@@ -1,10 +1,9 @@
 {% load i18n %}{% autoescape off %}
-{% url 'account_confirm_login_code' as confirm_url %}
-{% blocktrans with protocol=request.is_secure|yesno:"https,http" domain=current_site.domain code=code confirm_url=confirm_url %}Hello,
+{% blocktrans %}Hello,
 
 To log in, click the link below:
 
-{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}
+http{% if request.is_secure %}s{% endif %}://{{ current_site.domain }}{% url 'account_confirm_login_code' %}?code={{ code }}
 
 Or enter the following code on the login page:
 
