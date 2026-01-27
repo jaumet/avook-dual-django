@@ -15,7 +15,6 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView, View
 from weasyprint import HTML
-from allauth.account.models import EmailAddress
 
 from post_office.utils import send_templated_email
 from products.models import TitleTranslation, UserActivity, UserPurchase
@@ -73,12 +72,8 @@ def activate_account(request, token):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-
-        # Sync with allauth EmailAddress
-        EmailAddress.objects.filter(user=user, email=user.email).update(verified=True)
-
         messages.success(request, _('Your account has been activated successfully. You can now log in.'))
-        return redirect('account_login')
+        return redirect('accounts:login')
     except User.DoesNotExist:
         messages.error(request, _('The activation token is invalid or has expired.'))
         return redirect('home')
@@ -97,14 +92,6 @@ class SignUpView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         user = self.object
-
-        # Ensure allauth EmailAddress exists
-        EmailAddress.objects.get_or_create(
-            user=user,
-            email=user.email,
-            defaults={'primary': True, 'verified': False}
-        )
-
         activation_path = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
         domain = self.request.get_host()
         protocol = 'https' if self.request.is_secure() else 'http'
