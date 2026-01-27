@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account %}
+
+{% block title %}{% trans "Confirmar dirección de correo electrónico" %} — dual.cat{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>{% trans "Confirmar dirección de correo electrónico" %}</h1>
+
+    {% if confirmation %}
+        {% user_display confirmation.email_address.user as user_display %}
+        <p>{% blocktrans with confirmation=confirmation.email_address.email user_display=user_display %}Por favor, confirme que <a href="mailto:{{ confirmation }}">{{ confirmation }}</a> es la dirección de correo electrónico del usuario {{ user_display }}.{% endblocktrans %}</p>
+
+        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" class="form">
+            {% csrf_token %}
+            <button type="submit" class="button">{% trans "Confirmar" %}</button>
+        </form>
+    {% else %}
+        {% url 'account_email' as email_url %}
+        <p>{% blocktrans %}Este enlace de confirmación de correo electrónico ha caducado o no es válido. Por favor, <a href="{{ email_url }}">solicite una nueva confirmación de correo electrónico</a>.{% endblocktrans %}</p>
+    {% endif %}
+</section>
+{% endblock %}

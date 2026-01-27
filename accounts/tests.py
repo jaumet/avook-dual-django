@@ -102,3 +102,50 @@ class RedirectOnFirstLoginTest(TestCase):
 
         self.assertNotIn('edit=1', redirect_url)
         self.assertEqual(redirect_url, reverse('home')) # Default redirect
+
+class ActivateAccountTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='activeuser',
+            email='active@example.com',
+            password='password123',
+            is_active=False
+        )
+        self.user.confirmation_token = uuid.uuid4()
+        self.user.save()
+
+    def test_activate_account_logs_in_and_redirects(self):
+        url = reverse('accounts:activate', kwargs={'token': str(self.user.confirmation_token)})
+        response = self.client.get(url)
+
+        # Reload user
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_active)
+        self.assertTrue(self.user.email_confirmed)
+
+        # Check login (session should have _auth_user_id)
+        self.assertEqual(int(self.client.session['_auth_user_id']), self.user.pk)
+
+        # Check redirect (first login)
+        self.assertRedirects(response, reverse('accounts:profile') + "?edit=1")
+        self.assertFalse(self.user.is_first_login)
+
+class AllauthTemplateTest(TestCase):
+    def test_verification_sent_template_extends_base(self):
+        url = reverse('account_email_verification_sent')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/verification_sent.html')
+        # Check if it contains elements from base.html
+        self.assertContains(response, '<header class="main-header">')
+        self.assertContains(response, '<main>')
+
+    def test_login_template_extends_base(self):
+        url = reverse('account_login')
+        # account_login is redirected to account_request_login_code
+        # But we also have templates/account/login.html
+        # If we follow the redirect:
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        # Check if it contains elements from base.html
+        self.assertContains(response, '<header class="main-header">')

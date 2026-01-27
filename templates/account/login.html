@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Inicia sessió" %} — dual.cat{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>{% trans "Inicia sessió" %}</h1>
+    <p>{% trans "Enter your email to receive a magic link to log in." %}</p>
+    <form method="post" action="{% url 'account_request_login_code' %}" class="form">
+        {% csrf_token %}
+        <div class="form__field">
+            <label for="id_email">{% trans "Email" %}</label>
+            <input type="email" name="email" required id="id_email">
+        </div>
+        <button type="submit" class="button">{% trans "Send Magic Link" %}</button>
+    </form>
+    <p style="margin-top: 1rem;">
+        <a href="{% url 'account_signup' %}">{% trans "Registra't si encara no tens usuari" %}</a>
+    </p>
+</section>
+{% endblock %}

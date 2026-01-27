@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Dirección de correo electrónico confirmada" %} — dual.cat{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>{% trans "Dirección de correo electrónico confirmada" %}</h1>
+    <p>{% blocktrans %}Ha confirmado correctamente su dirección de correo electrónico.{% endblocktrans %}</p>
+    <a href="{% url 'account_login' %}" class="button">{% trans "Iniciar sesión" %}</a>
+</section>
+{% endblock %}
