@@ -5,6 +5,6 @@
 
 {{ email_addr }}
 
-No obstant això, ja existeix un compte amb aquest correu. Per iniciar la sessió, pots sol·licitar un enllaç màgic a la pàgina d'inici de sessió:
+No obstant això, ja existeix un compte amb aquest correu. Per iniciar la sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de sessió:
 
 {{ login_url }}{% endblocktrans %}{% endautoescape %}{% endblock content %}
