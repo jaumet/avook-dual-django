@@ -84,6 +84,18 @@ class SignUpForm(UserCreationForm):
                 raise forms.ValidationError(_("A user with that email already exists."))
         return email
 
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if first_name and not any(c.isalpha() for c in first_name):
+            raise forms.ValidationError(_("El nom ha de contenir almenys una lletra."))
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if last_name and not any(c.isalpha() for c in last_name):
+            raise forms.ValidationError(_("El cognom ha de contenir almenys una lletra."))
+        return last_name
+
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
         self.fields['password2'].label = _("Password confirmation")
@@ -112,6 +124,23 @@ class ProfileUpdateForm(forms.ModelForm):
             'last_name': _('Last name'),
             'email': _('Email'),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        if first_name and not any(c.isalpha() for c in first_name):
+            raise forms.ValidationError(_("El nom ha de contenir almenys una lletra."))
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data.get('last_name')
+        if last_name and not any(c.isalpha() for c in last_name):
+            raise forms.ValidationError(_("El cognom ha de contenir almenys una lletra."))
+        return last_name
 
     def clean_known_languages(self):
         languages = self.cleaned_data.get('known_languages')

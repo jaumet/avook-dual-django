@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUser(AbstractUser):
     email_confirmed = models.BooleanField(default=False)
+    is_first_login = models.BooleanField(default=True)
     confirmation_token = models.UUIDField(
         null=True,
         blank=True,

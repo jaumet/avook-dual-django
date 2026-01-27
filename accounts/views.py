@@ -1,7 +1,7 @@
 import json
 
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -72,8 +72,19 @@ def activate_account(request, token):
         user.email_confirmed = True
         user.confirmation_token = None
         user.save()
-        messages.success(request, _('Your account has been activated successfully. You can now log in.'))
-        return redirect('accounts:login')
+
+        # Log the user in automatically
+        login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
+
+        messages.success(request, _('Your account has been activated successfully.'))
+
+        # Check if first login to redirect to profile edit
+        if getattr(user, 'is_first_login', False):
+            user.is_first_login = False
+            user.save(update_fields=['is_first_login'])
+            return redirect(reverse('accounts:profile') + "?edit=1")
+
+        return redirect('home')
     except User.DoesNotExist:
         messages.error(request, _('The activation token is invalid or has expired.'))
         return redirect('home')

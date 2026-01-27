@@ -11,4 +11,6 @@ urlpatterns = [
     path('purchases/', PurchaseHistoryView.as_view(), name='purchase_history'),
     path('activity/', UserActivityView.as_view(), name='activity'),
     path('activity/pdf/', UserActivityPDFView.as_view(), name='activity_pdf'),
+    path('signup/', SignUpView.as_view(), name='signup'),
+    path('activate/<str:token>/', activate_account, name='activate'),
 ]
