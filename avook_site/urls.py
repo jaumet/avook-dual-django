@@ -24,6 +24,9 @@ urlpatterns = [
 # Add translated URLs using i18n_patterns
 urlpatterns += i18n_patterns(
     path('', HomeView.as_view(), name='home'),
+    # Override allauth login to use magic link (login by code)
+    path('accounts/login/', RedirectView.as_view(pattern_name='account_request_login_code', permanent=False), name='account_login'),
+    path('accounts/', include('allauth.urls')),
     path('accounts/', include('accounts.urls')),
     path('products/', include('products.urls')),
     path('legal/cookies/', CookiesView.as_view(), name='cookies'),

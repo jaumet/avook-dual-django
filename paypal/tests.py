@@ -10,7 +10,7 @@ User = get_user_model()
 
 class PayPalWebhookTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', pk=123)
+        self.user = User.objects.create_user(username='testuser', email='testuser@example.com', pk=123)
         self.product = Product.objects.create(machine_name='test-product', price=10.00)
         self.webhook_url = reverse('paypal:webhook')
 
@@ -53,7 +53,7 @@ class PayPalWebhookTest(TestCase):
         mock_verify.return_value = True
 
         # User ID 456, Product 'test-product'
-        user = User.objects.create_user(username='testuser2', pk=456)
+        user = User.objects.create_user(username='testuser2', email='testuser2@example.com', pk=456)
 
         payload = {
             "event_type": "PAYMENT.CAPTURE.COMPLETED",
@@ -93,7 +93,7 @@ class PayPalWebhookTest(TestCase):
 class PayPalServiceTest(TestCase):
     def setUp(self):
         if not User.objects.filter(pk=789).exists():
-            self.user = User.objects.create_user(username='testuser_service', pk=789)
+            self.user = User.objects.create_user(username='testuser_service', email='testuser_service@example.com', pk=789)
         else:
             self.user = User.objects.get(pk=789)
         self.product = Product.objects.create(machine_name='service-product', price=20.00)
@@ -103,12 +103,21 @@ class PayPalServiceTest(TestCase):
     def test_create_payment_resource_success(self, mock_post, mock_get_token):
         mock_get_token.return_value = 'fake_token'
 
-        mock_response = Mock()
-        mock_response.status_code = 201
-        mock_response.json.return_value = {
-            'payment_link': 'https://www.paypal.com/ncp/payment/PLB-XYZ'
+        # Token response
+        mock_token_response = Mock()
+        mock_token_response.status_code = 200
+        mock_token_response.json.return_value = {'access_token': 'fake_token'}
+
+        # Order response
+        mock_order_response = Mock()
+        mock_order_response.status_code = 201
+        mock_order_response.json.return_value = {
+            'links': [
+                {'rel': 'approve', 'href': 'https://www.paypal.com/ncp/payment/PLB-XYZ'}
+            ]
         }
-        mock_post.return_value = mock_response
+
+        mock_post.side_effect = [mock_token_response, mock_order_response]
 
         from paypal.services import create_payment_resource
         link = create_payment_resource(
@@ -124,14 +133,14 @@ class PayPalServiceTest(TestCase):
         # Verify payload
         args, kwargs = mock_post.call_args
         payload = kwargs['json']
-        self.assertEqual(payload['type'], 'BUY_NOW')
-        self.assertEqual(payload['line_items'][0]['product_id'], 'service-product__789')
+        self.assertEqual(payload['intent'], 'CAPTURE')
+        self.assertEqual(payload['purchase_units'][0]['custom_id'], '789')
 
 class PayPalViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         if not User.objects.filter(username='testuser_view').exists():
-            self.user = User.objects.create_user(username='testuser_view', password='password', pk=101)
+            self.user = User.objects.create_user(username='testuser_view', email='testuser_view@example.com', password='password', pk=101)
         else:
             self.user = User.objects.get(username='testuser_view')
         self.product = Product.objects.create(machine_name='view-product', price=30.00)
