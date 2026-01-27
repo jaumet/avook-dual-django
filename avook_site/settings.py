@@ -155,6 +155,7 @@ load_dotenv(BASE_DIR / ".env")
 
 RESEND_API_KEY = os.environ["RESEND_API_KEY"]
 DEFAULT_FROM_EMAIL = "Dual <no-reply@dual.cat>"
+EMAIL_BACKEND = 'avook_site.email_backend.ResendEmailBackend'
 
 # --- PayPal Configuration Selector ---
 PAYPAL_MODE = os.environ.get('PAYPAL_MODE')

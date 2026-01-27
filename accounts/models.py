@@ -56,8 +56,8 @@ class CustomUser(AbstractUser):
         return self.username
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('Administrator')
+        verbose_name_plural = _('Administrators')
         constraints = [
             models.UniqueConstraint(
                 Lower('username'),
