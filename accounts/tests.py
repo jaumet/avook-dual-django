@@ -102,3 +102,30 @@ class RedirectOnFirstLoginTest(TestCase):
 
         self.assertNotIn('edit=1', redirect_url)
         self.assertEqual(redirect_url, reverse('home')) # Default redirect
+
+class ActivateAccountTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='activeuser',
+            email='active@example.com',
+            password='password123',
+            is_active=False
+        )
+        self.user.confirmation_token = uuid.uuid4()
+        self.user.save()
+
+    def test_activate_account_logs_in_and_redirects(self):
+        url = reverse('accounts:activate', kwargs={'token': str(self.user.confirmation_token)})
+        response = self.client.get(url)
+
+        # Reload user
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_active)
+        self.assertTrue(self.user.email_confirmed)
+
+        # Check login (session should have _auth_user_id)
+        self.assertEqual(int(self.client.session['_auth_user_id']), self.user.pk)
+
+        # Check redirect (first login)
+        self.assertRedirects(response, reverse('accounts:profile') + "?edit=1")
+        self.assertFalse(self.user.is_first_login)

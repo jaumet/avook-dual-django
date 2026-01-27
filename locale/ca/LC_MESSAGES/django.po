@@ -763,3 +763,18 @@ msgstr "Registrar-me"
 
 #~ msgid "No hi ha productes disponibles."
 #~ msgstr "No hi ha productes disponibles."
+
+msgid "Your Magic Link for {{ site_name }}"
+msgstr "El teu enllaç màgic per a {{ site_name }}"
+
+msgid "Hello,\n\nTo log in, click the link below:\n\n{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n\nOr enter the following code on the login page:\n\nCode: {{ code }}\n\nThis link and code will expire in 10 minutes."
+msgstr "Hola,\n\nPer iniciar la sessió, fes clic a l'enllaç següent:\n\n{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n\nO introdueix el següent codi a la pàgina d'inici de sessió:\n\nCodi: {{ code }}\n\nAquest enllaç i el codi caducaran en 10 minuts."
+
+msgid "You are receiving this email because user {{ display_name }} has provided your email address to register an account at {{ site_domain }}."
+msgstr "Esteu rebent aquest correu electrònic perquè l'usuari {{ display_name }} ha proporcionat la vostra adreça electrònica per registrar un compte a {{ site_domain }}."
+
+msgid "Your email verification code is shown below. Please enter it in the open window of your browser."
+msgstr "El vostre codi de verificació de correu electrònic es mostra a continuació. Introduïu-lo a la finestra oberta del vostre navegador."
+
+msgid "To confirm this is correct, go to {{ activate_url }}"
+msgstr "Per confirmar que això és correcte, aneu a {{ activate_url }}"

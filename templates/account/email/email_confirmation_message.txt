@@ -2,8 +2,8 @@
 {% load account %}
 {% load i18n %}
 
-{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktranslate with display_name=user_display site_domain=current_site.domain %}Esteu rebent aquest correu electrònic perquè l'usuari {{ display_name }} ha proporcionat la vostra adreça electrònica per registrar un compte a {{ site_domain }}.{% endblocktranslate %}
+{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktranslate with display_name=user_display site_domain=current_site.domain %}You are receiving this email because user {{ display_name }} has provided your email address to register an account at {{ site_domain }}.{% endblocktranslate %}
 
-{% if code %}{% blocktranslate with verification_code=code %}El vostre codi de verificació de correu electrònic es mostra a continuació. Introduïu-lo a la finestra oberta del vostre navegador.{% endblocktranslate %}
+{% if code %}{% blocktranslate with verification_code=code %}Your email verification code is shown below. Please enter it in the open window of your browser.{% endblocktranslate %}
 
-{{ code }}{% else %}{% blocktranslate with activate_url=activate_url %}Per confirmar que això és correcte, aneu a {{ activate_url }}{% endblocktranslate %}{% endif %}{% endautoescape %}{% endblock content %}
+{{ code }}{% else %}{% blocktranslate with activate_url=activate_url %}To confirm this is correct, go to {{ activate_url }}{% endblocktranslate %}{% endif %}{% endautoescape %}{% endblock content %}
