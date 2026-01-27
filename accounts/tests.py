@@ -1,100 +1,44 @@
 import uuid
+import re
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from unittest.mock import patch
-from .forms import SignUpForm
-from post_office.models import EmailTemplate, EmailTemplateTranslation
+from accounts.adapter import CustomAccountAdapter
 
 User = get_user_model()
 
-class SignUpFormTest(TestCase):
-    def test_new_user_is_inactive_and_has_token(self):
-        """
-        Verify that a newly created user is inactive and has a confirmation token.
-        """
-        form_data = {
-            'username': 'testuser',
-            'first_name': 'Test',
-            'last_name': 'User',
-            'email': 'testuser@example.com',
-            'password1': 'testpassword',
-            'password2': 'testpassword',
-        }
-        form = SignUpForm(data=form_data)
-        self.assertTrue(form.is_valid(), form.errors.as_json())
-        user = form.save()
-        self.assertFalse(user.is_active)
-        self.assertFalse(user.is_staff)
-        self.assertFalse(user.is_superuser)
-        self.assertIsNotNone(user.confirmation_token)
+class CustomAccountAdapterTest(TestCase):
+    def test_generate_unique_username_min_length(self):
+        adapter = CustomAccountAdapter()
+        # Even with short input, should be at least 5 chars
+        username = adapter.generate_unique_username(['abc'])
+        self.assertGreaterEqual(len(username), 5)
+        self.assertTrue(re.match(r'^[a-zA-Z0-9]+$', username))
 
-class AccountsURLTest(TestCase):
-    def test_all_account_urls_resolve(self):
-        """
-        Verify that all URLs in the 'accounts' namespace resolve correctly.
-        """
-        User.objects.create_user(username='testuser', password='password')
-        self.client.login(username='testuser', password='password')
+    def test_generate_unique_username_alphanumeric(self):
+        adapter = CustomAccountAdapter()
+        # Should remove dots and special chars
+        username = adapter.generate_unique_username(['test.user@example.com'])
+        self.assertTrue(re.match(r'^[a-zA-Z0-9]+$', username))
+        self.assertNotIn('.', username)
 
-        # Test URLs that don't require arguments
-        simple_urls = [
-            'signup', 'login', 'logout', 'password_reset',
-            'password_reset_done', 'password_reset_complete', 'profile',
-            'purchase_history', 'activity', 'activity_pdf'
-        ]
-        for url_name in simple_urls:
-            url = reverse(f'accounts:{url_name}')
-            response = self.client.get(url)
-            self.assertNotEqual(response.status_code, 404)
-
-
-class SignUpEmailTest(TestCase):
-    @patch('post_office.utils.send_email')
-    def test_signup_sends_activation_email(self, mock_send_email):
-        """
-        Verify that signing up a new user sends an activation email.
-        """
-        form_data = {
-            'username': 'emailtestuser',
-            'first_name': 'Email',
-            'last_name': 'Test',
-            'email': 'emailtest@example.com',
-            'password1': 'testpassword',
-            'password2': 'testpassword',
-        }
-        response = self.client.post(reverse('accounts:signup'), form_data)
-        self.assertEqual(response.status_code, 302) # Should redirect on success
-
-        mock_send_email.assert_called_once()
-        _, kwargs = mock_send_email.call_args
-        self.assertEqual(kwargs['to'], ['emailtest@example.com'])
-
-    def test_activation_link_works(self):
-        """
-        Verify that a user can activate their account using the confirmation token.
-        """
-        form_data = {
-            'username': 'activationtestuser',
-            'first_name': 'Activation',
-            'last_name': 'Test',
-            'email': 'activationtest@example.com',
-            'password': 'testpassword',
-        }
-        user = User.objects.create_user(**form_data)
-        user.is_active = False
-        user.confirmation_token = str(uuid.uuid4())
-        user.save()
-
-        self.assertFalse(user.is_active)
-        self.assertIsNotNone(user.confirmation_token)
-
-        activation_url = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
-        response = self.client.get(activation_url)
-
+class AuthFlowTest(TestCase):
+    def test_login_url_redirects_to_request_code(self):
+        url = reverse('account_login')
+        response = self.client.get(url)
+        # We set it to redirect to account_request_login_code
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('accounts:login'))
+        self.assertIn(reverse('account_request_login_code'), response.url)
 
-        activated_user = User.objects.get(username='activationtestuser')
-        self.assertTrue(activated_user.is_active)
-        self.assertIsNone(activated_user.confirmation_token)
+    def test_request_login_code_view(self):
+        url = reverse('account_request_login_code')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/request_login_code.html')
+
+    def test_confirm_login_code_view_redirects_if_no_session(self):
+        url = reverse('account_confirm_login_code')
+        response = self.client.get(url)
+        # Should redirect back to request code if no login stage in session
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse('account_request_login_code'), response.url)
