@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // View/Edit mode toggle logic
     const viewMode = document.getElementById('view-mode');
     const editMode = document.getElementById('edit-mode');
+
+    // Handle ?edit=1 query parameter to show edit mode immediately
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('edit') === '1') {
+        if (viewMode && editMode) {
+            viewMode.style.display = 'none';
+            editMode.style.display = 'block';
+        }
+    }
     const editButton = document.getElementById('edit-button');
     const cancelButton = document.getElementById('cancel-button');
 
