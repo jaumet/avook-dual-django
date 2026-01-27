@@ -13,9 +13,25 @@ from django.utils.translation import gettext_lazy as _
 
 from post_office.utils import send_templated_email
 
+from allauth.account.forms import SignupForm
 from .models import CustomUser
 
 User = get_user_model()
+
+
+class AllauthSignUpForm(SignupForm):
+    display_name = forms.CharField(
+        max_length=30,
+        required=False,
+        label=_("Nom d'usuari"),
+        widget=forms.TextInput(attrs={'placeholder': _("Nom d'usuari")})
+    )
+
+    def save(self, request):
+        user = super(AllauthSignUpForm, self).save(request)
+        user.first_name = self.cleaned_data.get('display_name', '')
+        user.save()
+        return user
 
 
 # Form for Admin to CREATE a user

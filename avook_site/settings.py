@@ -119,6 +119,9 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 
 # django-allauth configuration for passwordless magic link login
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.AllauthSignUpForm',
+}
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*"]
 ACCOUNT_PASSWORD_REQUIRED = False
