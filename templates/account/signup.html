@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Crear compte" %} — dual.cat{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>{% trans "Crea un compte" %}</h1>
+    <p><a href="{% url 'account_login' %}">{% trans "Iniciar sessió si ja tens usuari" %}</a></p>
+    <form method="post" action="{% url 'account_signup' %}" class="form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="form__field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="form__help">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p class="form__error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button type="submit" class="button">{% trans "Registrar-me" %}</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,9 +1,11 @@
 {% load i18n %}{% autoescape off %}
+{% url 'account_confirm_login_code' as confirm_url %}
+{% with protocol=request.is_secure|yesno:"https,http" %}
 {% blocktrans %}Hello,
 
 To log in, click the link below:
 
-http{% if request.is_secure %}s{% endif %}://{{ current_site.domain }}{% url 'account_confirm_login_code' %}?code={{ code }}
+{{ protocol }}://{{ current_site.domain }}{{ confirm_url }}?code={{ code }}
 
 Or enter the following code on the login page:
 
@@ -11,4 +13,5 @@ Code: {{ code }}
 
 This link and code will expire in 10 minutes.
 {% endblocktrans %}
+{% endwith %}
 {% endautoescape %}
