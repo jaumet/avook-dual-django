@@ -192,15 +192,15 @@
                     {% if user.is_staff %}
                         <a href="{% url 'products:product_create' %}" data-translate-key="header.add_product">Afegir producte</a>
                     {% endif %}
-                    <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
+                    <form action="{% url 'account_logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="button-link" data-translate-key="header.logout">Tanca sessió</button>
                     </form>
                 </div>
             </div>
         {% else %}
-            <a href="{% url 'accounts:login' %}" data-translate-key="header.login">Inicia sessió</a>
-            <a href="{% url 'accounts:signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
+            <a href="{% url 'account_login' %}" data-translate-key="header.login">Inicia sessió</a>
+            <a href="{% url 'account_signup' %}" class="button button--small" data-translate-key="header.signup">Registra't</a>
         {% endif %}
         <div class="rightBtns">
             <button id="pwaInstallBtn">📲 <span data-translate-key="header.install">Instal·la</span></button>

@@ -1,0 +1,14 @@
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}Hello,
+
+To log in, click the link below:
+
+http{% if request.is_secure %}s{% endif %}://{{ current_site.domain }}{% url 'account_confirm_login_code' %}?code={{ code }}
+
+Or enter the following code on the login page:
+
+Code: {{ code }}
+
+This link and code will expire in 10 minutes.
+{% endblocktrans %}
+{% endautoescape %}
