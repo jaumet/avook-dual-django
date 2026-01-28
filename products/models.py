@@ -2,8 +2,8 @@ import os
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.db import models
-import datetime
 from django.db.models import Q
+import datetime
 from django.utils import timezone
 from django.utils.translation import get_language
 from django.templatetags.static import static
@@ -51,15 +51,25 @@ class Title(models.Model):
             if user.is_staff:
                 return 'PREMIUM_OWNED'
 
-            # This is an optimized query to check for access for regular users.
-            # It avoids N+1 queries by performing a single DB lookup.
-            is_owned = UserPurchase.objects.filter(
+            # Check UserAccess (new system)
+            is_owned = UserAccess.objects.filter(
+                Q(expiry_date__gte=timezone.now()) | Q(expiry_date__isnull=True),
+                user=user,
+                product__packages__titles=self,
+                active=True
+            ).exists()
+
+            if is_owned:
+                return 'PREMIUM_OWNED'
+
+            # Fallback for legacy UserPurchase records (migration period)
+            is_owned_legacy = UserPurchase.objects.filter(
                 user=user,
                 product__packages__titles=self,
                 expiry_date__gte=timezone.now()
             ).exists()
 
-            if is_owned:
+            if is_owned_legacy:
                 return 'PREMIUM_OWNED'
 
         return 'PREMIUM_NOT_OWNED'
@@ -199,14 +209,27 @@ class ProductTranslation(models.Model):
 
 
 class UserPurchase(models.Model):
+    STATUS_CHOICES = [
+        ('completed', 'Completed'),
+        ('refunded', 'Refunded'),
+        ('failed', 'Failed'),
+    ]
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
+    user_email = models.EmailField(max_length=255, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchases')
     purchase_date = models.DateTimeField(auto_now_add=True)
     expiry_date = models.DateTimeField(null=True, blank=True)
+    paypal_order_id = models.CharField(max_length=100, blank=True, null=True, unique=True)
+    paypal_capture_id = models.CharField(max_length=100, blank=True, null=True, unique=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
+    payment_provider = models.CharField(max_length=50, default='paypal')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='completed')
 
     def save(self, *args, **kwargs):
         if not self.expiry_date and self.product.duration:
-            self.expiry_date = timezone.now() + relativedelta(months=self.product.duration)
+            # For paid_at or purchase_date
+            base_date = self.paid_at or timezone.now()
+            self.expiry_date = base_date + relativedelta(months=self.product.duration)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -218,12 +241,27 @@ class UserPurchase(models.Model):
             elif self.product.machine_name:
                 product_name = self.product.machine_name
 
-        return f"{self.user.username} - {product_name}"
+        return f"{self.user.username} - {product_name} ({self.status})"
+
+    class Meta:
+        verbose_name = "Compra d'usuari"
+        verbose_name_plural = "Compres d'usuaris"
+
+
+class UserAccess(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='accesses')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='accesses')
+    active = models.BooleanField(default=True)
+    activated_at = models.DateTimeField(default=timezone.now)
+    expiry_date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.machine_name} (Active: {self.active})"
 
     class Meta:
         unique_together = ('user', 'product')
-        verbose_name = "Compra d'usuari"
-        verbose_name_plural = "Compres d'usuaris"
+        verbose_name = "Accés d'usuari"
+        verbose_name_plural = "Accessos d'usuaris"
 
 
 class TranslatableContent(models.Model):

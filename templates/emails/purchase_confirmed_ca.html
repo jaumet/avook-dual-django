@@ -1,0 +1,7 @@
+<p>Hola {{ user.first_name|default:user.username }},</p>
+<p>La teva compra s'ha activat correctament a Dual.</p>
+<p><strong>Producte:</strong> {{ product_name }}</p>
+<p><strong>Data de pagament:</strong> {{ payment_date }}</p>
+<p>Pots accedir als teus continguts des del següent enllaç:</p>
+<p><a href="{{ purchase_url }}">{{ purchase_url }}</a></p>
+<p>Gràcies per confiar en Dual!</p>

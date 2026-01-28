@@ -27,10 +27,12 @@ import os
 import requests
 import logging
 from decimal import Decimal
+from .models import PendingPayment
+from django.contrib.auth import get_user_model
 
 logger = logging.getLogger(__name__)
 
-def create_payment_resource(product_name, price, machine_name, user_id, return_url, description=""):
+def create_payment_resource(product_name, price, machine_name, user_id, return_url, product_id, description=""):
     # VALIDACIÓ
     if price is None:
         logger.error("PayPal: price is None")
@@ -100,6 +102,24 @@ def create_payment_resource(product_name, price, machine_name, user_id, return_u
         return None
 
     data = order_resp.json()
+    paypal_order_id = data.get("id")
+
+    if paypal_order_id:
+        try:
+            User = get_user_model()
+            user = User.objects.get(pk=user_id)
+            PendingPayment.objects.create(
+                paypal_order_id=paypal_order_id,
+                user=user,
+                product_id=product_id,
+                status='pending'
+            )
+            logger.info(f"Created PendingPayment for Order ID: {paypal_order_id}")
+        except Exception as e:
+            logger.error(f"Error creating PendingPayment: {e}")
+            # We don't return None here because the PayPal order was successfully created
+            # and the user should be able to pay. We'll have to handle the missing record
+            # in the webhook if possible, or log it for manual intervention.
 
     for link in data.get("links", []):
         if link.get("rel") == "approve":

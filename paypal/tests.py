@@ -1,10 +1,11 @@
 import json
-import unittest
 from django.test import TestCase, Client
 from django.urls import reverse
 from unittest.mock import patch, Mock
-from products.models import Product, UserPurchase
+from products.models import Product, UserPurchase, UserAccess
+from paypal.models import PendingPayment
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -13,96 +14,139 @@ class PayPalWebhookTest(TestCase):
         self.user = User.objects.create_user(username='testuser', email='testuser@example.com', pk=123)
         self.product = Product.objects.create(machine_name='test-product', price=10.00)
         self.webhook_url = reverse('paypal:webhook')
+        self.pending = PendingPayment.objects.create(
+            paypal_order_id='ORDER-123',
+            user=self.user,
+            product=self.product,
+            status='pending'
+        )
 
     @patch('paypal.views.verify_paypal_signature')
-    def test_webhook_payment_capture_completed(self, mock_verify):
+    @patch('paypal.views.send_purchase_confirmation_email')
+    def test_webhook_payment_capture_completed(self, mock_send_email, mock_verify):
         mock_verify.return_value = True
 
         payload = {
             "event_type": "PAYMENT.CAPTURE.COMPLETED",
             "resource": {
+                "id": "CAPTURE-123",
+                "create_time": "2024-01-01T12:00:00Z",
                 "custom_id": "123",
-                "purchase_units": [
-                    {
-                        "items": [
-                            {
-                                "sku": "test-product"
-                            }
-                        ]
+                "supplementary_data": {
+                    "related_ids": {
+                        "order_id": "ORDER-123"
                     }
-                ]
+                }
             }
         }
 
         response = self.client.post(
             self.webhook_url,
             data=json.dumps(payload),
-            content_type='application/json',
-            HTTP_PAYPAL_AUTH_ALGO='algo',
-            HTTP_PAYPAL_CERT_URL='url',
-            HTTP_PAYPAL_TRANSMISSION_ID='id',
-            HTTP_PAYPAL_TRANSMISSION_SIG='sig',
-            HTTP_PAYPAL_TRANSMISSION_TIME='time'
+            content_type='application/json'
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(UserPurchase.objects.filter(user=self.user, product=self.product).exists())
+
+        # Verify UserPurchase
+        purchase = UserPurchase.objects.get(user=self.user, product=self.product)
+        self.assertEqual(purchase.paypal_order_id, 'ORDER-123')
+        self.assertEqual(purchase.paypal_capture_id, 'CAPTURE-123')
+        self.assertEqual(purchase.status, 'completed')
+
+        # Verify UserAccess
+        access = UserAccess.objects.get(user=self.user, product=self.product)
+        self.assertTrue(access.active)
+
+        # Verify email was called
+        mock_send_email.assert_called_once()
 
     @patch('paypal.views.verify_paypal_signature')
-    def test_webhook_encoded_sku(self, mock_verify):
+    def test_webhook_payment_capture_denied(self, mock_verify):
         mock_verify.return_value = True
 
-        # User ID 456, Product 'test-product'
-        user = User.objects.create_user(username='testuser2', email='testuser2@example.com', pk=456)
-
         payload = {
-            "event_type": "PAYMENT.CAPTURE.COMPLETED",
+            "event_type": "PAYMENT.CAPTURE.DENIED",
             "resource": {
-                "purchase_units": [
-                    {
-                        "items": [
-                            {
-                                "sku": "test-product__456"
-                            }
-                        ]
+                "id": "CAPTURE-123",
+                "supplementary_data": {
+                    "related_ids": {
+                        "order_id": "ORDER-123"
                     }
-                ]
+                }
             }
         }
 
         response = self.client.post(
             self.webhook_url,
             data=json.dumps(payload),
-            content_type='application/json',
-            HTTP_PAYPAL_AUTH_ALGO='algo',
-            HTTP_PAYPAL_CERT_URL='url',
-            HTTP_PAYPAL_TRANSMISSION_ID='id',
-            HTTP_PAYPAL_TRANSMISSION_SIG='sig',
-            HTTP_PAYPAL_TRANSMISSION_TIME='time'
+            content_type='application/json'
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(UserPurchase.objects.filter(user=user, product=self.product).exists())
+
+        # Verify PendingPayment status
+        self.pending.refresh_from_db()
+        self.assertEqual(self.pending.status, 'failed')
+
+        # Verify NO UserPurchase
+        self.assertFalse(UserPurchase.objects.filter(user=self.user, product=self.product).exists())
+
+    @patch('paypal.views.verify_paypal_signature')
+    def test_webhook_payment_capture_refunded(self, mock_verify):
+        mock_verify.return_value = True
+
+        # Pre-create purchase and access
+        UserPurchase.objects.create(
+            user=self.user,
+            product=self.product,
+            paypal_order_id='ORDER-123',
+            paypal_capture_id='CAPTURE-123',
+            status='completed'
+        )
+        UserAccess.objects.create(user=self.user, product=self.product, active=True)
+
+        payload = {
+            "event_type": "PAYMENT.CAPTURE.REFUNDED",
+            "resource": {
+                "id": "CAPTURE-123",
+                "supplementary_data": {
+                    "related_ids": {
+                        "order_id": "ORDER-123"
+                    }
+                }
+            }
+        }
+
+        response = self.client.post(
+            self.webhook_url,
+            data=json.dumps(payload),
+            content_type='application/json'
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        # Verify UserPurchase status
+        purchase = UserPurchase.objects.get(user=self.user, product=self.product)
+        self.assertEqual(purchase.status, 'refunded')
+
+        # Verify UserAccess deactivation
+        access = UserAccess.objects.get(user=self.user, product=self.product)
+        self.assertFalse(access.active)
 
     @patch('paypal.views.verify_paypal_signature')
     def test_webhook_invalid_signature(self, mock_verify):
         mock_verify.return_value = False
         response = self.client.post(self.webhook_url, data='{}', content_type='application/json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 400)
 
 class PayPalServiceTest(TestCase):
     def setUp(self):
-        if not User.objects.filter(pk=789).exists():
-            self.user = User.objects.create_user(username='testuser_service', email='testuser_service@example.com', pk=789)
-        else:
-            self.user = User.objects.get(pk=789)
+        self.user = User.objects.create_user(username='testuser_service', email='testuser_service@example.com', pk=789)
         self.product = Product.objects.create(machine_name='service-product', price=20.00)
 
-    @patch('paypal.services.get_paypal_access_token')
     @patch('requests.post')
-    def test_create_payment_resource_success(self, mock_post, mock_get_token):
-        mock_get_token.return_value = 'fake_token'
-
+    def test_create_payment_resource_success(self, mock_post):
         # Token response
         mock_token_response = Mock()
         mock_token_response.status_code = 200
@@ -112,8 +156,9 @@ class PayPalServiceTest(TestCase):
         mock_order_response = Mock()
         mock_order_response.status_code = 201
         mock_order_response.json.return_value = {
+            'id': 'ORDER-XYZ',
             'links': [
-                {'rel': 'approve', 'href': 'https://www.paypal.com/ncp/payment/PLB-XYZ'}
+                {'rel': 'approve', 'href': 'https://www.paypal.com/checkout/ORDER-XYZ'}
             ]
         }
 
@@ -125,24 +170,19 @@ class PayPalServiceTest(TestCase):
             price=20.00,
             machine_name="service-product",
             user_id=789,
+            product_id=self.product.id,
             return_url="http://localhost:8000/success"
         )
 
-        self.assertEqual(link, 'https://www.paypal.com/ncp/payment/PLB-XYZ')
+        self.assertEqual(link, 'https://www.paypal.com/checkout/ORDER-XYZ')
 
-        # Verify payload
-        args, kwargs = mock_post.call_args
-        payload = kwargs['json']
-        self.assertEqual(payload['intent'], 'CAPTURE')
-        self.assertEqual(payload['purchase_units'][0]['custom_id'], '789')
+        # Verify PendingPayment created
+        self.assertTrue(PendingPayment.objects.filter(paypal_order_id='ORDER-XYZ', user=self.user, product=self.product).exists())
 
 class PayPalViewTest(TestCase):
     def setUp(self):
         self.client = Client()
-        if not User.objects.filter(username='testuser_view').exists():
-            self.user = User.objects.create_user(username='testuser_view', email='testuser_view@example.com', password='password', pk=101)
-        else:
-            self.user = User.objects.get(username='testuser_view')
+        self.user = User.objects.create_user(username='testuser_view', email='testuser_view@example.com', password='password', pk=101)
         self.product = Product.objects.create(machine_name='view-product', price=30.00)
         self.client.login(username='testuser_view', password='password')
 
@@ -155,3 +195,7 @@ class PayPalViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['payment_link'], 'https://paypal.com/link')
+        mock_create.assert_called_once()
+        # Verify it passed product_id
+        args, kwargs = mock_create.call_args
+        self.assertEqual(kwargs['product_id'], self.product.id)

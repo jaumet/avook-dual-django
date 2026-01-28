@@ -1,0 +1,7 @@
+<p>Hello {{ user.first_name|default:user.username }},</p>
+<p>Your purchase has been successfully activated on Dual.</p>
+<p><strong>Product:</strong> {{ product_name }}</p>
+<p><strong>Payment date:</strong> {{ payment_date }}</p>
+<p>You can access your content from the following link:</p>
+<p><a href="{{ purchase_url }}">{{ purchase_url }}</a></p>
+<p>Thank you for choosing Dual!</p>

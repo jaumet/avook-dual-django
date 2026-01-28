@@ -10,8 +10,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.html import strip_tags
-from products.models import Product, UserPurchase
+from django.db.models import Q
+from django.utils import timezone
+from products.models import Product, UserPurchase, UserAccess
 from .services import create_payment_resource
+from .models import PendingPayment
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 # Configuració del logging
 logger = logging.getLogger(__name__)
@@ -94,7 +99,7 @@ def paypal_webhook(request):
     # 1. Verificar la signatura del webhook
     if not verify_paypal_signature(request):
         logger.warning("Petició de webhook de PayPal amb signatura invàlida.")
-        return HttpResponseForbidden("Signatura invàlida.")
+        return HttpResponseBadRequest("Signatura invàlida.")
 
     # 2. Processar el payload
     try:
@@ -105,73 +110,171 @@ def paypal_webhook(request):
 
     # 3. Comprovar el tipus d'event
     event_type = payload.get('event_type')
-    if event_type != 'PAYMENT.CAPTURE.COMPLETED':
+    relevant_events = [
+        'PAYMENT.CAPTURE.COMPLETED',
+        'PAYMENT.CAPTURE.DENIED',
+        'PAYMENT.CAPTURE.DECLINED',
+        'PAYMENT.CAPTURE.REFUNDED'
+    ]
+
+    if event_type not in relevant_events:
         logger.info(f"Webhook rebut amb event no rellevant: {event_type}. S'ignora.")
         return HttpResponse(status=200)
 
     # 4. Extreure la informació rellevant
     try:
         resource = payload.get('resource', {})
-        custom_id = resource.get('custom_id')  # ID de l'usuari Django
-        purchase_units = resource.get('purchase_units', [])
+        paypal_capture_id = resource.get('id')
 
-        # Support for Payment Links and Buttons API where info is in the SKU/product_id
-        product_sku = None
-        if purchase_units:
-            items = purchase_units[0].get('items', [])
-            if items:
-                # Try 'sku' first, then 'product_id'
-                product_sku = items[0].get('sku') or items[0].get('product_id')
+        # Extreure paypal_order_id de supplementary_data si existeix
+        supplementary_data = resource.get('supplementary_data', {})
+        related_ids = supplementary_data.get('related_ids', {})
+        paypal_order_id = related_ids.get('order_id')
 
-        # Fallback for different webhook payload structures
-        if not product_sku:
-            # Some versions might put it in resource level
-            product_sku = resource.get('sku') or resource.get('product_id')
+        # Fallback per a paypal_order_id si no és a supplementary_data
+        if not paypal_order_id:
+            # En alguns events, l'order_id pot estar en els links o en altres llocs
+            for link in resource.get('links', []):
+                if link.get('rel') == 'up':
+                    # L'enllaç sol ser /v2/checkout/orders/{id}
+                    href = link.get('href', '')
+                    if '/orders/' in href:
+                        paypal_order_id = href.split('/orders/')[-1]
+                        break
 
-        if product_sku and '__' in product_sku:
-            sku_parts = product_sku.split('__')
-            product_sku = sku_parts[0]
-            # If custom_id was not in the payload's top level, get it from SKU
-            if not custom_id and len(sku_parts) > 1:
-                custom_id = sku_parts[1]
-                logger.info(f"Extracted custom_id from SKU: {custom_id}")
+        payment_date_str = resource.get('create_time')
+        custom_id = resource.get('custom_id')
 
-        if not product_sku:
-            raise ValueError("No s'ha trobat la SKU del producte al payload.")
+        logger.info(f"Webhook {event_type} rebut. Order: {paypal_order_id}, Capture: {paypal_capture_id}, CustomID: {custom_id}")
 
-        if not custom_id:
-            raise ValueError("No s'ha trobat el 'custom_id' d'usuari al payload.")
-
-        logger.info(f"Processant compra per a l'usuari ID: {custom_id} i producte SKU: {product_sku}")
-
-    except (IndexError, KeyError, ValueError) as e:
+    except Exception as e:
         logger.error(f"Error en extreure dades del payload del webhook: {e}. Payload: {payload}")
         return HttpResponseBadRequest("Dades del payload incompletes o malformades.")
 
-    # 5. Lògica de negoci: Crear UserPurchase
-    User = get_user_model()
-    try:
-        user = User.objects.get(pk=custom_id)
-        product = Product.objects.get(machine_name=product_sku)
+    # 5. Localitzar el pagament pendent
+    pending_payment = None
+    if paypal_order_id:
+        pending_payment = PendingPayment.objects.filter(paypal_order_id=paypal_order_id).first()
 
-        # Comprovar si la compra ja existeix per evitar duplicats
-        if UserPurchase.objects.filter(user=user, product=product).exists():
-            logger.warning(f"La compra per a l'usuari {user.id} i el producte {product.machine_name} ja existeix. No es crearà un duplicat.")
-        else:
-            UserPurchase.objects.create(user=user, product=product)
+    if not pending_payment:
+        logger.warning(f"No s'ha trobat cap pagament pendent per a paypal_order_id: {paypal_order_id}")
+        return HttpResponse(status=200)
+
+    # 6. Processar segons el tipus d'event
+    if event_type == 'PAYMENT.CAPTURE.COMPLETED':
+        user = pending_payment.user
+        product = pending_payment.product
+
+        # Idempotència: comprovar si ja existeix la compra
+        purchase_exists = UserPurchase.objects.filter(
+            Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
+        ).exists()
+
+        if not purchase_exists:
+            # Crear UserPurchase
+            paid_at = timezone.now()
+            if payment_date_str:
+                try:
+                    from django.utils.dateparse import parse_datetime
+                    paid_at = parse_datetime(payment_date_str) or timezone.now()
+                except Exception:
+                    pass
+
+            UserPurchase.objects.create(
+                user=user,
+                user_email=user.email,
+                product=product,
+                paypal_order_id=paypal_order_id,
+                paypal_capture_id=paypal_capture_id,
+                paid_at=paid_at,
+                payment_provider="paypal",
+                status="completed"
+            )
             logger.info(f"S'ha creat una nova UserPurchase per a l'usuari {user.id} i el producte {product.machine_name}.")
 
-    except User.DoesNotExist:
-        logger.error(f"L'usuari amb ID {custom_id} no existeix.")
-        return HttpResponseBadRequest(f"Usuari amb ID {custom_id} no trobat.")
-    except Product.DoesNotExist:
-        logger.error(f"El producte amb machine_name {product_sku} no existeix.")
-        return HttpResponseBadRequest(f"Producte amb SKU {product_sku} no trobat.")
-    except Exception as e:
-        logger.error(f"Error inesperat en crear la UserPurchase: {e}")
-        return HttpResponse("Error intern del servidor.", status=500)
+            # Calcular expiry_date basat en la durada del producte
+            expiry_date = None
+            if product.duration:
+                from dateutil.relativedelta import relativedelta
+                expiry_date = paid_at + relativedelta(months=product.duration)
+
+            # Activar producte en UserAccess
+            access, created = UserAccess.objects.update_or_create(
+                user=user,
+                product=product,
+                defaults={
+                    'active': True,
+                    'activated_at': paid_at,
+                    'expiry_date': expiry_date
+                }
+            )
+            logger.info(f"Producte {product.machine_name} activat per a l'usuari {user.id}.")
+
+            # Enviar correu de confirmació
+            send_purchase_confirmation_email(user, product, paid_at)
+        else:
+            logger.info(f"La compra per a l'ordre {paypal_order_id} ja ha estat processada prèviament.")
+
+    elif event_type in ['PAYMENT.CAPTURE.DENIED', 'PAYMENT.CAPTURE.DECLINED']:
+        pending_payment.status = 'failed'
+        pending_payment.save()
+        logger.info(f"Pagament pendent {paypal_order_id} marcat com a fallit ({event_type}).")
+
+    elif event_type == 'PAYMENT.CAPTURE.REFUNDED':
+        # Marcar UserPurchase com a retornada
+        UserPurchase.objects.filter(
+            Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
+        ).update(status='refunded')
+
+        # Desactivar l'accés
+        UserAccess.objects.filter(
+            user=pending_payment.user,
+            product=pending_payment.product
+        ).update(active=False)
+
+        logger.info(f"Compra retornada i accés desactivat per a l'ordre {paypal_order_id}.")
 
     return HttpResponse(status=200)
+
+def send_purchase_confirmation_email(user, product, paid_at):
+    """
+    Envia un correu electrònic de confirmació de compra en l'idioma de l'usuari.
+    """
+    try:
+        # Idioma de l'usuari (assumim que el guardem o usem el de la sessió si estigués disponible,
+        # però en webhook usem el que tinguem a CustomUser si existeix o el per defecte)
+        # En aquest projecte CustomUser no té language_code, així que usem settings.LANGUAGE_CODE o algun altre mecanisme.
+        # De moment usem 'ca' i 'en' com a exemples.
+
+        # Si tenim un camp language al model CustomUser, l'hauríem d'usar aquí.
+        # Com que no el veig clarament, provarem de detectar-lo o usar 'ca' per defecte.
+        lang = getattr(user, 'language_code', 'ca')
+        if lang not in ['ca', 'en']:
+            lang = 'ca'
+
+        subject = "La teva compra s’ha activat a Dual" if lang == 'ca' else "Your purchase has been activated on Dual"
+        template_name = f"emails/purchase_confirmed_{lang}.html"
+
+        context = {
+            'user': user,
+            'product_name': str(product),
+            'payment_date': paid_at.strftime('%d/%m/%Y %H:%M'),
+            'purchase_url': "https://dual.cat/ca/accounts/purchases/"
+        }
+
+        html_message = render_to_string(template_name, context)
+
+        send_mail(
+            subject=subject,
+            message=strip_tags(html_message),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            html_message=html_message,
+            fail_silently=False
+        )
+        logger.info(f"Correu de confirmació enviat a {user.email}")
+    except Exception as e:
+        logger.error(f"Error en enviar el correu de confirmació: {e}")
 
 @login_required
 def get_payment_link_view(request, product_id):
@@ -199,6 +302,7 @@ def get_payment_link_view(request, product_id):
         machine_name=product.machine_name,
         user_id=request.user.id,
         return_url=success_url,
+        product_id=product.id,
         description=product_description
     )
 
