@@ -73,12 +73,10 @@ def activate_account(request, token):
         user.confirmation_token = None
         user.save()
 
-        # Log the user in automatically
+        # Automatic login
         login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
-
         messages.success(request, _('Your account has been activated successfully.'))
 
-        # Check if first login to redirect to profile edit
         if getattr(user, 'is_first_login', False):
             user.is_first_login = False
             user.save(update_fields=['is_first_login'])

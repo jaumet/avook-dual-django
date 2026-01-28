@@ -708,8 +708,29 @@ msgstr "Iniciar sessió si ja tens usuari"
 msgid "Registrar-me"
 msgstr "Registrar-me"
 
-msgid "Your Magic Link for {{ site_name }}"
-msgstr "El teu enllaç màgic per a {{ site_name }}"
+#, python-format
+msgid ""
+"You are receiving this email because user %(display_name)s has provided your"
+" email address to register an account at %(site_domain)s."
+msgstr ""
+"Esteu rebent aquest correu electrònic perquè l'usuari %(display_name)s ha "
+"proporcionat la vostra adreça electrònica per registrar un compte a "
+"%(site_domain)s."
+
+msgid ""
+"Your email verification code is shown below. Please enter it in the open "
+"window of your browser."
+msgstr ""
+"El vostre codi de verificació de correu electrònic es mostra a continuació. "
+"Introduïu-lo a la finestra oberta del vostre navegador."
+
+#, python-format
+msgid "To confirm this is correct, go to %(activate_url)s"
+msgstr "Per confirmar que això és correcte, aneu a %(activate_url)s"
+
+#, python-format
+msgid "Your Magic Link for %(site_name)s"
+msgstr "El teu enllaç màgic per a %(site_name)s"
 
 #, python-format
 msgid ""
@@ -737,25 +758,11 @@ msgstr ""
 "\n"
 "Aquest enllaç i el codi caducaran en 10 minuts."
 
-#, python-format
-msgid ""
-"You are receiving this email because user %(display_name)s has provided your"
-" email address to register an account at %(site_domain)s."
-msgstr ""
-"Esteu rebent aquest correu electrònic perquè l'usuari %(display_name)s ha "
-"proporcionat la vostra adreça electrònica per registrar un compte a "
-"%(site_domain)s."
+msgid "El nom ha de contenir almenys una lletra."
+msgstr "El nom ha de contenir almenys una lletra."
 
-msgid ""
-"Your email verification code is shown below. Please enter it in the open "
-"window of your browser."
-msgstr ""
-"El vostre codi de verificació de correu electrònic es mostra a continuació. "
-"Introduïu-lo a la finestra oberta del vostre navegador."
-
-#, python-format
-msgid "To confirm this is correct, go to %(activate_url)s"
-msgstr "Per confirmar que això és correcte, aneu a %(activate_url)s"
+msgid "El cognom ha de contenir almenys una lletra."
+msgstr "El cognom ha de contenir almenys una lletra."
 
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compres"
