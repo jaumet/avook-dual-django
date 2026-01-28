@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 18:14+0000\n"
+"POT-Creation-Date: 2026-01-28 10:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,122 +34,153 @@ msgstr "Permisos"
 msgid "Important dates"
 msgstr "Dates importants"
 
-#: accounts/forms.py:37 accounts/forms.py:72
-msgid "First name"
-msgstr "Nom"
+#: accounts/apps.py:8 accounts/models.py:61
+#, fuzzy
+#| msgid "Username"
+msgid "Users"
+msgstr "Nom d'usuari"
 
-#: accounts/forms.py:38 accounts/forms.py:73
-msgid "Last name"
-msgstr "Cognom"
-
-#: accounts/forms.py:39 accounts/forms.py:74
-msgid "Email"
-msgstr "Correu electrònic"
-
-#: accounts/forms.py:45
+#: accounts/forms.py:26 accounts/forms.py:27 accounts/forms.py:66
 msgid "Username"
 msgstr "Nom d'usuari"
 
-#: accounts/forms.py:50
+#: accounts/forms.py:53 accounts/forms.py:123
+msgid "First name"
+msgstr "Nom"
+
+#: accounts/forms.py:54 accounts/forms.py:124
+msgid "Last name"
+msgstr "Cognom"
+
+#: accounts/forms.py:58 accounts/forms.py:125
+msgid "Email"
+msgstr "Correu electrònic"
+
+#: accounts/forms.py:59 accounts/forms.py:70 accounts/models.py:38
+#, fuzzy
+#| msgid "Confirm Email Address"
+msgid "Unique email address."
+msgstr "Confirmar correu electrònic"
+
+#: accounts/forms.py:69 accounts/models.py:22
+msgid "Minimum 5 characters. Only letters and numbers."
+msgstr ""
+
+#: accounts/forms.py:77 accounts/models.py:31
+msgid "A user with that username already exists."
+msgstr ""
+
+#: accounts/forms.py:84 accounts/models.py:40
+msgid "A user with that email already exists."
+msgstr ""
+
+#: accounts/forms.py:90 accounts/forms.py:136
+msgid "El nom ha de contenir almenys una lletra."
+msgstr ""
+
+#: accounts/forms.py:96 accounts/forms.py:142
+msgid "El cognom ha de contenir almenys una lletra."
+msgstr ""
+
+#: accounts/forms.py:101
 msgid "Password confirmation"
 msgstr "Confirmació de la contrasenya"
 
-#: accounts/models.py:13
+#: accounts/models.py:16
 #, fuzzy
 #| msgid "First name"
 msgid "first name"
 msgstr "Nom"
 
-#: accounts/models.py:14
+#: accounts/models.py:17
 #, fuzzy
 #| msgid "Last name"
 msgid "last name"
 msgstr "Cognom"
 
-#: accounts/models.py:16
+#: accounts/models.py:19
 #, fuzzy
 #| msgid "Username"
 msgid "username"
 msgstr "Nom d'usuari"
 
-#: accounts/models.py:19
-msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+#: accounts/models.py:26
+msgid ""
+"Enter a valid username. This value may contain only letters and numbers."
 msgstr ""
 
-#: accounts/models.py:22
-msgid "A user with that username already exists."
+#: accounts/models.py:28
+msgid "Username must be at least 5 characters long."
 msgstr ""
 
-#: accounts/models.py:25
+#: accounts/models.py:35
 msgid "email address"
 msgstr ""
 
-#: accounts/models.py:27
+#: accounts/models.py:44
 #, fuzzy
 #| msgid "Languages"
 msgid "known languages"
 msgstr "Llengües"
 
-#: accounts/models.py:30
+#: accounts/models.py:47
 msgid "A list of languages the user knows and their level."
 msgstr ""
 
-#: accounts/models.py:33
+#: accounts/models.py:50
 msgid "learning languages"
 msgstr ""
 
-#: accounts/models.py:36
+#: accounts/models.py:53
 msgid "A list of languages the user wants to learn and their level."
 msgstr ""
 
-#: accounts/models.py:43
-msgid "user"
+#: accounts/models.py:60
+#, fuzzy
+#| msgid "Username"
+msgid "User"
+msgstr "Nom d'usuari"
+
+#: accounts/views.py:79
+msgid "Your account has been activated successfully."
 msgstr ""
 
-#: accounts/models.py:44
-msgid "users"
-msgstr ""
-
-#: accounts/views.py:75
-msgid "Your account has been activated successfully. You can now log in."
-msgstr ""
-
-#: accounts/views.py:78
+#: accounts/views.py:89
 #, fuzzy
 #| msgid "El token d'activació és invàlid o ha expirat."
 msgid "The activation token is invalid or has expired."
 msgstr "El token d'activació és invàlid o ha expirat."
 
-#: accounts/views.py:90
+#: accounts/views.py:101
 msgid ""
 "Thank you for signing up! We've sent you an email to activate your account."
 msgstr ""
 
-#: avook_site/settings.py:74
+#: avook_site/settings.py:78
 msgid "Catalan"
 msgstr "Català"
 
-#: avook_site/settings.py:75
+#: avook_site/settings.py:79
 msgid "English"
 msgstr "Anglès"
 
-#: avook_site/settings.py:76
+#: avook_site/settings.py:80
 msgid "Spanish"
 msgstr "Espanyol"
 
-#: avook_site/settings.py:77
+#: avook_site/settings.py:81
 msgid "French"
 msgstr "Francès"
 
-#: avook_site/settings.py:78
+#: avook_site/settings.py:82
 msgid "German"
 msgstr "Alemany"
 
-#: avook_site/settings.py:79
+#: avook_site/settings.py:83
 msgid "Italian"
 msgstr "Italià"
 
-#: avook_site/settings.py:80
+#: avook_site/settings.py:84
 msgid "Portuguese"
 msgstr "Portuguès"
 
@@ -210,6 +241,193 @@ msgstr "Aquesta és una breu descripció per al segon títol d'exemple."
 #: samples/product_default.html:40
 msgid "French, German"
 msgstr "Francès, Alemany"
+
+#: templates/account/account_inactive.html:3
+#: templates/account/account_inactive.html:6
+msgid "Account Inactive"
+msgstr "Compte inactiu"
+
+#: templates/account/account_inactive.html:7
+#, fuzzy
+#| msgid "Account Inactive"
+msgid "This account is inactive."
+msgstr "Compte inactiu"
+
+#: templates/account/confirm_login_code.html:5
+msgid "Enter Code"
+msgstr ""
+
+#: templates/account/confirm_login_code.html:6
+msgid ""
+"We've sent a magic link and a code to your email. Click the link in the "
+"email or enter the code below to log in."
+msgstr ""
+
+#: templates/account/confirm_login_code.html:11
+#: templates/account/request_login_code.html:5
+msgid "Login"
+msgstr ""
+
+#: templates/account/email/account_already_exists_message.txt:4
+#, python-format
+msgid ""
+"S'ha rebut una petició de registre amb aquesta adreça electrònica:\n"
+"\n"
+"%(email_addr)s\n"
+"\n"
+"No obstant això, ja existeix un compte amb aquest correu. Per iniciar la "
+"sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de "
+"sessió:\n"
+"\n"
+"%(login_url)s"
+msgstr ""
+
+#: templates/account/email/account_already_exists_subject.txt:1
+msgid "El compte ja existeix"
+msgstr ""
+
+#: templates/account/email/base_message.txt:1
+#, fuzzy, python-format
+#| msgid "Hello from {{ site_name }}!"
+msgid "Hello from %(site_name)s!"
+msgstr "Hola des de {{ site_name }}!"
+
+#: templates/account/email/base_message.txt:5
+#, fuzzy, python-format
+#| msgid "Thank you for using {{ site_name }}!"
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"%(site_domain)s"
+msgstr "Gràcies per utilitzar {{ site_name }}!"
+
+#: templates/account/email/email_confirmation_message.txt:5
+#, fuzzy, python-format
+#| msgid ""
+#| "You are receiving this email because user {{ display_name }} has provided "
+#| "your email address to register an account at {{ site_domain }}."
+msgid ""
+"You are receiving this email because user %(display_name)s has provided your "
+"email address to register an account at %(site_domain)s."
+msgstr ""
+"Esteu rebent aquest correu electrònic perquè l'usuari {{ display_name }} ha "
+"proporcionat la vostra adreça electrònica per registrar un compte a "
+"{{ site_domain }}."
+
+#: templates/account/email/email_confirmation_message.txt:7
+msgid ""
+"Your email verification code is shown below. Please enter it in the open "
+"window of your browser."
+msgstr ""
+"El vostre codi de verificació de correu electrònic es mostra a continuació. "
+"Introduïu-lo a la finestra oberta del vostre navegador."
+
+#: templates/account/email/email_confirmation_message.txt:9
+#, fuzzy, python-format
+#| msgid "To confirm this is correct, go to {{ activate_url }}"
+msgid "To confirm this is correct, go to %(activate_url)s"
+msgstr "Per confirmar que això és correcte, aneu a {{ activate_url }}"
+
+#: templates/account/email/email_confirmation_subject.txt:1
+msgid "Please Confirm Your Email Address"
+msgstr "Confirma la teva adreça electrònica"
+
+#: templates/account/email/login_code_message.txt:4
+#, fuzzy, python-format
+#| msgid ""
+#| "Hello,\n"
+#| "\n"
+#| "To log in, click the link below:\n"
+#| "\n"
+#| "{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n"
+#| "\n"
+#| "Or enter the following code on the login page:\n"
+#| "\n"
+#| "Code: {{ code }}\n"
+#| "\n"
+#| "This link and code will expire in 10 minutes."
+msgid ""
+"Hello,\n"
+"\n"
+"To log in, click the link below:\n"
+"\n"
+"%(protocol)s://%(domain)s%(confirm_url)s?code=%(code)s\n"
+"\n"
+"Or enter the following code on the login page:\n"
+"\n"
+"Code: %(code)s\n"
+"\n"
+"This link and code will expire in 10 minutes.\n"
+msgstr ""
+"Hola,\n"
+"\n"
+"Per iniciar la sessió, fes clic a l'enllaç següent:\n"
+"\n"
+"{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n"
+"\n"
+"O introdueix el següent codi a la pàgina d'inici de sessió:\n"
+"\n"
+"Codi: {{ code }}\n"
+"\n"
+"Aquest enllaç i el codi caducaran en 10 minuts."
+
+#: templates/account/email/login_code_subject.txt:1
+#, fuzzy, python-format
+#| msgid "Your Magic Link for {{ site_name }}"
+msgid "Your Magic Link for %(site_name)s"
+msgstr "El teu enllaç màgic per a {{ site_name }}"
+
+#: templates/account/email_confirm.html:4
+#: templates/account/email_confirm.html:7
+msgid "Confirm Email Address"
+msgstr "Confirmar correu electrònic"
+
+#: templates/account/email_confirm.html:10
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an email "
+"address for user %(user_display)s."
+msgstr ""
+
+#: templates/account/email_confirm.html:13
+msgid "Confirm"
+msgstr ""
+
+#: templates/account/email_confirm.html:17
+#, python-format
+msgid ""
+"This email confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new email confirmation request</a>."
+msgstr ""
+
+#: templates/account/request_login_code.html:6
+msgid "Enter your email to receive a magic link to log in."
+msgstr ""
+
+#: templates/account/request_login_code.html:11
+msgid "Send Magic Link"
+msgstr ""
+
+#: templates/account/signup.html:4 templates/account/signup.html:8
+#: templates/account/signup.html:28
+msgid "Sign Up"
+msgstr "Crea un compte"
+
+#: templates/account/signup.html:9
+msgid "Log in if you already have an account"
+msgstr "Iniciar sessió si ja tens usuari"
+
+#: templates/account/verification_sent.html:3
+#: templates/account/verification_sent.html:6
+msgid "Verify Your Email Address"
+msgstr "Verifica la teva adreça de correu"
+
+#: templates/account/verification_sent.html:7
+msgid ""
+"We have sent an email to you for verification. Follow the link provided to "
+"finalize the signup process. If you do not see the verification email in "
+"your main inbox, check your spam folder. Please contact us if you do not "
+"receive the verification email within a few minutes."
+msgstr ""
 
 #: templates/accounts/activity.html:27
 msgid "User Activity Log"
@@ -286,14 +504,14 @@ msgid "Listening Time by Level and Language Pair"
 msgstr "Temps d'Escolta per Nivell i Parell de Llengües"
 
 #: templates/accounts/purchase_history.html:4
-#: templates/accounts/purchase_history.html:40 templates/base.html:81
+#: templates/accounts/purchase_history.html:40 templates/base.html:190
 msgid "My products"
 msgstr "Els meus productes"
 
 #: templates/accounts/purchase_history.html:41
 msgid ""
-"Here you can see the status of your products, including expiration dates and"
-" renewal options."
+"Here you can see the status of your products, including expiration dates and "
+"renewal options."
 msgstr ""
 "Aquí pots veure l'estat dels teus productes, incloent-hi les dates de "
 "caducitat i les opcions de renovació."
@@ -366,13 +584,13 @@ msgstr "Renovar"
 msgid "You have not made any purchases yet."
 msgstr "Encara no has fet cap compra."
 
-#: templates/base.html:186
+#: templates/base.html:295
 msgid ""
 "Per instal·lar aquesta aplicació al teu dispositiu: prem el botó de "
 "compartir i després 'Afegeix a la pantalla d'inici'"
 msgstr ""
 
-#: templates/base.html:188
+#: templates/base.html:297
 msgid ""
 "Per instal·lar aquesta aplicació: busca l'opció 'Instal·la' o 'Afegeix a la "
 "pantalla d'inici' al menú del teu navegador."
@@ -450,107 +668,119 @@ msgstr "Procedir al pagament"
 msgid "El teu carretó està buit."
 msgstr "El teu carretó està buit."
 
-#: templates/products/detail.html:24
+#: templates/products/detail.html:25
 msgid "La descripció no està disponible."
 msgstr ""
 
-#: templates/products/detail.html:26
+#: templates/products/detail.html:27
 msgid "Preu:"
 msgstr "Preu:"
 
-#: templates/products/detail.html:27
+#: templates/products/detail.html:28
 msgid "Durada:"
 msgstr "Durada:"
 
-#: templates/products/detail.html:27
+#: templates/products/detail.html:28
 msgid "mesos"
 msgstr "mesos"
 
-#: templates/products/detail.html:30
+#: templates/products/detail.html:31
 msgid "Editar producte"
 msgstr "Editar producte"
 
-#: templates/products/detail.html:37
+#: templates/products/detail.html:38
 msgid "Condicions de venda"
 msgstr "Condicions de venda"
 
-#: templates/products/detail.html:47
+#: templates/products/detail.html:49
 msgid "Accepto les condicions de venda"
 msgstr "Accepto les condicions de venda"
 
-#: templates/products/detail.html:49
+#: templates/products/detail.html:51
 msgid "Comprar ara"
 msgstr "Comprar ara"
 
 #: templates/products/detail.html:55
+#, fuzzy
+#| msgid "Inicia sessió"
+msgid "Inicia sessió per comprar"
+msgstr "Inicia sessió"
+
+#: templates/products/detail.html:56
+msgid ""
+"Per comprar productes, cal que hagis iniciat sessió o que t'hagis registrat "
+"a Dual.cat"
+msgstr ""
+
+#: templates/products/detail.html:63
 msgid "Títols inclosos en el paquet:"
 msgstr "Títols inclosos en el paquet:"
 
-#: templates/products/detail.html:61
+#: templates/products/detail.html:69
 msgid "Nivell"
 msgstr "Nivell"
 
-#: templates/products/detail.html:68
+#: templates/products/detail.html:76
 msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "Encara no hi ha títols assignats a aquest paquet."
 
-#: templates/products/product_list.html:12
+#: templates/products/product_list.html:13
 msgid "Productes"
 msgstr "Productes"
 
-#: templates/products/product_list.html:31
+#: templates/products/product_list.html:32
 msgid "Try for free"
 msgstr "Prova-ho gratis"
 
-#: templates/products/product_list.html:38
+#: templates/products/product_list.html:39
 msgid "Login / Register"
 msgstr ""
 
-#: templates/products/product_list.html:39
+#: templates/products/product_list.html:40
 msgid "To buy products, you need to log in or register to Dual.cat"
 msgstr ""
 
-#: templates/products/product_list.html:50
+#: templates/products/product_list.html:51
 msgid "Notes importants:"
 msgstr ""
 
-#: templates/products/product_list.html:51
+#: templates/products/product_list.html:52
 msgid "Tots els packs són"
 msgstr ""
 
-#: templates/products/product_list.html:51
+#: templates/products/product_list.html:52
 msgid "bidireccionals"
 msgstr ""
 
-#: templates/products/product_list.html:52
+#: templates/products/product_list.html:53
 msgid "Inclouen"
 msgstr ""
 
-#: templates/products/product_list.html:52
+#: templates/products/product_list.html:53
 msgid "totes les llengües disponibles"
 msgstr ""
 
-#: templates/products/product_list.html:53
+#: templates/products/product_list.html:54
 msgid "L’accés és"
 msgstr ""
 
-#: templates/products/product_list.html:53
+#: templates/products/product_list.html:54
 msgid "temporal"
 msgstr ""
 
-#: templates/products/product_list.html:53
+#: templates/products/product_list.html:54
 msgid "i"
 msgstr ""
 
-#: templates/products/product_list.html:53
+#: templates/products/product_list.html:54
 msgid "no es renova automàticamente"
 msgstr ""
 
-#: templates/products/product_list.html:54
+#: templates/products/product_list.html:55
 msgid "Un cop finalitzat el període, cal adquirir un nou pack per continuar."
 msgstr ""
 
-#: templates/products/product_list.html:59
+#: templates/products/product_list.html:60
 msgid "Navega pel catàleg"
 msgstr "Navega pel catàleg"
 
@@ -682,11 +912,11 @@ msgstr "L'equip de Dual"
 
 #: templates/registration/password_reset_form.html:13
 msgid ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
-" restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
+"restablir la teva contrasenya."
 msgstr ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
-" restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
+"restablir la teva contrasenya."
 
 #: templates/registration/password_reset_form.html:17
 msgid "Envia l'enllaç de restabliment"
@@ -704,9 +934,26 @@ msgstr "Crea un compte"
 msgid "Iniciar sessió si ja tens usuari"
 msgstr "Iniciar sessió si ja tens usuari"
 
-#: templates/registration/signup.html:22
+#: templates/registration/signup.html:25
 msgid "Registrar-me"
 msgstr "Registrar-me"
+
+msgid "Verification Email Sent"
+msgstr "Verificació de correu enviada"
+
+msgid "Hello from {{ site_name }}!"
+msgstr "Hola des de {{ site_name }}!"
+
+msgid "Thank you for using {{ site_name }}!"
+msgstr "Gràcies per utilitzar {{ site_name }}!"
+
+msgid ""
+"You are receiving this email because user {{ display_name }} has provided "
+"your email address to register an account at {{ site_domain }}."
+msgstr ""
+"Esteu rebent aquest correu electrònic perquè l'usuari {{ display_name }} ha "
+"proporcionat la vostra adreça electrònica per registrar un compte a "
+"{{ site_domain }}."
 
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compres"
@@ -714,13 +961,17 @@ msgstr "Registrar-me"
 #~ msgid "Paquets"
 #~ msgstr "Paquets"
 
-#~ msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
-#~ msgstr "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgid ""
+#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgstr ""
+#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 
 #~ msgid ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
+#~ "compte."
 #~ msgstr ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
+#~ "compte."
 
 #~ msgid "Dual Start"
 #~ msgstr "Dual Start"
@@ -763,18 +1014,3 @@ msgstr "Registrar-me"
 
 #~ msgid "No hi ha productes disponibles."
 #~ msgstr "No hi ha productes disponibles."
-
-msgid "Your Magic Link for {{ site_name }}"
-msgstr "El teu enllaç màgic per a {{ site_name }}"
-
-msgid "Hello,\n\nTo log in, click the link below:\n\n{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n\nOr enter the following code on the login page:\n\nCode: {{ code }}\n\nThis link and code will expire in 10 minutes."
-msgstr "Hola,\n\nPer iniciar la sessió, fes clic a l'enllaç següent:\n\n{{ protocol }}://{{ domain }}{{ confirm_url }}?code={{ code }}\n\nO introdueix el següent codi a la pàgina d'inici de sessió:\n\nCodi: {{ code }}\n\nAquest enllaç i el codi caducaran en 10 minuts."
-
-msgid "You are receiving this email because user {{ display_name }} has provided your email address to register an account at {{ site_domain }}."
-msgstr "Esteu rebent aquest correu electrònic perquè l'usuari {{ display_name }} ha proporcionat la vostra adreça electrònica per registrar un compte a {{ site_domain }}."
-
-msgid "Your email verification code is shown below. Please enter it in the open window of your browser."
-msgstr "El vostre codi de verificació de correu electrònic es mostra a continuació. Introduïu-lo a la finestra oberta del vostre navegador."
-
-msgid "To confirm this is correct, go to {{ activate_url }}"
-msgstr "Per confirmar que això és correcte, aneu a {{ activate_url }}"
