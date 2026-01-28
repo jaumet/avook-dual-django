@@ -23,8 +23,8 @@ class AllauthSignUpForm(SignupForm):
     display_name = forms.CharField(
         max_length=30,
         required=False,
-        label=_("Nom d'usuari"),
-        widget=forms.TextInput(attrs={'placeholder': _("Nom d'usuari")})
+        label=_("Username"),
+        widget=forms.TextInput(attrs={'placeholder': _("Username")})
     )
 
     def save(self, request):
