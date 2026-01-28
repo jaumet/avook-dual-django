@@ -115,3 +115,36 @@ def create_payment_resource(
 
     logger.error("No PayPal approval link found")
     return None
+
+
+def capture_paypal_order(order_id):
+    """
+    Captures an approved PayPal order.
+    Returns the response data if successful, None otherwise.
+    """
+    access_token = get_paypal_access_token()
+    if not access_token:
+        logger.error(f"PayPal Capture: could not obtain access token for order {order_id}")
+        return None
+
+    try:
+        capture_url = f"{settings.PAYPAL_API_URL}/v2/checkout/orders/{order_id}/capture"
+        logger.info(f"Capturing PayPal order at {capture_url}")
+
+        response = requests.post(
+            capture_url,
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json",
+            },
+            timeout=15,
+        )
+
+        response.raise_for_status()
+        data = response.json()
+        logger.info(f"PayPal order {order_id} captured successfully.")
+        return data
+
+    except Exception as e:
+        logger.error(f"PayPal order capture failed for {order_id}: {e}")
+        return None

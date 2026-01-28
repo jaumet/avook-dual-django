@@ -48,6 +48,10 @@ class PayPalWebhookTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+        # Verify PendingPayment status
+        self.pending.refresh_from_db()
+        self.assertEqual(self.pending.status, 'paid')
+
         # Verify UserPurchase
         purchase = UserPurchase.objects.get(user=self.user, product=self.product)
         self.assertEqual(purchase.paypal_order_id, 'ORDER-123')
@@ -185,6 +189,17 @@ class PayPalViewTest(TestCase):
         self.user = User.objects.create_user(username='testuser_view', email='testuser_view@example.com', password='password', pk=101)
         self.product = Product.objects.create(machine_name='view-product', price=30.00)
         self.client.login(username='testuser_view', password='password')
+
+    @patch('paypal.views.capture_paypal_order')
+    def test_paypal_capture_view_success(self, mock_capture):
+        mock_capture.return_value = {'status': 'COMPLETED'}
+
+        url = reverse('products:success') + '?token=ORDER-123'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'products/success.html')
+        mock_capture.assert_called_once_with('ORDER-123')
 
     @patch('paypal.views.create_payment_resource')
     def test_get_payment_link_view(self, mock_create):

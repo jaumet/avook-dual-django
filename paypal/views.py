@@ -3,28 +3,31 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.html import strip_tags
+from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
-from products.models import Product, UserPurchase, UserAccess
-from .services import create_payment_resource
-from .models import PendingPayment
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.utils.dateparse import parse_datetime
+from dateutil.relativedelta import relativedelta
+
+from products.models import Product, UserPurchase, UserAccess
+from .services import create_payment_resource, capture_paypal_order, get_paypal_access_token
+from .models import PendingPayment
 
 # Configuració del logging
 logger = logging.getLogger(__name__)
 
 def verify_paypal_signature(request):
     """
-    Verifica la signatura del webhook de PayPal.
-    Retorna True si la signatura és vàlida, False en cas contrari.
+    Verifica la signatura del webhook de PayPal utilitzant l'API de PayPal.
     """
     try:
         auth_algo = request.headers.get('Paypal-Auth-Algo')
@@ -50,26 +53,20 @@ def verify_paypal_signature(request):
             "webhook_event": json.loads(event_body),
         }
 
-        # Utilitzar la URL de l'API de PayPal definida a la configuració
-        paypal_api_url = f"{settings.PAYPAL_API_URL}/v1/notifications/verify-webhook-signature"
-
-        # Obtenir un token d'accés de PayPal
-        token_url = f"{settings.PAYPAL_API_URL}/v1/oauth2/token"
-        auth_response = requests.post(
-            token_url,
-            auth=(settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET),
-            headers={"Accept": "application/json", "Accept-Language": "en_US"},
-            data={"grant_type": "client_credentials"}
-        )
-        auth_response.raise_for_status()
-        access_token = auth_response.json()['access_token']
+        # Utilitzar el servei existent per obtenir el token
+        access_token = get_paypal_access_token()
+        if not access_token:
+            logger.error("No s'ha pogut obtenir el token d'accés per verificar la signatura.")
+            return False
 
         # Enviar la petició de verificació a PayPal
+        paypal_verify_url = f"{settings.PAYPAL_API_URL}/v1/notifications/verify-webhook-signature"
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json"
         }
-        verify_response = requests.post(paypal_api_url, headers=headers, json=verification_payload)
+
+        verify_response = requests.post(paypal_verify_url, headers=headers, json=verification_payload, timeout=10)
         verify_response.raise_for_status()
 
         verification_status = verify_response.json().get('verification_status')
@@ -80,21 +77,15 @@ def verify_paypal_signature(request):
             logger.warning(f"La verificació de la signatura de PayPal ha fallat amb l'estat: {verification_status}")
             return False
 
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Error de xarxa durant la verificació de la signatura de PayPal: {e}")
-        return False
-    except (KeyError, json.JSONDecodeError) as e:
-        logger.error(f"Error en processar les dades per a la verificació de la signatura: {e}")
-        return False
     except Exception as e:
-        logger.error(f"Error inesperat durant la verificació de la signatura de PayPal: {e}")
+        logger.error(f"Error durant la verificació de la signatura de PayPal: {e}")
         return False
 
 @csrf_exempt
 @require_POST
 def paypal_webhook(request):
     """
-    Gestiona els webhooks entrants de PayPal.
+    Gestiona els webhooks entrants de PayPal com a única font de veritat.
     """
     # 1. Verificar la signatura del webhook
     if not verify_paypal_signature(request):
@@ -108,12 +99,11 @@ def paypal_webhook(request):
         logger.error("Error en llegir el payload JSON del webhook.")
         return HttpResponseBadRequest("Payload invàlid.")
 
-    # 3. Comprovar el tipus d'event
+    # 3. Comprovar el tipus d'event (NOMÉS els requerits)
     event_type = payload.get('event_type')
     relevant_events = [
         'PAYMENT.CAPTURE.COMPLETED',
         'PAYMENT.CAPTURE.DENIED',
-        'PAYMENT.CAPTURE.DECLINED',
         'PAYMENT.CAPTURE.REFUNDED'
     ]
 
@@ -126,113 +116,112 @@ def paypal_webhook(request):
         resource = payload.get('resource', {})
         paypal_capture_id = resource.get('id')
 
-        # Extreure paypal_order_id de supplementary_data si existeix
+        # Cercar paypal_order_id en links si no és a supplementary_data
         supplementary_data = resource.get('supplementary_data', {})
-        related_ids = supplementary_data.get('related_ids', {})
-        paypal_order_id = related_ids.get('order_id')
+        paypal_order_id = supplementary_data.get('related_ids', {}).get('order_id')
 
-        # Fallback per a paypal_order_id si no és a supplementary_data
         if not paypal_order_id:
-            # En alguns events, l'order_id pot estar en els links o en altres llocs
             for link in resource.get('links', []):
-                if link.get('rel') == 'up':
-                    # L'enllaç sol ser /v2/checkout/orders/{id}
-                    href = link.get('href', '')
-                    if '/orders/' in href:
-                        paypal_order_id = href.split('/orders/')[-1]
-                        break
+                if link.get('rel') == 'up' and '/orders/' in link.get('href', ''):
+                    paypal_order_id = link.get('href').split('/orders/')[-1]
+                    break
 
         payment_date_str = resource.get('create_time')
         custom_id = resource.get('custom_id')
+        amount = resource.get('amount', {}).get('value')
+        currency = resource.get('amount', {}).get('currency_code')
 
-        logger.info(f"Webhook {event_type} rebut. Order: {paypal_order_id}, Capture: {paypal_capture_id}, CustomID: {custom_id}")
+        logger.info(f"Processant webhook {event_type}. Order: {paypal_order_id}, Capture: {paypal_capture_id}, CustomID: {custom_id}, Amount: {amount} {currency}")
 
     except Exception as e:
-        logger.error(f"Error en extreure dades del payload del webhook: {e}. Payload: {payload}")
+        logger.error(f"Error en extreure dades del payload del webhook: {e}")
         return HttpResponseBadRequest("Dades del payload incompletes o malformades.")
 
-    # 5. Localitzar el pagament pendent
-    pending_payment = None
-    if paypal_order_id:
-        pending_payment = PendingPayment.objects.filter(paypal_order_id=paypal_order_id).first()
-
-    if not pending_payment:
-        logger.warning(f"No s'ha trobat cap pagament pendent per a paypal_order_id: {paypal_order_id}")
+    if not paypal_order_id:
+        logger.warning(f"No s'ha pogut determinar paypal_order_id per a l'event {event_type}")
         return HttpResponse(status=200)
 
-    # 6. Processar segons el tipus d'event
-    if event_type == 'PAYMENT.CAPTURE.COMPLETED':
-        user = pending_payment.user
-        product = pending_payment.product
+    # 5. Processar segons el tipus d'event de forma atòmica
+    try:
+        if event_type == 'PAYMENT.CAPTURE.COMPLETED':
+            with transaction.atomic():
+                # Localitzar PendingPayment per paypal_order_id amb bloqueig
+                pending_payment = PendingPayment.objects.select_for_update().filter(paypal_order_id=paypal_order_id).first()
 
-        # Idempotència: comprovar si ja existeix la compra
-        purchase_exists = UserPurchase.objects.filter(
-            Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
-        ).exists()
+                if not pending_payment:
+                    logger.warning(f"No s'ha trobat cap pagament pendent per a paypal_order_id: {paypal_order_id}")
+                    return HttpResponse(status=200)
 
-        if not purchase_exists:
-            # Crear UserPurchase
-            paid_at = timezone.now()
-            if payment_date_str:
-                try:
-                    from django.utils.dateparse import parse_datetime
-                    paid_at = parse_datetime(payment_date_str) or timezone.now()
-                except Exception:
-                    pass
+                user = pending_payment.user
+                product = pending_payment.product
 
-            UserPurchase.objects.create(
-                user=user,
-                user_email=user.email,
-                product=product,
-                paypal_order_id=paypal_order_id,
-                paypal_capture_id=paypal_capture_id,
-                paid_at=paid_at,
-                payment_provider="paypal",
-                status="completed"
-            )
-            logger.info(f"S'ha creat una nova UserPurchase per a l'usuari {user.id} i el producte {product.machine_name}.")
+                # Idempotència: comprovar si ja existeix la compra
+                purchase_exists = UserPurchase.objects.filter(
+                    Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
+                ).exists()
 
-            # Calcular expiry_date basat en la durada del producte
-            expiry_date = None
-            if product.duration:
-                from dateutil.relativedelta import relativedelta
-                expiry_date = paid_at + relativedelta(months=product.duration)
+                if not purchase_exists:
+                    # Mark PendingPayment as PAID
+                    pending_payment.status = 'paid'
+                    pending_payment.save()
 
-            # Activar producte en UserAccess
-            access, created = UserAccess.objects.update_or_create(
-                user=user,
-                product=product,
-                defaults={
-                    'active': True,
-                    'activated_at': paid_at,
-                    'expiry_date': expiry_date
-                }
-            )
-            logger.info(f"Producte {product.machine_name} activat per a l'usuari {user.id}.")
+                    # Data de pagament
+                    paid_at = parse_datetime(payment_date_str) if payment_date_str else timezone.now()
+                    if not paid_at: paid_at = timezone.now()
 
-            # Enviar correu de confirmació
-            send_purchase_confirmation_email(user, product, paid_at)
-        else:
-            logger.info(f"La compra per a l'ordre {paypal_order_id} ja ha estat processada prèviament.")
+                    # Crear UserPurchase
+                    UserPurchase.objects.create(
+                        user=user,
+                        user_email=user.email,
+                        product=product,
+                        paypal_order_id=paypal_order_id,
+                        paypal_capture_id=paypal_capture_id,
+                        paid_at=paid_at,
+                        payment_provider="paypal",
+                        status="completed"
+                    )
+                    logger.info(f"Creada UserPurchase per a l'usuari {user.id} i producte {product.machine_name}.")
 
-    elif event_type in ['PAYMENT.CAPTURE.DENIED', 'PAYMENT.CAPTURE.DECLINED']:
-        pending_payment.status = 'failed'
-        pending_payment.save()
-        logger.info(f"Pagament pendent {paypal_order_id} marcat com a fallit ({event_type}).")
+                    # Activar en UserAccess
+                    expiry_date = None
+                    if product.duration:
+                        expiry_date = paid_at + relativedelta(months=product.duration)
 
-    elif event_type == 'PAYMENT.CAPTURE.REFUNDED':
-        # Marcar UserPurchase com a retornada
-        UserPurchase.objects.filter(
-            Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
-        ).update(status='refunded')
+                    UserAccess.objects.update_or_create(
+                        user=user,
+                        product=product,
+                        defaults={
+                            'active': True,
+                            'activated_at': paid_at,
+                            'expiry_date': expiry_date
+                        }
+                    )
+                    logger.info(f"Producte {product.machine_name} activat per a l'usuari {user.id}.")
 
-        # Desactivar l'accés
-        UserAccess.objects.filter(
-            user=pending_payment.user,
-            product=pending_payment.product
-        ).update(active=False)
+                    # Enviar correu de confirmació
+                    send_purchase_confirmation_email(user, product, paid_at)
+                else:
+                    logger.info(f"La compra per a l'ordre {paypal_order_id} ja s'havia processat.")
 
-        logger.info(f"Compra retornada i accés desactivat per a l'ordre {paypal_order_id}.")
+        elif event_type == 'PAYMENT.CAPTURE.DENIED':
+            PendingPayment.objects.filter(paypal_order_id=paypal_order_id).update(status='failed')
+            logger.info(f"Pagament pendent {paypal_order_id} marcat com a fallit (DENIED).")
+
+        elif event_type == 'PAYMENT.CAPTURE.REFUNDED':
+            with transaction.atomic():
+                UserPurchase.objects.filter(
+                    Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
+                ).update(status='refunded')
+
+                pending = PendingPayment.objects.filter(paypal_order_id=paypal_order_id).first()
+                if pending:
+                    UserAccess.objects.filter(user=pending.user, product=pending.product).update(active=False)
+
+                logger.info(f"Compra retornada i accés desactivat per a l'ordre {paypal_order_id}.")
+
+    except Exception as e:
+        logger.error(f"Error durant el processament del webhook {event_type}: {e}")
+        return HttpResponse(status=500)
 
     return HttpResponse(status=200)
 
@@ -241,13 +230,6 @@ def send_purchase_confirmation_email(user, product, paid_at):
     Envia un correu electrònic de confirmació de compra en l'idioma de l'usuari.
     """
     try:
-        # Idioma de l'usuari (assumim que el guardem o usem el de la sessió si estigués disponible,
-        # però en webhook usem el que tinguem a CustomUser si existeix o el per defecte)
-        # En aquest projecte CustomUser no té language_code, així que usem settings.LANGUAGE_CODE o algun altre mecanisme.
-        # De moment usem 'ca' i 'en' com a exemples.
-
-        # Si tenim un camp language al model CustomUser, l'hauríem d'usar aquí.
-        # Com que no el veig clarament, provarem de detectar-lo o usar 'ca' per defecte.
         lang = getattr(user, 'language_code', 'ca')
         if lang not in ['ca', 'en']:
             lang = 'ca'
@@ -276,14 +258,34 @@ def send_purchase_confirmation_email(user, product, paid_at):
     except Exception as e:
         logger.error(f"Error en enviar el correu de confirmació: {e}")
 
+def paypal_capture_view(request):
+    """
+    Captura l'ordre de PayPal després de l'aprovació de l'usuari.
+    """
+    order_id = request.GET.get('token')
+
+    if not order_id:
+        logger.warning("Redirecció d'èxit de PayPal sense 'token'.")
+        return redirect('products:product_list')
+
+    logger.info(f"Iniciant captura server-side per a l'ordre: {order_id}")
+
+    capture_data = capture_paypal_order(order_id)
+
+    if capture_data:
+        logger.info(f"Ordre {order_id} capturada correctament. Estat: {capture_data.get('status')}")
+    else:
+        logger.error(f"Error en capturar l'ordre {order_id} server-side.")
+
+    # Sempre renderitzem la pàgina d'èxit, el webhook farà l'activació real
+    return render(request, 'products/success.html', {'order_id': order_id})
+
 @login_required
 def get_payment_link_view(request, product_id):
     """
-    View that generates a PayPal payment link for a specific product.
+    Genera un enllaç de pagament de PayPal per a un producte.
     """
     product = get_object_or_404(Product, pk=product_id)
-
-    # Use the product translation if available
     lang = request.LANGUAGE_CODE
     product_translation = product.get_translation(lang)
     product_name = product.machine_name
@@ -293,7 +295,6 @@ def get_payment_link_view(request, product_id):
         product_name = product_translation.name
         product_description = strip_tags(product_translation.description)
 
-    # Ensure success URL is absolute
     success_url = request.build_absolute_uri(reverse('products:success'))
 
     payment_link = create_payment_resource(
@@ -309,5 +310,4 @@ def get_payment_link_view(request, product_id):
     if payment_link:
         return JsonResponse({'payment_link': payment_link})
     else:
-        # The service already logs the details
-        return JsonResponse({'error': 'Could not create PayPal payment link. Check server logs for details.'}, status=500)
+        return JsonResponse({'error': 'No s\'ha pogut crear l\'enllaç de pagament.'}, status=500)
