@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import translation
 import datetime
 from django.utils import timezone
-from products.models import Product, Title, Package, UserPurchase, ProductTranslation, TitleTranslation
+from products.models import Product, Title, Package, UserPurchase, UserAccess, ProductTranslation, TitleTranslation
 
 
 User = get_user_model()
@@ -52,22 +52,23 @@ class ProductAccessTest(TestCase):
         self.assertEqual(status, 'PREMIUM_NOT_OWNED')
 
     def test_access_with_active_purchase(self):
-        UserPurchase.objects.create(user=self.user, product=self.product_a2)
+        UserAccess.objects.create(user=self.user, product=self.product_a2, active=True)
         status = self.title_a2.get_user_status(self.user)
         self.assertEqual(status, 'PREMIUM_OWNED')
 
     def test_access_with_expired_purchase(self):
-        purchase = UserPurchase.objects.create(user=self.user, product=self.product_a2)
-        purchase.expiry_date = timezone.now() - datetime.timedelta(days=1)
-        purchase.save()
+        UserAccess.objects.create(
+            user=self.user,
+            product=self.product_a2,
+            active=True,
+            expiry_date=timezone.now() - datetime.timedelta(days=1)
+        )
         status = self.title_a2.get_user_status(self.user)
         self.assertEqual(status, 'PREMIUM_NOT_OWNED')
 
     def test_access_with_null_expiry(self):
         # Simulate a purchase made before the expiry_date feature was added
-        purchase = UserPurchase.objects.create(user=self.user, product=self.product_a2)
-        purchase.expiry_date = None
-        purchase.save()
+        UserAccess.objects.create(user=self.user, product=self.product_a2, active=True, expiry_date=None)
         status = self.title_a2.get_user_status(self.user)
         self.assertEqual(status, 'PREMIUM_OWNED')
 
