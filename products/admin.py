@@ -2,9 +2,9 @@ from django.contrib import admin
 from django import forms
 from django.urls import path
 from django.shortcuts import render
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Avg
 from django.utils.translation import gettext_lazy as _
-from .models import Product, Title, Package, UserPurchase, TranslatableContent, ProductTranslation, UserActivity
+from .models import Product, Title, Package, UserPurchase, TranslatableContent, ProductTranslation, UserActivity, UserActivityStat
 
 # Define the language choices for the dropdown
 LANGUAGE_CHOICES = [
@@ -103,12 +103,33 @@ class HomePageContentAdmin(admin.ModelAdmin):
         return False
 
 
-@admin.register(UserActivity)
-class UserActivityAdmin(admin.ModelAdmin):
-    list_display = ('user', 'title', 'language_pair', 'listening_time', 'last_listened_date')
-    list_filter = ('language_pair', 'title__level', 'last_listened_date')
-    search_fields = ('user__username', 'user__email', 'title__machine_name')
-    raw_id_fields = ('user', 'title')
+@admin.register(UserActivityStat)
+class UserActivityStatAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'get_total_time', 'get_total_count', 'get_avg_completion')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
+    readonly_fields = ('username', 'email', 'get_total_time', 'get_total_count', 'get_avg_completion')
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            total_time=Sum('activities__listening_time'),
+            total_count=Sum('activities__listen_count'),
+            avg_completion=Avg('activities__completion_percentage')
+        ).filter(total_count__gt=0)
+
+    def get_total_time(self, obj):
+        return obj.total_time
+    get_total_time.short_description = _("Total Listening Time")
+    get_total_time.admin_order_field = 'total_time'
+
+    def get_total_count(self, obj):
+        return obj.total_count
+    get_total_count.short_description = _("Total Listen Count")
+    get_total_count.admin_order_field = 'total_count'
+
+    def get_avg_completion(self, obj):
+        return f"{obj.avg_completion:.1f}%" if obj.avg_completion is not None else "0.0%"
+    get_avg_completion.short_description = _("Avg. Completion")
+    get_avg_completion.admin_order_field = 'avg_completion'
 
     def get_urls(self):
         urls = super().get_urls()
@@ -154,3 +175,11 @@ class UserActivityAdmin(admin.ModelAdmin):
             opts=self.model._meta,
         )
         return render(request, 'admin/products/useractivity/statistics.html', context)
+
+
+@admin.register(UserActivity)
+class UserActivityAdmin(admin.ModelAdmin):
+    list_display = ('user', 'title', 'language_pair', 'listening_time', 'last_listened_date')
+    list_filter = ('language_pair', 'title__level', 'last_listened_date')
+    search_fields = ('user__username', 'user__email', 'title__machine_name')
+    raw_id_fields = ('user', 'title')
