@@ -52,6 +52,12 @@ class CustomUser(AbstractUser):
         blank=True,
         help_text=_('A list of languages the user wants to learn and their level.')
     )
+    language_code = models.CharField(
+        _('language code'),
+        max_length=10,
+        default='ca',
+        help_text=_('The user\'s preferred language for communication.')
+    )
 
     def __str__(self):
         return self.username

@@ -101,14 +101,17 @@ class SignUpView(SuccessMessageMixin, CreateView):
     success_message = _("Thank you for signing up! We've sent you an email to activate your account.")
 
     def form_valid(self, form):
+        form.instance.language_code = self.request.LANGUAGE_CODE
         response = super().form_valid(form)
         user = self.object
+
         activation_path = reverse('accounts:activate', kwargs={'token': user.confirmation_token})
         domain = self.request.get_host()
         protocol = 'https' if self.request.is_secure() else 'http'
-        token_url = f"{protocol}://{domain}{activation_path}"
-        context = {'user': user, 'token_url': token_url}
+        activate_url = f"{protocol}://{domain}{activation_path}"
+        context = {'user': user, 'activate_url': activate_url}
         send_templated_email('account_confirmation', context, user.email, language=self.request.LANGUAGE_CODE)
+
         return response
 
 
