@@ -5,9 +5,10 @@ from django.db import models
 from django.db.models import Q
 import datetime
 from django.utils import timezone
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 from django.templatetags.static import static
 from django_ckeditor_5.fields import CKEditor5Field
+from accounts.models import CustomUser
 
 
 class Title(models.Model):
@@ -314,6 +315,13 @@ class UserActivity(models.Model):
         return f"{self.user.username} - {self.title.machine_name} ({self.language_pair})"
 
     class Meta:
-        verbose_name = "User Activity"
-        verbose_name_plural = "User Activities"
+        verbose_name = _("Activity Log")
+        verbose_name_plural = _("Activity Logs")
         unique_together = ('user', 'title', 'language_pair')
+
+
+class UserActivityStat(CustomUser):
+    class Meta:
+        proxy = True
+        verbose_name = _('User Activity (Accumulated)')
+        verbose_name_plural = _('User Activities (Accumulated)')
