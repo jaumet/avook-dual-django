@@ -5,6 +5,17 @@ from django.utils.translation import gettext_lazy as _
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import CustomUser
+from products.models import UserActivity
+
+
+class UserActivityInline(admin.TabularInline):
+    model = UserActivity
+    extra = 0
+    readonly_fields = ('title', 'language_pair', 'listening_time', 'completion_percentage', 'listen_count', 'last_listened_date')
+    can_delete = False
+
+    def has_add_permission(self, request, obj=None):
+        return False
 
 
 class CustomUserAdmin(UserAdmin):
@@ -36,6 +47,7 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
+    inlines = [UserActivityInline]
     search_fields = ('username', 'first_name', 'last_name', 'email')
     ordering = ('username',)
 
