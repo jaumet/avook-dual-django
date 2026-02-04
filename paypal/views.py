@@ -13,8 +13,7 @@ from django.utils.html import strip_tags
 from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
+from post_office.utils import send_templated_email
 from django.utils.dateparse import parse_datetime
 from dateutil.relativedelta import relativedelta
 
@@ -231,28 +230,19 @@ def send_purchase_confirmation_email(user, product, paid_at):
     """
     try:
         lang = getattr(user, 'language_code', 'ca')
-        if lang not in ['ca', 'en']:
-            lang = 'ca'
-
-        subject = "La teva compra s’ha activat a Dual" if lang == 'ca' else "Your purchase has been activated on Dual"
-        template_name = f"emails/purchase_confirmed_{lang}.html"
 
         context = {
             'user': user,
             'product_name': str(product),
             'payment_date': paid_at.strftime('%d/%m/%Y %H:%M'),
-            'purchase_url': "https://dual.cat/ca/accounts/purchases/"
+            'purchase_url': f"https://dual.cat/{lang}/accounts/purchases/"
         }
 
-        html_message = render_to_string(template_name, context)
-
-        send_mail(
-            subject=subject,
-            message=strip_tags(html_message),
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            html_message=html_message,
-            fail_silently=False
+        send_templated_email(
+            template_name='purchase_confirmation',
+            context=context,
+            to_email=user.email,
+            language=lang
         )
         logger.info(f"Correu de confirmació enviat a {user.email}")
     except Exception as e:
