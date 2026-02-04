@@ -1,0 +1,115 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url 'admin:products_useractivity_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {% trans 'Statistics' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>{% trans 'User Activity Statistics' %}</h1>
+
+    <div class="module">
+        <h2>{% trans 'Top 10 Most Active Users' %}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans 'Username' %}</th>
+                    <th>{% trans 'Email' %}</th>
+                    <th>{% trans 'Total Listening Time' %}</th>
+                    <th>{% trans 'Total Listen Count' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in top_users %}
+                <tr>
+                    <td>{{ user.user__username }}</td>
+                    <td>{{ user.user__email }}</td>
+                    <td>{{ user.total_time }}</td>
+                    <td>{{ user.total_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="module">
+        <h2>{% trans 'Top 10 Least Active Users' %}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans 'Username' %}</th>
+                    <th>{% trans 'Email' %}</th>
+                    <th>{% trans 'Total Listening Time' %}</th>
+                    <th>{% trans 'Total Listen Count' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in bottom_users %}
+                <tr>
+                    <td>{{ user.user__username }}</td>
+                    <td>{{ user.user__email }}</td>
+                    <td>{{ user.total_time }}</td>
+                    <td>{{ user.total_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="module">
+        <h2>{% trans 'Activity by Language Pair' %}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans 'Language Pair' %}</th>
+                    <th>{% trans 'Total Listening Time' %}</th>
+                    <th>{% trans 'Total Listen Count' %}</th>
+                    <th>{% trans 'Unique Users' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lang in by_language %}
+                <tr>
+                    <td>{{ lang.language_pair }}</td>
+                    <td>{{ lang.total_time }}</td>
+                    <td>{{ lang.total_count }}</td>
+                    <td>{{ lang.user_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="module">
+        <h2>{% trans 'Activity by Level' %}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans 'Level' %}</th>
+                    <th>{% trans 'Total Listening Time' %}</th>
+                    <th>{% trans 'Total Listen Count' %}</th>
+                    <th>{% trans 'Unique Users' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for level in by_level %}
+                <tr>
+                    <td>{{ level.title__level }}</td>
+                    <td>{{ level.total_time }}</td>
+                    <td>{{ level.total_count }}</td>
+                    <td>{{ level.user_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
