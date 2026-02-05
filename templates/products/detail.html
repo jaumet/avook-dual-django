@@ -52,7 +52,7 @@
             <div id="paypal-{{ product.id }}"></div>
         {% else %}
             <div class="my-3">
-                <a href="{% url 'accounts:login' %}" class="button button--primary">{% trans "Inicia sessió per comprar" %}</a>
+                <a href="{% url 'account_login' %}" class="button button--primary">{% trans "Inicia sessió per comprar" %}</a>
                 <p class="mt-2"><small>{% trans "Per comprar productes, cal que hagis iniciat sessió o que t'hagis registrat a Dual.cat" %}</small></p>
             </div>
         {% endif %}
