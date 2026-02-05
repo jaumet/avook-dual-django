@@ -1,1 +1,1 @@
-{% load i18n %}{% blocktrans %}El compte ja existeix{% endblocktrans %}
+{% load i18n %}{% blocktrans %}Account already exists{% endblocktrans %}

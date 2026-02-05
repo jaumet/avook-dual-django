@@ -35,7 +35,6 @@ msgid "Important dates"
 msgstr "Wichtige Daten"
 
 #: accounts/apps.py:8 accounts/models.py:61
-#, fuzzy
 #| msgid "Username"
 msgid "Users"
 msgstr "Benutzername"
@@ -85,19 +84,16 @@ msgid "Password confirmation"
 msgstr "Passwortbestätigung"
 
 #: accounts/models.py:16
-#, fuzzy
 #| msgid "First name"
 msgid "first name"
 msgstr "Vorname"
 
 #: accounts/models.py:17
-#, fuzzy
 #| msgid "Last name"
 msgid "last name"
 msgstr "Nachname"
 
 #: accounts/models.py:19
-#, fuzzy
 #| msgid "Username"
 msgid "username"
 msgstr "Benutzername"
@@ -116,7 +112,6 @@ msgid "email address"
 msgstr ""
 
 #: accounts/models.py:44
-#, fuzzy
 #| msgid "Languages"
 msgid "known languages"
 msgstr "Sprachen"
@@ -134,7 +129,6 @@ msgid "A list of languages the user wants to learn and their level."
 msgstr ""
 
 #: accounts/models.py:60
-#, fuzzy
 #| msgid "Username"
 msgid "User"
 msgstr "Benutzername"
@@ -144,7 +138,6 @@ msgid "Your account has been activated successfully."
 msgstr ""
 
 #: accounts/views.py:89
-#, fuzzy
 #| msgid "El token d'activació és invàlid o ha expirat."
 msgid "The activation token is invalid or has expired."
 msgstr "Der Aktivierungstoken ist ungültig oder abgelaufen."
@@ -251,18 +244,21 @@ msgstr ""
 
 #: templates/account/confirm_login_code.html:5
 msgid "Enter Code"
-msgstr ""
+msgstr "Code eingeben"
 
 #: templates/account/confirm_login_code.html:6
 msgid ""
 "We've sent a magic link and a code to your email. Click the link in the "
 "email or enter the code below to log in."
 msgstr ""
+"Wir haben einen Magic Link und einen Code an Ihre E-Mail gesendet. Klicken "
+"Sie auf den Link in der E-Mail oder geben Sie den Code unten ein, um sich "
+"anzumelden."
 
 #: templates/account/confirm_login_code.html:11
 #: templates/account/request_login_code.html:5
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
 #: templates/account/email/account_already_exists_message.txt:4
 #, python-format
@@ -271,9 +267,7 @@ msgid ""
 "\n"
 "%(email_addr)s\n"
 "\n"
-"No obstant això, ja existeix un compte amb aquest correu. Per iniciar la "
-"sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de "
-"sessió:\n"
+"No obstant això, ja existeix un compte amb aquest correu. Per iniciar la sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de sessió:\n"
 "\n"
 "%(login_url)s"
 msgstr ""
@@ -297,8 +291,8 @@ msgstr ""
 #: templates/account/email/email_confirmation_message.txt:5
 #, python-format
 msgid ""
-"You are receiving this email because user %(display_name)s has provided your "
-"email address to register an account at %(site_domain)s."
+"You are receiving this email because user %(display_name)s has provided your"
+" email address to register an account at %(site_domain)s."
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:7
@@ -363,10 +357,12 @@ msgstr ""
 #: templates/account/request_login_code.html:6
 msgid "Enter your email to receive a magic link to log in."
 msgstr ""
+"Geben Sie Ihre E-Mail-Adresse ein, um einen Magic Link zur Anmeldung zu "
+"erhalten."
 
 #: templates/account/request_login_code.html:11
 msgid "Send Magic Link"
-msgstr ""
+msgstr "Magic Link senden"
 
 #: templates/account/signup.html:4 templates/account/signup.html:8
 #: templates/account/signup.html:28
@@ -403,7 +399,6 @@ msgid "Title"
 msgstr ""
 
 #: templates/accounts/activity.html:36
-#, fuzzy
 #| msgid "Languages"
 msgid "Language Pair"
 msgstr "Sprachen"
@@ -417,13 +412,11 @@ msgid "Listening Time (minutes)"
 msgstr ""
 
 #: templates/accounts/activity.html:39
-#, fuzzy
 #| msgid "Collection"
 msgid "Completion"
 msgstr "Sammlung"
 
 #: templates/accounts/activity.html:40
-#, fuzzy
 #| msgid "Last name"
 msgid "Last Listened"
 msgstr "Nachname"
@@ -477,21 +470,19 @@ msgstr "Meine Produkte"
 
 #: templates/accounts/purchase_history.html:41
 msgid ""
-"Here you can see the status of your products, including expiration dates and "
-"renewal options."
+"Here you can see the status of your products, including expiration dates and"
+" renewal options."
 msgstr ""
 "Hier können Sie den Status Ihrer Produkte einsehen, einschließlich "
 "Ablaufdaten und Verlängerungsoptionen."
 
 #: templates/accounts/purchase_history.html:44
-#, fuzzy
 #| msgid "Productes"
 msgid "Active Products"
 msgstr "Produkte"
 
 #: templates/accounts/purchase_history.html:49
 #: templates/accounts/purchase_history.html:85
-#, fuzzy
 #| msgid "Product Page"
 msgid "Product Name"
 msgstr "Produktname"
@@ -524,13 +515,11 @@ msgid "Lifetime"
 msgstr "Lebenslang"
 
 #: templates/accounts/purchase_history.html:70
-#, fuzzy
 #| msgid "Edit product"
 msgid "Go to product"
 msgstr "Produkt bearbeiten"
 
 #: templates/accounts/purchase_history.html:80
-#, fuzzy
 #| msgid "Editar producte"
 msgid "Expired Products"
 msgstr "Produkt bearbeiten"
@@ -668,7 +657,6 @@ msgid "Comprar ara"
 msgstr "Jetzt kaufen"
 
 #: templates/products/detail.html:55
-#, fuzzy
 #| msgid "Inicia sessió"
 msgid "Inicia sessió per comprar"
 msgstr "Anmelden"
@@ -809,8 +797,8 @@ msgid ""
 "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
 "la nova contrasenya."
 msgstr ""
-"Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit dem neuen "
-"Passwort anmelden."
+"Ihr Passwort wurde erfolgreich geändert. Sie können sich jetzt mit dem neuen"
+" Passwort anmelden."
 
 #: templates/registration/password_reset_complete.html:14
 msgid "Inicia la sessió"
@@ -830,8 +818,9 @@ msgid ""
 "ha estat utilitzat. Si us plau, sol·licita un nou restabliment de "
 "contrasenya."
 msgstr ""
-"Der Link zum Zurücksetzen des Passworts ist ungültig, möglicherweise weil er "
-"bereits verwendet wurde. Bitte fordern Sie eine neue Passwortrücksetzung an."
+"Der Link zum Zurücksetzen des Passworts ist ungültig, möglicherweise weil er"
+" bereits verwendet wurde. Bitte fordern Sie eine neue Passwortrücksetzung "
+"an."
 
 #: templates/registration/password_reset_done.html:10
 msgid "Instruccions enviades"
@@ -879,8 +868,8 @@ msgstr "Das Dual-Team"
 
 #: templates/registration/password_reset_form.html:13
 msgid ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
-"restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
+" restablir la teva contrasenya."
 msgstr ""
 "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen zum "
 "Zurücksetzen Ihres Passworts."
@@ -905,23 +894,35 @@ msgstr "Anmelden, wenn Sie bereits ein Konto haben"
 msgid "Registrar-me"
 msgstr "Registrieren"
 
+msgid "Account already exists"
+msgstr "Konto existiert bereits"
+
+msgid "A registration request was received with this email address:"
+msgstr "Eine Registrierungsanfrage wurde mit dieser E-Mail-Adresse empfangen:"
+
+msgid ""
+"However, an account already exists with this email. To log in, you can "
+"request a magic link on the login page:"
+msgstr ""
+"Es existiert jedoch bereits ein Konto mit dieser E-Mail-Adresse. Um sich "
+"anzumelden (Log in), können Sie auf der Anmeldeseite einen Magic Link "
+"anfordern:"
+
 #~ msgid "Purchase History"
 #~ msgstr "Kaufhistorie"
 
 #~ msgid "Paquets"
 #~ msgstr "Pakete"
 
-#~ msgid ""
-#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 #~ msgstr ""
 #~ "Ihr Konto wurde erfolgreich aktiviert. Sie können sich jetzt anmelden."
 
 #~ msgid ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
-#~ "compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 #~ msgstr ""
-#~ "Danke für deine Registrierung! Wir haben dir eine E-Mail geschickt, um "
-#~ "dein Konto zu aktivieren."
+#~ "Danke für deine Registrierung! Wir haben dir eine E-Mail geschickt, um dein "
+#~ "Konto zu aktivieren."
 
 #~ msgid "Dual Start"
 #~ msgstr "Dual Start"
