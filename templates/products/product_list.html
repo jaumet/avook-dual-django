@@ -36,7 +36,7 @@
               <div id="paypal-{{ product.id }}"></div>
             {% else %}
               <div class="my-3">
-                <a href="{% url 'accounts:login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
+                <a href="{% url 'account_login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
                 <p class="mt-2"><small>{% trans "To buy products, you need to log in or register to Dual.cat" %}</small></p>
               </div>
             {% endif %}
