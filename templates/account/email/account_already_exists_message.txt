@@ -1,10 +1,10 @@
 {% extends "account/email/base_message.txt" %}
 {% load i18n %}
 
-{% block content %}{% autoescape off %}{% blocktrans with email_addr=email login_url=login_url %}S'ha rebut una petició de registre amb aquesta adreça electrònica:
+{% block content %}{% autoescape off %}{% blocktrans with email_addr=email login_url=login_url %}A registration request was received with this email address:
 
 {{ email_addr }}
 
-No obstant això, ja existeix un compte amb aquest correu. Per iniciar la sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de sessió:
+However, an account already exists with this email. To log in, you can request a magic link on the login page:
 
 {{ login_url }}{% endblocktrans %}{% endautoescape %}{% endblock content %}

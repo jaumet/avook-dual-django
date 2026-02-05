@@ -34,7 +34,6 @@ msgid "Important dates"
 msgstr "Important dates"
 
 #: accounts/apps.py:8 accounts/models.py:61
-#, fuzzy
 #| msgid "Username"
 msgid "Users"
 msgstr "Username"
@@ -84,19 +83,16 @@ msgid "Password confirmation"
 msgstr "Password confirmation"
 
 #: accounts/models.py:16
-#, fuzzy
 #| msgid "First name"
 msgid "first name"
 msgstr "First name"
 
 #: accounts/models.py:17
-#, fuzzy
 #| msgid "Last name"
 msgid "last name"
 msgstr "Last name"
 
 #: accounts/models.py:19
-#, fuzzy
 #| msgid "Username"
 msgid "username"
 msgstr "Username"
@@ -115,7 +111,6 @@ msgid "email address"
 msgstr ""
 
 #: accounts/models.py:44
-#, fuzzy
 #| msgid "Languages:"
 msgid "known languages"
 msgstr "Languages:"
@@ -133,7 +128,6 @@ msgid "A list of languages the user wants to learn and their level."
 msgstr ""
 
 #: accounts/models.py:60
-#, fuzzy
 #| msgid "Username"
 msgid "User"
 msgstr "Username"
@@ -143,7 +137,6 @@ msgid "Your account has been activated successfully."
 msgstr ""
 
 #: accounts/views.py:89
-#, fuzzy
 #| msgid "El token d'activació és invàlid o ha expirat."
 msgid "The activation token is invalid or has expired."
 msgstr "The activation token is invalid or has expired."
@@ -250,18 +243,20 @@ msgstr ""
 
 #: templates/account/confirm_login_code.html:5
 msgid "Enter Code"
-msgstr ""
+msgstr "Enter Code"
 
 #: templates/account/confirm_login_code.html:6
 msgid ""
 "We've sent a magic link and a code to your email. Click the link in the "
 "email or enter the code below to log in."
 msgstr ""
+"We've sent a magic link and a code to your email. Click the link in the "
+"email or enter the code below to log in."
 
 #: templates/account/confirm_login_code.html:11
 #: templates/account/request_login_code.html:5
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: templates/account/email/account_already_exists_message.txt:4
 #, python-format
@@ -270,9 +265,7 @@ msgid ""
 "\n"
 "%(email_addr)s\n"
 "\n"
-"No obstant això, ja existeix un compte amb aquest correu. Per iniciar la "
-"sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de "
-"sessió:\n"
+"No obstant això, ja existeix un compte amb aquest correu. Per iniciar la sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de sessió:\n"
 "\n"
 "%(login_url)s"
 msgstr ""
@@ -296,8 +289,8 @@ msgstr ""
 #: templates/account/email/email_confirmation_message.txt:5
 #, python-format
 msgid ""
-"You are receiving this email because user %(display_name)s has provided your "
-"email address to register an account at %(site_domain)s."
+"You are receiving this email because user %(display_name)s has provided your"
+" email address to register an account at %(site_domain)s."
 msgstr ""
 
 #: templates/account/email/email_confirmation_message.txt:7
@@ -361,11 +354,11 @@ msgstr ""
 
 #: templates/account/request_login_code.html:6
 msgid "Enter your email to receive a magic link to log in."
-msgstr ""
+msgstr "Enter your email to receive a magic link to log in."
 
 #: templates/account/request_login_code.html:11
 msgid "Send Magic Link"
-msgstr ""
+msgstr "Send Magic Link"
 
 #: templates/account/signup.html:4 templates/account/signup.html:8
 #: templates/account/signup.html:28
@@ -402,7 +395,6 @@ msgid "Title"
 msgstr ""
 
 #: templates/accounts/activity.html:36
-#, fuzzy
 #| msgid "Languages:"
 msgid "Language Pair"
 msgstr "Languages:"
@@ -420,7 +412,6 @@ msgid "Completion"
 msgstr ""
 
 #: templates/accounts/activity.html:40
-#, fuzzy
 #| msgid "Last name"
 msgid "Last Listened"
 msgstr "Last name"
@@ -469,24 +460,21 @@ msgstr ""
 
 #: templates/accounts/purchase_history.html:4
 #: templates/accounts/purchase_history.html:40 templates/base.html:190
-#, fuzzy
 msgid "My products"
 msgstr "Products"
 
 #: templates/accounts/purchase_history.html:41
 msgid ""
-"Here you can see the status of your products, including expiration dates and "
-"renewal options."
+"Here you can see the status of your products, including expiration dates and"
+" renewal options."
 msgstr ""
 
 #: templates/accounts/purchase_history.html:44
-#, fuzzy
 msgid "Active Products"
 msgstr "Products"
 
 #: templates/accounts/purchase_history.html:49
 #: templates/accounts/purchase_history.html:85
-#, fuzzy
 #| msgid "Product Page"
 msgid "Product Name"
 msgstr "Product Page"
@@ -519,13 +507,11 @@ msgid "Lifetime"
 msgstr ""
 
 #: templates/accounts/purchase_history.html:70
-#, fuzzy
 #| msgid "Edit product"
 msgid "Go to product"
 msgstr "Edit product"
 
 #: templates/accounts/purchase_history.html:80
-#, fuzzy
 #| msgid "Editar producte"
 msgid "Expired Products"
 msgstr "Edit product"
@@ -567,7 +553,6 @@ msgid "Cerca avançada"
 msgstr "Advanced search"
 
 #: templates/products/_title_card.html:20
-#, fuzzy
 #| msgid "Languages:"
 msgid "Languages"
 msgstr "Languages:"
@@ -581,7 +566,6 @@ msgid "Collection"
 msgstr ""
 
 #: templates/products/_title_card.html:24
-#, fuzzy
 #| msgid "Duration:"
 msgid "Duration"
 msgstr "Duration:"
@@ -631,7 +615,6 @@ msgid "Procedir al pagament"
 msgstr ""
 
 #: templates/products/cart.html:45
-#, fuzzy
 #| msgid "La teva cistella està buida."
 msgid "El teu carretó està buit."
 msgstr "Your cart is empty."
@@ -669,7 +652,6 @@ msgid "Comprar ara"
 msgstr "Buy now"
 
 #: templates/products/detail.html:55
-#, fuzzy
 #| msgid "Inicia sessió"
 msgid "Inicia sessió per comprar"
 msgstr "Log in"
@@ -693,7 +675,6 @@ msgid "Encara no hi ha títols assignats a aquest paquet."
 msgstr "There are no titles assigned to this package yet."
 
 #: templates/products/product_list.html:13
-#, fuzzy
 msgid "Productes"
 msgstr "Products"
 
@@ -811,8 +792,8 @@ msgid ""
 "La teva contrasenya s'ha canviat correctament. Ara pots iniciar sessió amb "
 "la nova contrasenya."
 msgstr ""
-"Your password has been changed successfully. You can now log in with the new "
-"password."
+"Your password has been changed successfully. You can now log in with the new"
+" password."
 
 #: templates/registration/password_reset_complete.html:14
 msgid "Inicia la sessió"
@@ -844,8 +825,8 @@ msgid ""
 "Hem enviat un correu electrònic amb instruccions per restablir la teva "
 "contrasenya. Si no el reps, comprova la teva carpeta de correu brossa."
 msgstr ""
-"We have sent an email with instructions to reset your password. If you don't "
-"receive it, check your spam folder."
+"We have sent an email with instructions to reset your password. If you don't"
+" receive it, check your spam folder."
 
 #: templates/registration/password_reset_email.html:2
 msgid "Hola,"
@@ -879,8 +860,8 @@ msgstr "The Dual Team"
 
 #: templates/registration/password_reset_form.html:13
 msgid ""
-"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per "
-"restablir la teva contrasenya."
+"Introdueix la teva adreça de correu electrònic i t'enviarem instruccions per"
+" restablir la teva contrasenya."
 msgstr ""
 "Enter your email address and we will send you instructions to reset your "
 "password."
@@ -905,16 +886,27 @@ msgstr "Log in if you already have an account"
 msgid "Registrar-me"
 msgstr "Sign up"
 
+msgid "Account already exists"
+msgstr "Account already exists"
+
+msgid "A registration request was received with this email address:"
+msgstr "A registration request was received with this email address:"
+
+msgid ""
+"However, an account already exists with this email. To log in, you can "
+"request a magic link on the login page:"
+msgstr ""
+"However, an account already exists with this email. To log in, you can "
+"request a magic link on the login page:"
+
 #~ msgid "Paquets"
 #~ msgstr "Packages"
 
-#~ msgid ""
-#~ "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
+#~ msgid "El teu compte ha estat activat correctament. Ara pots iniciar sessió."
 #~ msgstr "Your account has been activated successfully. You can now log in."
 
 #~ msgid ""
-#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu "
-#~ "compte."
+#~ "Gràcies per registrar-te! T'hem enviat un correu per activar el teu compte."
 #~ msgstr ""
 #~ "Thank you for registering! We have sent you an email to activate your "
 #~ "account."
@@ -943,7 +935,6 @@ msgstr "Sign up"
 #~ msgid "A0 → C1 · Accés 6 mesos"
 #~ msgstr "A0 → C1 · 6-month access"
 
-#, fuzzy
 #~ msgid "Compra'l"
 #~ msgstr "Buy now"
 
