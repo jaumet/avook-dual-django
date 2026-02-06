@@ -34,6 +34,7 @@
           {% else %}
             {% if user.is_authenticated %}
               <div id="paypal-{{ product.id }}"></div>
+              <div id="stripe-{{ product.id }}"></div>
             {% else %}
               <div class="my-3">
                 <a href="{% url 'account_login' %}" class="btn btn-primary">{% trans "Login / Register" %}</a>
@@ -65,6 +66,7 @@
 {% block extra_js %}
 {{ block.super }}
 <script src="{% static 'js/paypal_buttons.js' %}"></script>
+<script src="{% static 'js/stripe_buttons.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -72,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     {% if user.is_authenticated %}
     {% for product in products %}
       {% if product.price > 0 %}
+        // PayPal button
         if (typeof renderLinkButton === 'function') {
             renderLinkButton(
                 "#paypal-{{ product.id|escapejs }}",
@@ -80,6 +83,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 "{{ product.machine_name|escapejs }}",
                 successUrl,
                 "{{ user.id|escapejs }}",
+                "{{ product.id|escapejs }}"
+            );
+        }
+        // Stripe button
+        if (typeof renderStripeButton === 'function') {
+            renderStripeButton(
+                "#stripe-{{ product.id|escapejs }}",
+                "{{ product.translation.name|escapejs }}",
                 "{{ product.id|escapejs }}"
             );
         }

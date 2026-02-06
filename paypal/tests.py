@@ -22,7 +22,7 @@ class PayPalWebhookTest(TestCase):
         )
 
     @patch('paypal.views.verify_paypal_signature')
-    @patch('paypal.views.send_purchase_confirmation_email')
+    @patch('products.services.send_purchase_confirmation_email')
     def test_webhook_payment_capture_completed(self, mock_send_email, mock_verify):
         mock_verify.return_value = True
 
