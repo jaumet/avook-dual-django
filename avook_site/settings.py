@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'accounts',
     'post_office',
     'paypal',
+    'stripe_payments',
     'django_extensions',
 ]
 
@@ -186,6 +187,12 @@ if not all([PAYPAL_API_URL, PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_WEBHOOK_ID])
     )
 # --- End of PayPal Configuration ---
 
+# --- Stripe Configuration ---
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+# --- End of Stripe Configuration ---
+
 # Security Settings for CSP
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -200,6 +207,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
         "https://*.paypal.cn",
         "https://*.paypalobjects.com",
         "https://objects.paypal.cn",
+        "https://js.stripe.com",
         "https://www.google.com",
         "https://www.gstatic.com",
         "'unsafe-inline'",
@@ -234,7 +242,7 @@ SECURE_CONTENT_SECURITY_POLICY = {
         "https://www.google.com",
         "https://browser-intake-us5-datadoghq.com"
     ],
-    "frame-src": ["'self'", "https://*.sandbox.paypal.com", "https://*.paypal.com"],
+    "frame-src": ["'self'", "https://*.sandbox.paypal.com", "https://*.paypal.com", "https://js.stripe.com"],
     "object-src": ["'none'"],
 }
 

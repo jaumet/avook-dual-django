@@ -18,6 +18,7 @@ from django.utils.dateparse import parse_datetime
 from dateutil.relativedelta import relativedelta
 
 from products.models import Product, UserPurchase, UserAccess
+from products.services import fulfill_purchase
 from .services import create_payment_resource, capture_paypal_order, get_paypal_access_token
 from .models import PendingPayment
 
@@ -154,53 +155,23 @@ def paypal_webhook(request):
                 user = pending_payment.user
                 product = pending_payment.product
 
-                # Idempotència: comprovar si ja existeix la compra
-                purchase_exists = UserPurchase.objects.filter(
-                    Q(paypal_order_id=paypal_order_id) | Q(paypal_capture_id=paypal_capture_id)
-                ).exists()
+                # Mark PendingPayment as PAID (indempotency handled inside fulfill_purchase)
+                pending_payment.status = 'paid'
+                pending_payment.save()
 
-                if not purchase_exists:
-                    # Mark PendingPayment as PAID
-                    pending_payment.status = 'paid'
-                    pending_payment.save()
+                # Data de pagament
+                paid_at = parse_datetime(payment_date_str) if payment_date_str else timezone.now()
+                if not paid_at: paid_at = timezone.now()
 
-                    # Data de pagament
-                    paid_at = parse_datetime(payment_date_str) if payment_date_str else timezone.now()
-                    if not paid_at: paid_at = timezone.now()
-
-                    # Crear UserPurchase
-                    UserPurchase.objects.create(
-                        user=user,
-                        user_email=user.email,
-                        product=product,
-                        paypal_order_id=paypal_order_id,
-                        paypal_capture_id=paypal_capture_id,
-                        paid_at=paid_at,
-                        payment_provider="paypal",
-                        status="completed"
-                    )
-                    logger.info(f"Creada UserPurchase per a l'usuari {user.id} i producte {product.machine_name}.")
-
-                    # Activar en UserAccess
-                    expiry_date = None
-                    if product.duration:
-                        expiry_date = paid_at + relativedelta(months=product.duration)
-
-                    UserAccess.objects.update_or_create(
-                        user=user,
-                        product=product,
-                        defaults={
-                            'active': True,
-                            'activated_at': paid_at,
-                            'expiry_date': expiry_date
-                        }
-                    )
-                    logger.info(f"Producte {product.machine_name} activat per a l'usuari {user.id}.")
-
-                    # Enviar correu de confirmació
-                    send_purchase_confirmation_email(user, product, paid_at)
-                else:
-                    logger.info(f"La compra per a l'ordre {paypal_order_id} ja s'havia processat.")
+                # Call the generic fulfillment service
+                fulfill_purchase(
+                    user=user,
+                    product=product,
+                    payment_provider="paypal",
+                    paypal_order_id=paypal_order_id,
+                    paypal_capture_id=paypal_capture_id,
+                    paid_at=paid_at
+                )
 
         elif event_type == 'PAYMENT.CAPTURE.DENIED':
             PendingPayment.objects.filter(paypal_order_id=paypal_order_id).update(status='failed')
@@ -224,29 +195,6 @@ def paypal_webhook(request):
 
     return HttpResponse(status=200)
 
-def send_purchase_confirmation_email(user, product, paid_at):
-    """
-    Envia un correu electrònic de confirmació de compra en l'idioma de l'usuari.
-    """
-    try:
-        lang = getattr(user, 'language_code', 'ca')
-
-        context = {
-            'user': user,
-            'product_name': str(product),
-            'payment_date': paid_at.strftime('%d/%m/%Y %H:%M'),
-            'purchase_url': f"https://dual.cat/{lang}/accounts/purchases/"
-        }
-
-        send_templated_email(
-            template_name='purchase_confirmation',
-            context=context,
-            to_email=user.email,
-            language=lang
-        )
-        logger.info(f"Correu de confirmació enviat a {user.email}")
-    except Exception as e:
-        logger.error(f"Error en enviar el correu de confirmació: {e}")
 
 def paypal_capture_view(request):
     """
