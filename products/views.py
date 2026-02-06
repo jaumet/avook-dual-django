@@ -56,7 +56,7 @@ class ProductListView(TitleContextMixin, ListView):
 
             # Get titles with status for each package
             for package in product.packages.all():
-                package.titles_with_status = self.get_titles_with_status(package.titles.all())
+                package.titles_with_status = self.get_titles_with_status(package.titles.all(), include_playlist=True)
 
         context['products'] = products
         context['PAYPAL_CLIENT_ID'] = settings.PAYPAL_CLIENT_ID
@@ -136,6 +136,13 @@ class CatalogView(TitleContextMixin, ListView):
             if level not in titles_by_level:
                 titles_by_level[level] = []
             titles_by_level[level].append(item)
+
+        # Generate playlist per level
+        for level, items in titles_by_level.items():
+            playlist_str = ",".join([item['title'].machine_name for item in items])
+            for item in items:
+                item['playlist'] = playlist_str
+
         context['titles_by_level'] = titles_by_level
 
         # Prepare data for the filters
@@ -251,10 +258,28 @@ def player_view(request, machine_name):
     if not transcripts:
         return render(request, 'products/player.html', {'error': 'Could not load any title data.'})
 
+    playlist_str = request.GET.get('playlist', '')
+    prev_title = None
+    next_title = None
+
+    if playlist_str:
+        playlist = playlist_str.split(',')
+        try:
+            current_idx = playlist.index(machine_name)
+            if current_idx > 0:
+                prev_title = playlist[current_idx - 1]
+            if current_idx < len(playlist) - 1:
+                next_title = playlist[current_idx + 1]
+        except ValueError:
+            pass
+
     context = {
         'title': json_info,
         'transcripts': transcripts,
-        'audio_path_prefix': f"{settings.AUDIOS_URL}{level}/{machine_name}/"
+        'audio_path_prefix': f"{settings.AUDIOS_URL}{level}/{machine_name}/",
+        'prev_title': prev_title,
+        'next_title': next_title,
+        'playlist_str': playlist_str,
     }
 
     return render(request, 'products/player.html', context)
@@ -295,7 +320,7 @@ class ProductTestsView(TitleContextMixin, View):
         for package in product.packages.all():
             all_titles.extend(package.titles.all())
 
-        titles_with_status = self.get_titles_with_status(all_titles)
+        titles_with_status = self.get_titles_with_status(all_titles, include_playlist=True)
 
         titles_by_level = defaultdict(list)
         for item in titles_with_status:
