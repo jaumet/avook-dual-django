@@ -79,7 +79,9 @@ class TitleContextMixin:
             })
 
         if include_playlist:
-            playlist_str = ",".join([item['title'].machine_name for item in titles_with_status])
+            # Only include titles the user has access to in the playlist
+            playlist_titles = [item['title'].machine_name for item in titles_with_status if item['status'] == 'PREMIUM_OWNED']
+            playlist_str = ",".join(playlist_titles)
             for item in titles_with_status:
                 item['playlist'] = playlist_str
 

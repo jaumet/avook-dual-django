@@ -908,6 +908,12 @@ msgstr ""
 "anzumelden (Log in), können Sie auf der Anmeldeseite einen Magic Link "
 "anfordern:"
 
+msgid "No tens accés a aquest text"
+msgstr "Sie haben keinen Zugriff auf diesen Text"
+
+msgid "Títol no trobat"
+msgstr "Titel nicht gefunden"
+
 #~ msgid "Purchase History"
 #~ msgstr "Kaufhistorie"
 

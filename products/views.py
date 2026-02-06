@@ -139,7 +139,9 @@ class CatalogView(TitleContextMixin, ListView):
 
         # Generate playlist per level
         for level, items in titles_by_level.items():
-            playlist_str = ",".join([item['title'].machine_name for item in items])
+            # Only include titles the user has access to in the playlist
+            playlist_titles = [item['title'].machine_name for item in items if item['status'] == 'PREMIUM_OWNED']
+            playlist_str = ",".join(playlist_titles)
             for item in items:
                 item['playlist'] = playlist_str
 
@@ -180,6 +182,11 @@ def player_view(request, machine_name):
         try:
             data = json.loads(request.body)
             title = get_object_or_404(Title, machine_name=machine_name)
+
+            # Access control for POST requests
+            if title.get_user_status(request.user) != 'PREMIUM_OWNED':
+                return JsonResponse({'status': 'error', 'message': 'Access denied'}, status=403)
+
             language_pair = data.get('language_pair')
             listening_time_seconds = data.get('listening_time', 0)
             completion_percentage = data.get('completion_percentage', 0)
@@ -216,9 +223,16 @@ def player_view(request, machine_name):
     titles_with_status = mixin.get_titles_with_status([title])
 
     if not titles_with_status:
-        return render(request, 'products/player.html', {'error': 'Title not found'})
+        messages.error(request, _('Títol no trobat'))
+        return redirect('products:catalog')
 
     title_info = titles_with_status[0]
+
+    # Access control for GET requests
+    if title_info['status'] != 'PREMIUM_OWNED':
+        messages.error(request, _('No tens accés a aquest text'))
+        return redirect('products:catalog')
+
     json_info = title_info.get('json_info', {})
 
     # Add all text_versions to json_info

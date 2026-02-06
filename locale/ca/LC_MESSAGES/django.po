@@ -957,6 +957,12 @@ msgstr ""
 "sessió (Log in), pots sol·licitar un enllaç màgic a la pàgina d'inici de "
 "sessió:"
 
+msgid "No tens accés a aquest text"
+msgstr "No tens accés a aquest text"
+
+msgid "Títol no trobat"
+msgstr "Títol no trobat"
+
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compres"
 

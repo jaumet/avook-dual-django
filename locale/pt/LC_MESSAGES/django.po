@@ -927,6 +927,12 @@ msgstr ""
 "No entanto, já existe uma conta com este e-mail. Para iniciar sessão (Log "
 "in), pode solicitar um link mágico na página de início de sessão:"
 
+msgid "No tens accés a aquest text"
+msgstr "Você não tem acesso a este texto"
+
+msgid "Títol no trobat"
+msgstr "Título não encontrado"
+
 #~ msgid "Purchase History"
 #~ msgstr "Histórico de Compras"
 
