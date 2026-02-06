@@ -4,7 +4,7 @@ import json
 from django.conf import settings
 
 class TitleContextMixin:
-    def get_titles_with_status(self, titles):
+    def get_titles_with_status(self, titles, include_playlist=False):
         titles_with_status = []
         user = self.request.user if self.request.user.is_authenticated else None
 
@@ -77,5 +77,10 @@ class TitleContextMixin:
                 'image_url': title.get_image_url(),
                 'json_info': context_data,
             })
+
+        if include_playlist:
+            playlist_str = ",".join([item['title'].machine_name for item in titles_with_status])
+            for item in titles_with_status:
+                item['playlist'] = playlist_str
 
         return titles_with_status

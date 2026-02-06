@@ -235,6 +235,14 @@ document.addEventListener('DOMContentLoaded', () => {
         {{ title.languages|join:", " }}
       </span></div>
     </div>
+    <div class="topNavButtons">
+        {% if prev_title %}
+            <a href="{% url 'products:player' prev_title %}?playlist={{ playlist_str }}" class="nav-btn">⬅️ <span data-translate-key="player.previous">Anterior</span></a>
+        {% endif %}
+        {% if next_title %}
+            <a href="{% url 'products:player' next_title %}?playlist={{ playlist_str }}" class="nav-btn"><span data-translate-key="player.next">Següent</span> ➡️</a>
+        {% endif %}
+    </div>
   </section>
 
   <section id="setupPanel" class="panel-soft">
