@@ -899,6 +899,12 @@ msgstr ""
 "However, an account already exists with this email. To log in, you can "
 "request a magic link on the login page:"
 
+msgid "No tens accés a aquest text"
+msgstr "You do not have access to this text"
+
+msgid "Títol no trobat"
+msgstr "Title not found"
+
 #~ msgid "Paquets"
 #~ msgstr "Packages"
 

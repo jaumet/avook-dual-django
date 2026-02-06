@@ -974,6 +974,12 @@ msgstr ""
 "Sin embargo, ya existe una cuenta con este correo. Para iniciar sesión (Log "
 "in), puedes solicitar un enlace mágico en la página de inicio de sesión:"
 
+msgid "No tens accés a aquest text"
+msgstr "No tienes acceso a este texto"
+
+msgid "Títol no trobat"
+msgstr "Título no encontrado"
+
 #~ msgid "Purchase History"
 #~ msgstr "Historial de Compras"
 
