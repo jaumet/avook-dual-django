@@ -907,6 +907,12 @@ msgstr ""
 "Tuttavia, esiste già un account con questa email. Per accedere (Log in), "
 "puoi richiedere un link magico nella pagina di login:"
 
+msgid "No tens accés a aquest text"
+msgstr "Non hai accesso a questo testo"
+
+msgid "Títol no trobat"
+msgstr "Titolo non trovato"
+
 #~ msgid "Purchase History"
 #~ msgstr "Cronologia Acquisti"
 

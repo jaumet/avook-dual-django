@@ -87,6 +87,12 @@ class PlayerViewTest(TestCase):
         self.non_existent_title = 'non-existent-title'
         title = Title.objects.create(machine_name=self.test_title_machine_name, level='A0')
 
+        # Create a free product containing this title to grant access in tests
+        free_package = Package.objects.create(name='Free Package', level='A0')
+        free_package.titles.add(title)
+        product_free = Product.objects.create(machine_name='free-test-product', price=0, duration=0)
+        product_free.packages.add(free_package)
+
         TitleTranslation.objects.create(title=title, language_code='en', human_name='Test ENG', description='Description ENG')
         TitleTranslation.objects.create(title=title, language_code='ca', human_name='Test CAT', description='Descripció CAT')
 
@@ -185,3 +191,35 @@ class PlayerViewTest(TestCase):
             self.assertIn('audio_path_prefix', response.context)
             expected_prefix = f"{settings.AUDIOS_URL}A0/{self.test_title_machine_name}/"
             self.assertEqual(response.context['audio_path_prefix'], expected_prefix)
+
+    def test_player_view_access_denied(self):
+        """
+        Verify that the player view denies access for a non-owned premium title.
+        """
+        premium_title_name = 'premium-title'
+        premium_title = Title.objects.create(machine_name=premium_title_name, level='B1')
+        # Create a paid product for it
+        premium_package = Package.objects.create(name='Premium Package', level='B1')
+        premium_package.titles.add(premium_title)
+        product_paid = Product.objects.create(machine_name='premium-product', price=99.99, duration=12)
+        product_paid.packages.add(premium_package)
+
+        # Mock audios.json to include this premium title
+        with open(self.audios_json_path, 'r') as f:
+            data = json.load(f)
+        data['AUDIOS'].append({
+            "machine_name": premium_title_name,
+            "levels": "B1",
+            "text_versions": [{"lang": "EN", "json_file": "premium-EN.json"}]
+        })
+        with open(self.audios_json_path, 'w') as f:
+            json.dump(data, f)
+
+        response = self.client.get(reverse('products:player', kwargs={'machine_name': premium_title_name}))
+        self.assertEqual(response.status_code, 302)  # Redirect to catalog
+        self.assertRedirects(response, reverse('products:catalog'))
+
+        # Check that error message is present
+        messages = list(response.wsgi_request._messages)
+        self.assertEqual(len(messages), 1)
+        # The message depends on the current language, but we just check it exists.
