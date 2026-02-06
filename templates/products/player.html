@@ -2,60 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<style>
-  .topCard{display:flex;gap:1em;align-items:center;background:var(--panel-bg);
-    border:4px solid var(--accent);border-radius:10px;padding:1em;margin-bottom:1em;color:var(--panel-fg);}
-  .topCard img{width:auto;max-height:80px;border-radius:6px;object-fit:contain}
-  .topCard h2{margin:.1em 0 .2em 0;color:var(--panel-fg)}
-  .topCard .langs{font-weight:bold;color:var(--panel-fg)}
-
-  .panel-soft{background:var(--panel-bg);color:var(--panel-fg);
-    border:none;border-radius:10px;padding:1em;margin:.6em 0}
-  .row{display:flex;flex-wrap:wrap;gap:1em;align-items:flex-start}
-  .langBox{flex:1 1 320px;background:var(--panel-bg);color:var(--panel-fg);
-    border:4px solid var(--accent);border-radius:10px;padding:1em}
-  .radios{display:flex;gap:.8em;flex-wrap:wrap}
-  .radios label{display:flex;align-items:center;gap:.3em;border:2px solid var(--accent);
-    border-radius:20px;padding:.2em .6em;background:var(--fg);color:var(--bg);cursor:pointer}
-  select{font-size:1em;border:2px solid var(--accent);border-radius:6px;padding:.2em .4em;background:var(--panel-bg);color:var(--panel-fg)}
-
-  #modesPanel{text-align:center;margin:1em 0;}
-  #modesPanel>div:first-child{font-weight:bold;color:var(--accent);margin-bottom:.4em;}
-  #modeButtons{display:flex;flex-wrap:wrap;justify-content:center;gap:.6em;}
-  #modeButtons button{
-    background:var(--accent);color:#fff;border:0;border-radius:10px;
-    font-size:1.05em;padding:.6em 1.2em;cursor:pointer;
-    transition:background .2s,transform .1s;
-  }
-  #modeButtons button:hover{background:#191a5b;transform:scale(1.05);}
-
-  #textBox{position:relative;border:2px solid var(--accent);border-radius:10px;
-    background:var(--panel-bg);color:var(--panel-fg);padding:1em;
-    margin:.6em 0;min-height:3.2em;font-size:1.05em;font-style:italic}
-  #progressInfo{position:absolute;top:4px;right:8px;font-size:0.8em;color:#ccc;}
-  #progressBarContainer{position:absolute;bottom:0;left:0;width:100%;height:8px;background:#8884;border-radius:0 0 10px 10px;overflow:hidden;}
-  #progressBar{height:100%;width:0%;background:linear-gradient(90deg,#f7836a,#ffb27a);transition:width .3s;}
-  audio{width:100%;margin-top:.6em}
-  #backBtn{display:none;margin:1em auto 0 auto;border:0;background:var(--accent);
-    color:#fff;border-radius:8px;padding:.6em 1em;cursor:pointer}
-  #backBtn:hover{background:#191a5b}
-  #playerPanel button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:.4em .8em;cursor:pointer}
-  #playerPanel button:hover{background:#191a5b}
-
-  #infoModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; }
-  #infoContent { background:var(--panel-bg); color:var(--panel-fg); border:2px solid var(--accent); border-radius:10px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; padding:1.4em; box-shadow:0 4px 12px rgba(0,0,0,.5); scrollbar-color:var(--accent) var(--panel-bg); scrollbar-width:thin; }
-  #closeModal { background:var(--accent); color:#fff; border:0; border-radius:6px; padding:.4em .8em; cursor:pointer; margin-top:.8em; }
-  #infoContent ul { padding-left:1.4em; line-height:1.5; }
-  #infoContent h4 { margin-top:1em; color:var(--accent); }
-
-  #textContent {
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 1em 0;
-  }
-</style>
+<link rel="stylesheet" href="{% static 'css/player.css' %}">
 {% endblock %}
 
 {% block extra_js %}
