@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/player.css' %}">
@@ -230,7 +231,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <img id="relatImg" src="{% static 'imgs/book-icon.png' %}" alt="Imatge relat"/>
     <div>
       <h2 id="relatTitle">{{ title.human_title }}</h2>
-      <div id="relatDesc" style="margin:.1em 0 .3em 0;">{{ title.description }}</div>
+      <div id="relatLevel" style="font-weight: bold; color: var(--accent); margin-bottom: 0.2em;">{% trans "Nivell" %}: {{ title.levels }}</div>
+      {% if title.description != '...' %}
+        <div id="relatDesc" style="margin:.1em 0 .3em 0;">{{ title.description }}</div>
+      {% endif %}
       <div class="langs">🌐 <span data-translate-key="player.languages">Idiomes:</span> <span id="relatLangs">
         {{ title.languages|join:", " }}
       </span></div>
